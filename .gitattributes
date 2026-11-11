@@ -1,0 +1,11 @@
+# Normalize line endings for text files so Windows CRLF never shows as a diff noise warning.
+* text=auto eol=lf
+
+# Binary assets: never touch line endings.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
