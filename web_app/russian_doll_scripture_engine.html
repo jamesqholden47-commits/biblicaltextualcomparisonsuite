@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Plenary Scripture Engine | Russian Doll Multi-Witness Workspace</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        plenary: {
+                            gold: '#fbbf24',
+                            crimson: '#f43f5e',
+                            sapphire: '#38bdf8',
+                            slate: '#94a3b8',
+                            darkbg: '#090d16',
+                            cardbg: '#111827',
+                            border: '#1f2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Three.js for 3D Holographic Spatial Overlay -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .doll-drawer {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tier-badge-gold { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .tier-badge-crimson { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .tier-badge-sapphire { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .tier-badge-slate { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+        canvas#three-canvas {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen font-sans antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0 z-50 px-6 py-3.5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-9 w-9 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+                    🪆
+                </div>
+                <div>
+                    <h1 class="text-base font-semibold tracking-tight text-white flex items-center space-x-2">
+                        <span>Plenary Scripture Engine</span>
+                        <span class="text-xs font-mono uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">v1.0-alpha</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Russian Doll Multi-Witness Apparatus & Spatial Manuscript Overlay</p>
+                </div>
+            </div>
+
+            <!-- Mode Controls & Actions -->
+            <div class="flex items-center space-x-3">
+                <button id="toggle3DBtn" onclick="toggle3DMode()" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 transition flex items-center space-x-1.5 shadow-sm shadow-cyan-500/10">
+                    <i data-lucide="box" class="w-3.5 h-3.5"></i>
+                    <span id="toggle3DText">3D Spatial Strata Mode</span>
+                </button>
+                <button onclick="expandAllDolls()" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-slate-300 hover:bg-gray-800 transition">
+                    Expand All Dolls
+                </button>
+                <button onclick="collapseAllDolls()" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-900 text-slate-300 hover:bg-gray-800 transition">
+                    Collapse All
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-6 py-6 space-y-6">
+
+        <!-- 3D Tony Stark Holographic Canvas Section (Collapsible) -->
+        <section id="three-container" class="hidden relative rounded-2xl overflow-hidden border border-cyan-500/30 bg-gray-950 shadow-2xl h-96 transition-all duration-500">
+            <div class="absolute top-3 left-4 z-10 flex items-center space-x-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-cyan-950/80 text-cyan-300 border border-cyan-500/40">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse mr-1.5"></span>
+                    HOLOGRAPHIC STRATA ACTIVE
+                </span>
+                <span class="text-xs text-slate-400">Drag to rotate • Scroll to zoom • Strata separate along Z-axis</span>
+            </div>
+            <div class="absolute bottom-3 right-4 z-10 flex items-center space-x-2 text-[11px] font-mono text-slate-400 bg-black/60 px-3 py-1.5 rounded-lg border border-gray-800">
+                <span class="text-amber-400">■ Top: Master Vernacular</span>
+                <span class="text-sky-400">■ Mid: Critical Uncials (B/ℵ)</span>
+                <span class="text-rose-400">■ Deep: Qumran Vorlagen</span>
+            </div>
+            <canvas id="three-canvas" class="w-full h-full block"></canvas>
+        </section>
+
+        <!-- Search, Tiers & Filter Ribbon -->
+        <section class="bg-gray-900/60 p-4 rounded-xl border border-gray-800 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-2 flex-grow max-w-md">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+                <input id="searchInput" oninput="filterCruxes()" type="text" placeholder="Search references, Greek/Hebrew terms, or Church Fathers..." class="w-full bg-gray-950 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition">
+            </div>
+
+            <!-- Tier Pills -->
+            <div class="flex items-center space-x-2 text-xs">
+                <span class="text-slate-400 font-mono text-[11px]">FILTER:</span>
+                <button onclick="setFilter('all')" class="tier-filter-btn px-2.5 py-1 rounded-md border border-gray-700 bg-gray-800 text-white font-medium hover:border-gray-600 active" data-filter="all">All Cruxes</button>
+                <button onclick="setFilter('tier1-gold')" class="tier-filter-btn px-2.5 py-1 rounded-md border border-amber-500/40 bg-amber-500/10 text-amber-300 font-medium hover:bg-amber-500/20" data-filter="tier1-gold">🟡 Tier 1: Vorlage</button>
+                <button onclick="setFilter('tier2-crimson')" class="tier-filter-btn px-2.5 py-1 rounded-md border border-rose-500/40 bg-rose-500/10 text-rose-300 font-medium hover:bg-rose-500/20" data-filter="tier2-crimson">🔴 Tier 2: Dogma / Canon</button>
+            </div>
+        </section>
+
+        <!-- Cruxes Stream (Russian Dolls) -->
+        <section id="crux-stream" class="space-y-6">
+            <!-- Dynamically Rendered by JS -->
+        </section>
+
+    </main>
+
+    <!-- Embedded Complete Data -->
+    <script>
+        const CRUXES = [{"id": "acts15-amos9", "title": "Gentiles Seeking God vs. Israel Conquering Edom", "ref": "Acts 15:16–17 / Amos 9:11–12", "tier": "tier1-gold", "tier_name": "Tier 1: Ancient Vorlage Divergence", "testament": "OT / NT Synthesis", "category": "Gentile Salvation & Second Temple Vorlage", "summary": "St. James at the Council of Jerusalem settles the circumcision controversy by quoting Amos 9 from the Septuagint. The Hebrew Masoretic Text predicts a military conquest of Edom, making James's argument impossible on the Protestant Hebrew text.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Acts 15:16–17)", "text": "‘After this I will return, and I will rebuild the tent of David that has fallen; I will rebuild its ruins, and I will restore it, that the remnant of mankind may seek the Lord, and all the Gentiles who are called by my name, says the Lord, who makes these things known from of old.’"}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The Greek clause uses the conjunction ὅπως ἄν (hopōs an) with the subjunctive ἐκζητήσωσιν (ekzētēsōsin, 'that they may seek diligently'), followed by the accusative τὸν Κύριον ('the Lord'). The grammatical subject is οἱ κατάλοιποι τῶν ἀνθρώπων ('the remnant of mankind'). The New Testament author faithfully reproduces the Septuagint's universal salvation theology rather than conforming the text to the nationalistic Hebrew Masoretic reading."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "ὅπως ἄν", "translit": "hopōs an", "pos": "Conjunction", "meaning": "in order that"}, {"word": "ἐκζητήσωσιν", "translit": "ekzētēsōsin", "pos": "Verb, Aorist Subjunctive Active 3P", "lemma": "ἐκζητέω (G1830)", "meaning": "may seek after"}, {"word": "οἱ κατάλοιποι", "translit": "hoi kataloipoi", "pos": "Noun, Nominative Masculine Plural", "lemma": "κατάλοιπος (G2645)", "meaning": "the remnant"}, {"word": "τῶν ἀνθρώπων", "translit": "tōn anthrōpōn", "pos": "Noun, Genitive Masculine Plural", "lemma": "ἄνθρωπος (G444)", "meaning": "of mankind"}, {"word": "τὸν Κύριον", "translit": "ton Kyrion", "pos": "Noun, Accusative Masculine Singular", "lemma": "Κύριος (G2962)", "meaning": "the Lord"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "New Testament Citation (Acts 15:17, NA28)", "text": "ὅπως ἂν ἐκζητήσωσιν οἱ κατάλοιποι τῶν ἀνθρώπων τὸν Κύριον", "gloss": "that the remnant of mankind may seek the Lord"}, {"source": "Septuagint (Amos 9:12, Rahlfs-Hanhart / Codex B)", "text": "ὅπως ἐκζητήσωσιν οἱ κατάλοιποι τῶν ἀνθρώπων τὸν κύριον", "gloss": "that the rest of mankind may seek out the Lord"}, {"source": "Hebrew Masoretic Text (Amos 9:12, BHS / Protestant OT)", "text": "לְמַעַן יִירְשׁוּ אֶת־שְׁאֵרִית אֱדוֹם (ləma'an yirshu 'et-she'erit 'Edom)", "gloss": "that they may possess the remnant of Edom"}, {"source": "Latin Vulgate (St. Jerome / Clementine 1592)", "text": "ut possideant reliquias Idumaeae", "gloss": "that they may possess the remnants of Edom (translated from MT)"}, {"source": "Reconstructed Ancient Hebrew Vorlage", "text": "למען ידרשו את־שארית אדם (yidrshu... 'Adam)", "gloss": "Consonantal variance: Dalet (ידרשו, seek) vs Yod (יירשו, possess); Adam (אדם, mankind) vs Edom (אדום)."}], "verdict": "The Council of Jerusalem's infallible decision to admit Gentiles without circumcision is tethered directly to the Septuagint's Hebrew Vorlage, not the Masoretic Text."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "Council of Jerusalem (Acts 15:14–19, 49 AD)", "quote": "‘It seemed good to the Holy Spirit and to us to lay upon you no greater burden than these necessary things...’ James establishes the Gentile church strictly upon the LXX text-type."}, {"author": "St. John Chrysostom (Homilies on the Acts of the Apostles 33)", "quote": "‘Observe how James does not bring forward human arguments, but roots the admission of the nations in the ancient voice of the prophet who spoke of mankind seeking God.’"}, {"author": "Council of Florence (1442, Cantate Domino)", "quote": "Defines the cessation of Mosaic legal ceremonies, pointing back to the apostolic decrees formulated on this prophecy."}]}}}, {"id": "heb10-ps40", "title": "A Body Prepared vs. Ears Dug / Pierced", "ref": "Hebrews 10:5–10 / Psalm 40:6–8", "tier": "tier1-gold", "tier_name": "Tier 1: Ancient Vorlage Divergence", "testament": "OT / NT Synthesis", "category": "Incarnation, Sacrifice & Christology", "summary": "Hebrews 10 argues that the Levitical animal sacrifices are abolished by Christ's Incarnate Body ('a body you prepared for me'). In the Hebrew Masoretic Text, the word 'body' does not exist; it reads 'ears you have dug for me.'", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Hebrews 10:5–7)", "text": "Consequently, when Christ came into the world, he said, ‘Sacrifices and offerings you have not desired, but a body you have prepared for me; in burnt offerings and sin offerings you have taken no pleasure. Then I said, Behold, I have come to do your will, O God, as it is written of me in the scroll of the book.’"}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The author of Hebrews bases his entire theological argument in verse 10 ('sanctified through the offering of the body of Jesus Christ once for all') upon the word σῶμα (sōma, 'body'). In verse 8–9, the author argues: 'He abolishes the first in order to establish the second.' If the Old Testament said only 'ears,' the physical offering of Christ's incarnate flesh as the replacement of animal sacrifice lacks its biblical prooftext."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "θυσίαν καὶ προσφοράν", "translit": "thysian kai prosphoran", "pos": "Noun, Accusative Feminine Singular", "meaning": "sacrifice and offering"}, {"word": "οὐκ ἠθέλησας", "translit": "ouk ēthelēsas", "pos": "Verb, Aorist Active Indicative 2S", "lemma": "θέλω (G2309)", "meaning": "you did not desire"}, {"word": "σῶμα δέ", "translit": "sōma de", "pos": "Noun, Accusative Neuter Singular", "lemma": "σῶμα (G4983)", "meaning": "but a body"}, {"word": "κατηρτίσω", "translit": "katērtisō", "pos": "Verb, Aorist Middle Indicative 2S", "lemma": "καταρτίζω (G2675)", "meaning": "you prepared / equipped"}, {"word": "μοι", "translit": "moi", "pos": "Pronoun, Dative 1S", "meaning": "for me"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "New Testament Citation (Hebrews 10:5, NA28)", "text": "σῶμα δὲ κατηρτίσω μοι (sōma de katērtisō moi)", "gloss": "but a body you have prepared for me"}, {"source": "Septuagint (Psalm 39:7, LXX Rahlfs / Codex Vaticanus)", "text": "σῶμα δὲ κατηρτίσω μοι (sōma de katērtisō moi)", "gloss": "a body you have fitted for me"}, {"source": "Hebrew Masoretic Text (Psalm 40:6, BHS / Protestant OT)", "text": "אָזְנַיִם כָּרִיתָ לִּי ('oznayim karita li)", "gloss": "ears you have dug / opened for me"}, {"source": "Latin Vulgate (Clementine / Gallican Psalter)", "text": "corpus autem aptasti mihi", "gloss": "a body you have fitted to me (following LXX)"}, {"source": "Dead Sea Scrolls / Vorlage Note", "text": "Scholars note the Septuagint either translated a Semitic metonymy (ears representing the organ of obedience expanded to the whole physical body) or translated an ancient divergent Vorlage.", "gloss": "The Holy Spirit canonized the Greek reading in Hebrews."}], "verdict": "The Christian theology of the Eucharistic and Incarnational sacrifice of Christ's physical body replacing temple animals is biblically rooted in the Septuagint reading against the Masoretic Text."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "St. Athanasius of Alexandria (De Incarnatione 8)", "quote": "‘For this reason, when coming into our realm, He says: A body hast thou prepared for Me; that in the body He might offer Himself as an unblemished sacrifice to the Father.’"}, {"author": "Council of Ephesus (431 AD, Third Anathema of St. Cyril against Nestorius)", "quote": "‘Whosoever shall say that the Word of God was not united according to hypostasis with flesh... let him be anathema. For a body was prepared for Him.’"}, {"author": "St. Thomas Aquinas (Summa Theologiae III, q. 22, a. 2)", "quote": "‘Christ was at once priest and victim; and therefore it is said in Hebrews 10: A body you have prepared for me.’"}]}}}, {"id": "heb1-deut32", "title": "Angels Worshiping the Son vs. Masoretic Complete Omission", "ref": "Hebrews 1:6 / Deuteronomy 32:43 / 4QDeut^q", "tier": "tier1-gold", "tier_name": "Tier 1: Ancient Vorlage Divergence", "testament": "OT / NT Synthesis", "category": "Divinity of Christ & Qumran Textual Recovery", "summary": "Hebrews 1:6 quotes Scripture commanding all angels to worship Jesus ('Let all God's angels worship him'). In Protestant Bibles, Deuteronomy 32:43 completely omits this line! Dead Sea Scroll 4QDeut^q proved the Hebrew line existed and was lost by Masoretic scribes.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Hebrews 1:6)", "text": "And again, when he brings the firstborn into the world, he says, ‘Let all God's angels worship him.’"}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The Greek verb προσκυνησάτωσαν (proskynēsatōsan) is an Aorist Active Imperative 3P ('let them worship / bow down before'). In Jewish theology, angels worship God alone (Rev 22:8–9). By commanding the angels to offer proskynesis to the Firstborn Son, the text asserts Christ's absolute ontological deity."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "καὶ προσκυνησάτωσαν", "translit": "kai proskynēsatōsan", "pos": "Verb, Aorist Active Imperative 3P", "lemma": "προσκυνέω (G4352)", "meaning": "and let worship"}, {"word": "αὐτῷ", "translit": "autō", "pos": "Pronoun, Dative Masculine 3S", "meaning": "him"}, {"word": "πάντες ἄγγελοι", "translit": "pantes angeloi", "pos": "Noun, Nominative Masculine Plural", "lemma": "ἄγγελος (G32)", "meaning": "all angels"}, {"word": "Θεοῦ", "translit": "Theou", "pos": "Noun, Genitive Masculine Singular", "lemma": "Θεός (G2316)", "meaning": "of God"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "New Testament Citation (Hebrews 1:6, NA28)", "text": "καὶ προσκυνησάτωσαν αὐτῷ πάντες ἄγγελοι Θεοῦ", "gloss": "and let all God's angels worship him"}, {"source": "Septuagint (Deuteronomy 32:43, LXX Rahlfs)", "text": "καὶ προσκυνησάτωσαν αὐτῷ πάντες υἱοὶ θεοῦ / ἄγγελοι θεοῦ", "gloss": "and let all the angels / sons of God worship him"}, {"source": "Dead Sea Scrolls (4QDeut^q / 4Q44, Qumran Cave 4)", "text": "והשתחוו לו כל אלהים (wə-hish-tachawu lo kol-elohim)", "gloss": "Recovered 1st-century BC Hebrew scroll verbatim: 'Worship him, all you gods / heavenly hosts!'"}, {"source": "Hebrew Masoretic Text (Deuteronomy 32:43, BHS / Protestant OT)", "text": "רַרְנִינוּ גוֹיִם עַמּוֹ כִּי דַם־עֲבָדָיו יִקּוֹם...", "gloss": "ENTIRE PHRASE IS MISSING. Deleted or lost by scribal haplography in the Proto-MT."}], "verdict": "Qumran 4QDeut^q delivered the death blow to Masoretic Textual Infallibility by proving the Septuagint and Hebrews quoted an ancient Hebrew text that the medieval synagogue scribes dropped."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "Justin Martyr (Dialogue with Trypho 130, c. 155 AD)", "quote": "Accuses the Jewish rabbis of expelling verses from the Song of Moses that testified to the worship of Christ by angels."}, {"author": "St. John Chrysostom (Homilies on Hebrews 3)", "quote": "‘When he says: Let all the angels of God worship Him, he shows that He is not an angel, but the Master and Creator of angels.’"}, {"author": "Council of Nicaea (325 AD, Nicene Creed)", "quote": "Grounds Christ as 'True God from True God, begotten not made, consubstantial with the Father', who receives universal adoration."}]}}}, {"id": "1sam11-nahash", "title": "Nahash Ammonite Eye-Gouging Paragraph: 4QSamª Recovery", "ref": "1 Samuel 11:1–2 / 4QSamª / Josephus", "tier": "tier1-gold", "tier_name": "Tier 1: Ancient Vorlage Divergence", "testament": "Old Testament Historical Crux", "category": "Dead Sea Scrolls & Scribal Parablepsis", "summary": "The Hebrew Masoretic Text opens 1 Samuel 11 with Nahash abruptly demanding to gouge out right eyes with no context. Qumran scroll 4QSamª and Josephus preserve a 50-word historical paragraph explaining Nahash's terror campaign, lost by Masoretic scribal homeoteleuton.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (1 Samuel 11:1, Restored from 4QSamª / NABRE)", "text": "Now Nahash, king of the Ammonites, severely oppressed the Gadites and the Reubenites, and he gouged out the right eye of all of them, and brought terror and fear on Israel. There was not a man left among the Israelites beyond the Jordan whose right eye was not gouged out by Nahash king of the Ammonites, except that seven thousand men had fled from the Ammonites and entered Jabesh-gilead. And about a month later, Nahash the Ammonite came up and encamped against Jabesh-gilead..."}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "Modern Catholic translations (NABRE) and academic editions (NRSV, NET) insert this paragraph directly into 1 Samuel 11 because it restores narrative coherence. Without it, the men of Jabesh surrender instantly and Nahash's bizarre demand makes no military sense. With it, Nahash is hunting the 7,000 escaped one-eyed veterans who took refuge in Jabesh."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "וְנָחָשׁ מֶלֶךְ בְּנֵי־עַמּוֹן", "translit": "wə-nachash melek bene-'ammon", "pos": "Proper Noun + Construct", "meaning": "And Nahash king of the Ammonites"}, {"word": "נִקֵּר", "translit": "niqqer", "pos": "Verb, Piel Perfect 3MS", "lemma": "נָקַר (H5365)", "meaning": "he gouged out / bored out"}, {"word": "כָּל־עֵין יָמִין", "translit": "kol-'en yamin", "pos": "Noun Construct", "meaning": "every right eye"}, {"word": "שִׁבְעַת אֲלָפִים", "translit": "shiv'at 'alaphim", "pos": "Numeral", "meaning": "seven thousand men"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "Dead Sea Scrolls (4QSamª / 4Q51, Cave 4 Qumran, c. 50 BC)", "text": "Preserves the complete Hebrew paragraph: וְנָחָשׁ מֶלֶךְ בְּנֵי־עַמּוֹן לָחַץ אֶת־בְּנֵי גָד וְאֶת־בְּנֵי רְאוּבֵן בְּחָזְקָה...", "gloss": "Provides the complete uncorrupted historical opening of 1 Samuel 11."}, {"source": "Flavius Josephus (Antiquities of the Jews 6.68–71, c. 93 AD)", "text": "Records the exact narrative: Nahash gouged out right eyes so soldiers were useless in battle when their left eyes were covered by shields.", "gloss": "Proves 1st-century Jewish historians possessed Hebrew copies containing this paragraph."}, {"source": "Hebrew Masoretic Text (BHS / KJV / ESV)", "text": "וַיַּעַל נָחָשׁ הָעַמּוֹנִי (Then Nahash the Ammonite came up...)", "gloss": "PARABLEPSIS / HOMEOTELEUTON: Scribe's eye skipped from 'Nahash king of Ammon' to 'Nahash the Ammonite', dropping 50 words!"}], "verdict": "Demonstrates that the Masoretic Text suffered mechanical scribal errors, and that the Dead Sea Scrolls and Catholic textual emendations restore authentic biblical history."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "Catholic Biblical Association (NABRE Critical Notes 2011)", "quote": "‘The paragraph from 4QSamª and Josephus is adopted into the translation to restore the authentic historical sense omitted in MT.’"}, {"author": "Frank Moore Cross (Harvard University, The Ancient Library of Qumran)", "quote": "‘4QSamª has preserved a reading whose originality is beyond reasonable doubt, solving an ancient enigma.’"}]}}}, {"id": "heb11-2macc7", "title": "Tortured to Obtain a Better Resurrection", "ref": "Hebrews 11:35b / 2 Maccabees 7 / 2 Maccabees 6:18–31", "tier": "tier2-crimson", "tier_name": "Tier 2: Doctrinal Crux (Catholic Canon Exclusive)", "testament": "NT / Deuterocanon Intertextuality", "category": "Martyrdom, Resurrection & Catholic Canon", "summary": "Hebrews 11 lists the heroes of faith who were tortured and refused release to gain a better resurrection. This narrative exists NOWHERE in the 39 books of the Protestant Old Testament; it is the verbatim story of 2 Maccabees 7.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Hebrews 11:35b)", "text": "Others were tortured, refusing to accept release, so that they might gain a better resurrection."}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The Greek verb ἐτυμπανίσθησαν (etympanisthēsan) comes from tympanon (the rack / torture drum). The martyrs were stretched upon a wheel and beaten to death. The phrase 'not accepting release' (οὐ προσδεξάμενοι τὴν ἀπολύτρωσιν) refers to the royal pardon offered if they tasted pork or apostatized."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "ἄλλοι δὲ", "translit": "alloi de", "pos": "Adjective, Nominative Plural", "meaning": "and others"}, {"word": "ἐτυμπανίσθησαν", "translit": "etympanisthēsan", "pos": "Verb, Aorist Passive Indicative 3P", "lemma": "τυμπανίζω (G5178)", "meaning": "were tortured on the rack"}, {"word": "οὐ προσδεξάμενοι", "translit": "ou prosdexamenoi", "pos": "Participle, Aorist Middle Nominative MP", "lemma": "προσδέχομαι (G4327)", "meaning": "not accepting"}, {"word": "τὴν ἀπολύτρωσιν", "translit": "tēn apolytrōsin", "pos": "Noun, Accusative Feminine Singular", "lemma": "ἀπολύτρωσις (G629)", "meaning": "the redemption / release"}, {"word": "ἵνα κρείττονος ἀναστάσεως τύχωσιν", "translit": "hina kreittonos anastaseōs tychōsin", "pos": "Clause", "meaning": "that they might obtain a better resurrection"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "New Testament (Hebrews 11:35, NA28)", "text": "ἄλλοι δὲ ἐτυμπανίσθησαν, οὐ προσδεξάμενοι τὴν ἀπολύτρωσιν, ἵνα κρείττονος ἀναστάσεως τύχωσιν", "gloss": "Directly alludes to 2 Maccabees 6:18–7:42."}, {"source": "2 Maccabees 7:9 (Mother and Seven Sons)", "text": "‘Thou like a fury takest us out of this present life, but the King of the world shall raise us up, who have died for his laws, unto everlasting life.’", "gloss": "The exact 'better resurrection' professed on the torture rack."}, {"source": "2 Maccabees 6:30 (Eleazar the Scribe)", "text": "‘When he was ready to die with stripes, he groaned, and said: It is manifest unto the Lord... that whereas I might have been delivered from death, I now endure sore pains in body by being beaten...’", "gloss": "The exact refusal of release (apolytrōsis) to keep faith."}, {"source": "Protestant 39-Book Old Testament", "text": "TOTAL ABSENCE: No martyr in Genesis through Malachi is tortured, offered release upon apostasy, and refuses it for bodily resurrection.", "gloss": "Demonstrates the apostolic canon included Second Maccabees."}], "verdict": "Hebrews 11's 'Hall of Faith' explicitly canonizes the martyrs of 2 Maccabees as inspired historical witnesses."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "St. Cyprian of Carthage (Exhortation to Martyrdom 11)", "quote": "‘What shall I say of the seven brothers in the book of Maccabees, who showed such courage under torture, and whose mother stood firm in hope of resurrection?’"}, {"author": "St. Gregory of Nazianzus (Oration 15: On the Maccabees)", "quote": "‘They were martyrs before Christ's coming, yet suffered through faith in Christ and the resurrection.’"}, {"author": "Council of Trent (Session IV, 1546)", "quote": "Infallibly defines First and Second Maccabees as Sacred Scripture."}]}}}, {"id": "rev8-tobit12", "title": "The Seven Archangels Standing Before God", "ref": "Revelation 8:2 / Revelation 1:4 / Tobit 12:15", "tier": "tier2-crimson", "tier_name": "Tier 2: Doctrinal Crux (Catholic Canon Exclusive)", "testament": "NT / Deuterocanon Intertextuality", "category": "Angelology & Liturgical Heavenly Court", "summary": "St. John sees 'the seven angels who stand before God.' The Protestant Old Testament names only Michael and Gabriel; the heavenly council of Seven Archangels exists exclusively in Tobit 12:15.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Revelation 8:2)", "text": "Then I saw the seven angels who stand before God, and seven trumpets were given to them."}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The Greek phrase τοὺς ἑπτὰ ἀγγέλους οἳ ἐνώπιον τοῦ Θεοῦ ἑστήκασιν ('the seven angels who stand before God') utilizes the definite article τοὺς ('the'), designating a specific, pre-known class of archangels familiar to the reader from Jewish canonical literature."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "καὶ εἶδον", "translit": "kai eidon", "pos": "Verb, Aorist Active Indicative 1S", "meaning": "and I saw"}, {"word": "τοὺς ἑπτὰ ἀγγέλους", "translit": "tous hepta angelous", "pos": "Noun, Accusative Masculine Plural", "meaning": "the seven angels"}, {"word": "οἳ ἐνώπιον τοῦ Θεοῦ", "translit": "hoi enōpion tou Theou", "pos": "Prepositional Phrase", "meaning": "who before God"}, {"word": "ἑστήκασιν", "translit": "hestēkasin", "pos": "Verb, Perfect Active Indicative 3P", "lemma": "ἵστημι (G2476)", "meaning": "stand / have stood"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "New Testament (Revelation 8:2, NA28)", "text": "καὶ εἶδον τοὺς ἑπτὰ ἀγγέλους οἳ ἐνώπιον τοῦ θεοῦ ἑστήκασιν", "gloss": "The seven archangels of the presence."}, {"source": "Tobit 12:15 (Codex Sinaiticus / Greek Septuagint)", "text": "ἐγώ εἰμι Ραφαηλ, εἷς ἐκ τῶν ἑπτὰ ἁγίων ἀγγέλων, οἳ προσαναφέρουσιν τὰς προσευχὰς τῶν ἁγίων καὶ εἰσπορεύονται ἐνώπιον τῆς δόξης τοῦ ἁγίου", "gloss": "‘I am Raphael, one of the seven holy angels who present the prayers of the saints and enter before the glory of the Holy One.’"}, {"source": "Protestant 39-Book Canon", "text": "TOTAL ABSENCE: No mention anywhere of seven archangels standing before the throne presenting the prayers of the saints.", "gloss": "Revelation 8:2–4 directly mirrors Tobit 12:15."}], "verdict": "St. John's heavenly liturgy in the Apocalypse is architecturally built upon the angelology of the Book of Tobit."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "St. Clement of Alexandria (Stromata VI.16)", "quote": "‘By the seven spirits and the seven angels who stand before God, as shown by Raphael in Tobit and John in Revelation...’"}, {"author": "Traditional Roman Liturgy (Mass of the Holy Angels)", "quote": "Invokes St. Raphael and the Seven Archangels based jointly upon Tobit and the Apocalypse."}]}}}, {"id": "baruch3-incarnation", "title": "Baruch 3:35–37: The Incarnation Prophecy Cited as 'Jeremiah'", "ref": "Baruch 3:35–37 / St. Athanasius / St. Irenaeus", "tier": "tier2-crimson", "tier_name": "Tier 2: Doctrinal Crux (Patristic Canon Defense)", "testament": "Deuterocanon / Patristic Synthesis", "category": "Incarnation Prophecy & Patristic Reception", "summary": "Protestants claim St. Athanasius rejected the Deuterocanon. But Athanasius's canonical list explicitly states: 'Jeremiah, with Baruch, Lamentations, and the Epistle.' Furthermore, Baruch 3:37 ('He appeared on earth and conversed with men') was universally cited as an inspired prophecy of Christ's Incarnation.", "dolls": {"doll1_reading": {"label": "Doll 1: Master English Text (Baruch 3:35–37)", "text": "‘This is our God, and no other can be compared to him! He found the whole way to knowledge, and gave her to Jacob his servant and to Israel whom he loved. Afterward she [Wisdom / God Incarnate] appeared upon earth and conversed with men.’"}, "doll2_rationale": {"label": "Doll 2: Translation Rationale & Syntax Breakdown", "content": "The Greek verb συνανεστράφη (synanestraphē) means 'conversed / walked among / lived alongside'. The early Church Fathers interpreted this passage as the divine Logos/Wisdom personally descending and walking among human beings in the flesh of Jesus Christ."}, "doll3_morphology": {"label": "Doll 3: Interlinear & Morphological Parsing", "words": [{"word": "οὗτος ὁ θεὸς ἡμῶν", "translit": "houtos ho theos hēmōn", "pos": "Demonstrative + Noun", "meaning": "This is our God"}, {"word": "οὐ λογισθήσεται ἕτερος", "translit": "ou logisthēsetai heteros", "pos": "Passive Verb + Adjective", "meaning": "no other shall be accounted"}, {"word": "μετὰ τοῦτο", "translit": "meta touto", "pos": "Prepositional Phrase", "meaning": "after this"}, {"word": "ἐπὶ τῆς γῆς ὤφθη", "translit": "epi tēs gēs ōphthē", "pos": "Passive Verb", "meaning": "upon earth he appeared"}, {"word": "καὶ τοῖς ἀνθρώποις συνανεστράφη", "translit": "kai tois anthrōpois synanestraphē", "pos": "Verb, Aorist Passive", "meaning": "and with men he conversed / lived"}]}, "doll4_apparatus": {"label": "Doll 4: Multi-Witness Plenary Apparatus", "witnesses": [{"source": "Septuagint (Baruch 3:36–38, LXX Rahlfs / Codex Vaticanus)", "text": "οὗτος ὁ θεὸς ἡμῶν... μετὰ ταῦτα ἐπὶ τῆς γῆς ὤφθη καὶ τοῖς ἀνθρώποις συνανεστράφη", "gloss": "Standard text in all Greek patristic uncials."}, {"source": "Latin Vulgate (Baruch 3:36–38)", "text": "Hic est Deus noster... post haec in terris visus est, et cum hominibus conversatus est.", "gloss": "Read in the Roman Breviary and Advent liturgies."}, {"source": "Protestant Canon Status", "text": "COMPLETELY EXCISED: The entire book of Baruch was rejected by Reformers, stripping Christian theology of one of its most explicit Old Testament Incarnation prophecies.", "gloss": "Protestants overlook that patristic canons subsumed Baruch under Jeremiah."}], "verdict": "Proves that when the Church Fathers listed 'Jeremiah,' they possessed the complete Septuagint corpus containing the Baruch Incarnation prophecy."}, "doll5_reception": {"label": "Doll 5: Patristic, Conciliar & Liturgical Reception", "citations": [{"author": "St. Athanasius of Alexandria (Orations Against the Arians II.49)", "quote": "Quotes Baruch 3:37 as Jeremiah: ‘And Jeremiah says: Afterward He appeared upon earth and conversed with men.’"}, {"author": "St. Irenaeus of Lyons (Against Heresies V.35.1)", "quote": "Cites Baruch 3 as Jeremiah the Prophet to defend the physical bodily presence of God on earth."}, {"author": "St. Cyprian of Carthage (Testimonies Against the Jews II.6)", "quote": "Deploys Baruch 3 under the title ‘That Christ is God’."}, {"author": "St. Cyril of Jerusalem (Catechetical Lectures 4.35)", "quote": "Explicitly instructs catechumens that the canonical book of Jeremiah includes Baruch and the Epistle."}]}}}];
+        let currentFilter = 'all';
+        let is3DActive = false;
+        let scene, camera, renderer, strataGroup;
+
+        // Render All Cruxes
+        function renderCruxes() {
+            const stream = document.getElementById('crux-stream');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            stream.innerHTML = '';
+
+            const filtered = CRUXES.filter(c => {
+                const matchesTier = (currentFilter === 'all') || (c.tier === currentFilter);
+                const matchesSearch = c.title.toLowerCase().includes(searchVal) ||
+                                      c.ref.toLowerCase().includes(searchVal) ||
+                                      c.summary.toLowerCase().includes(searchVal) ||
+                                      JSON.stringify(c.dolls).toLowerCase().includes(searchVal);
+                return matchesTier && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                stream.innerHTML = `
+                    <div class="p-12 text-center border border-gray-800 rounded-xl bg-gray-900/40">
+                        <i data-lucide="search-x" class="w-8 h-8 text-slate-500 mx-auto mb-2"></i>
+                        <p class="text-sm text-slate-400">No manuscript cruxes match your filter.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.forEach((c, idx) => {
+                const card = document.createElement('article');
+                card.className = "bg-gray-950 border border-gray-800 rounded-2xl overflow-hidden shadow-xl transition-all duration-200 hover:border-gray-700";
+                card.id = `card-${c.id}`;
+
+                let tierBadge = c.tier === 'tier1-gold' ? 'tier-badge-gold' : 'tier-badge-crimson';
+
+                card.innerHTML = `
+                    <!-- Header Bar -->
+                    <div class="px-6 py-4 bg-gray-900/80 border-b border-gray-800 flex flex-wrap items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded text-[11px] font-mono uppercase ${tierBadge}">
+                                    ${c.tier_name}
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">${c.ref}</span>
+                            </div>
+                            <h2 class="text-lg font-bold text-white tracking-tight">${c.title}</h2>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="copyDiscordCard('${c.id}')" class="px-3 py-1.5 rounded-lg text-xs font-medium border border-indigo-500/40 bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 transition flex items-center space-x-1.5" title="Copy formatted Markdown for Discord">
+                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                                <span>Discord Card</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Banner -->
+                    <div class="px-6 py-3 bg-gray-900/30 border-b border-gray-800 text-xs text-slate-300 leading-relaxed">
+                        <span class="font-semibold text-slate-200">Forensic Context:</span> ${c.summary}
+                    </div>
+
+                    <!-- Russian Dolls Nested Container -->
+                    <div class="p-6 space-y-3">
+
+                        <!-- DOLL 1: Surface Clean English -->
+                        <div class="border border-gray-800 rounded-xl overflow-hidden bg-gray-900/60">
+                            <button onclick="toggleDoll('${c.id}', 1)" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-800/50 transition">
+                                <div class="flex items-center space-x-2 font-mono text-xs text-amber-400 font-semibold">
+                                    <span>🪆 Doll 1: Clean Master English Text</span>
+                                </div>
+                                <i id="icon-${c.id}-1" data-lucide="chevron-up" class="w-4 h-4 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div id="body-${c.id}-1" class="px-5 py-4 border-t border-gray-800/80 bg-gray-950 text-slate-100 text-sm leading-relaxed font-serif">
+                                "${c.dolls.doll1_reading.text}"
+                            </div>
+                        </div>
+
+                        <!-- DOLL 2: Translator Rationale -->
+                        <div class="border border-gray-800 rounded-xl overflow-hidden bg-gray-900/60">
+                            <button onclick="toggleDoll('${c.id}', 2)" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-800/50 transition">
+                                <div class="flex items-center space-x-2 font-mono text-xs text-sky-400 font-semibold">
+                                    <span>🪆 Doll 2: Translation Rationale & Syntax</span>
+                                </div>
+                                <i id="icon-${c.id}-2" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div id="body-${c.id}-2" class="hidden px-5 py-4 border-t border-gray-800/80 bg-gray-950 text-xs text-slate-300 leading-relaxed space-y-2">
+                                <p>${c.dolls.doll2_rationale.content}</p>
+                            </div>
+                        </div>
+
+                        <!-- DOLL 3: Morphology & Interlinear -->
+                        <div class="border border-gray-800 rounded-xl overflow-hidden bg-gray-900/60">
+                            <button onclick="toggleDoll('${c.id}', 3)" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-800/50 transition">
+                                <div class="flex items-center space-x-2 font-mono text-xs text-emerald-400 font-semibold">
+                                    <span>🪆 Doll 3: Original Language & Grammatical Parsing</span>
+                                </div>
+                                <i id="icon-${c.id}-3" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div id="body-${c.id}-3" class="hidden px-5 py-4 border-t border-gray-800/80 bg-gray-950">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                    ${c.dolls.doll3_morphology.words.map(w => `
+                                        <div class="p-2.5 rounded-lg border border-gray-800 bg-gray-900/80 space-y-1">
+                                            <div class="text-sm font-semibold text-emerald-300 font-serif">${w.word}</div>
+                                            <div class="text-[11px] text-slate-400 italic">${w.translit}</div>
+                                            <div class="text-[10px] font-mono text-amber-400">${w.pos}</div>
+                                            <div class="text-[11px] text-slate-200">${w.meaning}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DOLL 4: Multi-Witness Plenary Apparatus -->
+                        <div class="border border-gray-800 rounded-xl overflow-hidden bg-gray-900/60">
+                            <button onclick="toggleDoll('${c.id}', 4)" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-800/50 transition">
+                                <div class="flex items-center space-x-2 font-mono text-xs text-amber-300 font-semibold">
+                                    <span>🪆 Doll 4: Multi-Witness Plenary Manuscript Matrix</span>
+                                </div>
+                                <i id="icon-${c.id}-4" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div id="body-${c.id}-4" class="hidden px-5 py-4 border-t border-gray-800/80 bg-gray-950 space-y-3">
+                                <div class="space-y-2">
+                                    ${c.dolls.doll4_apparatus.witnesses.map(w => `
+                                        <div class="p-3 rounded-lg border border-gray-800/90 bg-gray-900/40 space-y-1">
+                                            <div class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                                                <span>${w.source}</span>
+                                            </div>
+                                            <div class="text-xs font-mono text-amber-200/90 bg-black/40 px-2 py-1 rounded">${w.text}</div>
+                                            <div class="text-[11px] text-slate-400 italic">${w.gloss}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="p-3 rounded-lg border border-amber-500/30 bg-amber-500/10 text-xs text-amber-200 leading-relaxed">
+                                    <span class="font-bold">Apparatus Synthesis:</span> ${c.dolls.doll4_apparatus.verdict}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DOLL 5: Patristic & Conciliar Reception -->
+                        <div class="border border-gray-800 rounded-xl overflow-hidden bg-gray-900/60">
+                            <button onclick="toggleDoll('${c.id}', 5)" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-800/50 transition">
+                                <div class="flex items-center space-x-2 font-mono text-xs text-purple-400 font-semibold">
+                                    <span>🪆 Doll 5: Patristic, Conciliar & Liturgical Reception</span>
+                                </div>
+                                <i id="icon-${c.id}-5" data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform"></i>
+                            </button>
+                            <div id="body-${c.id}-5" class="hidden px-5 py-4 border-t border-gray-800/80 bg-gray-950 space-y-3">
+                                ${c.dolls.doll5_reception.citations.map(cit => `
+                                    <div class="p-3 rounded-lg border border-purple-500/20 bg-purple-950/20 space-y-1">
+                                        <div class="text-xs font-semibold text-purple-300">${cit.author}</div>
+                                        <div class="text-xs text-slate-300 italic font-serif">${cit.quote}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+                `;
+                stream.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Toggle individual doll drawer
+        function toggleDoll(cruxId, dollNum) {
+            const body = document.getElementById(`body-${cruxId}-${dollNum}`);
+            const icon = document.getElementById(`icon-${cruxId}-${dollNum}`);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                body.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'chevron-down');
+            }
+            lucide.createIcons();
+        }
+
+        function expandAllDolls() {
+            CRUXES.forEach(c => {
+                for (let i = 1; i <= 5; i++) {
+                    const body = document.getElementById(`body-${c.id}-${i}`);
+                    const icon = document.getElementById(`icon-${c.id}-${i}`);
+                    if (body) body.classList.remove('hidden');
+                    if (icon) icon.setAttribute('data-lucide', 'chevron-up');
+                }
+            });
+            lucide.createIcons();
+        }
+
+        function collapseAllDolls() {
+            CRUXES.forEach(c => {
+                for (let i = 2; i <= 5; i++) {
+                    const body = document.getElementById(`body-${c.id}-${i}`);
+                    const icon = document.getElementById(`icon-${c.id}-${i}`);
+                    if (body) body.classList.add('hidden');
+                    if (icon) icon.setAttribute('data-lucide', 'chevron-down');
+                }
+            });
+            lucide.createIcons();
+        }
+
+        function setFilter(tier) {
+            currentFilter = tier;
+            document.querySelectorAll('.tier-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === tier) {
+                    btn.classList.add('ring-2', 'ring-amber-500');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-amber-500');
+                }
+            });
+            renderCruxes();
+        }
+
+        function filterCruxes() {
+            renderCruxes();
+        }
+
+        // Copy formatted Discord card
+        function copyDiscordCard(cruxId) {
+            const c = CRUXES.find(x => x.id === cruxId);
+            if (!c) return;
+
+            let md = `**🏛️ PLENARY SCRIPTURE APPARATUS: ${c.title}**\n`;
+            md += `**Reference:** \`${c.ref}\` | **Classification:** \`${c.tier_name}\`\n\n`;
+            md += `> **Forensic Summary:** ${c.summary}\n\n`;
+            md += `**📖 Master Reading (Doll 1):**\n"${c.dolls.doll1_reading.text}"\n\n`;
+            md += `**📜 Multi-Witness Manuscript Breakdown (Doll 4):**\n`;
+            c.dolls.doll4_apparatus.witnesses.forEach(w => {
+                md += `• **${w.source}:** \`${w.text}\` (${w.gloss})\n`;
+            });
+            md += `\n**⚖️ Textual Verdict:** *${c.dolls.doll4_apparatus.verdict}*\n`;
+            md += `\n*Compiled via The Russian Doll Scripture Engine*`;
+
+            navigator.clipboard.writeText(md).then(() => {
+                alert('Copied Discord Apologetics Card to clipboard! Ready to paste into Discord.');
+            }).catch(() => {
+                prompt('Copy your Discord card below:', md);
+            });
+        }
+
+        // 3D Spatial Strata Mode (Three.js)
+        function toggle3DMode() {
+            const container = document.getElementById('three-container');
+            const btnText = document.getElementById('toggle3DText');
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                btnText.textContent = "Close 3D Spatial Mode";
+                is3DActive = true;
+                initThreeJS();
+            } else {
+                container.classList.add('hidden');
+                btnText.textContent = "3D Spatial Strata Mode";
+                is3DActive = false;
+            }
+        }
+
+        function initThreeJS() {
+            if (scene) return; // already initialized
+
+            const container = document.getElementById('three-container');
+            const canvas = document.getElementById('three-canvas');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x05070d);
+            scene.fog = new THREE.FogExp2(0x05070d, 0.0015);
+
+            camera = new THREE.PerspectiveCamera(45, width / height, 1, 2000);
+            camera.position.set(0, 180, 500);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Lighting
+            const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambient);
+
+            const pointLight = new THREE.PointLight(0x38bdf8, 2, 800);
+            pointLight.position.set(100, 250, 200);
+            scene.add(pointLight);
+
+            const goldLight = new THREE.PointLight(0xfbbf24, 1.5, 800);
+            goldLight.position.set(-150, -100, 100);
+            scene.add(goldLight);
+
+            strataGroup = new THREE.Group();
+            scene.add(strataGroup);
+
+            // Create 5 Holographic Manuscript Strata Planes along Z-Axis
+            const strataConfigs = [
+                { name: "Stratum 0: English Vernacular", color: 0xfbbf24, z: 120, opacity: 0.85 },
+                { name: "Stratum 1: Critical Greek (NA28)", color: 0x38bdf8, z: 60, opacity: 0.75 },
+                { name: "Stratum 2: 4th-c Uncials (Vaticanus B)", color: 0xa855f7, z: 0, opacity: 0.65 },
+                { name: "Stratum 3: 2nd-c Papyri (P46/P75)", color: 0x10b981, z: -60, opacity: 0.55 },
+                { name: "Stratum 4: Qumran Hebrew Vorlage (4QSamª)", color: 0xf43f5e, z: -120, opacity: 0.45 }
+            ];
+
+            const planeGeo = new THREE.PlaneGeometry(360, 90);
+
+            strataConfigs.forEach((cfg, i) => {
+                const mat = new THREE.MeshPhongMaterial({
+                    color: cfg.color,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: cfg.opacity,
+                    wireframe: false,
+                    shininess: 80
+                });
+
+                const mesh = new THREE.Mesh(planeGeo, mat);
+                mesh.position.set(0, (i - 2) * -35, cfg.z);
+                mesh.rotation.x = -Math.PI / 8;
+                strataGroup.add(mesh);
+
+                // Add wireframe border
+                const wireGeo = new THREE.EdgesGeometry(planeGeo);
+                const wireMat = new THREE.LineBasicMaterial({ color: cfg.color, linewidth: 2 });
+                const wire = new THREE.LineSegments(wireGeo, wireMat);
+                mesh.add(wire);
+            });
+
+            // Interactive mouse rotation
+            let isDragging = false;
+            let prevMouseX = 0;
+            let prevMouseY = 0;
+
+            canvas.addEventListener('mousedown', e => {
+                isDragging = true;
+                prevMouseX = e.clientX;
+                prevMouseY = e.clientY;
+            });
+
+            window.addEventListener('mouseup', () => isDragging = false);
+
+            canvas.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                const deltaX = e.clientX - prevMouseX;
+                const deltaY = e.clientY - prevMouseY;
+                strataGroup.rotation.y += deltaX * 0.005;
+                strataGroup.rotation.x += deltaY * 0.005;
+                prevMouseX = e.clientX;
+                prevMouseY = e.clientY;
+            });
+
+            window.addEventListener('resize', () => {
+                if (!is3DActive) return;
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newWidth, newHeight);
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                if (!isDragging) {
+                    strataGroup.rotation.y += 0.0015;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Initialize on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCruxes();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "today",
+    "label": "Today",
+    "script": "today.js"
+  },
+  {
+    "id": "files",
+    "label": "Files",
+    "script": "files.js"
+  },
+  {
+    "id": "organizer",
+    "label": "Organizer",
+    "script": "organizer.js"
+  },
+  {
+    "id": "navigator",
+    "label": "Genealogy & Treemap",
+    "script": "navigator.js"
+  },
+  {
+    "id": "manuscripts",
+    "label": "Manuscripts",
+    "script": "manuscripts.js"
+  },
+  {
+    "id": "verbum",
+    "label": "Verbum Suite",
+    "script": "verbum_suite.js"
+  },
+  {
+    "id": "loose",
+    "label": "Loose Ends",
+    "script": "loose.js"
+  },
+  {
+    "id": "books",
+    "label": "Volumes",
+    "script": "books.js"
+  },
+  {
+    "id": "recall",
+    "label": "Recall",
+    "script": "recall.js"
+  },
+  {
+    "id": "ledger",
+    "label": "Question Ledger",
+    "script": "ledger.js"
+  },
+  {
+    "id": "threads",
+    "label": "Threads",
+    "script": "threads.js"
+  },
+  {
+    "id": "desk",
+    "label": "Did I Cook?",
+    "script": "desk.js"
+  },
+  {
+    "id": "drill",
+    "label": "Drill",
+    "script": "drill.js"
+  },
+  {
+    "id": "packs",
+    "label": "Packs",
+    "script": "packs.js"
+  },
+  {
+    "id": "reader",
+    "label": "Reader",
+    "script": "reader.js"
+  },
+  {
+    "id": "episodes",
+    "label": "Episodes",
+    "script": "episodes.js"
+  },
+  {
+    "id": "audit",
+    "label": "Visual Audit",
+    "script": "audit.js"
+  },
+  {
+    "id": "pope_leo",
+    "label": "Pope Leo Tracker",
+    "script": "pope_leo.js"
+  },
+  {
+    "id": "vatican_culture",
+    "label": "Vatican Intel & Culture",
+    "script": "vatican_culture.js"
+  },
+  {
+    "id": "health",
+    "label": "Health",
+    "script": "health.js"
+  }
+]

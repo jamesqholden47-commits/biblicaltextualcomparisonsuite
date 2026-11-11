@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditory Research Studio & Scrivener Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f1117;
+      --bg-panel: #161922;
+      --bg-card: #1e2230;
+      --bg-card-hover: #262b3d;
+      --border-subtle: #2d3246;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --highlight-active: rgba(212, 175, 55, 0.22);
+      --highlight-border: #d4af37;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Master Top Bar */
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border-subtle);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 16px;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .brand h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--accent-gold);
+    }
+
+    .badge-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--accent-gold);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Audio Controller in Header */
+    .audio-controller {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-card);
+      padding: 6px 16px;
+      border-radius: 30px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-ctrl {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      transition: all 0.15s ease;
+    }
+
+    .btn-ctrl:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent-cyan);
+    }
+
+    .btn-play-master {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-radius: 50%;
+      font-weight: bold;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-play-master:hover {
+      transform: scale(1.05);
+      background: #e6bf40;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      color: #000;
+    }
+
+    .btn-play-master.playing {
+      background: #f43f5e;
+      color: #fff;
+    }
+
+    .clip-quick-btn {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: white;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    }
+
+    .clip-quick-btn:hover {
+      background: linear-gradient(135deg, #4338ca, #4f46e5);
+      transform: translateY(-1px);
+    }
+
+    .clip-quick-btn kbd {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Voice & Speed selectors */
+    .dropdown-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .dropdown-pill:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Main Workspace Layout */
+    .workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Pane: PDF Reader */
+    .reader-pane {
+      flex: 1.15;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-subtle);
+      background: var(--bg-dark);
+      position: relative;
+    }
+
+    .reader-toolbar {
+      height: 42px;
+      background: rgba(22, 25, 34, 0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .reader-stream {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 48px;
+      user-select: text;
+      scroll-behavior: smooth;
+    }
+
+    .page-separator {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 36px 0 20px 0;
+      color: var(--text-dim);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .page-separator::before,
+    .page-separator::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .chunk-box {
+      position: relative;
+      padding: 12px 18px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      font-family: 'Newsreader', serif;
+      font-size: 19px;
+      line-height: 1.7;
+      color: #cbd5e1;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .chunk-box:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .chunk-box.active-speech {
+      background: var(--highlight-active);
+      border-left-color: var(--highlight-border);
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .chunk-hover-menu {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      display: none;
+      gap: 6px;
+    }
+
+    .chunk-box:hover .chunk-hover-menu {
+      display: flex;
+    }
+
+    .btn-chunk-action {
+      background: rgba(15, 17, 23, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+
+    .btn-chunk-action:hover {
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+    }
+
+    /* Right Pane: Scrivener Corkboard & Notes */
+    .corkboard-pane {
+      flex: 0.95;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-panel);
+      position: relative;
+    }
+
+    .corkboard-toolbar {
+      height: 48px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+
+    .corkboard-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-counter {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 11px;
+      color: var(--accent-cyan);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .corkboard-search {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      outline: none;
+      width: 160px;
+    }
+
+    .cards-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      user-select: text;
+    }
+
+    /* Scrivener Style Index Card */
+    .index-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .index-card:hover {
+      border-color: #3b425b;
+      transform: translateY(-2px);
+    }
+
+    .card-pin-header {
+      background: #1a1e2a;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title-input {
+      background: transparent;
+      border: none;
+      color: var(--accent-gold);
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 700;
+      outline: none;
+      width: 70%;
+    }
+
+    .card-meta-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-page {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .badge-page:hover {
+      text-decoration: underline;
+    }
+
+    .card-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-excerpt {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #94a3b8;
+      border-left: 2px solid var(--accent-gold);
+      padding-left: 10px;
+      line-height: 1.5;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .card-notes {
+      width: 100%;
+      background: rgba(15, 17, 23, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 8px;
+      resize: vertical;
+      min-height: 70px;
+      outline: none;
+    }
+
+    .card-notes:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .card-footer {
+      padding: 6px 12px;
+      background: rgba(0, 0, 0, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 4px;
+    }
+
+    .tag-badge {
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+    }
+
+    .btn-delete-card {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn-delete-card:hover {
+      color: #f43f5e;
+    }
+
+    /* Floating Mini HUD */
+    .mini-hud {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(22, 25, 34, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 18px;
+      border-radius: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 999;
+    }
+
+    .mini-hud.active {
+      display: flex;
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px;
+      gap: 14px;
+    }
+
+    .empty-state svg {
+      width: 56px;
+      height: 56px;
+      stroke: var(--text-dim);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2d3345;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f4760;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Master Bar -->
+  <header>
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <h1>Auditory Studio</h1>
+      <span class="badge-sub">Scrivener Mode</span>
+    </div>
+
+    <!-- Central Audio Controller -->
+    <div class="audio-controller">
+      <button class="btn-ctrl" id="btn-prev-chunk" title="Previous Chunk (←)">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+
+      <button class="btn-ctrl" id="btn-rewind" title="Rewind 10s (J)">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.93 5.12-1.93 3.82 0 7 2.87 7.55 6.55h2.02c-.58-4.79-4.66-8.5-9.57-8.5z"/></svg>
+      </button>
+
+      <button class="btn-play-master" id="btn-play-toggle" title="Play / Pause (Space)">
+        <svg id="icon-play" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icon-pause" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
+
+      <button class="btn-ctrl" id="btn-forward" title="Forward 10s (K)">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M11.5 8c2.65 0 5.05.99 6.9 2.6L22 7v9h-9l3.62-3.62c-1.39-1.2-3.16-1.93-5.12-1.93-3.82 0-7 2.87-7.55 6.55H1.93c.58-4.79 4.66-8.5 9.57-8.5z"/></svg>
+      </button>
+
+      <button class="btn-ctrl" id="btn-next-chunk" title="Next Chunk (→)">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+
+      <button class="clip-quick-btn" id="btn-quick-clip" title="Clip Spoken Sentence to Scrivener Card (Hotkey: C)">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Clip to Card <kbd>C</kbd>
+      </button>
+    </div>
+
+    <!-- Voice, Speed & Controls -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <select id="voice-select" class="dropdown-pill" title="Select AI Voice">
+        <option value="en-US-AvaNeural" selected>Ava (US - Session Default)</option>
+        <option value="en-US-ChristopherNeural">Christopher (US - Academic)</option>
+        <option value="en-US-JennyNeural">Jenny (US - Warm)</option>
+        <option value="en-US-GuyNeural">Guy (US - Natural)</option>
+        <option value="en-GB-RyanNeural">Ryan (UK - Distinguished)</option>
+        <option value="en-GB-SoniaNeural">Sonia (UK - Elegant)</option>
+        <option value="en-US-AriaNeural">Aria (US - Crisp)</option>
+      </select>
+
+      <select id="speed-select" class="dropdown-pill" title="Playback Speed">
+        <option value="1.0">1.0x Speed</option>
+        <option value="1.15">1.15x Speed</option>
+        <option value="1.25" selected>1.25x Speed</option>
+        <option value="1.5">1.5x Speed</option>
+        <option value="1.75">1.75x Speed</option>
+        <option value="2.0">2.0x Speed</option>
+      </select>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button class="btn-action" id="btn-load-sample" title="Load Master Dissertation Sample">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Sample PDF
+      </button>
+
+      <div class="file-input-wrapper">
+        <button class="btn-action">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Open PDF
+        </button>
+        <input type="file" id="pdf-file-input" accept=".pdf">
+      </div>
+
+      <button class="btn-action" id="btn-export-scrivener" title="Export Cards to Markdown / Scrivener">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export (.md)
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace Split: Reader + Corkboard -->
+  <div class="workspace">
+    
+    <!-- Left Pane: Synced PDF Teleprompter -->
+    <div class="reader-pane">
+      <div class="reader-toolbar">
+        <div id="doc-meta-title">No document loaded</div>
+        <div style="display: flex; gap: 14px; align-items: center;">
+          <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="checkbox" id="autoscroll-toggle" checked> Auto-Scroll Teleprompter
+          </label>
+          <span id="page-counter-badge" style="font-family: 'JetBrains Mono', monospace;">p. 0 / 0</span>
+        </div>
+      </div>
+
+      <div class="reader-stream" id="reader-stream">
+        <div class="empty-state" id="reader-empty">
+          <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <p>Click <strong>Open PDF</strong> or <strong>Sample PDF</strong> to begin listening.</p>
+          <p style="font-size: 13px; color: var(--text-dim);">While listening, hit <kbd style="background: rgba(255,255,255,0.1); padding: 2px 5px; border-radius: 3px;">C</kbd> to clip the current sentence into an index card.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Pane: Scrivener Corkboard & Index Cards -->
+    <div class="corkboard-pane">
+      <div class="corkboard-toolbar">
+        <div class="corkboard-title">
+          <span>Corkboard & Binder</span>
+          <span class="card-counter" id="card-counter">0 cards</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <input type="text" id="card-search" class="corkboard-search" placeholder="Filter notes...">
+          <button class="btn-action" id="btn-add-blank-card" style="padding: 4px 8px; font-size: 11px;">+ Card</button>
+        </div>
+      </div>
+
+      <div class="cards-container" id="cards-container">
+        <!-- Index Cards dynamically injected here -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Audio Element (hidden) -->
+  <audio id="audio-engine" preload="auto"></audio>
+
+  <script>
+    // State
+    let documentData = null;
+    let flatChunks = [];
+    let currentChunkIndex = -1;
+    let isPlaying = false;
+    let indexCards = JSON.parse(localStorage.getItem("auditory_scrivener_cards") || "[]");
+    const audio = document.getElementById("audio-engine");
+
+    // Elements
+    const readerStream = document.getElementById("reader-stream");
+    const readerEmpty = document.getElementById("reader-empty");
+    const btnPlayToggle = document.getElementById("btn-play-toggle");
+    const iconPlay = document.getElementById("icon-play");
+    const iconPause = document.getElementById("icon-pause");
+    const voiceSelect = document.getElementById("voice-select");
+    const speedSelect = document.getElementById("speed-select");
+    const autoscrollToggle = document.getElementById("autoscroll-toggle");
+    const docMetaTitle = document.getElementById("doc-meta-title");
+    const pageCounterBadge = document.getElementById("page-counter-badge");
+    const cardsContainer = document.getElementById("cards-container");
+    const cardCounter = document.getElementById("card-counter");
+
+    // Initialize Cards
+    renderCards();
+
+    // Load Voices from Server
+    fetch("/api/voices")
+      .then(r => r.json())
+      .then(voices => {
+        voiceSelect.innerHTML = "";
+        voices.forEach(v => {
+          const opt = document.createElement("option");
+          opt.value = v.id;
+          opt.textContent = v.name;
+          voiceSelect.appendChild(opt);
+        });
+      })
+      .catch(console.error);
+
+    // Load Sample PDF
+    document.getElementById("btn-load-sample").addEventListener("click", () => {
+      docMetaTitle.textContent = "Loading sample PDF...";
+      fetch("/api/sample")
+        .then(r => {
+          if (!r.ok) throw new Error("Sample PDF not found");
+          return r.json();
+        })
+        .then(data => loadDocument(data))
+        .catch(err => alert("Could not load sample: " + err.message));
+    });
+
+    // Upload PDF
+    document.getElementById("pdf-file-input").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append("file", file);
+      docMetaTitle.textContent = `Parsing ${file.name}...`;
+
+      fetch("/api/upload", { method: "POST", body: formData })
+        .then(r => {
+          if (!r.ok) throw new Error("Upload failed");
+          return r.json();
+        })
+        .then(data => loadDocument(data))
+        .catch(err => alert("Error parsing PDF: " + err.message));
+    });
+
+    // Load Document into Reader
+    function loadDocument(data) {
+      documentData = data;
+      flatChunks = [];
+      readerStream.innerHTML = "";
+      readerEmpty.style.display = "none";
+      docMetaTitle.textContent = data.title || data.filename;
+      pageCounterBadge.textContent = `Total pages: ${data.total_pages}`;
+
+      data.pages.forEach(page => {
+        const pageSep = document.createElement("div");
+        pageSep.className = "page-separator";
+        pageSep.textContent = page.label ? page.label : `PAGE ${page.page_num}`;
+        readerStream.appendChild(pageSep);
+
+        page.chunks.forEach(chunk => {
+          flatChunks.push(chunk);
+          const box = document.createElement("div");
+          box.className = "chunk-box";
+          box.id = `chunk-${chunk.id}`;
+          box.textContent = chunk.text;
+
+          // Quick Hover Menu
+          const menu = document.createElement("div");
+          menu.className = "chunk-hover-menu";
+          menu.innerHTML = `
+            <button class="btn-chunk-action" onclick="jumpToChunk(${chunk.id}, event)">Play</button>
+            <button class="btn-chunk-action" onclick="clipChunkToCard(${chunk.id}, event)">+ Clip</button>
+          `;
+          box.appendChild(menu);
+
+          box.addEventListener("click", (e) => {
+            if (e.target.tagName !== "BUTTON") {
+              jumpToChunk(chunk.id);
+            }
+          });
+
+          readerStream.appendChild(box);
+        });
+      });
+
+      if (flatChunks.length > 0) {
+        currentChunkIndex = 0;
+        // resume where this book was left (2026-10-07)
+        let saved = -1;
+        try { saved = parseInt(localStorage.getItem("studio.pos." + (data.path || data.title)) || "-1", 10); } catch (e) { }
+        if (saved > 0 && saved < flatChunks.length) {
+          currentChunkIndex = saved;
+          pageCounterBadge.textContent += ` · resuming at ${Math.round(100 * saved / flatChunks.length)}%`;
+        }
+        highlightActiveChunk();
+        const el = document.getElementById(`chunk-${flatChunks[currentChunkIndex].id}`);
+        if (el) el.scrollIntoView({ block: "center" });
+      }
+    }
+
+    // Open a book straight from disk: studio_frame.html?path=<file inside the Files roots> (2026-10-07)
+    (function openFromLink() {
+      const p = new URLSearchParams(location.search).get("path");
+      if (!p) return;
+      docMetaTitle.textContent = "Opening " + p.split(/[\\/]/).pop() + "...";
+      fetch("/api/studio/open?path=" + encodeURIComponent(p))
+        .then(r => r.ok ? r.json() : r.json().then(j => { throw new Error(j.detail || r.status); }))
+        .then(data => loadDocument(data))
+        .catch(err => { docMetaTitle.textContent = "Could not open: " + err.message; });
+    })();
+
+    // Audio Playback Engine
+    async function playChunk(index) {
+      if (index < 0 || index >= flatChunks.length) return;
+      currentChunkIndex = index;
+      highlightActiveChunk();
+      // remember the place in this book (2026-10-07): reopening it resumes here
+      try { if (documentData) localStorage.setItem("studio.pos." + (documentData.path || documentData.title), String(index)); } catch (e) { }
+
+      const chunk = flatChunks[index];
+      const voice = voiceSelect.value;
+      const speed = parseFloat(speedSelect.value);
+
+      // Preload / Play Audio from Backend
+      const ttsUrl = `/api/tts?text=${encodeURIComponent(chunk.text)}&voice=${encodeURIComponent(voice)}&rate=+0%`;
+      audio.src = ttsUrl;
+      audio.playbackRate = speed;
+
+      try {
+        await audio.play();
+        isPlaying = true;
+        updatePlayIcons();
+        updateMediaSession(chunk);
+      } catch (e) {
+        console.warn("Audio play prevented:", e);
+      }
+    }
+
+    // When audio finishes, advance to next chunk automatically
+    audio.onended = () => {
+      if (currentChunkIndex + 1 < flatChunks.length) {
+        playChunk(currentChunkIndex + 1);
+      } else {
+        isPlaying = false;
+        updatePlayIcons();
+      }
+    };
+
+    function highlightActiveChunk() {
+      document.querySelectorAll(".chunk-box.active-speech").forEach(el => el.classList.remove("active-speech"));
+      if (currentChunkIndex < 0 || currentChunkIndex >= flatChunks.length) return;
+
+      const chunk = flatChunks[currentChunkIndex];
+      const activeEl = document.getElementById(`chunk-${chunk.id}`);
+      if (activeEl) {
+        activeEl.classList.add("active-speech");
+        pageCounterBadge.textContent = `Page ${chunk.page} / Chunk ${chunk.id + 1} of ${flatChunks.length}`;
+
+        if (autoscrollToggle.checked) {
+          activeEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    }
+
+    function jumpToChunk(id, event) {
+      if (event) event.stopPropagation();
+      const idx = flatChunks.findIndex(c => c.id === id);
+      if (idx !== -1) {
+        playChunk(idx);
+      }
+    }
+
+    function togglePlay() {
+      if (!flatChunks.length) return;
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+      } else {
+        if (currentChunkIndex === -1) currentChunkIndex = 0;
+        if (audio.src && audio.currentTime > 0 && !audio.ended) {
+          audio.play();
+          isPlaying = true;
+        } else {
+          playChunk(currentChunkIndex);
+        }
+      }
+      updatePlayIcons();
+    }
+
+    function updatePlayIcons() {
+      if (isPlaying) {
+        iconPlay.style.display = "none";
+        iconPause.style.display = "block";
+        btnPlayToggle.classList.add("playing");
+      } else {
+        iconPlay.style.display = "block";
+        iconPause.style.display = "none";
+        btnPlayToggle.classList.remove("playing");
+      }
+    }
+
+    // Windows MediaSession Integration (Locks keyboard media keys while working!)
+    function updateMediaSession(chunk) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: chunk.text.slice(0, 60) + '...',
+          artist: documentData?.title || 'Academic Research',
+          album: `Page ${chunk.page} (Auditory Studio)`,
+        });
+
+        navigator.mediaSession.setActionHandler('play', () => togglePlay());
+        navigator.mediaSession.setActionHandler('pause', () => togglePlay());
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+          if (currentChunkIndex > 0) playChunk(currentChunkIndex - 1);
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          if (currentChunkIndex + 1 < flatChunks.length) playChunk(currentChunkIndex + 1);
+        });
+      }
+    }
+
+    // Navigation Buttons
+    btnPlayToggle.addEventListener("click", togglePlay);
+    document.getElementById("btn-prev-chunk").addEventListener("click", () => {
+      if (currentChunkIndex > 0) playChunk(currentChunkIndex - 1);
+    });
+    document.getElementById("btn-next-chunk").addEventListener("click", () => {
+      if (currentChunkIndex + 1 < flatChunks.length) playChunk(currentChunkIndex + 1);
+    });
+    document.getElementById("btn-rewind").addEventListener("click", () => {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+    });
+    document.getElementById("btn-forward").addEventListener("click", () => {
+      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+    });
+
+    speedSelect.addEventListener("change", () => {
+      audio.playbackRate = parseFloat(speedSelect.value);
+    });
+
+    voiceSelect.addEventListener("change", () => {
+      if (isPlaying && currentChunkIndex !== -1) {
+        const time = audio.currentTime;
+        playChunk(currentChunkIndex);
+      }
+    });
+
+    // SCRIVENER CORKBOARD CARDS ENGINE
+    function clipCurrentChunk() {
+      if (currentChunkIndex < 0 || currentChunkIndex >= flatChunks.length) return;
+      clipChunkToCard(flatChunks[currentChunkIndex].id);
+    }
+
+    function clipChunkToCard(chunkId, event) {
+      if (event) event.stopPropagation();
+      const chunk = flatChunks.find(c => c.id === chunkId);
+      if (!chunk) return;
+
+      const newCard = {
+        id: Date.now(),
+        chunkId: chunk.id,
+        page: chunk.page,
+        title: `Synopsis p.${chunk.page}`,
+        excerpt: chunk.text,
+        notes: "",
+        tags: ["#research"],
+        created: new Date().toLocaleTimeString()
+      };
+
+      indexCards.unshift(newCard);
+      saveCards();
+      renderCards();
+
+      // Focus the newly created note textarea
+      setTimeout(() => {
+        const firstCardNote = document.querySelector(".card-notes");
+        if (firstCardNote) firstCardNote.focus();
+      }, 50);
+    }
+
+    function saveCards() {
+      localStorage.setItem("auditory_scrivener_cards", JSON.stringify(indexCards));
+      cardCounter.textContent = `${indexCards.length} cards`;
+    }
+
+    function renderCards(filterText = "") {
+      cardsContainer.innerHTML = "";
+      const filtered = indexCards.filter(c => 
+        c.title.toLowerCase().includes(filterText.toLowerCase()) ||
+        c.excerpt.toLowerCase().includes(filterText.toLowerCase()) ||
+        c.notes.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      cardCounter.textContent = `${indexCards.length} cards`;
+
+      if (filtered.length === 0) {
+        cardsContainer.innerHTML = `
+          <div class="empty-state" style="height: 300px;">
+            <p style="font-size: 13px;">No index cards yet.</p>
+            <p style="font-size: 12px; color: var(--text-dim);">Hit <kbd style="background: rgba(255,255,255,0.1); padding: 1px 4px; border-radius: 3px;">C</kbd> while listening to clip a passage into this deck.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(card => {
+        const cardEl = document.createElement("div");
+        cardEl.className = "index-card";
+        cardEl.innerHTML = `
+          <div class="card-pin-header">
+            <input type="text" class="card-title-input" value="${card.title}" onchange="updateCardTitle(${card.id}, this.value)">
+            <div class="card-meta-badges">
+              <span class="badge-page" title="Jump audio to this passage" onclick="jumpToChunk(${card.chunkId})">p. ${card.page} 🔊</span>
+              <button class="btn-delete-card" title="Delete card" onclick="deleteCard(${card.id})">&times;</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-excerpt">"${card.excerpt}"</div>
+            <textarea class="card-notes" placeholder="Write your commentary, dissertation synthesis, or critique..." oninput="updateCardNotes(${card.id}, this.value)">${card.notes}</textarea>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="tag-badge">#citation</span>
+              <span class="tag-badge">#audio-anchor</span>
+            </div>
+            <span style="color: var(--text-dim); font-size: 10px;">${card.created}</span>
+          </div>
+        `;
+        cardsContainer.appendChild(cardEl);
+      });
+    }
+
+    window.updateCardTitle = (id, val) => {
+      const card = indexCards.find(c => c.id === id);
+      if (card) { card.title = val; saveCards(); }
+    };
+
+    window.updateCardNotes = (id, val) => {
+      const card = indexCards.find(c => c.id === id);
+      if (card) { card.notes = val; saveCards(); }
+    };
+
+    window.deleteCard = (id) => {
+      indexCards = indexCards.filter(c => c.id !== id);
+      saveCards();
+      renderCards(document.getElementById("card-search").value);
+    };
+
+    document.getElementById("btn-quick-clip").addEventListener("click", clipCurrentChunk);
+    document.getElementById("btn-add-blank-card").addEventListener("click", () => {
+      indexCards.unshift({
+        id: Date.now(),
+        chunkId: currentChunkIndex !== -1 ? flatChunks[currentChunkIndex].id : 0,
+        page: currentChunkIndex !== -1 ? flatChunks[currentChunkIndex].page : 1,
+        title: "New Note",
+        excerpt: "Manual note entry",
+        notes: "",
+        tags: ["#thought"],
+        created: new Date().toLocaleTimeString()
+      });
+      saveCards();
+      renderCards();
+    });
+
+    document.getElementById("card-search").addEventListener("input", (e) => {
+      renderCards(e.target.value);
+    });
+
+    // Export to Markdown / Scrivener Binder
+    document.getElementById("btn-export-scrivener").addEventListener("click", () => {
+      if (indexCards.length === 0) {
+        alert("No index cards to export yet!");
+        return;
+      }
+
+      let md = `# Research Dossier & Corkboard Synthesis\n`;
+      md += `**Document**: ${documentData?.title || 'PDF Document'}\n`;
+      md += `**Generated**: ${new Date().toLocaleString()}\n`;
+      md += `**Total Cards**: ${indexCards.length}\n\n---\n\n`;
+
+      indexCards.forEach((c, idx) => {
+        md += `## [${idx + 1}] ${c.title} (Page ${c.page})\n\n`;
+        md += `> "${c.excerpt}"\n\n`;
+        if (c.notes.trim()) {
+          md += `**Synthesis / Analysis**:\n${c.notes}\n\n`;
+        }
+        md += `---\n\n`;
+      });
+
+      const blob = new Blob([md], { type: "text/markdown" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Scrivener_Research_Notes_${Date.now()}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Global Keyboard Shortcuts
+    window.addEventListener("keydown", (e) => {
+      // Don't intercept when user is typing in inputs or textareas
+      if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+
+      if (e.code === "Space") {
+        e.preventDefault();
+        togglePlay();
+      } else if (e.code === "KeyC") {
+        e.preventDefault();
+        clipCurrentChunk();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        if (currentChunkIndex > 0) playChunk(currentChunkIndex - 1);
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        if (currentChunkIndex + 1 < flatChunks.length) playChunk(currentChunkIndex + 1);
+      } else if (e.code === "KeyJ") {
+        e.preventDefault();
+        audio.currentTime = Math.max(0, audio.currentTime - 10);
+      } else if (e.code === "KeyK") {
+        e.preventDefault();
+        audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+      } else if (e.key === "[") {
+        // Slow down
+        const idx = speedSelect.selectedIndex;
+        if (idx > 0) {
+          speedSelect.selectedIndex = idx - 1;
+          audio.playbackRate = parseFloat(speedSelect.value);
+        }
+      } else if (e.key === "]") {
+        // Speed up
+        const idx = speedSelect.selectedIndex;
+        if (idx < speedSelect.options.length - 1) {
+          speedSelect.selectedIndex = idx + 1;
+          audio.playbackRate = parseFloat(speedSelect.value);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

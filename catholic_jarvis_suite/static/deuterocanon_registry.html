@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deuterocanon Autopsy & New Testament Citation Registry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0b0d13;
+      --bg-panel: #121622;
+      --bg-card: #181e2e;
+      --bg-card-hover: #22293d;
+      --border: #262c42;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1550px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .controls {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus { border-color: var(--accent-gold); }
+
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .pill-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent-gold);
+    }
+
+    .pill-btn.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+    }
+
+    /* Cards Layout */
+    .registry-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .registry-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .registry-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    .card-header {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dc-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .arrow-icon {
+      color: var(--text-dim);
+    }
+
+    .nt-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .theme-badge {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.1);
+      color: #fef08a;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .parallel-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .pane-col {
+      background: var(--bg-panel);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .col-label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .col-label.dc { color: var(--accent-gold); }
+    .col-label.nt { color: var(--accent-cyan); }
+
+    .greek-text {
+      font-family: 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .english-text {
+      font-family: 'Newsreader', serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #f1f5f9;
+    }
+
+    .card-footer {
+      background: rgba(212, 175, 55, 0.03);
+      border-top: 1px solid var(--border);
+      padding: 14px 20px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #fef08a;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .footer-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <div class="brand-title">Deuterocanon Autopsy & NT Citation Registry</div>
+      <span class="brand-badge">Intertextual Evidence Base</span>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted);">
+      <span id="counter-badge">8 Intertextual Parallels</span> • Septuagintal Apostolic Substrate
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="controls">
+      <div class="search-row">
+        <input type="text" class="search-input" id="search-input" placeholder="Search reference, Greek lemma, theme, or theological analysis..." onkeyup="filterRegistry()">
+      </div>
+      <div class="filter-pills">
+        <button class="pill-btn active" onclick="setBook('ALL', this)">All Books</button>
+        <button class="pill-btn" onclick="setBook('WISDOM', this)">Wisdom of Solomon</button>
+        <button class="pill-btn" onclick="setBook('SIRACH', this)">Sirach (Ecclesiasticus)</button>
+        <button class="pill-btn" onclick="setBook('2MACCABEES', this)">2 Maccabees</button>
+        <button class="pill-btn" onclick="setBook('TOBIT', this)">Tobit</button>
+      </div>
+    </div>
+
+    <div class="registry-grid" id="registry-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <footer>
+    History Proves Catholicism • Subject Matter Dossier Registry • Rule 13 Compliant
+  </footer>
+
+  <script>
+    const PARALLELS = [
+      {
+        id: "heb11-35",
+        book: "2MACCABEES",
+        dcRef: "2 Maccabees 7:1–42; 6:18–31",
+        ntRef: "Hebrews 11:35",
+        theme: "Martyrs Tortured for a 'Better Resurrection'",
+        dcGreek: "ὁ δὲ τοῦ κόσμου βασιλεὺς ἀποθανόντας ἡμᾶς... εἰς αἰώνιον ἀναβίωσιν ζωῆς ἡμᾶς ἀναστήσει (7:9)",
+        dcEng: "The King of the universe will raise us up to an everlasting renewal of life... Others were tortured on the wheel (ἐτυμπανίσθησαν, 6:19), choosing death rather than apostasy.",
+        ntGreek: "ἄλλοι δὲ ἐτυμπανίσθησαν, οὐ προσδεξάμενοι τὴν ἀπολύτρωσιν, ἵνα κρείττονος ἀναστάσεως τύχωσιν.",
+        ntEng: "Others were tortured on the wheel [etympanisthēsan], refusing to accept release, that they might obtain a better resurrection.",
+        significance: "Crucial Forensic Locus: Nowhere in the 39 books of the Protestant Old Testament does anyone refuse release from torture in order to attain a resurrection. The author of Hebrews directly canonizes the martyrdom of the Seven Maccabean Brothers and Eleazar as the climax of the Old Covenant heroes of faith!"
+      },
+      {
+        id: "rom1-18",
+        book: "WISDOM",
+        dcRef: "Wisdom 13:1–9; 14:22–31",
+        ntRef: "Romans 1:18–32",
+        theme: "Natural Knowledge of God, Idolatry, and Sexual Inversion",
+        dcGreek: "Μάταιοι μὲν γὰρ πάντες ἄνθρωποι φύσει, οἷς παρῆν θεοῦ ἀγνωσία... ἐκ γὰρ μεγέθους καὶ καλλονῆς κτισμάτων ἀναλόγως ὁ γενεσιουργὸς αὐτῶν θεωρεῖται (13:1, 5).",
+        dcEng: "For foolish by nature were all men who were ignorant of God... for from the greatness and beauty of created things their Maker is proportionately seen... Then they lived in ignorance, resulting in changing of sex [γενέσεως ἐναλλαγή] and adultery (14:26).",
+        ntGreek: "τὸ γὰρ γνωστὸν τοῦ θεοῦ φανερόν ἐστιν ἐν αὐτοῖς... τὰ γὰρ ἀόρατα αὐτοῦ ἀπὸ κτίσεως κόσμου τοῖς ποιήμασιν νοούμενα καθορᾶται... διὸ παρέδωκεν αὐτοὺς ὁ θεὸς εἰς πάθη ἀτιμίας (Rom 1:19, 20, 26).",
+        ntEng: "What can be known about God is plain to them... His invisible nature has been perceived in the things made... Therefore God gave them up to dishonorable passions; their women exchanged natural relations for unnatural.",
+        significance: "Structural Dependency: Paul's entire diagnosis of Gentile paganism in Romans 1 is a direct condensation of Wisdom 13–14: 1) Knowledge of God available in creation; 2) Suppression of truth through idolatry; 3) God judging them by handing them over to moral corruption and sexual perversion."
+      },
+      {
+        id: "matt27-43",
+        book: "WISDOM",
+        dcRef: "Wisdom 2:12–20",
+        ntRef: "Matthew 27:41–43",
+        theme: "Crucifixion Mockery: 'If He is the Son of God, let Him deliver Him'",
+        dcGreek: "Ἐνεδρεύσωμεν τὸν δίκαιον... ἐπαγγέλλεται γνῶσιν ἔχειν θεοῦ καὶ παῖδα κυρίου ἑαυτὸν ὀνομάζει... εἰ γάρ ἐστιν ὁ δίκαιος υἱὸς θεοῦ, ἀντιλήμψεται αὐτοῦ καὶ ῥύσεται αὐτόν (2:12, 13, 18).",
+        dcEng: "Let us lie in wait for the righteous man... he calls himself the son of God... For if the righteous man is God's son, He will help him and deliver him from the hand of his adversaries... Let us condemn him to a shameful death.",
+        ntGreek: "ὁμοίως καὶ οἱ ἀρχιερεῖς ἐμπαίζοντες... λέγοντες· πέποιθεν ἐπὶ τὸν θεόν, ῥυσάσθω νῦν εἰ θέλει αὐτόν· εἶπεν γὰρ ὅτι θεοῦ εἰμι υἱός.",
+        ntEng: "So also the chief priests, with the scribes and elders, mocked him, saying: 'He trusts in God; let God deliver him now, if He desires him; for he said, I am the Son of God.'",
+        significance: "Prophetic Fulfillment: Matthew exhibits the chief priests quoting the exact verbal taunt of the wicked from Wisdom 2:18, confirming that Wisdom 2 was a literal, inspired prophecy of the Passion of Jesus Christ."
+      },
+      {
+        id: "heb1-3",
+        book: "WISDOM",
+        dcRef: "Wisdom 7:26",
+        ntRef: "Hebrews 1:3",
+        theme: "Christological Title: The Radiance (Apaugasma) of His Glory",
+        dcGreek: "ἀπαύγασμα γάρ ἐστιν φωτὸς ἀϊδίου καὶ ἔσοπτρον ἀκηλίδωτον τῆς τοῦ θεοῦ ἐνεργείας καὶ εἰκὼν τῆς ἀγαθότητος αὐτοῦ.",
+        dcEng: "For she is the radiance [ἀπαύγασμα, apaugasma] of eternal light, a spotless mirror of the working of God, and an image of His goodness.",
+        ntGreek: "ὃς ὢν ἀπαύγασμα τῆς δόξης καὶ χαρακτὴρ τῆς ὑποστάσεως αὐτοῦ...",
+        ntEng: "He is the radiance [apaugasma] of His glory and the exact imprint of His nature...",
+        significance: "Philological Singularity: The Greek noun ἀπαύγασμα (apaugasma) appears in the ENTIRE Greek Old Testament ONLY in Wisdom 7:26! The author of Hebrews lifted this core christological title directly from the Book of Wisdom."
+      },
+      {
+        id: "jas1-19",
+        book: "SIRACH",
+        dcRef: "Sirach 5:11",
+        ntRef: "James 1:19",
+        theme: "Apostolic Proverb: 'Quick to Hear, Slow to Speak'",
+        dcGreek: "γίνου ταχὺς ἐν ἀκροάσει σου, καὶ ἐν μακροθυμίᾳ φθέγγου ἀπόκρισιν.",
+        dcEng: "Be quick to hear, and deliberate in uttering your answer.",
+        ntGreek: "ἔστω πᾶς ἄνθρωπος ταχὺς εἰς τὸ ἀκοῦσαι, βραδὺς εἰς τὸ λαλῆσαι, βραδὺς εἰς ὀργήν.",
+        ntEng: "Let every man be quick to hear, slow to speak, slow to anger.",
+        significance: "Verbatim Ethic: St. James adopts the moral wisdom of Ben Sira into the canon of Christian apostolic behavior."
+      },
+      {
+        id: "matt6-14",
+        book: "SIRACH",
+        dcRef: "Sirach 28:2",
+        ntRef: "Matthew 6:14–15",
+        theme: "Forgiveness of Sins Tied to Forgiving Others",
+        dcGreek: "ἄφες ἀδίκημα τῷ πλησίον σου, καὶ τότε δεηθέντος σου αἱ ἁμαρτίαι σου λυθήσονται.",
+        dcEng: "Forgive your neighbor the wrong he has done, and then your sins will be pardoned when you pray.",
+        ntGreek: "Ἐὰν γὰρ ἀφῆτε τοῖς ἀνθρώποις τὰ παραπτώματα αὐτῶν, ἀφήσει καὶ ὑμῖν ὁ πατὴρ ὑμῶν ὁ οὐράνιος...",
+        ntEng: "For if you forgive men their trespasses, your heavenly Father also will forgive you; but if you do not forgive men their trespasses, neither will your Father forgive your trespasses.",
+        significance: "Lord's Prayer Matrix: Jesus in the Sermon on the Mount unpacks the fifth petition of the Lord's Prayer using the exact theological formula of Sirach 28:2."
+      },
+      {
+        id: "rev8-2",
+        book: "TOBIT",
+        dcRef: "Tobit 12:15",
+        ntRef: "Revelation 8:2, 3–4",
+        theme: "The Seven Holy Angels Before the Throne of God",
+        dcGreek: "ἐγώ εἰμι Ραφαηλ, εἷς ἐκ τῶν ἑπτὰ ἁγίων ἀγγέλων, οἳ προσαναφέρουσιν τὰς προσευχὰς τῶν ἁγίων...",
+        dcEng: "I am Raphael, one of the seven holy angels who offer the prayers of the saints and enter into the presence of the glory of the Holy One.",
+        ntGreek: "καὶ εἶδον τοὺς ἑπτὰ ἀγγέλους οἳ ἐνώπιον τοῦ θεοῦ ἑστήκασιν... καὶ ἀνέβη ὁ καπνὸς τῶν θυμιαμάτων ταῖς προσευχαῖς τῶν ἁγίων ἐκ χειρὸς τοῦ ἀγγέλου ἐνώπιον τοῦ θεοῦ.",
+        ntEng: "Then I saw the seven angels who stand before God... and the smoke of the incense rose with the prayers of the saints from the hand of the angel before God.",
+        significance: "Liturgical Angelology: St. John's vision of heavenly liturgy and the angels presenting the prayers of the saints on earth is directly dependent upon the revelation given to Tobias in Tobit 12."
+      },
+      {
+        id: "1cor15-29",
+        book: "2MACCABEES",
+        dcRef: "2 Maccabees 12:42–45",
+        ntRef: "1 Corinthians 15:29",
+        theme: "Vicarious Prayer and Atonement for the Dead",
+        dcGreek: "εἰς παράδοσιν ἐτράπησαν, ἀξιώσαντες τὸ γεγονὸς ἁμάρτημα τελείως ἐξαλειφθῆναι... ὅθεν περὶ τῶν τεθνηκότων τὸν ἱλασμὸν ἐποιήσατο, τῆς ἁμαρτίας ἀπολυθῆναι.",
+        dcEng: "They turned to prayer, beseeching that the sin which had been committed might be wholly blotted out... Therefore Judas made atonement for the dead, that they might be delivered from their sin.",
+        ntGreek: "Ἐπεὶ τί ποιήσουσιν οἱ βαπτιζόμενοι ὑπὲρ τῶν νεκρῶν; εἰ ὅλως νεκροὶ οὐκ ἐγείρονται, τί καὶ βαπτίζονται ὑπὲρ αὐτῶν;",
+        ntEng: "Otherwise, what do people mean by being baptized on behalf of the dead? If the dead are not raised at all, why are people baptized on their behalf?",
+        significance: "Second Temple Intercession: Paul references vicarious intercession for the deceased awaiting resurrection, an established practice sanctified in 2 Maccabees 12."
+      }
+    ];
+
+    let currentBook = "ALL";
+
+    function renderRegistry(items) {
+      const grid = document.getElementById("registry-grid");
+      grid.innerHTML = "";
+
+      if (items.length === 0) {
+        grid.innerHTML = `<div style="text-align: center; padding: 60px; color: var(--text-dim);">No intertextual parallels match your criteria.</div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "registry-card";
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="dc-ref">${item.dcRef}</span>
+              <span class="arrow-icon">➔</span>
+              <span class="nt-ref">${item.ntRef}</span>
+            </div>
+            <span class="theme-badge">${item.theme}</span>
+          </div>
+
+          <div class="parallel-body">
+            <div class="pane-col">
+              <span class="col-label dc">Deuterocanon Witness (LXX / Qumran)</span>
+              <div class="greek-text">${item.dcGreek}</div>
+              <div class="english-text">${item.dcEng}</div>
+            </div>
+
+            <div class="pane-col">
+              <span class="col-label nt">New Testament Inscription</span>
+              <div class="greek-text">${item.ntGreek}</div>
+              <div class="english-text">${item.ntEng}</div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <svg class="footer-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div><strong>Apostolic Intertextual Defeater:</strong> ${item.significance}</div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById("counter-badge").innerText = `${items.length} Intertextual Parallels`;
+    }
+
+    function setBook(b, btn) {
+      currentBook = b;
+      document.querySelectorAll(".pill-btn").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      filterRegistry();
+    }
+
+    function filterRegistry() {
+      const q = document.getElementById("search-input").value.toLowerCase();
+      const filtered = PARALLELS.filter(p => {
+        const matchesBook = (currentBook === "ALL" || p.book === currentBook);
+        const matchesQ = p.dcRef.toLowerCase().includes(q) ||
+                         p.ntRef.toLowerCase().includes(q) ||
+                         p.theme.toLowerCase().includes(q) ||
+                         p.dcGreek.toLowerCase().includes(q) ||
+                         p.dcEng.toLowerCase().includes(q) ||
+                         p.ntGreek.toLowerCase().includes(q) ||
+                         p.ntEng.toLowerCase().includes(q) ||
+                         p.significance.toLowerCase().includes(q);
+        return matchesBook && matchesQ;
+      });
+      renderRegistry(filtered);
+    }
+
+    // Initial render
+    renderRegistry(PARALLELS);
+  </script>
+</body>
+</html>

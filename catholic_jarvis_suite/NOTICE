@@ -1,0 +1,60 @@
+THIRD-PARTY CONTENT NOTICE
+CatholicJarvis Suite / Plenary Logos Suite
+
+The LICENSE file in this repository (MIT) covers only the original code
+written for this project. Everything below is bundled as DATA this software
+reads and displays, written by other people, under its own terms. This list
+is a working categorization, not a legal clearance — it has not been
+reviewed by a lawyer. Treat anything marked "copyrighted" as for personal
+study use only; do not redistribute this software with that data bundled in
+without separately confirming the rights to do so.
+
+PUBLIC DOMAIN (pre-1929 publication, or explicitly released as such):
+  - Douay-Rheims Bible, Challoner revision (DRA)
+  - Brenton English Septuagint (1851)
+  - American Standard Version (1901)
+  - King James Version with Apocrypha
+  - Clementine Vulgate (1592)
+  - Westminster Leningrad Codex (Hebrew Old Testament)
+  - Rahlfs 1935 Greek Septuagint
+  - Strong's Concordance numbering and base lexicon data
+  - World English Bible, Catholic Edition — explicitly released into the
+    public domain by its translators (Rainbow Missions, Inc. / eBible.org)
+  - Berean Standard Bible (BSB) — explicitly released public domain /
+    CC0 by the Berean Bible translators (berean.bible)
+
+OPEN-LICENSED (not public domain, but freely redistributable under stated terms
+— confirm the exact license text at the source before any public release):
+  - Statistical Restoration Greek New Testament (SR GNT) — Tyndale House,
+    Cambridge; released under a Creative Commons license (verify CC variant
+    at github.com/Center-for-New-Testament-Restoration/SBLGNT or the SR GNT
+    repo before redistributing)
+  - Byzantine Majority Text / Textus Receptus NT — widely distributed
+    freely; verify the specific edition's own terms before redistributing
+
+COPYRIGHTED — PERSONAL STUDY USE ONLY, NOT FOR REDISTRIBUTION:
+  - Nova Vulgata — (c) Libreria Editrice Vaticana
+  - NET Bible 2.1 text and translator/study notes — (c) Biblical Studies
+    Press / NET Bible. NET Bible has a published free-use license for
+    ministry/non-commercial quotation up to a verse limit; bulk inclusion in
+    an app like this is outside that license and would need separate
+    clearance before any public distribution.
+  - NIV translation and NIV Study Bible notes — (c) Biblica (text) /
+    Zondervan (study notes)
+  - SBL Study Bible notes — (c) Society of Biblical Literature
+  - New Oxford Annotated Bible (NOAB / NRSVue) notes — (c) Oxford
+    University Press
+  - Ignatius Catholic Study Bible commentary (Hahn & Mitch et al.) —
+    (c) Ignatius Press
+  - NABRE text and Catholic Study Bible (Third Edition) notes —
+    (c) USCCB (text) / Oxford University Press (notes)
+  - Any PDF/EPUB source files in the PDFS library this suite's build
+    scripts read from (including the Migne Patrologia Latina/Graeca scans,
+    which are themselves PD originals but the specific digitizations may
+    carry a scanning library's own terms) — check the specific scan's
+    source library before redistributing the file itself.
+
+If this project is ever shown to someone outside personal use (e.g. as a
+portfolio piece), say plainly that the code is MIT-licensed and the bundled
+Bible texts/notes are third-party copyrighted material used for personal
+study, not being redistributed or claimed as original work.

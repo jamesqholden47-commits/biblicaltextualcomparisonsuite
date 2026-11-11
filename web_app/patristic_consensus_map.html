@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patristic Consensus Graph & Mediterranean Timeline Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0b0d13;
+      --bg-panel: #121622;
+      --bg-card: #181e2e;
+      --bg-card-hover: #22293d;
+      --border: #262c42;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .timeline-control {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+    }
+
+    .timeline-slider {
+      width: 140px;
+      accent-color: var(--accent-gold);
+      cursor: pointer;
+    }
+
+    .timeline-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent-gold);
+      font-size: 13px;
+      min-width: 65px;
+    }
+
+    /* Main Workspace Split Layout */
+    .workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Map Canvas Area */
+    .map-pane {
+      flex: 1.3;
+      background: radial-gradient(circle at 50% 50%, #151a29 0%, #0b0d13 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-svg-container {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    svg.mediterranean-map {
+      width: 100%;
+      height: 100%;
+      user-select: none;
+    }
+
+    .map-node {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .map-node circle {
+      fill: var(--bg-card);
+      stroke: var(--accent-gold);
+      stroke-width: 2.5;
+      transition: all 0.2s ease;
+    }
+
+    .map-node:hover circle, .map-node.active circle {
+      fill: var(--accent-gold);
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.7));
+    }
+
+    .map-node text {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      fill: #e2e8f0;
+      font-weight: 700;
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    .communion-link {
+      stroke: rgba(212, 175, 55, 0.25);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+      animation: dash 20s linear infinite;
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+
+    /* Map Overlay Doctrine Filter Bar */
+    .doctrine-bar {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      z-index: 10;
+    }
+
+    .doc-pill {
+      background: rgba(18, 22, 34, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .doc-pill:hover, .doc-pill.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Right Dossier Panel */
+    .dossier-pane {
+      flex: 1;
+      background: var(--bg-panel);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .dossier-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .city-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+
+    .city-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .fathers-list {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .father-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .father-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .father-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .father-name {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .father-dates {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent-gold);
+    }
+
+    .father-works {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .quote-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--accent-gold);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-family: 'Newsreader', serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .quote-citation {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: block;
+    }
+
+    .tag-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-chip {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.1);
+      color: #fef08a;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .badge-audit-pending {
+      font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; text-transform: uppercase;
+      padding: 2px 6px; border-radius: 4px;
+      background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);
+      white-space: nowrap;
+    }
+    .audit-pending-banner {
+      margin: 0 0 14px 0; padding: 10px 14px; border-radius: 8px;
+      background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fde68a; font-size: 12px; line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <div class="brand-title">Patristic Consensus Graph & Timeline Explorer</div>
+      <span class="brand-badge">Early Church 30–451 CE</span>
+    </div>
+    <div class="toolbar">
+      <div class="timeline-control">
+        <span class="timeline-label">Chronology:</span>
+        <input type="range" class="timeline-slider" id="timeline-slider" min="96" max="451" value="451" oninput="updateTimeline(this.value)">
+        <span class="timeline-val" id="timeline-val">≤ 451 CE</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <div class="map-pane">
+      <div class="doctrine-bar">
+        <button class="doc-pill active" onclick="setDoctrine('ALL', this)">All Doctrines</button>
+        <button class="doc-pill" onclick="setDoctrine('EUCHARIST', this)">Eucharistic Realism</button>
+        <button class="doc-pill" onclick="setDoctrine('PRIMACY', this)">Petrine Primacy</button>
+        <button class="doc-pill" onclick="setDoctrine('SUCCESSION', this)">Episcopal Succession</button>
+        <button class="doc-pill" onclick="setDoctrine('CANON', this)">Tradition & Canon</button>
+        <button class="doc-pill" onclick="setDoctrine('GRACE', this)">Grace & Merit</button>
+      </div>
+
+      <div class="map-svg-container">
+        <svg class="mediterranean-map" id="map-svg" viewBox="0 0 1000 600">
+          <!-- Stylized Ancient Mediterranean Coastline Background -->
+          <path d="M 120 180 Q 200 120 280 150 T 400 170 T 520 220 T 680 180 T 800 240 T 900 320 T 920 450 L 920 580 L 100 580 Z" fill="#0d111a" opacity="0.6"/>
+          <!-- Network Communion Lines (Centered on Rome as Principalitas) -->
+          <line x1="380" y1="260" x2="220" y2="180" class="communion-link" /> <!-- Rome to Lyons -->
+          <line x1="380" y1="260" x2="350" y2="390" class="communion-link" /> <!-- Rome to Carthage -->
+          <line x1="380" y1="260" x2="270" y2="380" class="communion-link" /> <!-- Rome to Hippo -->
+          <line x1="380" y1="260" x2="320" y2="160" class="communion-link" /> <!-- Rome to Milan -->
+          <line x1="380" y1="260" x2="650" y2="230" class="communion-link" /> <!-- Rome to Constantinople -->
+          <line x1="380" y1="260" x2="680" y2="260" class="communion-link" /> <!-- Rome to Nicaea -->
+          <line x1="380" y1="260" x2="820" y2="330" class="communion-link" /> <!-- Rome to Antioch -->
+          <line x1="380" y1="260" x2="720" y2="480" class="communion-link" /> <!-- Rome to Alexandria -->
+          <line x1="820" y1="330" x2="840" y2="420" class="communion-link" /> <!-- Antioch to Jerusalem -->
+          <line x1="650" y1="230" x2="720" y2="300" class="communion-link" /> <!-- Constantinople to Ephesus -->
+
+          <!-- Map Nodes injected dynamically via JS -->
+          <g id="map-nodes-group"></g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Right Side Dossier Inspector -->
+    <div class="dossier-pane" id="dossier-pane">
+      <div class="dossier-header">
+        <h2 class="city-title" id="dossier-city">Rome (Roma Aeterna)</h2>
+        <div class="city-subtitle" id="dossier-subtitle">The Cathedra Petri • Potentior Principalitas • Apostolic See</div>
+      </div>
+      <div class="audit-pending-banner">
+        <strong>[S / AUDIT PENDING]:</strong> This module (built 2026-10-13) was verified only for loading without HTTP/JS errors. Every patristic quote, date, and citation below is unverified against a primary critical edition (Rule 19 / Charter &sect;II.9) &mdash; treat every row as [S] until independently checked against the source in hand. See REPORT_2026-10-14, sections 2 and 4.
+      </div>
+      <div class="fathers-list" id="fathers-list">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PATRISTIC_NETWORK = {
+      "rome": {
+        name: "Rome (Roma)",
+        coords: { x: 380, y: 260 },
+        subtitle: "Cathedra Petri • Sede Apostolica • Center of Catholic Communion",
+        fathers: [
+          {
+            name: "St. Clement of Rome",
+            dates: "c. 35–99 CE",
+            works: "Epistle to the Corinthians (1 Clement)",
+            tags: ["SUCCESSION", "PRIMACY"],
+            quote: "Our Apostles knew through our Lord Jesus Christ that there would be strife on account of the office of the episcopate. For this reason they appointed those already mentioned, and afterwards gave instructions that when they should fall asleep, other approved men should succeed to their ministry.",
+            citation: "1 Clement 44.1–2 (SC 167; c. 96 CE)"
+          },
+          {
+            name: "St. Jerome of Stridon",
+            dates: "c. 347–420 CE",
+            works: "Biblia Vulgata, Epistula ad Damasum",
+            tags: ["PRIMACY", "CANON"],
+            quote: "I speak with the successor of the fisherman and disciple of the cross. Following no chief but Christ, I am joined in communion with Your Beatitude, that is, with the chair of Peter. On this rock I know that the Church is built.",
+            citation: "Epistle 15 to Pope Damasus I (PL 22, 355; 376 CE)"
+          },
+          {
+            name: "St. Leo the Great",
+            dates: "c. 400–461 CE",
+            works: "Epistula ad Flavianum (Tome of Leo), Sermons",
+            tags: ["PRIMACY", "SUCCESSION"],
+            quote: "Peter does not cease to preside over his See, and obtains an unfailing partnership with the Eternal Priest. For the firmness which he received from the Rock, Christ, has been transferred to his successors.",
+            citation: "Sermon 3.3 (PL 54, 146; Council of Chalcedon 451 CE)"
+          }
+        ]
+      },
+      "lyons": {
+        name: "Lyons (Lugdunum, Gaul)",
+        coords: { x: 220, y: 180 },
+        subtitle: "Apostolic Bridge from Polycarp & John to the Western Church",
+        fathers: [
+          {
+            name: "St. Irenaeus of Lyons",
+            dates: "c. 130–202 CE",
+            works: "Adversus Haereses, Demonstratio Apostolica",
+            tags: ["SUCCESSION", "PRIMACY", "EUCHARIST", "CANON"],
+            quote: "With this Church [of Rome], because of its more potent principalitas, every church must agree—that is, the faithful everywhere—in which the tradition that comes from the apostles has been preserved perpetually... They possess the certain charism of truth (charisma veritatis certum).",
+            citation: "Adversus Haereses III.3.2 & IV.26.2 (SC 211, SC 100bis; c. 180 CE)"
+          }
+        ]
+      },
+      "carthage": {
+        name: "Carthage (North Africa)",
+        coords: { x: 350, y: 390 },
+        subtitle: "Latin Patristic Crucible of Ecclesial Unity & Legal Precision",
+        fathers: [
+          {
+            name: "Tertullian of Carthage",
+            dates: "c. 155–220 CE",
+            works: "De Praescriptione Haereticorum, De Baptismo",
+            tags: ["CANON", "SUCCESSION"],
+            quote: "We must not appeal to Scripture nor dispute on terms which can yield no victory... Heretics have no right to the Christian Scriptures. Let them produce the origins of their churches; let them unfold the roll of their bishops running back to an Apostle.",
+            citation: "De Praescriptione Haereticorum 19, 32 (CCSL 1; c. 200 CE)"
+          },
+          {
+            name: "St. Cyprian of Carthage",
+            dates: "c. 210–258 CE",
+            works: "De Ecclesiae Catholicae Unitate, Epistles",
+            tags: ["PRIMACY", "SUCCESSION", "EUCHARIST"],
+            quote: "Upon one, Peter, He builds His Church... If a man does not hold fast to this oneness of Peter, does he imagine that he still holds the faith? If he deserts the chair of Peter upon whom the Church was built, has he still confidence that he is in the Church?",
+            citation: "De Ecclesiae Catholicae Unitate 4 (CCSL 3; 251 CE)"
+          }
+        ]
+      },
+      "hippo": {
+        name: "Hippo Regius (Numidia)",
+        coords: { x: 270, y: 380 },
+        subtitle: "Doctor Gratiae • Western Theological Epicenter",
+        fathers: [
+          {
+            name: "St. Augustine of Hippo",
+            dates: "354–430 CE",
+            works: "Confessiones, De Civitate Dei, Contra Faustum",
+            tags: ["CANON", "GRACE", "EUCHARIST", "PRIMACY"],
+            quote: "For my part, I should not believe the Gospel except as moved by the authority of the Catholic Church (Ego vero Evangelio non crederem, nisi me catholicae Ecclesiae commoveret auctoritas)... Rome has spoken; the cause is finished.",
+            citation: "Contra Epistolam Manichaei Fundamenti 5 (PL 42, 176; 397 CE)"
+          }
+        ]
+      },
+      "milan": {
+        name: "Milan (Mediolanum)",
+        coords: { x: 320, y: 160 },
+        subtitle: "Imperial Capital • Champion of Nicene Orthodoxy",
+        fathers: [
+          {
+            name: "St. Ambrose of Milan",
+            dates: "c. 340–397 CE",
+            works: "De Sacramentis, De Mysteriis",
+            tags: ["EUCHARIST", "PRIMACY"],
+            quote: "Where Peter is, there is the Church; and where the Church is, there is no death, but life eternal... Before the blessing, it is named bread; after the consecration, it is designated the Body of Christ.",
+            citation: "Enarratio in Psalmum 40.30; De Sacramentis IV.4 (PL 14, 16)"
+          }
+        ]
+      },
+      "antioch": {
+        name: "Antioch (Syria)",
+        coords: { x: 820, y: 330 },
+        subtitle: "Apostolic See of Peter & Paul • Cradle of the Name 'Christian'",
+        fathers: [
+          {
+            name: "St. Ignatius of Antioch",
+            dates: "c. 35–108 CE",
+            works: "Seven Epistles to the Churches",
+            tags: ["EUCHARIST", "SUCCESSION", "PRIMACY"],
+            quote: "They abstain from the Eucharist and from prayer, because they confess not the Eucharist to be the flesh of our Savior Jesus Christ... Wherever the bishop shall appear, there let the multitude also be; even as, wherever Jesus Christ is, there is the Catholic Church.",
+            citation: "Epistle to the Smyrnaeans 7.1, 8.2 (SC 10bis; c. 110 CE)"
+          },
+          {
+            name: "St. John Chrysostom",
+            dates: "c. 349–407 CE",
+            works: "Homilies on Matthew, John, Romans, On the Priesthood",
+            tags: ["EUCHARIST", "PRIMACY"],
+            quote: "He chose Peter, the leader of the Apostles, and entrusted to him the presidency of the universal Church... When you see the Lord sacrificed and lying before you, and the priest standing over the victim, do you still think you are among men?",
+            citation: "De Sacerdotio III.4; Homily 54 on Matthew (PG 48, PG 58)"
+          }
+        ]
+      },
+      "alexandria": {
+        name: "Alexandria (Egypt)",
+        coords: { x: 720, y: 480 },
+        subtitle: "Catechetical School of Mark • Theotokos & Hypostatic Union",
+        fathers: [
+          {
+            name: "St. Athanasius of Alexandria",
+            dates: "c. 296–373 CE",
+            works: "De Incarnatione, Contra Arianos, Festal Letter 39",
+            tags: ["CANON", "GRACE"],
+            quote: "Let us look at that very tradition, teaching, and faith of the Catholic Church from the very beginning, which the Lord gave, the Apostles preached, and the Fathers preserved. Upon this the Church is founded.",
+            citation: "Epistle 1 to Serapion 28 (PG 26, 593; c. 359 CE)"
+          },
+          {
+            name: "St. Cyril of Alexandria",
+            dates: "c. 376–444 CE",
+            works: "Twelve Anathemas, Epistulae Synodicae",
+            tags: ["EUCHARIST", "PRIMACY"],
+            quote: "We approach the mystical oblations and are sanctified, being partakers of the holy Flesh and precious Blood of Christ the Savior of us all... It is not the flesh of a mere man, but the life-giving Flesh of God the Word.",
+            citation: "Third Letter to Nestorius, Council of Ephesus (431 CE)"
+          }
+        ]
+      },
+      "constantinople": {
+        name: "Constantinople (New Rome)",
+        coords: { x: 650, y: 230 },
+        subtitle: "Imperial Patriarchate • Ecumenical Conciliar Stage",
+        fathers: [
+          {
+            name: "St. Gregory of Nazianzus",
+            dates: "c. 329–390 CE",
+            works: "Five Theological Orations",
+            tags: ["CANON", "GRACE"],
+            quote: "What was not assumed is not redeemed; but what is united to God is also being saved.",
+            citation: "Epistle 101 to Cledonius (SC 208; c. 382 CE)"
+          }
+        ]
+      }
+    };
+
+    let selectedCityKey = "rome";
+    let selectedDoctrine = "ALL";
+    let currentTimelineMax = 451;
+
+    function renderMapNodes() {
+      const g = document.getElementById("map-nodes-group");
+      g.innerHTML = "";
+
+      for (const [key, city] of Object.entries(PATRISTIC_NETWORK)) {
+        const nodeG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        nodeG.setAttribute("class", `map-node ${key === selectedCityKey ? 'active' : ''}`);
+        nodeG.setAttribute("onclick", `selectCity('${key}')`);
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", city.coords.x);
+        circle.setAttribute("cy", city.coords.y);
+        circle.setAttribute("r", key === 'rome' ? "10" : "7");
+
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", city.coords.x);
+        text.setAttribute("y", city.coords.y - 12);
+        text.textContent = city.name.split(" ")[0];
+
+        nodeG.appendChild(circle);
+        nodeG.appendChild(text);
+        g.appendChild(nodeG);
+      }
+    }
+
+    function selectCity(key) {
+      selectedCityKey = key;
+      renderMapNodes();
+      renderDossier();
+    }
+
+    function setDoctrine(doc, btn) {
+      selectedDoctrine = doc;
+      document.querySelectorAll(".doc-pill").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      renderDossier();
+    }
+
+    function updateTimeline(val) {
+      currentTimelineMax = parseInt(val);
+      document.getElementById("timeline-val").innerText = `≤ ${val} CE`;
+      renderDossier();
+    }
+
+    function renderDossier() {
+      const city = PATRISTIC_NETWORK[selectedCityKey];
+      document.getElementById("dossier-city").innerText = city.name;
+      document.getElementById("dossier-subtitle").innerText = city.subtitle;
+
+      const list = document.getElementById("fathers-list");
+      list.innerHTML = "";
+
+      // Filter fathers by doctrine and timeline
+      const filteredFathers = city.fathers.filter(f => {
+        // extract max year from dates
+        const yearMatch = f.dates.match(/(\d+)\s*CE/);
+        const fatherYear = yearMatch ? parseInt(yearMatch[1]) : 100;
+        const matchesTime = fatherYear <= currentTimelineMax;
+        const matchesDoctrine = selectedDoctrine === "ALL" || f.tags.includes(selectedDoctrine);
+        return matchesTime && matchesDoctrine;
+      });
+
+      if (filteredFathers.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-dim); font-size:13px;">No Fathers match this date (≤ ${currentTimelineMax} CE) or doctrinal filter.</div>`;
+        return;
+      }
+
+      filteredFathers.forEach(f => {
+        const card = document.createElement("div");
+        card.className = "father-card";
+
+        const chipsHtml = f.tags.map(t => `<span class="tag-chip">${t}</span>`).join("");
+
+        card.innerHTML = `
+          <div class="father-header">
+            <span class="father-name">${f.name}</span>
+            <span class="father-dates">${f.dates}</span>
+            <span class="badge-audit-pending" title="Quote and citation not yet fact-checked against a primary critical edition (REPORT_2026-10-14, sections 2 and 4)">[S / AUDIT PENDING]</span>
+          </div>
+          <div class="father-works">${f.works}</div>
+          <div class="quote-box">
+            "${f.quote}"
+            <span class="quote-citation">Primary Citation: ${f.citation}</span>
+          </div>
+          <div class="tag-chips">
+            ${chipsHtml}
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    // Initial setup
+    renderMapNodes();
+    renderDossier();
+
+    // Cross-link deep anchor (Pass 3b): opened as patristic_consensus_map.html#<city-key> — no
+    // individual-father id exists in this dataset, so the deep link resolves to the city dossier
+    // (the finest-grained addressable unit here) rather than a specific quote.
+    function openDeepLinkFromHash() {
+      const key = (location.hash || '').replace(/^#/, '');
+      if (!key || !PATRISTIC_NETWORK[key]) return;
+      selectCity(key);
+    }
+    window.addEventListener('hashchange', openDeepLinkFromHash);
+    openDeepLinkFromHash();
+  </script>
+</body>
+</html>

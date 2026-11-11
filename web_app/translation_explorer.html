@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scripture Textual Criticism & Forensic Translation Workstation</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    
+    .font-hebrew { font-family: 'SBL Hebrew', 'Ezra SIL', 'Times New Roman', serif; direction: rtl; }
+    .font-greek { font-family: 'SBL Greek', 'Cardo', 'Gentium Plus', 'Times New Roman', serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-amber-500 selection:text-slate-950 min-h-screen">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between py-2.5 gap-2">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center shadow font-mono font-black text-slate-950 text-xs">
+            NA28
+          </div>
+          <div>
+            <span class="font-serif font-bold text-sm tracking-wider text-amber-400 block leading-tight">TEXTUAL CRITICISM & FORENSIC TRANSLATION WORKSTATION</span>
+            <span class="text-[10px] text-slate-400 font-mono hidden sm:inline-block">Critical Apparatus • CBGM Genealogy • Committee Ideologies • Manuscript Archives</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap items-center gap-1 text-xs font-mono">
+          <a href="#apparatus" class="px-2.5 py-1 rounded text-slate-300 hover:text-amber-400 hover:bg-slate-800 transition">Apparatus</a>
+          <a href="#cbgm" class="px-2.5 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800 transition">CBGM Explorer</a>
+          <a href="#lxx-editions" class="px-2.5 py-1 rounded text-slate-300 hover:text-emerald-400 hover:bg-slate-800 transition">LXX Critical Editions</a>
+          <a href="#bias-dossiers" class="px-2.5 py-1 rounded text-slate-300 hover:text-rose-400 hover:bg-slate-800 transition">Committee Bias</a>
+          <a href="#codices" class="px-2.5 py-1 rounded text-slate-300 hover:text-indigo-400 hover:bg-slate-800 transition">Codices</a>
+          <a href="#database" class="px-2.5 py-1 rounded text-slate-300 hover:text-amber-400 hover:bg-slate-800 transition">Translation Index</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- SECTION 1: THE CRITICAL VARIANT INTERROGATION ENGINE -->
+    <section id="apparatus" class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-slate-800 pb-3 gap-3">
+        <div>
+          <div class="flex items-center space-x-2 text-amber-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+            <i data-lucide="binary" class="w-4 h-4"></i>
+            <span>Module 01: Forensic Variant Apparatus</span>
+          </div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">Text-Critical Variant Interrogation Engine</h2>
+          <p class="text-xs text-slate-400">Raw original-language collation against primary papyri, uncials, minuscules, versions, and patristic citations.</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <label class="text-[11px] font-mono text-slate-400 whitespace-nowrap">Select Crux:</label>
+          <select id="apparatus-selector" onchange="updateApparatus()" class="bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-amber-300 font-semibold focus:outline-none focus:border-amber-500">
+            <option value="1jn5_7">1 John 5:7–8 — Comma Johanneum (The Heavenly Witnesses)</option>
+            <option value="mk16_9">Mark 16:9–20 — The Longer Ending of Mark</option>
+            <option value="jn7_53">John 7:53–8:11 — Pericope Adulterae (Woman Caught in Adultery)</option>
+            <option value="isa7_14">Isaiah 7:14 — Hebrew 'Almah vs LXX Parthenos</option>
+            <option value="deut32_8">Deut 32:8 — Sons of Israel (MT) vs Sons of God (4QDeut-q, LXX)</option>
+            <option value="ps22_16">Psalm 22:16 — 'Like a Lion' (MT) vs 'They Pierced' (5/6HevPs, LXX)</option>
+            <option value="1tim3_16">1 Tim 3:16 — 'God was manifested' (Theos) vs 'He who' (Hos)</option>
+            <option value="rom9_5">Romans 9:5 — Christological Doxology Punctuation</option>
+            <option value="gen3_16">Genesis 3:16 — Preposition 'El (Toward) vs 'Contrary To'</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Main Apparatus Card Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        <!-- Left 2 Cols: Primary Text & Detailed Apparatus -->
+        <div class="lg:col-span-2 space-y-4">
+          <!-- Original Language Panel -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+              <span class="text-[11px] font-mono text-amber-400 font-bold uppercase" id="app-text-heading">NA28 / Critical Text Benchmark (1 John 5:7–8)</span>
+              <span class="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded" id="app-text-sigla">NA28 / ECM / Editio Critica Maior</span>
+            </div>
+            <div class="text-base sm:text-lg leading-relaxed text-slate-100 font-greek" id="app-primary-text">
+              ὅτι τρεῖς εἰσιν οἱ μαρτυροῦντες, τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα, καὶ οἱ τρεῖς εἰς τὸ ἕν εἰσιν.
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 text-xs text-slate-400 font-mono" id="app-morphology">
+              Three witnesses: the Spirit (pneuma), the water (hydor), and the blood (haima). No heavenly witnesses formula in Greek archetype.
+            </div>
+          </div>
+
+          <!-- Manuscript Witnesses Split Table -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+            <h3 class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">Collation of Competing Variant Readings</h3>
+            <div class="space-y-3" id="app-variants-list">
+              <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5"><div class="font-mono font-bold text-xs text-amber-300">[Reading A] ὅτι τρεῖς εἰσιν οἱ μαρτυροῦντες, τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα [Short Reading / Original]</div><div class="text-[11px] font-mono text-slate-400"><strong class="text-cyan-400">Witnesses:</strong> P74, ℵ, A, B, K, L, P, Ψ, 049, 0142, 0296, 1739, all ancient Greek minuscules, syr(p,h), cop(sa,bo), arm, eth, early Old Latin (Vercellensis, Colbertinus), Clement of Alexandria, Origen, Athanasius, Didymus, Augustine, Chrysostom.</div></div><div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5"><div class="font-mono font-bold text-xs text-amber-300">[Reading B] ...in caelo: Pater, Verbum, et Spiritus Sanctus... et tres sunt qui testimonium dant in terra... [Comma Johanneum]</div><div class="text-[11px] font-mono text-slate-400"><strong class="text-cyan-400">Witnesses:</strong> Latin: Priscillian of Ávila (c. 385 AD), Speculum (m), Codex Cavensis (9th c.), Clementine Vulgate (1592). Greek: Codex Montfortianus (minuscule 61, c. 1520 AD), Codex Ottobonianus (629, 14th c. Latin-Greek diglot), 918 (16th c.), 2318 (18th c.). Total exclusion from early Greek tradition.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 1 Col: Forensic Evaluation & Translation Behavior -->
+        <div class="space-y-4">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+            <h3 class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">Text-Critical Judgment & Canons</h3>
+            <div class="text-xs text-slate-300 space-y-2 leading-relaxed" id="app-judgment-body">
+              <p>Unanimous critical consensus: The Comma Johanneum is a 4th-century Latin theological marginal gloss that gradually entered the Old Latin and Vulgate traditions. Erasmus excluded it in 1516/1519, was pressured into adding it in 1522 via MS 61 (produced to order), passing into the Textus Receptus and KJV. Excluded by all modern critical editions.</p>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+            <h3 class="text-xs font-mono text-rose-400 font-bold uppercase tracking-wider">How Translations Treat This Variant</h3>
+            <div class="space-y-2 text-xs" id="app-translations-treatment">
+              <div class="border-b border-slate-800/80 pb-1.5"><span class="font-mono font-bold text-slate-200">KJV / NKJV:</span><span class="text-slate-400 text-[11px] block">Retains the full Comma in main text without brackets (Textus Receptus).</span></div><div class="border-b border-slate-800/80 pb-1.5"><span class="font-mono font-bold text-slate-200">NRSVue / ESV / NASB / CSB / NIV:</span><span class="text-slate-400 text-[11px] block">Total exclusion from text; relegated to critical footnote.</span></div><div class="border-b border-slate-800/80 pb-1.5"><span class="font-mono font-bold text-slate-200">Douay-Rheims:</span><span class="text-slate-400 text-[11px] block">Retained from the Clementine Vulgate tradition.</span></div><div class="border-b border-slate-800/80 pb-1.5"><span class="font-mono font-bold text-slate-200">NABRE / CAB (2027):</span><span class="text-slate-400 text-[11px] block">Excluded from text in accordance with Nova Vulgata & NA28.</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 2: THE SEPTUAGINT (LXX) CRITICAL EDITIONS HIERARCHY -->
+    <section id="lxx-editions" class="space-y-4">
+      <div class="border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2 text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+          <i data-lucide="book-open" class="w-4 h-4"></i>
+          <span>Module 02: Critical LXX Editions & Scholar Standards</span>
+        </div>
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">Septuagint Critical Editions: Göttingen vs. Rahlfs-Hanhart vs. Cambridge</h2>
+        <p class="text-xs text-slate-400">The exact hierarchy of Greek Old Testament critical editions utilized by the SBL, NRSVue, NETS, and modern academia.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Göttingen -->
+        <div class="bg-slate-900/90 border border-emerald-500/40 rounded-xl p-4 shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-emerald-500/20 text-emerald-300 text-[9px] font-mono px-2 py-0.5 rounded-bl">SBL / NRSVue GOLD STANDARD</div>
+          <h3 class="font-serif font-bold text-sm text-emerald-300 mb-1">Göttingen Septuaginta (Editio Maior)</h3>
+          <p class="text-[11px] font-mono text-slate-400 mb-3">Vandenhoeck & Ruprecht (1931–Present) • Multi-Volume</p>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Status:</strong> The supreme critical monument of Septuagint scholarship. Prepared by the <em>Septuaginta-Unternehmen</em> of the Göttingen Academy of Sciences (Alfred Rahlfs, Joseph Ziegler, Robert Hanhart, John Wevers, Udo Quast).</p>
+            <p><strong>Method:</strong> Full historical-critical eclecticism reconstructing the earliest attainable Greek archetype (<em>Ur-Septuaginta</em>), complete with a massive two-tiered apparatus recording all manuscript groups (Alexandrian, Lucianic/Antiochene, Hexaplaric/Origenian, Catena), daughter versions, and patristic citations.</p>
+            <p><strong>NRSVue / SBL Use:</strong> Explicitly mandated as the primary text for all books where published.</p>
+          </div>
+        </div>
+
+        <!-- Rahlfs-Hanhart -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow">
+          <div class="text-amber-400 text-[9px] font-mono font-bold uppercase mb-1">Standard Handausgabe (Manual Edition)</div>
+          <h3 class="font-serif font-bold text-sm text-amber-300 mb-1">Rahlfs-Hanhart Septuaginta (2006)</h3>
+          <p class="text-[11px] font-mono text-slate-400 mb-3">Deutsche Bibelgesellschaft • Revised by Robert Hanhart</p>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Status:</strong> The standard one-volume desk reference. Revision of Alfred Rahlfs's 1935 <em>Handausgabe</em>.</p>
+            <p><strong>Method:</strong> Semi-critical text based primarily on the three great fourth-century uncials: Codex Vaticanus (B), Codex Sinaiticus (ℵ), and Codex Alexandrinus (A), with a minimal critical apparatus.</p>
+            <p><strong>Role in Translation:</strong> Used as the fallback base for modern English translations (NRSVue, NETS, NABRE) for biblical books where the Göttingen <em>editio maior</em> has not yet appeared (e.g., Samuel/Kings, Chronicles).</p>
+          </div>
+        </div>
+
+        <!-- Cambridge & Sixtine -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow">
+          <div class="text-cyan-400 text-[9px] font-mono font-bold uppercase mb-1">Diplomatic & Historic Editions</div>
+          <h3 class="font-serif font-bold text-sm text-cyan-300 mb-1">Larger Cambridge & Editio Sixtina</h3>
+          <p class="text-[11px] font-mono text-slate-400 mb-3">Brooke-McLean (1906–1940) • Rome (1587)</p>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Larger Cambridge Septuagint (Brooke-McLean):</strong> Premier <em>diplomatic</em> edition printing the exact text of Codex Vaticanus (B) with an exhaustive apparatus of other uncials/papyri (Genesis through Tobit/Judith/Esther).</p>
+            <p><strong>Editio Sixtina (1587):</strong> Historic Catholic edition commissioned by Pope Sixtus V based on Vaticanus; standard text for 300+ years and base of Douay-Rheims OT Deuterocanon and Brenton (1844).</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 3: THE CBGM (COHERENCE-BASED GENEALOGICAL METHOD) EXPLORER -->
+    <section id="cbgm" class="space-y-4">
+      <div class="border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+          <i data-lucide="git-graph" class="w-4 h-4"></i>
+          <span>Module 03: Modern Münster CBGM Mechanics</span>
+        </div>
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">The Coherence-Based Genealogical Method (CBGM) in NA28 & ECM</h2>
+        <p class="text-xs text-slate-400">How the INTF (Münster) dismantled Hortian stemmatics using computer-assisted global genealogical coherence.</p>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs font-mono">
+          <div class="bg-slate-950 p-3 rounded border border-slate-800">
+            <div class="text-cyan-400 font-bold">1. Pre-Genealogical Coherence</div>
+            <div class="text-slate-400 mt-1 text-[11px]">Statistical percentage of agreement between any two manuscripts (W1, W2) across all shared variation units.</div>
+          </div>
+          <div class="bg-slate-950 p-3 rounded border border-slate-800">
+            <div class="text-indigo-400 font-bold">2. Local Stemma</div>
+            <div class="text-slate-400 mt-1 text-[11px]">Determining internal transcriptional priority (a -> b or b -> a) at a single isolated variation unit.</div>
+          </div>
+          <div class="bg-slate-950 p-3 rounded border border-slate-800">
+            <div class="text-amber-400 font-bold">3. Potential Ancestors</div>
+            <div class="text-slate-400 mt-1 text-[11px]">A witness is a potential ancestor of another if it contains a significantly higher ratio of prior (older) readings.</div>
+          </div>
+          <div class="bg-slate-950 p-3 rounded border border-slate-800">
+            <div class="text-rose-400 font-bold">4. Global Coherence</div>
+            <div class="text-slate-400 mt-1 text-[11px]">Checking local stemma decisions against the entire manuscript network to eliminate circular genealogical loops.</div>
+          </div>
+        </div>
+
+        <!-- Case Study in CBGM Changes -->
+        <div class="mt-4 pt-4 border-t border-slate-800">
+          <h4 class="text-xs font-mono text-slate-300 font-bold uppercase mb-2">Empirical Example: Why NA28 Changed 1 Peter 1:22 (Adopted by NRSVue & CSB)</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-950 p-3 rounded border border-red-900/40">
+              <span class="text-rose-400 font-mono font-bold block mb-1">NA27 (Old Reading):</span>
+              <span class="font-greek text-sm text-slate-200 block mb-1">ἐκ καθαρᾶς καρδίας ἀλλήλους ἀγαπήσατε ἐκτενῶς</span>
+              <span class="text-slate-400 text-[11px]">"love one another earnestly from a <em>pure</em> heart" (Supported by P72, ℵ, B, C, Ψ, Majority Text).</span>
+            </div>
+            <div class="bg-slate-950 p-3 rounded border border-emerald-900/40">
+              <span class="text-emerald-400 font-mono font-bold block mb-1">NA28 / ECM (CBGM Adopted Reading):</span>
+              <span class="font-greek text-sm text-slate-200 block mb-1">ἐκ καρδίας ἀλλήλους ἀγαπήσατε ἐκτενῶς</span>
+              <span class="text-slate-400 text-[11px]">"love one another earnestly from the heart" (Omission of <em>pure</em> supported by Codex Alexandrinus (A) and 33). CBGM demonstrated that 'pure' was a secondary scribal harmonization to 1 Tim 1:5.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION 4: COMMITTEE IDEOLOGY & SYSTEMATIC BIAS DOSSIERS -->
+    <section id="bias-dossiers" class="space-y-4">
+      <div class="border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2 text-rose-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+          <i data-lucide="shield-alert" class="w-4 h-4"></i>
+          <span>Module 04: Committee Ideology & Exegetical Biases</span>
+        </div>
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">Forensic Analysis of Translation Committee Tendencies</h2>
+        <p class="text-xs text-slate-400">Documented cases where translation committees manipulated syntax, lexical choices, or prepositions to enforce theological dogmas.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- ESV Complementarian Dossier -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="font-serif font-bold text-sm text-amber-300">ESV / Crossway: Complementarian Insertion</span>
+            <span class="text-[10px] font-mono bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded">CBMW Hegemony</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Genesis 3:16 (The 2016 "Permanent Text" Fiasco):</strong> The Hebrew phrase <em>w'el-ishek t'shuqatek</em> (literally: "and toward your husband is your desire") was translated in 2016 as <em>"Your desire shall be <strong>contrary to</strong> your husband, but he shall rule over you"</em> to enforce Susan Foh's 1975 complementarian thesis directly into the text.</p>
+            <p><strong>1 Timothy 2:12 (<em>Authentein</em>):</strong> Translated "exercise authority" (neutral/positive) rather than "usurp / domineer" to prohibit all female leadership.</p>
+            <p><strong>Romans 16:1 & 16:7:</strong> Phoebe downgraded to "servant" (vs "deacon"); Junia translated as "known <em>to</em> the apostles" to extinguish evidence of a female apostle.</p>
+          </div>
+        </div>
+
+        <!-- NIV Inerrancy Harmonization Dossier -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="font-serif font-bold text-sm text-blue-300">NIV / CBT: Systematic Inerrancy Harmonizations</span>
+            <span class="text-[10px] font-mono bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded">Evangelical Harmony</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Mark 1:2 vs Malachi/Isaiah:</strong> Mark 1:2 quotes Malachi 3:1 and Isaiah 40:3 under the heading "As it is written in Isaiah the prophet". The NIV committee translated early editions to smooth over the composite citation attribution.</p>
+            <p><strong>Genesis 2:19 (Chronological Past Perfect Tense):</strong> Translated Hebrew imperfect consecutive as a pluperfect <em>"Now the LORD God <strong>had formed</strong> out of the ground all the wild animals"</em> to eliminate the apparent contradiction with Genesis 1's creation order.</p>
+            <p><strong>Matthew 27:44 vs Luke 23:39:</strong> Harmonizing the behavior of the two thieves on the cross.</p>
+          </div>
+        </div>
+
+        <!-- Catholic Liturgical Divergence Dossier -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="font-serif font-bold text-sm text-indigo-300">USCCB / CCD: The 35-Year Lectionary Divergence</span>
+            <span class="text-[10px] font-mono bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded">Liturgiam Authenticam</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>The Quadfurcation Crisis (1991–2026):</strong> In 1994, Cardinal Ratzinger (CDF) revoked confirmation of the 1991 NAB Psalter due to gender-neutral alterations destroying Christological singulars (Ps 1:1, Ps 8:4). The US Mass Lectionary was manually modified, creating a permanent divergence between the study Bible (NABRE 2011) and the Mass Lectionary (1998/2002).</p>
+            <p><strong>Resolution:</strong> The November 2024 USCCB vote (216-4-3) adopting the unified <strong>Catholic American Bible (CAB)</strong> with <em>The Abbey Psalms</em> for Ash Wednesday 2027.</p>
+          </div>
+        </div>
+
+        <!-- NRSV / NRSVue Academic Guild Dossier -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="font-serif font-bold text-sm text-emerald-300">NRSV / NRSVue: Academic Guild & Ideology</span>
+            <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">SBL Handbook Standard</span>
+          </div>
+          <div class="text-xs text-slate-300 space-y-2 leading-relaxed">
+            <p><strong>Methodological Rigor:</strong> Absolute commitment to non-confessional text-critical transparency, integrating all 40 volumes of Qumran DJD, Göttingen Septuaginta, and BHQ.</p>
+            <p><strong>Linguistic Tensions:</strong> Rigorous gender-neutralization policy at times converts singular Hebrew/Greek forms into plural generics (e.g. "human beings" / "them" in Psalm 8:4), obscuring traditional messianic connections quoted in Hebrews 2:6.</p>
+            <p><strong>2021 NRSVue Updates:</strong> Updated archaic terminology (e.g., "defiling skin disease" for Hebrew *tsara'ath* instead of "leprosy").</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SECTION 5: PRIMARY CODICES & PAPYROLOGY COMPENDIUM -->
+    <section id="codices" class="space-y-4">
+      <div class="border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2 text-indigo-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+          <i data-lucide="archive" class="w-4 h-4"></i>
+          <span>Module 05: Primary Witness Dossiers</span>
+        </div>
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">Primary Greek Codices, Early Papyri & Qumran Scrolls</h2>
+        <p class="text-xs text-slate-400">Codicological and text-critical profiles of the foundational witnesses of the Old and New Testaments.</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-amber-400 transition cursor-pointer" onclick="showWitnessDetail('p75')">
+          <div class="text-amber-400 font-bold font-mono text-sm">P75 (Bodmer XIV-XV)</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 175–225 AD</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Luke & John (Proto-B)</span>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-amber-400 transition cursor-pointer" onclick="showWitnessDetail('p66')">
+          <div class="text-amber-400 font-bold font-mono text-sm">P66 (Bodmer II)</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 200 AD</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Gospel of John</span>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-cyan-400 transition cursor-pointer" onclick="showWitnessDetail('sinaiticus')">
+          <div class="text-cyan-400 font-bold font-mono text-sm">Codex Sinaiticus (ℵ)</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 330–360 AD</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Complete NT + Barnabas</span>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-cyan-400 transition cursor-pointer" onclick="showWitnessDetail('vaticanus')">
+          <div class="text-cyan-400 font-bold font-mono text-sm">Codex Vaticanus (B)</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 325–350 AD</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Premier Alexandrian</span>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-emerald-400 transition cursor-pointer" onclick="showWitnessDetail('bezae')">
+          <div class="text-emerald-400 font-bold font-mono text-sm">Codex Bezae (D)</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 400–450 AD</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Diglot Western Text</span>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg text-center hover:border-rose-400 transition cursor-pointer" onclick="showWitnessDetail('qumran')">
+          <div class="text-rose-400 font-bold font-mono text-sm">4QSam-a & 1QIsa-a</div>
+          <div class="text-[10px] text-slate-400 mt-1">c. 250–50 BC</div>
+          <span class="inline-block mt-1.5 text-[9px] font-mono px-1 rounded bg-slate-800 text-slate-300">Dead Sea Scrolls</span>
+        </div>
+
+      </div>
+
+      <!-- Detail Box -->
+      <div id="witness-detail-box" class="bg-slate-900/90 border border-slate-800 p-4 rounded-xl text-xs text-slate-300 space-y-2">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span class="font-mono font-bold text-amber-300" id="wit-title">Codex Vaticanus (B / 03) — Vatican Library, Gr. 1209</span>
+          <span class="text-[10px] font-mono text-slate-400" id="wit-meta">Alexandrian Text-Type • IV Century Uncial</span>
+        </div>
+        <p id="wit-desc" class="leading-relaxed">Considered by Westcott & Hort and modern Nestle-Aland editors to be the highest-quality single witness to the Greek New Testament. Noted for its extreme textual purity, lack of rhetorical embellishment, and close alignment with early papyri P75.</p>
+      </div>
+    </section>
+
+
+    <!-- SECTION 6: MASTER TRANSLATION & COMMITTEE INDEX -->
+    <section id="database" class="space-y-4">
+      <div class="border-b border-slate-800 pb-3 flex flex-col sm:flex-row sm:items-end justify-between">
+        <div>
+          <div class="flex items-center space-x-2 text-amber-400 text-xs font-mono font-bold uppercase tracking-wider mb-1">
+            <i data-lucide="database" class="w-4 h-4"></i>
+            <span>Module 06: Scholarly & Ecclesiastical Translation Index</span>
+          </div>
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-slate-100">The Academic & Ecclesiastical Collation Matrix</h2>
+          <p class="text-xs text-slate-400">Textual foundations, translation charters, committee governance, and canonical authority.</p>
+        </div>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl flex flex-wrap gap-3 text-xs">
+        <input type="text" id="trans-search" oninput="renderTranslationsTable()" placeholder="Search translation, committee, or base text..." class="bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500 min-w-[220px]">
+        <select id="trans-canon-filter" onchange="renderTranslationsTable()" class="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500">
+          <option value="all">All Ecclesiastical Statuses</option>
+          <option value="Catholic">Catholic Ecclesiastical Approval</option>
+          <option value="Academic">Academic Guild Standard (SBL)</option>
+          <option value="Protestant">Protestant Confessional</option>
+        </select>
+        <select id="trans-nt-filter" onchange="renderTranslationsTable()" class="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500">
+          <option value="all">All NT Textual Bases</option>
+          <option value="NA28">NA28 / ECM / Critical</option>
+          <option value="TR">Textus Receptus</option>
+          <option value="Vulgate">Latin Vulgate</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-slate-900/60 border border-slate-800 rounded-xl overflow-x-auto shadow-2xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-900 border-b border-slate-800 text-[11px] font-mono text-slate-400 uppercase">
+              <th class="py-3 px-3.5">Code</th>
+              <th class="py-3 px-3.5">Translation Name</th>
+              <th class="py-3 px-3.5">Year</th>
+              <th class="py-3 px-3.5">OT Base</th>
+              <th class="py-3 px-3.5">NT Base</th>
+              <th class="py-3 px-3.5">Translation Methodology</th>
+              <th class="py-3 px-3.5">Sponsoring Body / Publisher</th>
+              <th class="py-3 px-3.5">Ecclesiastical / Academic Status</th>
+            </tr>
+          </thead>
+          <tbody id="trans-table-body" class="divide-y divide-slate-800/60 font-mono text-[11px]">
+            <tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">NRSVue</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">New Revised Standard Version Updated Edition</td><td class="py-2.5 px-3.5 text-slate-400">2021</td><td class="py-2.5 px-3.5 text-slate-300">BHS/BHQ, Göttingen LXX, DJD Qumran</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / ECM (CBGM Integration)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Academic Formal Equivalence with Inclusive Policy</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">National Council of Churches / SBL (Oxford Univ. Press)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">SBL & Guild Gold Standard</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">ESV-CE</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">English Standard Version Catholic Edition</td><td class="py-2.5 px-3.5 text-slate-400">2018</td><td class="py-2.5 px-3.5 text-slate-300">BHS, LXX, DSS, Latin Vulgate</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / UBS5 (Catholic Oversight)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Essentially Literal (Formal Equivalence)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">Crossway / Catholic Truth Society / ATC</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">Approved Lectionary (UK, India, Scotland)</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">CAB (2027)</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">Catholic American Bible (Unified Lectionary Bible)</td><td class="py-2.5 px-3.5 text-slate-400">2027</td><td class="py-2.5 px-3.5 text-slate-300">Revised NABRE OT + Abbey Psalms & Canticles</td><td class="py-2.5 px-3.5 text-cyan-300">Newly Revised 2024 Catholic NT (NA28/Nova Vulgata)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Formal Correspondence (Liturgiam Authenticam)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">USCCB / Confraternity of Christian Doctrine (CCD)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">Mandatory US Liturgical Standard (Ash Wed 2027)</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">RSV-2CE</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">Revised Standard Version, Second Catholic Edition</td><td class="py-2.5 px-3.5 text-slate-400">2006</td><td class="py-2.5 px-3.5 text-slate-300">BHS, Clementine/Nova Vulgata, LXX</td><td class="py-2.5 px-3.5 text-cyan-300">Nestle-Aland with Liturgiam Authenticam Alignment</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Formal Equivalence (Traditional Hieratic)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">Ignatius Press / Midwest Theological Forum</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">Personal Ordinariates & Antilles Lectionary</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">Douay-Rheims</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">Douay-Rheims Bible (Challoner Revision)</td><td class="py-2.5 px-3.5 text-slate-400">1582/1750</td><td class="py-2.5 px-3.5 text-slate-300">Sixto-Clementine Latin Vulgate (1592)</td><td class="py-2.5 px-3.5 text-cyan-300">Latin Vulgate collated with Greek MSS</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Strict Formal Equivalence from Latin Textus Receptus</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">English College at Douai / Bishop Richard Challoner</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">Historic Catholic English Monument</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">LSB</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">Legacy Standard Bible</td><td class="py-2.5 px-3.5 text-slate-400">2021</td><td class="py-2.5 px-3.5 text-slate-300">BHS / DSS (Restores 'Yahweh' 6,800+ times)</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / UBS5 (Translates 'doulos' strictly as 'slave')</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Strict Exhaustive Formal Equivalence</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">The Master's Seminary / Lockman Foundation / 316</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">Strict Inerrantist Reformed Baseline</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">ESV</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">English Standard Version</td><td class="py-2.5 px-3.5 text-slate-400">2001/2016</td><td class="py-2.5 px-3.5 text-slate-300">BHS (1971 RSV base with conservative revisions)</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / UBS5 (Complementarian Framing)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Essentially Literal with CBMW Ideological Policy</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">Crossway (Good News Publishers)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">Reformed Evangelical Hegemon</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">NASB95</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">New American Standard Bible (1995 Update)</td><td class="py-2.5 px-3.5 text-slate-400">1995</td><td class="py-2.5 px-3.5 text-slate-300">BHS (Stuttgartensia 1983)</td><td class="py-2.5 px-3.5 text-cyan-300">Nestle-Aland 26th / 27th Edition</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Formal Equivalence (Gold Standard Word-for-Word)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">The Lockman Foundation (La Habra, CA)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">Academic Inerrantist Pulpit Standard</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">KJV</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">King James Version (Authorized Version)</td><td class="py-2.5 px-3.5 text-slate-400">1611/1769</td><td class="py-2.5 px-3.5 text-slate-300">Bomberg Rabbinic Bible / Jacob ben Hayyim MT</td><td class="py-2.5 px-3.5 text-cyan-300">Textus Receptus (Stephanus 1550 / Beza 1598)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Formal Equivalence (Jacobean English)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">The British Crown / King's Printer (Barker)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">Historic Protestant Heritage</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">CSB</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">Christian Standard Bible</td><td class="py-2.5 px-3.5 text-slate-400">2017</td><td class="py-2.5 px-3.5 text-slate-300">BHS (5th Edition)</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / UBS5</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Optimal Equivalence (Mediating Formal/Dynamic)</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">Broadman & Holman / Lifeway (Southern Baptist Conv.)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">SBC Denominational Curriculum Standard</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">NIV</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">New International Version</td><td class="py-2.5 px-3.5 text-slate-400">2011</td><td class="py-2.5 px-3.5 text-slate-300">BHS / Eclectic Ancient Versions</td><td class="py-2.5 px-3.5 text-cyan-300">NA28 / UBS5 with Systematic Inerrancy Harmonization</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Functional / Dynamic Equivalence with Balance</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">Biblica / Zondervan (HarperCollins)</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">Commercial Global Bestseller</span></td></tr><tr class="hover:bg-slate-900/80 transition"><td class="py-2.5 px-3.5 font-bold text-amber-400">NABRE</td><td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">New American Bible Revised Edition</td><td class="py-2.5 px-3.5 text-slate-400">2011</td><td class="py-2.5 px-3.5 text-slate-300">Completely Revised 2011 OT (DSS / LXX / BHS)</td><td class="py-2.5 px-3.5 text-cyan-300">1986 Revised NT (Pre-Liturgiam Authenticam)</td><td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">Critical Formal Equivalence with Academic Notes</td><td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">USCCB / Catholic Biblical Association / CCD</td><td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">US Catholic Study Bible Standard</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-6 mt-12 text-center text-xs text-slate-500 font-mono">
+    <div class="max-w-7xl mx-auto px-4">
+      Scripture Textual Criticism & Forensic Translation Workstation • History Proves Catholicism Academic Project
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Lucide Icons
+    if (window.lucide) { lucide.createIcons(); }
+
+    // Safely Parsed JSON Datasets
+    const APPARATUS_DATA = {"1jn5_7": {"heading": "NA28 / Critical Text Benchmark (1 John 5:7–8)", "sigla": "NA28 / ECM / Editio Critica Maior", "text": "ὅτι τρεῖς εἰσιν οἱ μαρτυροῦντες, τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα, καὶ οἱ τρεῖς εἰς τὸ ἕν εἰσιν.", "morphology": "Three witnesses: the Spirit (pneuma), the water (hydor), and the blood (haima). No heavenly witnesses formula in Greek archetype.", "variants": [{"reading": "ὅτι τρεῖς εἰσιν οἱ μαρτυροῦντες, τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα [Short Reading / Original]", "witnesses": "P74, ℵ, A, B, K, L, P, Ψ, 049, 0142, 0296, 1739, all ancient Greek minuscules, syr(p,h), cop(sa,bo), arm, eth, early Old Latin (Vercellensis, Colbertinus), Clement of Alexandria, Origen, Athanasius, Didymus, Augustine, Chrysostom."}, {"reading": "...in caelo: Pater, Verbum, et Spiritus Sanctus... et tres sunt qui testimonium dant in terra... [Comma Johanneum]", "witnesses": "Latin: Priscillian of Ávila (c. 385 AD), Speculum (m), Codex Cavensis (9th c.), Clementine Vulgate (1592). Greek: Codex Montfortianus (minuscule 61, c. 1520 AD), Codex Ottobonianus (629, 14th c. Latin-Greek diglot), 918 (16th c.), 2318 (18th c.). Total exclusion from early Greek tradition."}], "judgment": "Unanimous critical consensus: The Comma Johanneum is a 4th-century Latin theological marginal gloss that gradually entered the Old Latin and Vulgate traditions. Erasmus excluded it in 1516/1519, was pressured into adding it in 1522 via MS 61 (produced to order), passing into the Textus Receptus and KJV. Excluded by all modern critical editions.", "translations": [{"name": "KJV / NKJV", "desc": "Retains the full Comma in main text without brackets (Textus Receptus)."}, {"name": "NRSVue / ESV / NASB / CSB / NIV", "desc": "Total exclusion from text; relegated to critical footnote."}, {"name": "Douay-Rheims", "desc": "Retained from the Clementine Vulgate tradition."}, {"name": "NABRE / CAB (2027)", "desc": "Excluded from text in accordance with Nova Vulgata & NA28."}]}, "mk16_9": {"heading": "NA28 / Critical Text Benchmark (Mark 16:9–20)", "sigla": "Double Brackets [[ ]] in NA28 / ECM", "text": "[[ Ἀναστὰς δὲ πρωῒ πρώτῃ σαββάτου ἐφάνη πρῶτον Μαρίᾳ τῇ Μαγδαληνῇ... ]]", "morphology": "Longer Ending of Mark (vv. 9–20) detailing post-resurrection appearances, sign-gifts, and ascension.", "variants": [{"reading": "Gospel ends abruptly at verse 16:8: ἐφοβοῦντο γάρ. [Shortest / Oldest Reading]", "witnesses": "Codex Sinaiticus (ℵ), Codex Vaticanus (B), Old Latin k (Bobbiensis), Sinaitic Syriac (syr^s), Sahidic Coptic, ~100 Armenian manuscripts, 2 oldest Georgian manuscripts. Clement of Alexandria, Origen, Eusebius, Jerome testify that ending was absent in almost all accurate Greek copies."}, {"reading": "Intermediate / Shorter Ending: 'All that had been commanded them they told briefly to those around Peter...'", "witnesses": "Codex Regius (L / 019), Ψ (044), 099, 0112, Harklean Syriac margin, Sahidic/Bohairic Coptic margins, Ethiopic."}, {"reading": "Longer Ending (vv. 9–20) [Traditional / Byzantine Reading]", "witnesses": "Codex Alexandrinus (A), Codex Ephraemi (C), Codex Bezae (D), Codex Washingtonianus (W - with Freer Logion), Majority Text (𝔐), Latin Vulgate, Peshitta. Patristic: Irenaeus (Adv. Haer. 3.10.6, c. 180 AD), Tatian (Diatessaron)."}], "judgment": "Internal evidence (vocabulary: 18 non-Marcan words, abrupt transition from v. 8 to v. 9 where Mary Magdalene is introduced as if for the first time) and external evidence (ℵ and B) prove vv. 9–20 were not authored by Mark. However, their 2nd-century presence in Irenaeus makes them canonical scriptural tradition.", "translations": [{"name": "KJV / NKJV", "desc": "Printed continuously without brackets or cautionary headers."}, {"name": "NRSVue / ESV / NASB / CSB", "desc": "Placed in prominent double brackets with extensive warning footnote."}, {"name": "NABRE / RSV-2CE / CAB", "desc": "Printed in text with footnote explaining liturgical canonical status."}]}, "jn7_53": {"heading": "NA28 / Critical Text Benchmark (John 7:53–8:11)", "sigla": "Double Brackets [[ ]] in NA28 / ECM", "text": "[[ Καὶ ἐπορεύθησαν ἕκαστος εἰς τὸν οἶκον αὐτοῦ, Ἰησοῦς δὲ ἐπορεύθη εἰς τὸ Ὄρος τῶν Ἐλαιῶν... ]]", "morphology": "Pericope Adulterae: The account of the woman caught in adultery.", "variants": [{"reading": "Omission of John 7:53–8:11 (Text jumps directly from 7:52 to 8:12)", "witnesses": "𝔓66 (c. 200), 𝔓75 (c. 225), Codex Sinaiticus (ℵ), Codex Vaticanus (B), Codex Alexandrinus (A - lacuna spans exact space for omission), Codex Ephraemi (C), Codex Washingtonianus (W), L, N, T, 0141, 0211, Family 1424, syr(s,c,p), Sahidic/Bohairic Coptic. Origen, Chrysostom, Nonnus omit."}, {"reading": "Inclusion in John 7:53–8:11", "witnesses": "Codex Bezae (D / 05), Codex Basilensis (E), Codex Cyprius (K), Majority Text (𝔐), Old Latin, Latin Vulgate. Supported by Augustine (who argued moralists removed it fearing wives would sin with impunity), Jerome, Ambrose."}, {"reading": "Floating Pericope (Placed after John 7:36, John 7:52, John 21:25, or Luke 21:38)", "witnesses": "Family 13 (Ferrar Group: placed after Luke 21:38), MS 225 (placed after John 7:36)."}], "judgment": "Non-Johannine vocabulary, style, and total absence from all pre-4th century Greek manuscripts prove it was an independent authentic apostolic oral tradition (likely Lucan in style) inserted into John by Western scribes.", "translations": [{"name": "KJV / NKJV", "desc": "Printed without brackets or demarcation."}, {"name": "NRSVue / ESV / NASB / CSB / NIV", "desc": "Enclosed in brackets with italicized warning notes."}, {"name": "Catholic Editions (NABRE/RSV-2CE/CAB)", "desc": "Maintained as canonical Scripture inspired by the Holy Spirit (Council of Trent)."}]}, "isa7_14": {"heading": "Masoretic vs. Septuagint & Qumran (Isaiah 7:14)", "sigla": "BHS / BHQ vs. Göttingen LXX vs. 1QIsa-a", "text": "MT: לָ֠כֵן יִתֵּ֨ן אֲדֹנָ֥י ה֛וּא לָכֶ֖ם א֑וֹת הִנֵּ֣ה הָעַלְמָ֗ה הָרָה֙ וְיֹלֶ֣דֶת בֵּ֔ן וְקָרָ֥את שְׁמ֖וֹ עִמָּ֥נוּ אֵֽל׃", "morphology": "Hebrew: ha-'almah (the young woman of childbearing age). LXX: he parthenos (the virgin). 1QIsa-a confirms MT spelling.", "variants": [{"reading": "MT & 1QIsa-a: הָעַלְמָה (ha-'almah) — 'young woman / maiden'", "witnesses": "Masoretic Text (Leningrad B19A), Great Isaiah Scroll (1QIsa-a, 2nd c. BC), Aquila, Symmachus, Theodotion (all render Greek νεᾶνις - neanis)."}, {"reading": "Septuagint (LXX): ἡ παρθένος (he parthenos) — 'the virgin'", "witnesses": "Göttingen LXX (ed. Ziegler), Codex Vaticanus (B), Codex Sinaiticus (ℵ), Codex Alexandrinus (A), Matthew 1:23 quotation."}], "judgment": "In classical Hebrew, 'almah denotes a young woman who has reached puberty without technical designation of sexual history (unlike bethulah). However, the Jewish translators of the LXX in Alexandria (3rd-2nd c. BC) deliberately chose parthenos (virgin), establishing the messianic trajectory quoted in Matthew 1:23.", "translations": [{"name": "KJV / NKJV / ESV / NASB / CSB / RSV-2CE", "desc": "'Behold, the virgin shall conceive'"}, {"name": "RSV (1952) / NRSV / NRSVue", "desc": "'Look, the young woman is with child' (Footnote: 'Or virgin')"}, {"name": "NABRE / CAB", "desc": "'the virgin shall conceive' (Liturgical and canonical Christological fulfillment)."}]}, "deut32_8": {"heading": "Deuteronomy 32:8–9 (The Divine Council Battleground)", "sigla": "BHS vs. 4QDeut-q vs. Göttingen LXX", "text": "MT: לְמִסְפַּ֖ר בְּנֵ֥י יִשְׂרָאֵֽל׃ (bnei Yisrael) vs 4QDeut: בניה אלוהים (bnei Elohim)", "morphology": "Number of the sons of Israel (MT) vs Number of the sons of God / angels of God (4QDeut-q, 4QDeut-j, LXX).", "variants": [{"reading": "MT: בְּנֵי יִשְׂרָאֵל ('sons of Israel')", "witnesses": "Masoretic Text, Samaritan Pentateuch, Targum Onkelos, Vulgate (filiorum Israel)."}, {"reading": "4QDeut-q, 4QDeut-j: בני אלוהים ('sons of God / divine beings') | LXX: ἀγγέλων θεοῦ / υἱῶν θεοῦ", "witnesses": "Qumran Cave 4 (4QDeut-q / 4Q44, 1st c. BC), Göttingen LXX (ed. Wevers), Codex Vaticanus, Old Latin, Philo, Justin Martyr."}], "judgment": "The Qumran discovery of 4QDeut-q proved that the LXX was translating an authentic Hebrew Vorlage reading 'sons of God' (reflecting Yahweh portioning the nations among the divine council in Genesis 10-11). The MT reading represents a later theological correction to prevent polytheistic misunderstanding.", "translations": [{"name": "KJV / NKJV / NASB95", "desc": "'according to the number of the children of Israel' (Strict MT)."}, {"name": "ESV / NRSVue / CSB / NET / NABRE", "desc": "'according to the number of the sons of God' (Adopting 4QDeut-q and LXX)."}]}, "ps22_16": {"heading": "Psalm 22:16 (MT 22:17) — 'They Pierced' vs 'Like a Lion'", "sigla": "BHS vs. 5/6HevPs vs. Göttingen LXX", "text": "MT: כָּ֝אֲרִ֗י יָדַ֥י וְרַגְלָֽי׃ (ka'ari - like a lion my hands and feet)", "morphology": "MT reads ka'ari (noun with prefix k-). 5/6HevPs & LXX read ka'aru / oryxan (verb: they dug/pierced).", "variants": [{"reading": "MT: כָּאֲרִי (ka'ari) — 'like a lion [are] my hands and feet'", "witnesses": "Leningrad Codex (B19A), Aleppo Codex, Targum ('biting like a lion'). Syntax is missing a verb in Hebrew."}, {"reading": "5/6HevPs: כארו / כרו (ka'aru / karu) | LXX: ὤρυξαν (oryxan) — 'they dug / pierced'", "witnesses": "Naḥal Ḥever Dead Sea Scroll (5/6ḤevPs, 1st c. AD), Göttingen LXX (Codex B, ℵ, A), Syriac Peshitta (baz'w), Vulgate (foderunt)."}], "judgment": "The ancient Naḥal Ḥever scroll confirms the Septuagint reading against the medieval Masoretic vocalization, showing scribal confusion between the Hebrew letter Waw (ו) and Yod (י). The original Hebrew contained a verbal form meaning 'they pierced/dug'.", "translations": [{"name": "KJV / NKJV / ESV / NASB / CSB / RSV-2CE / NABRE", "desc": "'they pierced my hands and my feet'"}, {"name": "NRSVue (2021)", "desc": "'My hands and feet have shriveled' (Footnote: 'Other ancient witnesses read they pierced')"}, {"name": "Jewish JPS (1985)", "desc": "'like lions they maul my hands and feet'"}]}, "1tim3_16": {"heading": "1 Timothy 3:16 — 'God was manifested' vs 'He who was manifested'", "sigla": "NA28 vs. Textus Receptus", "text": "NA28: ὃς ἐφανερώθη ἐν σαρκί (Hos ephanerothe) vs TR: Θεὸς ἐφανερώθη (Theos)", "morphology": "Relative pronoun ὃς (He who) vs Nomina Sacra ΘC (Theos - God).", "variants": [{"reading": "ὃς (Hos) — 'He who was manifested in the flesh' [Critical Reading]", "witnesses": "𝔓46 (lacuna), Codex Sinaiticus (ℵ* original hand), Codex Vaticanus (lacuna in Pastorals), Codex Ephraemi (C* original), Codex Alexandrinus (A* original), 061, 33, 1739, syr(p,h), cop(sa,bo), Gothic, Jerome, Epiphanius."}, {"reading": "Θεὸς (Theos) — 'God was manifested in the flesh' [Byzantine / TR Reading]", "witnesses": "Codex Sinaiticus (corrector ℵ^e), Codex Alexandrinus (corrector A^c), Codex Ephraemi (C^3), Codex Bezae (corrector D^2), Majority Text (𝔐), John Chrysostom, Theodoret."}], "judgment": "In early uncial majuscule script, OC (Hos) was easily modified by a pious scribe into ΘC (Theos) by adding a central horizontal bar and an upper supralinear contraction stroke. The earlier, harder reading is the relative pronoun ὃς opening a pre-Pauline Christological hymn.", "translations": [{"name": "KJV / NKJV", "desc": "'God was manifest in the flesh' (TR)."}, {"name": "NRSVue / ESV / NASB / CSB / NIV / NABRE", "desc": "'He was manifested in the flesh' (Critical Text)."}]}, "rom9_5": {"heading": "Romans 9:5 — Christological Doxology & Punctuation", "sigla": "Syntactical & Punctuation Variant", "text": "Greek: ὧν οἱ πατέρες καὶ ἐξ ὧν ὁ Χριστὸς τὸ κατὰ σάρκα, ὁ ὢν ἐπὶ πάντων Θεὸς εὐλογητὸς εἰς τοὺς αἰῶνας, ἀμήν.", "morphology": "Punctuation crux: Does 'God over all, blessed forever' refer directly in apposition to 'Christ', or is it an independent doxology to God the Father?", "variants": [{"reading": "Direct Apposition (Christ is God over all): '...Christ according to the flesh, who is God over all, blessed forever.'", "witnesses": "Early patristic citations (Irenaeus, Tertullian, Hippolytus, Athanasius, Chrysostom, Augustine, Jerome). Natural Greek syntax of participle ὁ ὢν connecting back to ὁ Χριστός."}, {"reading": "Separated Doxology: '...Christ according to the flesh. God who is over all be blessed forever.'", "witnesses": "Advocated by Socinian and historical-critical commentators (Erasmus notes, modern critical margins)."}], "judgment": "Grammatical analysis demonstrates that ὁ ὢν is an appositional relative clause modifying Christ. Placing a full stop before ὁ ὢν breaks the Paulinian rhythm and creates an unprecedented isolated doxology.", "translations": [{"name": "KJV / ESV / NASB / CSB / RSV-2CE / NABRE", "desc": "'Christ, who is God over all, blessed forever.'"}, {"name": "RSV (1952) / NRSV margin", "desc": "'Christ. God who is over all be blessed forever.'"}, {"name": "NRSVue (2021)", "desc": "'Christ, who is over all, God blessed forever.' (Recognizing high Christology)."}]}, "gen3_16": {"heading": "Genesis 3:16 — Preposition 'El (Toward) vs 'Contrary To'", "sigla": "BHS vs. ESV 2016 Permanent Text Alteration", "text": "Hebrew: וְאֶל־אִישֵׁךְ תְּשׁוּקָתֵךְ וְהוּא יִמְשָׁל־בָּךְ", "morphology": "Preposition אֶל ('el = toward) + teshûqāh (desire/longing).", "variants": [{"reading": "Standard Lexical Grammar: 'Your desire shall be FOR your husband'", "witnesses": "Septuagint (ἀποστροφή - turning/longing), Vulgate (appetitus tuus), Targum, KJV, RSV, NASB, NIV, CSB, NRSV, NABRE."}, {"reading": "ESV 2016 Text: 'Your desire shall be CONTRARY TO your husband'", "witnesses": "No Hebrew manuscript or ancient version support. Derived solely from Susan Foh's 1975 WTJ hypothesis linking Gen 3:16 to Gen 4:7."}], "judgment": "The Hebrew preposition 'el does not mean 'contrary to' or 'against' in this syntactical construction (which would require 'al or k'neged). The 2016 ESV reading was an ideological insertion by the Translation Oversight Committee to force complementarian theology into the translated text. Partially walked back in 2025.", "translations": [{"name": "ESV (2016 Edition)", "desc": "'Your desire shall be contrary to your husband, but he shall rule over you.'"}, {"name": "NASB / CSB / NIV / NRSVue / KJV / NABRE", "desc": "'Your desire shall be for your husband, and he shall rule over you.'"}]}};
+    const WITNESSES_DATA = {"p75": {"title": "Papyrus 75 (𝔓75 / Bodmer XIV–XV) — Vatican Library, P.Bodmer XIV–XV", "meta": "c. 175–225 AD • Early Alexandrian Papyrus Codex", "desc": "Contains large portions of Luke and John. Its text displays astonishing, letter-for-letter fidelity with Codex Vaticanus (B), proving that the pristine Alexandrian text-type was already firmly established in the late 2nd century and did not originate as a 4th-century recension."}, "p66": {"title": "Papyrus 66 (𝔓66 / Bodmer II) — Cologny-Geneva, Bibliotheca Bodmeriana", "meta": "c. 200 AD • Continuous Text of the Gospel of John", "desc": "Contains almost the complete Gospel of John. Free from the Comma Johanneum and the Pericope Adulterae. Shows extensive scribal self-corrections indicating rigorous early scriptorium practices."}, "sinaiticus": {"title": "Codex Sinaiticus (ℵ / 01) — British Library, Add. 43725", "meta": "c. 330–360 AD • Complete Greek Bible + Apocrypha + Apostolic Fathers", "desc": "Discovered by Constantin von Tischendorf at St Catherine's Monastery on Mount Sinai. One of the two primary pillars of modern New Testament textual criticism. Contains the complete NT, Epistle of Barnabas, and Shepherd of Hermas. Omits Mark 16:9–20 and John 7:53–8:11."}, "vaticanus": {"title": "Codex Vaticanus (B / 03) — Vatican Library, Gr. 1209", "meta": "c. 325–350 AD • Premier Alexandrian Great Uncial", "desc": "The single most valuable extant witness to the text of the Septuagint and the Greek New Testament. Characterized by its unadorned, non-harmonized, concise readings. Forms the backbone of Westcott-Hort, Tischendorf, NA28, and the Larger Cambridge Septuagint."}, "bezae": {"title": "Codex Bezae Cantabrigiensis (D / 05) — Cambridge University Library, Nn. 2.41", "meta": "c. 400–450 AD • Greek-Latin Diglot of Gospels & Acts", "desc": "Presented to Cambridge University by Theodore Beza in 1581. The chief witness to the 'Western' text-type, characterized by expansive paraphrases, unique narrative additions, and harmonizations. Contains the Pericope Adulterae and the unique Sabbath worker logion in Luke 6:5."}, "qumran": {"title": "Dead Sea Scrolls: 4QSam-a, 4QJer-b, 1QIsa-a — Israel Museum / Shrine of the Book", "meta": "c. 250 BC – 68 AD • Qumran Caves 1 & 4", "desc": "Revolutionized Old Testament textual criticism by proving the existence of a pluriform text before 70 AD. 4QSam-a and 4QJer-b proved that the Septuagint was translating an authentic, earlier Hebrew Vorlage differing significantly from the medieval Masoretic Text."}};
+    const TRANSLATIONS_DATA = [{"code": "NRSVue", "name": "New Revised Standard Version Updated Edition", "year": "2021", "ot": "BHS/BHQ, Göttingen LXX, DJD Qumran", "nt": "NA28 / ECM (CBGM Integration)", "method": "Academic Formal Equivalence with Inclusive Policy", "sponsor": "National Council of Churches / SBL (Oxford Univ. Press)", "status": "Academic", "statusDesc": "SBL & Guild Gold Standard"}, {"code": "ESV-CE", "name": "English Standard Version Catholic Edition", "year": "2018", "ot": "BHS, LXX, DSS, Latin Vulgate", "nt": "NA28 / UBS5 (Catholic Oversight)", "method": "Essentially Literal (Formal Equivalence)", "sponsor": "Crossway / Catholic Truth Society / ATC", "status": "Catholic", "statusDesc": "Approved Lectionary (UK, India, Scotland)"}, {"code": "CAB (2027)", "name": "Catholic American Bible (Unified Lectionary Bible)", "year": "2027", "ot": "Revised NABRE OT + Abbey Psalms & Canticles", "nt": "Newly Revised 2024 Catholic NT (NA28/Nova Vulgata)", "method": "Formal Correspondence (Liturgiam Authenticam)", "sponsor": "USCCB / Confraternity of Christian Doctrine (CCD)", "status": "Catholic", "statusDesc": "Mandatory US Liturgical Standard (Ash Wed 2027)"}, {"code": "RSV-2CE", "name": "Revised Standard Version, Second Catholic Edition", "year": "2006", "ot": "BHS, Clementine/Nova Vulgata, LXX", "nt": "Nestle-Aland with Liturgiam Authenticam Alignment", "method": "Formal Equivalence (Traditional Hieratic)", "sponsor": "Ignatius Press / Midwest Theological Forum", "status": "Catholic", "statusDesc": "Personal Ordinariates & Antilles Lectionary"}, {"code": "Douay-Rheims", "name": "Douay-Rheims Bible (Challoner Revision)", "year": "1582/1750", "ot": "Sixto-Clementine Latin Vulgate (1592)", "nt": "Latin Vulgate collated with Greek MSS", "method": "Strict Formal Equivalence from Latin Textus Receptus", "sponsor": "English College at Douai / Bishop Richard Challoner", "status": "Catholic", "statusDesc": "Historic Catholic English Monument"}, {"code": "LSB", "name": "Legacy Standard Bible", "year": "2021", "ot": "BHS / DSS (Restores 'Yahweh' 6,800+ times)", "nt": "NA28 / UBS5 (Translates 'doulos' strictly as 'slave')", "method": "Strict Exhaustive Formal Equivalence", "sponsor": "The Master's Seminary / Lockman Foundation / 316", "status": "Protestant", "statusDesc": "Strict Inerrantist Reformed Baseline"}, {"code": "ESV", "name": "English Standard Version", "year": "2001/2016", "ot": "BHS (1971 RSV base with conservative revisions)", "nt": "NA28 / UBS5 (Complementarian Framing)", "method": "Essentially Literal with CBMW Ideological Policy", "sponsor": "Crossway (Good News Publishers)", "status": "Protestant", "statusDesc": "Reformed Evangelical Hegemon"}, {"code": "NASB95", "name": "New American Standard Bible (1995 Update)", "year": "1995", "ot": "BHS (Stuttgartensia 1983)", "nt": "Nestle-Aland 26th / 27th Edition", "method": "Formal Equivalence (Gold Standard Word-for-Word)", "sponsor": "The Lockman Foundation (La Habra, CA)", "status": "Protestant", "statusDesc": "Academic Inerrantist Pulpit Standard"}, {"code": "KJV", "name": "King James Version (Authorized Version)", "year": "1611/1769", "ot": "Bomberg Rabbinic Bible / Jacob ben Hayyim MT", "nt": "Textus Receptus (Stephanus 1550 / Beza 1598)", "method": "Formal Equivalence (Jacobean English)", "sponsor": "The British Crown / King's Printer (Barker)", "status": "Protestant", "statusDesc": "Historic Protestant Heritage"}, {"code": "CSB", "name": "Christian Standard Bible", "year": "2017", "ot": "BHS (5th Edition)", "nt": "NA28 / UBS5", "method": "Optimal Equivalence (Mediating Formal/Dynamic)", "sponsor": "Broadman & Holman / Lifeway (Southern Baptist Conv.)", "status": "Protestant", "statusDesc": "SBC Denominational Curriculum Standard"}, {"code": "NIV", "name": "New International Version", "year": "2011", "ot": "BHS / Eclectic Ancient Versions", "nt": "NA28 / UBS5 with Systematic Inerrancy Harmonization", "method": "Functional / Dynamic Equivalence with Balance", "sponsor": "Biblica / Zondervan (HarperCollins)", "status": "Protestant", "statusDesc": "Commercial Global Bestseller"}, {"code": "NABRE", "name": "New American Bible Revised Edition", "year": "2011", "ot": "Completely Revised 2011 OT (DSS / LXX / BHS)", "nt": "1986 Revised NT (Pre-Liturgiam Authenticam)", "method": "Critical Formal Equivalence with Academic Notes", "sponsor": "USCCB / Catholic Biblical Association / CCD", "status": "Catholic", "statusDesc": "US Catholic Study Bible Standard"}];
+
+    function updateApparatus() {
+      const selector = document.getElementById('apparatus-selector');
+      if (!selector) return;
+      const crux = selector.value;
+      const data = APPARATUS_DATA[crux];
+      if (!data) return;
+
+      const headingEl = document.getElementById('app-text-heading');
+      const siglaEl = document.getElementById('app-text-sigla');
+      const textEl = document.getElementById('app-primary-text');
+      const morphEl = document.getElementById('app-morphology');
+      const vList = document.getElementById('app-variants-list');
+      const jBody = document.getElementById('app-judgment-body');
+      const tBox = document.getElementById('app-translations-treatment');
+
+      if (headingEl) headingEl.innerText = data.heading;
+      if (siglaEl) siglaEl.innerText = data.sigla;
+      if (textEl) textEl.innerText = data.text;
+      if (morphEl) morphEl.innerText = data.morphology;
+
+      if (vList) {
+        vList.innerHTML = data.variants.map((v, i) => `
+          <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5">
+            <div class="font-mono font-bold text-xs text-amber-300">[Reading ${String.fromCharCode(65 + i)}] ${v.reading}</div>
+            <div class="text-[11px] font-mono text-slate-400"><strong class="text-cyan-400">Witnesses:</strong> ${v.witnesses}</div>
+          </div>
+        `).join('');
+      }
+
+      if (jBody) {
+        jBody.innerHTML = `<p>${data.judgment}</p>`;
+      }
+
+      if (tBox) {
+        tBox.innerHTML = data.translations.map(t => `
+          <div class="border-b border-slate-800/80 pb-1.5">
+            <span class="font-mono font-bold text-slate-200">${t.name}:</span>
+            <span class="text-slate-400 text-[11px] block">${t.desc}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function showWitnessDetail(key) {
+      const data = WITNESSES_DATA[key];
+      if (!data) return;
+      const titleEl = document.getElementById('wit-title');
+      const metaEl = document.getElementById('wit-meta');
+      const descEl = document.getElementById('wit-desc');
+      if (titleEl) titleEl.innerText = data.title;
+      if (metaEl) metaEl.innerText = data.meta;
+      if (descEl) descEl.innerText = data.desc;
+    }
+
+    function renderTranslationsTable() {
+      const searchEl = document.getElementById('trans-search');
+      const canonEl = document.getElementById('trans-canon-filter');
+      const ntEl = document.getElementById('trans-nt-filter');
+      const tbody = document.getElementById('trans-table-body');
+      if (!tbody) return;
+
+      const search = searchEl ? searchEl.value.toLowerCase() : '';
+      const canon = canonEl ? canonEl.value : 'all';
+      const nt = ntEl ? ntEl.value : 'all';
+
+      const filtered = TRANSLATIONS_DATA.filter(t => {
+        const matchesSearch = t.name.toLowerCase().includes(search) || t.code.toLowerCase().includes(search) || t.sponsor.toLowerCase().includes(search) || t.ot.toLowerCase().includes(search);
+        const matchesCanon = canon === 'all' || t.status === canon;
+        const matchesNt = nt === 'all' || t.nt.includes(nt);
+        return matchesSearch && matchesCanon && matchesNt;
+      });
+
+      tbody.innerHTML = filtered.map(t => `
+        <tr class="hover:bg-slate-900/80 transition">
+          <td class="py-2.5 px-3.5 font-bold text-amber-400">${t.code}</td>
+          <td class="py-2.5 px-3.5 text-slate-200 font-sans font-medium text-xs">${t.name}</td>
+          <td class="py-2.5 px-3.5 text-slate-400">${t.year}</td>
+          <td class="py-2.5 px-3.5 text-slate-300">${t.ot}</td>
+          <td class="py-2.5 px-3.5 text-cyan-300">${t.nt}</td>
+          <td class="py-2.5 px-3.5 text-slate-300 font-sans text-[11px]">${t.method}</td>
+          <td class="py-2.5 px-3.5 text-slate-400 font-sans text-[11px]">${t.sponsor}</td>
+          <td class="py-2.5 px-3.5"><span class="px-1.5 py-0.5 rounded text-[10px] ${t.status === 'Catholic' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40' : t.status === 'Academic' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-slate-800 text-slate-300'}">${t.statusDesc}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // Direct invocation
+    updateApparatus();
+    renderTranslationsTable();
+  </script>
+</body>
+</html>

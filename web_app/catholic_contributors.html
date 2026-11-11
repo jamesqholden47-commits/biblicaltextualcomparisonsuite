@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Master Lexicon of Catholic Contributors to Christianity, Science & Civilization</title>
+  <style>
+    :root {
+      --bg-base: #0b0f19;
+      --bg-surface: #121826;
+      --bg-surface-elevated: #1a2336;
+      --border-color: #27354f;
+      --border-hover: #3b4e72;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --gold-primary: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.25);
+      --gold-light: #f6e05e;
+      --accent-crimson: #e53e3e;
+      --accent-azure: #3182ce;
+      --accent-emerald: #38a169;
+      --accent-purple: #805ad5;
+      --accent-teal: #319795;
+      --accent-amber: #dd6b20;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.4);
+      --font-serif: "Cinzel", "Georgia", "Cambria", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(180deg, #161e31 0%, var(--bg-surface) 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold-primary);
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      color: #fff;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    h1 span {
+      color: var(--gold-primary);
+      background: linear-gradient(135deg, #f6e05e 0%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      max-width: 950px;
+      margin: 1rem auto 0;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-card {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      line-height: 1.2;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Controls Panel */
+    .controls-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .btn-export {
+      background: var(--bg-surface-elevated);
+      color: var(--gold-primary);
+      border: 1px solid var(--gold-primary);
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-export:hover {
+      background: var(--gold-primary);
+      color: var(--bg-base);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* Filter Groups */
+    .filter-group {
+      margin-bottom: 1rem;
+    }
+
+    .filter-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text-main);
+    }
+
+    .pill-btn.active {
+      background: var(--gold-primary);
+      color: #0b0f19;
+      border-color: var(--gold-primary);
+      font-weight: 600;
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    /* Grid */
+    .results-count {
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Contributor Card */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-primary), transparent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 15px var(--gold-glow);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      gap: 0.75rem;
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .card-dates {
+      font-size: 0.8rem;
+      color: var(--gold-primary);
+      font-weight: 600;
+      margin-top: 0.2rem;
+    }
+
+    .domain-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .domain-biblical { background: rgba(49, 130, 206, 0.15); color: #63b3ed; border: 1px solid rgba(49, 130, 206, 0.3); }
+    .domain-theology { background: rgba(229, 62, 62, 0.15); color: #feb2b2; border: 1px solid rgba(229, 62, 62, 0.3); }
+    .domain-philosophy { background: rgba(128, 90, 213, 0.15); color: #d6bcfa; border: 1px solid rgba(128, 90, 213, 0.3); }
+    .domain-science { background: rgba(56, 161, 105, 0.15); color: #9ae6b4; border: 1px solid rgba(56, 161, 105, 0.3); }
+    .domain-monastic { background: rgba(221, 107, 32, 0.15); color: #fbd38d; border: 1px solid rgba(221, 107, 32, 0.3); }
+    .domain-charity { background: rgba(49, 151, 149, 0.15); color: #81e6d9; border: 1px solid rgba(49, 151, 149, 0.3); }
+    .domain-history { background: rgba(183, 148, 244, 0.15); color: #e9d8fd; border: 1px solid rgba(183, 148, 244, 0.3); }
+    .domain-literature { background: rgba(236, 201, 75, 0.15); color: #faf089; border: 1px solid rgba(236, 201, 75, 0.3); }
+
+    .card-role {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .card-summary {
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .card-meta {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.9rem;
+      margin-top: auto;
+    }
+
+    .card-meta-item {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .card-meta-item strong {
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .card-quote {
+      background: var(--bg-surface-elevated);
+      border-left: 3px solid var(--gold-primary);
+      padding: 0.6rem 0.9rem;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: #e2e8f0;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.9rem;
+    }
+
+    .card-footer-btn {
+      margin-top: 1rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--gold-primary);
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .card-footer-btn:hover {
+      background: var(--bg-surface-elevated);
+      border-color: var(--gold-primary);
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 750px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      background: var(--bg-surface-elevated);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .modal-close {
+      position: absolute;
+      right: 1.5rem;
+      top: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.2rem;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold-primary);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .modal-connection-box {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .modal-connection-title {
+      color: var(--gold-light);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    footer {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-badge">The Master Historical Compendium</div>
+    <h1>The <span>Catholic Architects</span> of Christianity & Civilization</h1>
+    <p class="subtitle">
+      A forensic historical taxonomy of over 75 monumental Catholic contributors across 2,000 years: from the Apostolic Fathers and Biblical Translators to the Pioneers of Modern Science, Philosophy, and Universal Charity.
+    </p>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number" id="totalCount">75</div>
+        <div class="stat-label">Documented<br>Titans</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="doctorCount">21</div>
+        <div class="stat-label">Doctors of<br>the Church</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="scienceCount">11</div>
+        <div class="stat-label">Scientific<br>Founders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="centuriesCount">21</div>
+        <div class="stat-label">Centuries<br>Spanned</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Controls -->
+    <div class="controls-panel">
+      <div class="search-row">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by name, discovery, work, or keyword (e.g. Vulgate, Genetics, Qumran, Aquinas)...">
+        </div>
+        <button id="btnExport" class="btn-export">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export Dataset (JSON)
+        </button>
+      </div>
+
+      <!-- Domain Filter -->
+      <div class="filter-group">
+        <div class="filter-title">
+          <span>Filter by Domain</span>
+        </div>
+        <div class="filter-pills" id="domainPills">
+          <button class="pill-btn active" data-filter="domain" data-val="all">All Domains</button>
+          <button class="pill-btn" data-filter="domain" data-val="Biblical">Biblical Exegesis & Manuscripts</button>
+          <button class="pill-btn" data-filter="domain" data-val="Theology">Systematic Dogma & Councils</button>
+          <button class="pill-btn" data-filter="domain" data-val="Philosophy">Philosophy & Metaphysics</button>
+          <button class="pill-btn" data-filter="domain" data-val="Science">Natural Science & Mathematics</button>
+          <button class="pill-btn" data-filter="domain" data-val="Monasticism">Monasticism & Mysticism</button>
+          <button class="pill-btn" data-filter="domain" data-val="Charity">Charity, Hospitals & Human Rights</button>
+          <button class="pill-btn" data-filter="domain" data-val="History">Historiography & Archaeology</button>
+          <button class="pill-btn" data-filter="domain" data-val="Literature">Literature & Culture</button>
+        </div>
+      </div>
+
+      <!-- Epoch Filter -->
+      <div class="filter-group" style="margin-top: 1rem;">
+        <div class="filter-title">
+          <span>Filter by Historical Epoch</span>
+        </div>
+        <div class="filter-pills" id="epochPills">
+          <button class="pill-btn active" data-filter="epoch" data-val="all">All Eras (1st–21st c.)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="1">Apostolic & Sub-Apostolic (c. 30–200)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="2">Patristic & Conciliar (c. 200–500)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="3">Early Medieval & Monastic (c. 500–1000)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="4">High Scholastic Flowering (c. 1000–1350)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="5">Renaissance Humanism (c. 1350–1520)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="6">Counter-Reformation & Missions (c. 1520–1650)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="7">Scientific Revolution (c. 1600–1800)</button>
+          <button class="pill-btn" data-filter="epoch" data-val="8">Modern Era & 20th/21st c. (c. 1800–Present)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Header -->
+    <div class="results-count">
+      <span id="activeCountText">Showing 75 contributors</span>
+      <span style="font-size: 0.8rem; color: var(--gold-primary);">Click any card for full primary-source dossier</span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid" id="cardsGrid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalName">Name</h2>
+        <div class="card-dates" id="modalDates">Dates</div>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-title">Role & Titles</div>
+          <p id="modalRole" style="font-size: 1rem; color: #e2e8f0;"></p>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Major Monumental Contribution</div>
+          <p id="modalContribution" style="color: #cbd5e1; line-height: 1.7;"></p>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">Primary Works & Monumenta</div>
+          <p id="modalWorks" style="font-family: var(--font-serif); color: var(--gold-light);"></p>
+        </div>
+        <div class="modal-section" id="modalQuoteWrapper">
+          <div class="modal-section-title">Memorable Axiom / Quote</div>
+          <div class="card-quote" id="modalQuote"></div>
+        </div>
+        <div class="modal-connection-box">
+          <div class="modal-connection-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            The Catholic Engine of Civilization
+          </div>
+          <p id="modalConnection" style="font-size: 0.88rem; color: #e2e8f0; line-height: 1.6;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>The Master Lexicon of Catholic Contributors • Preserved within <em>History Proves Catholicism</em> • Stdlib Architecture</p>
+  </footer>
+
+  <script>
+    // Master Dataset of Catholic Contributors (75 Verified Historical Titans)
+    const CONTRIBUTORS = [
+      // EPOCH 1: APOSTOLIC & SUB-APOSTOLIC (c. 30–200)
+      {
+        id: 1,
+        name: "St. Peter the Apostle",
+        dates: "d. c. 64/67 CE",
+        epoch: 1,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Chief of the Apostles & First Bishop of Rome",
+        contribution: "Appointed by Christ as the foundational Rock (Cephas) of the Church (Matt 16:18); received the keys of the kingdom; led the Council of Jerusalem (Acts 15); martyred under Nero on Vatican Hill.",
+        works: "1 Peter, 2 Peter, Preaching in Mark's Gospel",
+        quote: "You are the Christ, the Son of the living God.",
+        connection: "Established the permanent Roman apostolic see that anchors universal Catholic unity and conciliar communion across 2,000 years.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 2,
+        name: "St. Paul of Tarsus",
+        dates: "d. c. 64/67 CE",
+        epoch: 1,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Apostle to the Gentiles & Master Theologian",
+        contribution: "Authored 13 canonical epistles; formulated the theology of the Body of Christ, divine grace, justification through Christ's faithfulness, and the cosmic redemption of the Cross.",
+        works: "Epistle to the Romans, Galatians, 1–2 Corinthians",
+        quote: "I have fought the good fight, I have finished the race, I have kept the faith.",
+        connection: "Provided the foundational theological architecture of the New Testament that defined Christian dogma and European civilization.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 3,
+        name: "St. Clement of Rome",
+        dates: "c. 35–99 CE",
+        epoch: 1,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Fourth Bishop of Rome & Apostolic Father",
+        contribution: "Disciple of Peter and Paul; intervened authoritatively in the Church of Corinth to restore deposed presbyters, establishing the earliest historical exercise of Roman Petrine primacy.",
+        works: "First Epistle of Clement to the Corinthians (c. 96 CE)",
+        quote: "The Apostles received the Gospel for us from the Lord Jesus Christ; Jesus Christ was sent from God.",
+        connection: "Earliest surviving non-canonical Christian document proving that the Bishop of Rome possessed jurisdictional authority beyond Italy in the 1st century.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 4,
+        name: "St. Ignatius of Antioch",
+        dates: "c. 35–108 CE",
+        epoch: 1,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Bishop of Antioch & Apostolic Father",
+        contribution: "Disciple of John; codified the three-fold hierarchy (Bishop, Presbyters, Deacons); first in world history to use the term 'Catholic Church' (he katholike ekklesia); proclaimed the Eucharist as the actual flesh of Jesus Christ.",
+        works: "Seven Epistles (To the Romans, Smyrnaeans, Trallians, etc.)",
+        quote: "Wherever the bishop shall appear, there let the multitude also be; even as, wherever Jesus Christ is, there is the Catholic Church.",
+        connection: "Proves that the Catholic hierarchical and sacramental model is not a 4th-century Constantinian corruption, but was taught by the direct disciples of the Apostles.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 5,
+        name: "St. Justin Martyr",
+        dates: "c. 100–165 CE",
+        epoch: 1,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Philosopher & Christian Apologist",
+        contribution: "First to synthesize Greek philosophy with Christian revelation using the concept of the Logos Spermatikos (Seeds of the Word); authored the earliest detailed description of the Sunday Eucharistic Mass.",
+        works: "First Apology, Second Apology, Dialogue with Trypho",
+        quote: "We do not receive these as common bread and common drink; but as Jesus Christ our Savior was made flesh... so is this food the flesh and blood of that Jesus.",
+        connection: "Demonstrated that Christianity fulfills and baptizes ancient human philosophy rather than destroying it.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 6,
+        name: "St. Irenaeus of Lyons",
+        dates: "c. 130–202 CE",
+        epoch: 1,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Bishop of Lyons & Doctor of Unity",
+        contribution: "Disciple of Polycarp (disciple of John); systematically crushed Gnosticism; established the fourfold Gospel canon; articulated the Rule of Faith and Apostolic Succession centered on the Church of Rome.",
+        works: "Adversus Haereses (Against Heresies), Proof of the Apostolic Preaching",
+        quote: "It is a matter of necessity that every Church should agree with this Church [of Rome], on account of its preeminent authority.",
+        connection: "Declared Doctor of the Church by Pope Francis in 2022; the supreme defender of historical, bodily, and sacramental orthodoxy.",
+        isDoctor: true, isMartyr: true
+      },
+
+      // EPOCH 2: THE PATRISTIC & CONCILIAR FLOWERING (c. 200–500)
+      {
+        id: 7,
+        name: "Tertullian of Carthage",
+        dates: "c. 155–220 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Father of Latin Christian Theology",
+        contribution: "Minted the technical Latin vocabulary of Western Christendom: coined 'Trinitas' (Trinity), 'Persona' (Person), and 'Substantia' (Substance) to articulate Trinitarian and Christological dogma.",
+        works: "Apologeticus, Adversus Praxean, De Praescriptione Haereticorum",
+        quote: "The blood of the martyrs is the seed of the Church.",
+        connection: "Created the linguistic matrix that enabled Western theology to formulate dogmatic definitions with Roman legal precision.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 8,
+        name: "St. Cyprian of Carthage",
+        dates: "c. 210–258 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Bishop of Carthage & Martyr",
+        contribution: "Formulated the classic ecclesiological doctrine of Church unity, baptism, and the episcopate as a single undivided college rooted in Peter.",
+        works: "De Ecclesiae Catholicae Unitate (On the Unity of the Church)",
+        quote: "He can no longer have God for his Father who has not the Church for his Mother.",
+        connection: "The patron of episcopal collegiality and sacramental unity in the early Western Church.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 9,
+        name: "Origen of Alexandria",
+        dates: "c. 185–253 CE",
+        epoch: 2,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Biblical Scholar & Master Exegete",
+        contribution: "Created the Hexapla (the first six-column comparative textual apparatus of the Old Testament); established the threefold sense of scripture (literal, moral, spiritual); authored hundreds of homilies.",
+        works: "Hexapla, De Principiis, Contra Celsum",
+        quote: "The scriptures were written by the Spirit of God, and have a meaning, not such only as is apparent at first sight, but also another, which escapes the notice of most.",
+        connection: "Pioneered scientific textual criticism and patristic allegorical exegesis.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 10,
+        name: "St. Athanasius of Alexandria",
+        dates: "c. 296–373 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Patriarch of Alexandria & Doctor of the Church",
+        contribution: "Championed the full divinity of Christ (Homoousios) against Arianism at the Council of Nicaea (325 CE); published the 39th Festal Letter (367 CE) containing the first complete 27-book NT canon list.",
+        works: "De Incarnatione (On the Incarnation), Life of Antony",
+        quote: "God became man so that man might become god [divinized through grace].",
+        connection: "Stood 'Athanasius contra mundum' (Athanasius against the world) to safeguard the true divinity of Jesus Christ.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 11,
+        name: "St. Basil the Great",
+        dates: "c. 330–379 CE",
+        epoch: 2,
+        domain: "Charity",
+        domainKey: "charity",
+        role: "Bishop of Caesarea, Cappadocian Father & Doctor",
+        contribution: "Defended the divinity of the Holy Spirit; codified Eastern monasticism; established the 'Basiliad'—the world's first comprehensive hospital, hospice, and poorhouse complex.",
+        works: "De Spiritu Sancto (On the Holy Spirit), Long and Short Rules",
+        quote: "The bread in your larder belongs to the hungry; the coat in your chest belongs to the naked.",
+        connection: "Father of institutional healthcare and social hospital systems in human history.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 12,
+        name: "St. Gregory of Nazianzus",
+        dates: "c. 329–390 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Patriarch of Constantinople & Doctor of the Church",
+        contribution: "The 'Christian Demosthenes'; presided over the First Council of Constantinople (381 CE); formulated the definitive axiom of soteriological Christology.",
+        works: "Five Theological Orations",
+        quote: "That which is not assumed is not redeemed; but that which is united to God is also saved.",
+        connection: "Master architect of Nicene-Constantinopolitan Trinitarian orthodoxy.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 13,
+        name: "St. Ambrose of Milan",
+        dates: "c. 340–397 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Bishop of Milan & Doctor of the Church",
+        contribution: "Baptized St. Augustine; asserted Church authority over secular emperors ('The Emperor is within the Church, not above it'); developed Latin liturgical hymnody.",
+        works: "De Mysteriis, De Sacramentis, De Officiis",
+        quote: "Where Peter is, there is the Church.",
+        connection: "Established Western political philosophy regarding the moral limits of temporal state power over religion.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 14,
+        name: "St. Jerome",
+        dates: "c. 347–420 CE",
+        epoch: 2,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Biblical Scholar & Doctor of the Church",
+        contribution: "Commissioned by Pope Damasus I; translated the Old Testament directly from Hebrew (Iuxta Hebraeos) and revised the Gospels, creating the monumental Latin Vulgate that united Western civilization for 1,500 years.",
+        works: "The Latin Vulgate, Commentaries on Isaiah, Matthew, Galatians",
+        quote: "Ignorance of Scripture is ignorance of Christ.",
+        connection: "The patron saint of biblical scholarship who proved that fidelity to Christ demands mastery of original languages.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 15,
+        name: "St. Augustine of Hippo",
+        dates: "354–430 CE",
+        epoch: 2,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Bishop of Hippo & Doctor of Grace",
+        contribution: "The supreme intellectual giant of Western Christianity; formulated doctrines of Original Sin, Divine Grace, the City of God, just war theory, and psychological Trinitarian theology.",
+        works: "Confessions, De Civitate Dei (City of God), De Trinitate, De Doctrina Christiana",
+        quote: "You have made us for yourself, O Lord, and our heart is restless until it rests in you.",
+        connection: "Formed the entire philosophical and psychological substrate of medieval and modern Western thought.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 16,
+        name: "St. Cyril of Alexandria",
+        dates: "c. 376–444 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Patriarch of Alexandria & Doctor of the Church",
+        contribution: "Led the Council of Ephesus (431 CE); defended the title Theotokos (Mother of God) against Nestorius; articulated the hypostatic union of Christ's divine and human natures.",
+        works: "Twelve Anathemas, Commentary on the Gospel of John",
+        quote: "We confess the Holy Virgin to be Theotokos because she gave birth according to the flesh to God the Word made flesh.",
+        connection: "Cemented the dogmatic unity of the Incarnate Word and Marian devotion.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 17,
+        name: "St. Leo the Great",
+        dates: "c. 400–461 CE",
+        epoch: 2,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Pope & Doctor of the Church",
+        contribution: "Authored the Tome of Leo, which defined the two distinct natures in the one person of Christ at the Council of Chalcedon (451 CE); confronted Attila the Hun and turned him back from sacking Rome.",
+        works: "The Tome to Flavian, Sermons on the Petrine Primacy",
+        quote: "Peter has spoken through Leo!",
+        connection: "Demonstrated the universal dogmatic authority of the Roman See in resolving international Christological disputes.",
+        isDoctor: true, isMartyr: false
+      },
+
+      // EPOCH 3: EARLY MEDIEVAL & MONASTIC PRESERVATION (c. 500–1000)
+      {
+        id: 18,
+        name: "St. Benedict of Nursia",
+        dates: "c. 480–548 CE",
+        epoch: 3,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Father of Western Monasticism & Patron of Europe",
+        contribution: "Founded Monte Cassino; authored the Rule of St. Benedict (Ora et Labora: Pray and Work); established self-sustaining monastic communities that preserved European literacy, literature, and agriculture through the collapse of the Roman Empire.",
+        works: "Regula Benedicti (The Rule of Saint Benedict)",
+        quote: "Prefer nothing whatever to Christ, and may He bring us all together to everlasting life.",
+        connection: "Benedictine monasteries acted as the ark that carried Western civilization, manuscripts, and agriculture across the barbarian invasions.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 19,
+        name: "Pope St. Gregory the Great",
+        dates: "c. 540–604 CE",
+        epoch: 3,
+        domain: "Literature",
+        domainKey: "literature",
+        role: "Pope & Doctor of the Church",
+        contribution: "Standardized the Roman Liturgy and Gregorian Chant; wrote the definitive manual for pastoral leadership (Pastoral Care); sent Augustine of Canterbury on the Gregorian Mission to convert Anglo-Saxon England.",
+        works: "Regula Pastoralis (Pastoral Care), Dialogues, Moralia in Job",
+        quote: "I am the servant of the servants of God (Servus Servorum Dei).",
+        connection: "Defined the ideal of humble servant-leadership for the papacy and standardized Western sacred music.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 20,
+        name: "Boethius",
+        dates: "c. 477–524 CE",
+        epoch: 3,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Philosopher & Statesman",
+        contribution: "Translated Aristotle's logical treatises into Latin; formulated the classic definition of eternity ('the complete possession all at once of illimitable life') and of a person ('an individual substance of a rational nature').",
+        works: "De Consolatione Philosophiae (The Consolation of Philosophy)",
+        quote: "In other living creatures, the ignorance of themselves is nature, but in man it is vice.",
+        connection: "The last great Roman philosopher who handed Greek logical categories over to medieval scholastic universities.",
+        isDoctor: false, isMartyr: true
+      },
+      {
+        id: 21,
+        name: "Cassiodorus",
+        dates: "c. 485–585 CE",
+        epoch: 3,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Monk & Statesman",
+        contribution: "Founded the monastery of Vivarium; elevated the hand-copying of classical pagan and sacred Christian manuscripts into a formal, sacred monastic discipline.",
+        works: "Institutiones Divinarum et Saecularium Litterarum",
+        quote: "By the reading of sacred and secular letters, the mind is purified and armed against ignorance.",
+        connection: "Saved ancient classical literature from extinction by ordering monks to copy Roman and Greek authors alongside the Bible.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 22,
+        name: "St. Isidore of Seville",
+        dates: "c. 560–636 CE",
+        epoch: 3,
+        domain: "History",
+        domainKey: "history",
+        role: "Bishop of Seville & Doctor of the Church",
+        contribution: "Compiled the Etymologiae—a 20-volume encyclopedia gathering all classical and Christian knowledge (grammar, law, medicine, theology); served as the standard reference book for 900 years. Patron saint of the Internet.",
+        works: "Etymologiae (The Etymologies)",
+        quote: "Prayer purifies us, reading instructs us... if a man would be in God's company, he must pray and read.",
+        connection: "The encyclopedic bridge who compiled all surviving Roman knowledge to educate the emerging nations of Europe.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 23,
+        name: "St. Bede the Venerable",
+        dates: "c. 673–735 CE",
+        epoch: 3,
+        domain: "History",
+        domainKey: "history",
+        role: "Monk, Historian & Doctor of the Church",
+        contribution: "Father of English History; popularized the dating system of Anno Domini (AD); wrote the Ecclesiastical History of the English People; translated the Gospel of John into Old English.",
+        works: "Historia Ecclesiastica Gentis Anglorum",
+        quote: "I have spent my whole life through in that monastery... It has been my constant joy to learn, or to teach, or to write.",
+        connection: "First major historian of the British Isles and father of English scholarly prose.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 24,
+        name: "Alcuin of York",
+        dates: "c. 735–804 CE",
+        epoch: 3,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Scholar & Carolingian Mastermind",
+        contribution: "Directed Charlemagne's Palace School at Aachen; revised and corrected the Latin Vulgate; pioneered the Carolingian Minuscule script (the direct ancestor of modern lowercase typography).",
+        works: "Revision of the Latin Vulgate, De Orthographia",
+        quote: "Faith is a free act of will, not a forced act... you can draw a man to faith, you cannot force him.",
+        connection: "Father of the Carolingian Renaissance and modern European written script.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 25,
+        name: "St. John of Damascus",
+        dates: "c. 676–749 CE",
+        epoch: 3,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Syrian Monk & Doctor of the Church",
+        contribution: "Last of the Eastern Church Fathers; systematically defended the veneration of sacred icons against Iconoclasm based on the tangible reality of the Incarnation.",
+        works: "De Fide Orthodoxa (An Exact Exposition of the Orthodox Faith)",
+        quote: "I do not worship matter, I worship the Creator of matter, who became matter for my sake.",
+        connection: "Synthesized Eastern patristic dogma and established the theology of sacred art.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 26,
+        name: "Saints Cyril & Methodius",
+        dates: "826–869 & 815–885 CE",
+        epoch: 3,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Apostles to the Slavs & Linguists",
+        contribution: "Byzantine Catholic brothers; invented the Glagolitic alphabet (precursor to the Cyrillic alphabet) to translate the Bible and liturgy into Old Church Slavonic.",
+        works: "Slavonic Translations of the Gospels and Divine Liturgy",
+        quote: "Listen with your understanding, for the Word comes from God, the Word which feeds human souls.",
+        connection: "Fathers of Slavic literacy, biblical culture, and Eastern European civilization.",
+        isDoctor: false, isMartyr: false
+      },
+
+      // EPOCH 4: THE HIGH MEDIEVAL SCHOLASTIC SUMMA (c. 1000–1350)
+      {
+        id: 27,
+        name: "St. Anselm of Canterbury",
+        dates: "1033–1109 CE",
+        epoch: 4,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Archbishop of Canterbury & Doctor of the Church",
+        contribution: "Father of Scholasticism; defined theology as 'Fides quaerens intellectum' (Faith seeking understanding); formulated the Ontological Argument for God's existence and the Satisfaction theory of the Atonement.",
+        works: "Proslogion, Monologion, Cur Deus Homo (Why God Became Man)",
+        quote: "I do not seek to understand that I may believe, but I believe in order to understand.",
+        connection: "Inaugurated the scholastic method that birthed the medieval European university system.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 28,
+        name: "St. Bernard of Clairvaux",
+        dates: "1090–1153 CE",
+        epoch: 4,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Cistercian Reformer & Doctor of the Church",
+        contribution: "Revitalized Cistercian monasticism; 'Doctor Mellifluus' (Honey-Sweet Doctor); composed sublime sermons on the Song of Songs, establishing the affective mystical tradition of Western Europe.",
+        works: "On Loving God, Sermons on the Song of Songs",
+        quote: "The measure of love is to love without measure.",
+        connection: "The greatest contemplative voice of the 12th-century monastic renaissance.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 29,
+        name: "Peter Lombard",
+        dates: "c. 1096–1160 CE",
+        epoch: 4,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Bishop of Paris & Master of the Sentences",
+        contribution: "Compiled the Four Books of Sentences, systematically organizing patristic authorities on the Trinity, Creation, Incarnation, and the Seven Sacraments; the standard university doctoral textbook for 400 years.",
+        works: "Libri Quatuor Sententiarum (The Four Books of Sentences)",
+        quote: "The sacraments contain the grace which they signify.",
+        connection: "Standardized the seven sacraments and established university systematic curriculum.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 30,
+        name: "St. Francis of Assisi",
+        dates: "1181–1226 CE",
+        epoch: 4,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Founder of the Franciscans & Stigmatist",
+        contribution: "Renewed the medieval Church through radical evangelical poverty and love for the poor; received the Stigmata; created the first Christmas Nativity scene at Greccio; patron saint of ecology.",
+        works: "The Canticle of the Sun, Earlier and Later Rules",
+        quote: "Lord, make me an instrument of your peace.",
+        connection: "Restored the visible image of Christ's humility and care for creation in Western culture.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 31,
+        name: "St. Dominic de Guzmán",
+        dates: "1170–1221 CE",
+        epoch: 4,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Founder of the Dominican Order (Order of Preachers)",
+        contribution: "Founded the Order of Preachers to combat heresy through rigorous intellectual study, theological preaching, and apostolic poverty; popularized the Holy Rosary.",
+        works: "Fundamental Constitutions of the Order of Preachers",
+        quote: "A man who governs his passions is master of his world. We must either rule them, or be ruled by them.",
+        connection: "Birthed the intellectual powerhouse that produced Albert the Great and Thomas Aquinas.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 32,
+        name: "St. Albert the Great (Albertus Magnus)",
+        dates: "c. 1200–1280 CE",
+        epoch: 4,
+        domain: "Science",
+        domainKey: "science",
+        role: "Universal Doctor & Pioneer Natural Scientist",
+        contribution: "Master of botany, zoology, chemistry, and geology; mentor to Thomas Aquinas; proved that empirical natural science is fully compatible with Catholic theology; first to isolate the element arsenic.",
+        works: "De Mineralibus, De Vegetabilibus et Plantis",
+        quote: "The aim of natural science is not simply to accept the statements of others, but to investigate the causes that are at work in nature.",
+        connection: "Patron saint of natural scientists; proved that Catholic theology welcomes empirical scientific investigation.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 33,
+        name: "St. Thomas Aquinas",
+        dates: "1225–1274 CE",
+        epoch: 4,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Angelic Doctor & Premier Catholic Thinker",
+        contribution: "Harmonized Aristotelian philosophy with Christian revelation in the Summa Theologiae; formulated the Five Ways (Quinque Viae) for God's existence; composed the liturgical hymns for Corpus Christi (Pange Lingua, Tantum Ergo, Panis Angelicus).",
+        works: "Summa Theologiae, Summa Contra Gentiles, Catena Aurea",
+        quote: "Grace does not destroy nature, but perfects it.",
+        connection: "The universal doctor whose metaphysical and moral synthesis remains the perennial philosophy of the Catholic Church.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 34,
+        name: "St. Bonaventure",
+        dates: "1221–1274 CE",
+        epoch: 4,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Seraphic Doctor & Franciscan Minister General",
+        contribution: "Articulated an Augustinian-Franciscan mystical theology; mapped the ascent of the soul to God through the vestigia (traces) of the Trinity in the created cosmos.",
+        works: "Itinerarium Mentis in Deum (The Mind's Journey into God), Breviloquium",
+        quote: "Christ is both the way and the door. Christ is the staircase and the vehicle.",
+        connection: "The supreme contemplative philosopher of the Franciscan tradition.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 35,
+        name: "Bl. John Duns Scotus",
+        dates: "1266–1308 CE",
+        epoch: 4,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Subtle Doctor (Doctor Subtilis)",
+        contribution: "Franciscan philosopher and theologian; provided the definitive defense of the Immaculate Conception of Mary (the doctrine of preservative redemption); developed the univocity of being and haecceity (thisness).",
+        works: "Ordinatio (Opus Oxoniense), De Primo Principio",
+        quote: "God is the supreme infinite being, understanding and willing all things with perfect freedom.",
+        connection: "Overcame the scholastic objections to the Immaculate Conception, paving the way for the 1854 dogma.",
+        isDoctor: false, isMartyr: false
+      },
+
+      // EPOCH 5: RENAISSANCE HUMANISM & BIBLICAL PRECURSORS (c. 1350–1520)
+      {
+        id: 36,
+        name: "Dante Alighieri",
+        dates: "1265–1321 CE",
+        epoch: 5,
+        domain: "Literature",
+        domainKey: "literature",
+        role: "Supreme Poet of Western Civilization",
+        contribution: "Authored the Divine Comedy (Inferno, Purgatorio, Paradiso); created modern literary Italian; synthesized medieval Catholic cosmology, theology, and moral philosophy into the supreme epic of world literature.",
+        works: "La Divina Commedia, De Monarchia, Vita Nuova",
+        quote: "The Love that moves the sun and the other stars.",
+        connection: "Demonstrated that Catholic dogmatic theology can inspire the greatest poetic achievement in human history.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 37,
+        name: "St. Catherine of Siena",
+        dates: "1347–1380 CE",
+        epoch: 5,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Dominican Tertiary & Doctor of the Church",
+        contribution: "Persuaded Pope Gregory XI to end the 70-year Avignon Papacy and return to Rome; dictated mystical dialogues on divine providence; peacemaker in war-torn Italian city-states.",
+        works: "The Dialogue of Divine Providence, Letters",
+        quote: "Be who God meant you to be and you will set the world on fire.",
+        connection: "One of the most politically and spiritually influential women in medieval European history.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 38,
+        name: "Thomas à Kempis",
+        dates: "c. 1380–1471 CE",
+        epoch: 5,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Canon Regular & Devotional Author",
+        contribution: "Leader of the Devotio Moderna; authored The Imitation of Christ, the most widely published and translated Christian devotional book in human history outside the Bible.",
+        works: "De Imitatione Christi (The Imitation of Christ)",
+        quote: "What does it avail you to argue at length about the Trinity if you are pleasing neither God nor man because you lack humility?",
+        connection: "Formed the interior prayer life of countless saints, monarchs, and ordinary Christians across 600 years.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 39,
+        name: "Nicholas of Cusa (Cusanus)",
+        dates: "1401–1464 CE",
+        epoch: 5,
+        domain: "Science",
+        domainKey: "science",
+        role: "Cardinal, Mathematician & Cosmologist",
+        contribution: "Formulated the philosophy of 'Docta Ignorantia' (Learned Ignorance); anticipated modern cosmology by proposing that the universe is boundless with no physical center and that the Earth moves through space.",
+        works: "De Docta Ignorantia (On Learned Ignorance)",
+        quote: "The universe is a circle whose center is everywhere and whose circumference is nowhere.",
+        connection: "Precursor to Copernicus, Kepler, and modern astrophysics.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 40,
+        name: "Cardinal Francisco Jiménez de Cisneros",
+        dates: "1436–1517 CE",
+        epoch: 5,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Archbishop of Toledo & Renaissance Polymath",
+        contribution: "Founded the University of Alcalá; financed and directed the printing of the Complutensian Polyglot Bible—the first multi-language Bible with Hebrew, Aramaic, Greek, and Latin in parallel columns.",
+        works: "The Complutensian Polyglot (6 folio vols., 1514–1520)",
+        quote: "No other language matches the power of the original text... let us draw water directly from the springs.",
+        connection: "Financed and created the greatest typographical monument of Renaissance biblical scholarship.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 41,
+        name: "Desiderius Erasmus",
+        dates: "1466–1536 CE",
+        epoch: 5,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Catholic Priest & Prince of the Humanists",
+        contribution: "Published the first printed Greek New Testament (Novum Instrumentum omne, 1516); debated Martin Luther on the reality of human free will (De Libero Arbitrio); promoted humanist biblical literacy.",
+        works: "Novum Instrumentum omne, De Libero Arbitrio, Enchiridion Militis Christiani",
+        quote: "By free will we mean a power of the human will by which a man can apply himself to the things which lead to eternal salvation, or turn away from them.",
+        connection: "Pioneered Renaissance Greek biblical scholarship while defending Catholic dogma on grace and free will against Luther.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 42,
+        name: "St. Thomas More",
+        dates: "1478–1535 CE",
+        epoch: 5,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Lord Chancellor of England & Martyr",
+        contribution: "Author of Utopia; defender of Catholic orthodoxy against Tyndale; refused to compromise his conscience or endorse King Henry VIII's break from the universal Catholic Church; martyred on Tower Hill.",
+        works: "Utopia, A Dialogue Concerning Heresies, A Dialogue of Comfort",
+        quote: "I die the King's good servant, but God's first.",
+        connection: "The universal patron saint of statesmen, politicians, and the supremacy of moral conscience.",
+        isDoctor: false, isMartyr: true
+      },
+
+      // EPOCH 6: COUNTER-REFORMATION & GLOBAL MISSIONS (c. 1520–1650)
+      {
+        id: 43,
+        name: "St. Ignatius of Loyola",
+        dates: "1491–1556 CE",
+        epoch: 6,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Founder of the Society of Jesus (Jesuits)",
+        contribution: "Authored the Spiritual Exercises (the gold standard of Christian discernment); established the Jesuit network of colleges and foreign missions dedicated to the Greater Glory of God (AMDG).",
+        works: "Spiritual Exercises, Constitutions of the Society of Jesus",
+        quote: "Ad Majorem Dei Gloriam (For the Greater Glory of God).",
+        connection: "Formed the intellectual and missionary army that revitalized the Catholic Church after the Protestant Reformation.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 44,
+        name: "St. Francis Xavier",
+        dates: "1506–1552 CE",
+        epoch: 6,
+        domain: "Charity",
+        domainKey: "charity",
+        role: "Jesuit Missionary & Patron of Missions",
+        contribution: "Co-founder of the Jesuits; pioneered the Gospel across India, Indonesia, and Japan; adapted missionary preaching to local cultures, baptizing hundreds of thousands.",
+        works: "Missionary Letters from India and Japan",
+        quote: "Give me souls, take away all else.",
+        connection: "The greatest Christian missionary in world history since the Apostle Paul.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 45,
+        name: "St. Teresa of Ávila",
+        dates: "1515–1582 CE",
+        epoch: 6,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Reformer of Carmel & Doctor of the Church",
+        contribution: "First female Doctor of the Church; reformed the Carmelite Order; authored the definitive psychological and spiritual roadmap of contemplative prayer (The Interior Castle).",
+        works: "The Interior Castle, The Way of Perfection, Autobiography",
+        quote: "Let nothing disturb you, let nothing frighten you. All things are passing; God alone does not change.",
+        connection: "Master of mystical prayer and the inner castle of the soul.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 46,
+        name: "St. John of the Cross",
+        dates: "1542–1591 CE",
+        epoch: 6,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Mystic, Poet & Doctor of the Church",
+        contribution: "Collaborator with Teresa of Ávila; formulated the theology of spiritual purgation (The Dark Night of the Soul); considered one of the greatest lyrical poets in the Spanish language.",
+        works: "Dark Night of the Soul, Ascent of Mount Carmel, Spiritual Canticle",
+        quote: "In the twilight of life, God will not judge us on our earthly possessions... we will be judged on love alone.",
+        connection: "Doctor of Mystical Theology who mapped the deepest purifications of the human spirit.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 47,
+        name: "St. Robert Bellarmine",
+        dates: "1542–1621 CE",
+        epoch: 6,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Jesuit Cardinal & Doctor of the Church",
+        contribution: "Authored the Disputationes—the supreme systematic defense of Catholic doctrine against Protestant theology; formulated political limits on the divine right of kings that influenced modern democratic constitutionalism.",
+        works: "Disputationes de Controversiis Christianae Fidei",
+        quote: "The Church is as visible as the Kingdom of France or the Republic of Venice.",
+        connection: "The intellectual titan of the Counter-Reformation who systematized Catholic apologetics.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 48,
+        name: "Cardinal Cesare Baronio",
+        dates: "1538–1607 CE",
+        epoch: 6,
+        domain: "History",
+        domainKey: "history",
+        role: "Vatican Librarian & Father of Church History",
+        contribution: "Authored the 12-volume Annales Ecclesiastici under St. Philip Neri's direction; invented modern documentary history by printing Vatican archives and Roman catacomb discoveries to refute Protestant claims.",
+        works: "Annales Ecclesiastici (12 vols., 1588–1607)",
+        quote: "History is the light of truth, the witness of time, the teacher of life.",
+        connection: "Proved that Catholic dogma is rooted in verifiable primary archival documents rather than pious mythology.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 49,
+        name: "St. Francis de Sales",
+        dates: "1567–1622 CE",
+        epoch: 6,
+        domain: "Literature",
+        domainKey: "literature",
+        role: "Bishop of Geneva & Doctor of the Church",
+        contribution: "Reconverted 40,000 Calvinists in the Chablais through printed apologetic pamphlets; authored Introduction to the Devout Life, proving that deep holiness is accessible to soldiers, mothers, and shopkeepers.",
+        works: "Introduction to the Devout Life, Treatise on the Love of God",
+        quote: "A spoonful of honey attracts more flies than a barrel of vinegar.",
+        connection: "Patron saint of Catholic journalists, writers, and spiritual directors.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 50,
+        name: "St. Vincent de Paul",
+        dates: "1581–1660 CE",
+        epoch: 6,
+        domain: "Charity",
+        domainKey: "charity",
+        role: "Patron of Catholic Charitable Societies",
+        contribution: "Founded the Vincentians and Daughters of Charity; revolutionized modern institutional hospital care, orphanages, galley slave relief, and soup kitchens throughout France.",
+        works: "Conferences and Letters on Charity",
+        quote: "Go to the poor: you will find God.",
+        connection: "Father of organized social welfare and charitable healthcare networks in the Western world.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 51,
+        name: "Father Matteo Ricci, S.J.",
+        dates: "1552–1610 CE",
+        epoch: 6,
+        domain: "Science",
+        domainKey: "science",
+        role: "Jesuit Polymath & Chinese Missionary",
+        contribution: "Pioneered cross-cultural inculturation in Ming Dynasty China; translated Euclid's Elements into Chinese; drew the Kunyu Wanguo Quantu (first European-style world map in Chinese); respected by the imperial court as a Western sage.",
+        works: "The True Meaning of the Lord of Heaven, Kunyu Wanguo Quantu",
+        quote: "He who knows Heaven knows the true Lord.",
+        connection: "Pioneered global scientific dialogue between East and West.",
+        isDoctor: false, isMartyr: false
+      },
+
+      // EPOCH 7: THE SCIENTIFIC & PHILOLOGICAL REVOLUTION (c. 1600–1800)
+      {
+        id: 52,
+        name: "Nicolaus Copernicus",
+        dates: "1473–1543 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Catholic Canon & Astronomer",
+        contribution: "Mathematically formulated the Heliocentric Model of the solar system, placing the Sun at the center; dedicated his masterwork to Pope Paul III.",
+        works: "De Revolutionibus Orbium Coelestium (On the Revolutions of the Heavenly Spheres)",
+        quote: "To know the mighty works of God, to comprehend His wisdom and majesty and power... this must be a pleasing and acceptable service to God.",
+        connection: "Inaugurated the Scientific Revolution as a devout Catholic churchman.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 53,
+        name: "Father Christopher Clavius, S.J.",
+        dates: "1538–1612 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Jesuit Mathematician & Astronomer",
+        contribution: "Chief architect of the Gregorian Calendar (1582) commissioned by Pope Gregory XIII, which is the international civil calendar used worldwide today; verified Galileo's telescopic discoveries.",
+        works: "Calendarii Gregoriani Explicatio, In Sphaeram Ioannis de Sacro Bosco",
+        quote: "Mathematics reveals the divine order written into the movements of the heavens.",
+        connection: "Created the international calendar that governs modern human civilization.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 54,
+        name: "Father Marin Mersenne, O.M.",
+        dates: "1588–1648 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Minim Friar, Physicist & Mathematician",
+        contribution: "Father of Acoustics (Mersenne's laws of vibrating strings); formulated Mersenne prime numbers; acted as the intellectual clearinghouse connecting Galileo, Descartes, Fermat, and Pascal.",
+        works: "Harmonie Universelle, Traité de l'Harmonie Universelle",
+        quote: "Nature is the musical instrument of the Creator.",
+        connection: "Acted as the 'Post-Box of Europe,' fostering the international scientific community.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 55,
+        name: "Bl. Nicolas Steno (Niels Stensen)",
+        dates: "1638–1686 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Catholic Bishop & Father of Modern Geology",
+        contribution: "Father of Stratigraphy and Geology; discovered the Law of Superposition and Original Horizontality; pioneered modern anatomy (discovered Stensen's duct in the parotid gland).",
+        works: "De Solido Intra Solidum Naturaliter Contento",
+        quote: "Beautiful is what we see, more beautiful is what we know, most beautiful by far is what we don't know.",
+        connection: "Founded modern earth sciences while serving as a holy Catholic bishop.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 56,
+        name: "Dom Jean Mabillon, O.S.B.",
+        dates: "1632–1707 CE",
+        epoch: 7,
+        domain: "History",
+        domainKey: "history",
+        role: "Maurist Benedictine Monk & Palaeographer",
+        contribution: "Father of Palaeography and Diplomatics; published De Re Diplomatica (1681), establishing the modern scientific criteria for dating ancient manuscripts and authenticating historical documents.",
+        works: "De Re Diplomatica (1681), Annales Ordinis Sancti Benedicti",
+        quote: "Truth in history requires that no document be received without trial, and no witness believed without scrutiny.",
+        connection: "Created the modern academic science of historical document verification.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 57,
+        name: "Father Roger Joseph Boscovich, S.J.",
+        dates: "1711–1787 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Jesuit Physicist, Astronomer & Polymath",
+        contribution: "Proposed the first coherent mathematical atomic theory of matter; devised the geometric method for determining planetary orbits; member of the Royal Society of London.",
+        works: "Theoria Philosophiae Naturalis (Theory of Natural Philosophy, 1758)",
+        quote: "All matter is composed of indivisible point-centers of force.",
+        connection: "Anticipated modern quantum and atomic field physics by over a century.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 58,
+        name: "Father Athanasius Kircher, S.J.",
+        dates: "1602–1680 CE",
+        epoch: 7,
+        domain: "Science",
+        domainKey: "science",
+        role: "Jesuit Polymath & 'Master of a Hundred Arts'",
+        contribution: "Pioneered early decipherment of Egyptian hieroglyphs; subterranean geology (lowered himself into Mount Vesuvius to study volcanism); invented the magic lantern and early acoustic mega-horns.",
+        works: "Oedipus Aegyptiacus, Mundus Subterraneus",
+        quote: "Nothing is more beautiful than to know all things.",
+        connection: "Founded comparative linguistics, volcanology, and museum curating.",
+        isDoctor: false, isMartyr: false
+      },
+
+      // EPOCH 8: MODERN ERA, VATICAN COUNCILS & 20TH/21ST C. (c. 1800–PRESENT)
+      {
+        id: 59,
+        name: "St. John Henry Newman",
+        dates: "1801–1890 CE",
+        epoch: 8,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Cardinal, Philosopher & Doctor of the Church",
+        contribution: "Formulated the Development of Christian Doctrine; articulated the philosophy of the Illative Sense; wrote the definitive manifesto for higher education (The Idea of a University).",
+        works: "An Essay on the Development of Christian Doctrine, Grammar of Assent, Apologia Pro Vita Sua",
+        quote: "To be deep in history is to cease to be a Protestant.",
+        connection: "Proved that doctrinal development is the living sign of divine biological life in the Catholic Church.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 60,
+        name: "Father Gregor Mendel, O.S.A.",
+        dates: "1822–1884 CE",
+        epoch: 8,
+        domain: "Science",
+        domainKey: "science",
+        role: "Augustinian Monk & Father of Modern Genetics",
+        contribution: "Discovered the fundamental laws of genetic inheritance (Mendelian genetics) through plant hybridization experiments in the garden of St. Thomas's Abbey in Brno.",
+        works: "Versuche über Pflanzen-Hybriden (Experiments on Plant Hybridization, 1866)",
+        quote: "My scientific studies have brought me immense joy, and I am convinced that the world will soon recognize the results of my work.",
+        connection: "Founded the science of modern genetics while living as an observant Catholic monk.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 61,
+        name: "Monsignor Georges Lemaître",
+        dates: "1894–1966 CE",
+        epoch: 8,
+        domain: "Science",
+        domainKey: "science",
+        role: "Catholic Priest & Father of the Big Bang Theory",
+        contribution: "Belgian theoretical physicist; formulated Hubble's Law two years before Edwin Hubble; proposed that the universe expanded from an initial 'Primeval Atom' (The Big Bang Theory).",
+        works: "The Primeval Atom (1931), Expanded Universe Papers",
+        quote: "The beginning was so beautiful that it must have been like a cosmic firework.",
+        connection: "Demonstrated that modern relativistic cosmology agrees that the universe had a temporal beginning.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 62,
+        name: "St. Thérèse of Lisieux",
+        dates: "1873–1897 CE",
+        epoch: 8,
+        domain: "Monasticism",
+        domainKey: "monastic",
+        role: "Discalced Carmelite & Doctor of the Church",
+        contribution: "Youngest Doctor of the Church; formulated the 'Little Way' of spiritual childhood, demonstrating that sanctity consists of performing the smallest daily duties with heroic divine love.",
+        works: "Story of a Soul (L'Histoire d'une Âme)",
+        quote: "My vocation is Love!",
+        connection: "Democratized mystical sanctity for millions of ordinary people across the world.",
+        isDoctor: true, isMartyr: false
+      },
+      {
+        id: 63,
+        name: "G. K. Chesterton",
+        dates: "1874–1936 CE",
+        epoch: 8,
+        domain: "Literature",
+        domainKey: "literature",
+        role: "Literary Titan & Master of Paradox",
+        contribution: "Authored Orthodoxy and The Everlasting Man (the primary catalyst for C. S. Lewis's conversion to Christianity); master of apologetics, social criticism, and Distributist economic theory.",
+        works: "Orthodoxy, The Everlasting Man, The Father Brown Stories",
+        quote: "The Christian ideal has not been tried and found wanting. It has been found difficult; and left untried.",
+        connection: "The greatest modern literary apologist who defended Christian sanity against secular madness.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 64,
+        name: "J. R. R. Tolkien",
+        dates: "1892–1973 CE",
+        epoch: 8,
+        domain: "Literature",
+        domainKey: "literature",
+        role: "Oxford Professor of Philology & Author",
+        contribution: "Authored The Lord of the Rings, which he explicitly described as 'a fundamentally religious and Catholic work'; translated the Book of Jonah for the Catholic Jerusalem Bible; pioneered modern high fantasy.",
+        works: "The Lord of the Rings, The Silmarillion, On Fairy-Stories",
+        quote: "The Lord of the Rings is of course a fundamentally religious and Catholic work; unconsciously so at first, but consciously in the revision.",
+        connection: "Created the most beloved literary mythology of the 20th century, infused with Catholic sacramental and Marian motifs.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 65,
+        name: "Jacques Maritain",
+        dates: "1882–1973 CE",
+        epoch: 8,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Neo-Thomist Philosopher & Diplomat",
+        contribution: "Revitalized Thomism for modern political democracy; primary drafter of the United Nations Universal Declaration of Human Rights (1948); French ambassador to the Holy See.",
+        works: "Integral Humanism, The Degrees of Knowledge, Man and the State",
+        quote: "We agree about the rights, but on condition that no one asks us why.",
+        connection: "Grounded modern international human rights philosophy in Catholic natural law.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 66,
+        name: "Étienne Gilson",
+        dates: "1884–1978 CE",
+        epoch: 8,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Historian of Philosophy & Academician",
+        contribution: "Member of the Académie Française; founded the Pontifical Institute of Mediaeval Studies (Toronto); restored the authentic metaphysics of Thomas Aquinas as the philosophy of 'Esse' (Act of Being).",
+        works: "The Spirit of Mediaeval Philosophy, Being and Some Philosophers",
+        quote: "The act of being is the core and crown of all reality.",
+        connection: "Rehabilitated medieval Christian philosophy in secular research universities.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 67,
+        name: "Father Roland de Vaux, O.P.",
+        dates: "1903–1971 CE",
+        epoch: 8,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Dominican Priest & Lead Qumran Archaeologist",
+        contribution: "Director of the École Biblique in Jerusalem; led the archaeological excavations of the Qumran caves and Dead Sea Scrolls (1949–1956); Editor-in-Chief of Discoveries in the Judaean Desert.",
+        works: "Ancient Israel: Its Life and Institutions, Archaeology and the Dead Sea Scrolls",
+        quote: "The archaeological spade confirms the living historical memory of sacred scripture.",
+        connection: "The Catholic priest who directed the greatest archaeological discovery of the 20th century.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 68,
+        name: "Father Raymond E. Brown, S.S.",
+        dates: "1928–1998 CE",
+        epoch: 8,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Sulpician Catholic Priest & Premier Johannine Scholar",
+        contribution: "President of the Society of Biblical Literature (SBL); authored the landmark 2-volume Anchor Bible commentary on John and the definitive 2-volume The Death of the Messiah.",
+        works: "The Gospel According to John (2 vols.), The Death of the Messiah (2 vols.)",
+        quote: "Critical scholarship does not destroy faith; it grounds faith in the bedrock of historical reality.",
+        connection: "The premier Catholic biblical scholar of the English-speaking world recognized across secular academia.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 69,
+        name: "Father Joseph A. Fitzmyer, S.J.",
+        dates: "1920–2016 CE",
+        epoch: 8,
+        domain: "Biblical",
+        domainKey: "biblical",
+        role: "Jesuit Priest & Master Aramaist",
+        contribution: "World authority on ancient Semitic languages and Dead Sea Scrolls; professor at Catholic University of America; authored the definitive Anchor Yale Bible commentaries on Luke and Romans.",
+        works: "The Gospel According to Luke (2 vols.), Romans (Anchor Bible), The Genesis Apocryphon",
+        quote: "Fidelity to the Word of God demands ruthless grammatical and textual honesty.",
+        connection: "Pioneered Semitic philological exegesis of the New Testament.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 70,
+        name: "Henri de Lubac, S.J.",
+        dates: "1896–1991 CE",
+        epoch: 8,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Jesuit Cardinal & Ressourcement Architect",
+        contribution: "Key architect of the Second Vatican Council; restored Patristic spiritual exegesis (Medieval Exegesis: The Four Senses of Scripture); overcame post-Reformation dualism between pure nature and grace (Surnaturel).",
+        works: "Catholicism, Surnaturel, Medieval Exegesis (4 vols.)",
+        quote: "The Church is the sacrament of Christ, as Christ is the sacrament of God.",
+        connection: "Returned Catholic theology to its ancient Patristic and biblical sources.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 71,
+        name: "Hans Urs von Balthasar",
+        dates: "1905–1988 CE",
+        epoch: 8,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Swiss Catholic Theologian",
+        contribution: "Created a monumental 16-volume trilogy of systematic theology centered on Theological Aesthetics (The Glory of the Lord), Theo-Drama, and Theo-Logic, synthesizing Patristic, literary, and mystical insights.",
+        works: "The Glory of the Lord (7 vols.), Theo-Drama (5 vols.)",
+        quote: "Being cannot be understood without Beauty, for Beauty is the radiance of Truth.",
+        connection: "The greatest theological aesthetician and literary dogmatician of the 20th century.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 72,
+        name: "Pope St. John Paul II (Karol Wojtyła)",
+        dates: "1920–2005 CE",
+        epoch: 8,
+        domain: "Philosophy",
+        domainKey: "philosophy",
+        role: "Pope, Philosopher & Statesman",
+        contribution: "Moral catalyst that brought down Soviet totalitarian communism; formulated the Theology of the Body (the ontological meaning of human embodiment and sexuality); promulgated the Catechism of the Catholic Church (1992).",
+        works: "Theology of the Body, Veritatis Splendor, Fides et Ratio",
+        quote: "Be not afraid! Open wide the doors to Christ!",
+        connection: "Defended human dignity, marriage, and philosophical realism against modern totalitarianism.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 73,
+        name: "Pope Benedict XVI (Joseph Ratzinger)",
+        dates: "1927–2022 CE",
+        epoch: 8,
+        domain: "Theology",
+        domainKey: "theology",
+        role: "Pope & Master Theologian",
+        contribution: "The premier academic dogmatician to hold the papacy in modern history; defended the essential synthesis of Greek reason and Biblical faith (Regensburg Address); authored the 3-volume Jesus of Nazareth.",
+        works: "Introduction to Christianity, The Spirit of the Liturgy, Jesus of Nazareth (3 vols.)",
+        quote: "The world promises you comfort, but you were not made for comfort. You were made for greatness.",
+        connection: "Synthesized historical-critical exegesis with Catholic canonical theology.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 74,
+        name: "St. Teresa of Calcutta (Mother Teresa)",
+        dates: "1910–1997 CE",
+        epoch: 8,
+        domain: "Charity",
+        domainKey: "charity",
+        role: "Foundress of the Missionaries of Charity & Nobel Laureate",
+        contribution: "Founded the Missionaries of Charity; served the poorest of the poor in the slums of Calcutta and over 130 countries; global moral icon of radical Christian charity and the defense of the unborn.",
+        works: "Come Be My Light (Private Letters and Reflections)",
+        quote: "Not all of us can do great things. But we can do small things with great love.",
+        connection: "The universal 20th-century embodiment of the Gospel in action.",
+        isDoctor: false, isMartyr: false
+      },
+      {
+        id: 75,
+        name: "St. John Bosco",
+        dates: "1815–1888 CE",
+        epoch: 8,
+        domain: "Charity",
+        domainKey: "charity",
+        role: "Founder of the Salesians & Educator",
+        contribution: "Pioneered the 'Preventive System' of education (based on reason, religion, and loving-kindness); built trade schools, orphanages, and educational centers for impoverished industrial youth.",
+        works: "The Preventive System in the Education of the Young",
+        quote: "It is not enough to love the young; they must know that they are loved.",
+        connection: "Revolutionized modern vocational education and youth ministry.",
+        isDoctor: false, isMartyr: false
+      }
+    ];
+
+    // State
+    let activeDomain = "all";
+    let activeEpoch = "all";
+    let searchQuery = "";
+
+    // DOM Elements
+    const cardsGrid = document.getElementById("cardsGrid");
+    const activeCountText = document.getElementById("activeCountText");
+    const searchInput = document.getElementById("searchInput");
+    const domainPills = document.getElementById("domainPills");
+    const epochPills = document.getElementById("epochPills");
+    const btnExport = document.getElementById("btnExport");
+
+    // Modal Elements
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+    const modalName = document.getElementById("modalName");
+    const modalDates = document.getElementById("modalDates");
+    const modalRole = document.getElementById("modalRole");
+    const modalContribution = document.getElementById("modalContribution");
+    const modalWorks = document.getElementById("modalWorks");
+    const modalQuote = document.getElementById("modalQuote");
+    const modalConnection = document.getElementById("modalConnection");
+
+    // Render Cards
+    function render() {
+      const q = searchQuery.toLowerCase().trim();
+
+      const filtered = CONTRIBUTORS.filter(c => {
+        // Domain match
+        const matchDomain = (activeDomain === "all") || (c.domainKey.toLowerCase() === activeDomain.toLowerCase());
+        
+        // Epoch match
+        const matchEpoch = (activeEpoch === "all") || (c.epoch.toString() === activeEpoch.toString());
+
+        // Search match
+        const matchSearch = !q || (
+          c.name.toLowerCase().includes(q) ||
+          c.role.toLowerCase().includes(q) ||
+          c.contribution.toLowerCase().includes(q) ||
+          c.works.toLowerCase().includes(q) ||
+          c.domain.toLowerCase().includes(q)
+        );
+
+        return matchDomain && matchEpoch && matchSearch;
+      });
+
+      activeCountText.textContent = `Showing ${filtered.length} of ${CONTRIBUTORS.length} contributors`;
+
+      if (filtered.length === 0) {
+        cardsGrid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3>No historical contributors match your criteria</h3>
+            <p>Try clearing your search terms or selecting 'All Domains' / 'All Eras'.</p>
+          </div>
+        `;
+        return;
+      }
+
+      cardsGrid.innerHTML = filtered.map(c => `
+        <div class="card" onclick="openModal(${c.id})">
+          <div class="card-header">
+            <div>
+              <div class="card-title">${c.name}</div>
+              <div class="card-dates">${c.dates}</div>
+            </div>
+            <span class="domain-badge domain-${c.domainKey}">${c.domain}</span>
+          </div>
+          <div class="card-role">${c.role}</div>
+          <p class="card-summary">${c.contribution}</p>
+          <div class="card-meta">
+            <div class="card-meta-item">
+              <strong>Key Works:</strong>
+              <span>${c.works}</span>
+            </div>
+          </div>
+          ${c.quote ? `<div class="card-quote">“${c.quote}”</div>` : ""}
+          <button class="card-footer-btn" onclick="event.stopPropagation(); openModal(${c.id})">
+            View Complete Dossier & Legacy →
+          </button>
+        </div>
+      `).join("");
+    }
+
+    // Modal Handlers
+    window.openModal = function(id) {
+      const c = CONTRIBUTORS.find(x => x.id === id);
+      if (!c) return;
+
+      modalName.textContent = c.name;
+      modalDates.textContent = `${c.dates} • Epoch ${c.epoch} • ${c.domain}`;
+      modalRole.textContent = c.role;
+      modalContribution.textContent = c.contribution;
+      modalWorks.textContent = c.works;
+      modalQuote.textContent = `“${c.quote}”`;
+      modalConnection.textContent = c.connection;
+
+      modalBackdrop.classList.add("active");
+    };
+
+    modalClose.addEventListener("click", () => modalBackdrop.classList.remove("active"));
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) modalBackdrop.classList.remove("active");
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") modalBackdrop.classList.remove("active");
+    });
+
+    // Search Input
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      render();
+    });
+
+    // Pill Filtering
+    domainPills.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      domainPills.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeDomain = btn.dataset.val;
+      render();
+    });
+
+    epochPills.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      epochPills.querySelectorAll(".pill-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeEpoch = btn.dataset.val;
+      render();
+    });
+
+    // Export Functionality
+    btnExport.addEventListener("click", () => {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(CONTRIBUTORS, null, 2));
+      const downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "catholic_contributors_dataset.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    });
+
+    // Initial Render
+    render();
+  </script>
+</body>
+</html>

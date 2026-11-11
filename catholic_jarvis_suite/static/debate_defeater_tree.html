@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tactical Defeater Tree & Live Debate Cockpit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0b0d13;
+      --bg-panel: #121622;
+      --bg-card: #181e2e;
+      --bg-card-hover: #22293d;
+      --border: #262c42;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .control-deck {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-row-top {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 300px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus { border-color: var(--accent-gold); }
+
+    .tradition-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .trad-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .trad-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent-gold);
+    }
+
+    .trad-btn.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+    }
+
+    /* Cards Grid */
+    .battle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(460px, 1fr));
+      gap: 20px;
+    }
+
+    .battle-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .battle-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-gold);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .objection-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.4;
+    }
+
+    .trad-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      text-transform: uppercase;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* 4-Tier Strike Payload Boxes */
+    .payload-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .box-tier {
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .tier-concession {
+      background: rgba(212, 175, 55, 0.08);
+      border-left: 3px solid var(--accent-gold);
+      color: #fef08a;
+    }
+
+    .tier-patristic {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--accent-cyan);
+      color: #e0f2fe;
+    }
+
+    .tier-academic {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid var(--accent-green);
+      color: #d1fae5;
+    }
+
+    .tier-socratic {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 3px solid var(--accent-red);
+      color: #fee2e2;
+    }
+
+    .box-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tier-concession .box-label { color: var(--accent-gold); }
+    .tier-patristic .box-label { color: var(--accent-cyan); }
+    .tier-academic .box-label { color: var(--accent-green); }
+    .tier-socratic .box-label { color: var(--accent-red); }
+
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 12px;
+    }
+
+    .btn-copy {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .btn-copy:hover {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+    }
+
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+      <div class="brand-title">Tactical Defeater Tree & Live Debate Cockpit</div>
+      <span class="brand-badge">War-Room Protocol</span>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted);">
+      <span id="counter-badge">10 Battlecards Loaded</span> • Concede-First Mechanics (Rule 10)
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="control-deck">
+      <div class="control-row-top">
+        <input type="text" class="search-input" id="search-input" placeholder="Search objection, opponent tradition, patristic locus, or academic citation..." onkeyup="filterBattlecards()">
+        <div class="tradition-pills">
+          <button class="trad-btn active" onclick="setTradition('ALL', this)">All Traditions</button>
+          <button class="trad-btn" onclick="setTradition('REFORMED', this)">Reformed / Westminster</button>
+          <button class="trad-btn" onclick="setTradition('BAPTIST', this)">Baptist / Neo-Calvinist</button>
+          <button class="trad-btn" onclick="setTradition('ORTHODOX', this)">Eastern Orthodox</button>
+          <button class="trad-btn" onclick="setTradition('GENERAL', this)">Evangelical General</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="battle-grid" id="battle-grid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <footer>
+    History Proves Catholicism • Four-Tier Apologetic Strike Payload • Rule 10 Concede-First Architecture
+  </footer>
+
+  <script>
+    const BATTLECARDS = [
+      {
+        id: "sola-scriptura",
+        tradition: "REFORMED",
+        traditionLabel: "Reformed / Westminster",
+        objection: "Sola Scriptura: 'Scripture alone is the sole infallible rule of faith; Church Tradition is fallible human opinion.'",
+        concession: "Rule 10 Concession: Acknowledge that Sacred Scripture is uniquely inspired by the Holy Spirit (theopneustos), possessing material sufficiency and supreme divine dignity, which no human council can ever contradict.",
+        patristic: "St. Irenaeus of Lyons (AH IV.26.2): 'Wherefore it is incumbent to obey the presbyters in the Church who possess the succession from the Apostles... who together with the succession of the episcopate have received the certain charism of truth (charisma veritatis certum).' Also Tertullian (De Praescr. 19): Heretics are barred from appealing to Scripture because the texts belong exclusively to the apostolic succession.",
+        academic: "Heiko Oberman (The Harvest of Medieval Theology): Proves that the Early Church operated on 'Tradition 1' (the coinherence of Scripture and Tradition interpreted by the apostolic episcopate), whereas the Protestant model of Scripture isolated from the Living Voice was a post-14th century nominalist emergence.",
+        socratic: "Socratic Strike: 'On the authority of what inspired scripture do you know that the Gospel of Luke and the Epistle to the Hebrews are divinely inspired scripture, without relying on the fallible extra-biblical Tradition of Catholic bishops who canonized them?'"
+      },
+      {
+        id: "justification-sola-fide",
+        tradition: "REFORMED",
+        traditionLabel: "Reformed / Piper / Schreiner",
+        objection: "Sola Fide: 'Justification is a purely legal imputation of Christ's active obedience, received by faith alone apart from all works (Rom 3:28).'",
+        concession: "Rule 10 Concession: Acknowledge that initial justification is 100% unmerited grace (Council of Trent VI, Canon 1); no work done prior to regeneration can ever earn justification or place God in man's debt.",
+        patristic: "St. Augustine (De Fide et Operibus 14.22): 'Unintelligent persons, however, with regard to the Apostle Paul's statement... have thought that he was saying that faith is sufficient for man even if he leads a bad life... whereas Peter, John, James, and Jude in their Epistles took special pains to direct their aim against such thinking.'",
+        academic: "E.P. Sanders (Paul and Palestinian Judaism) & John Barclay (Paul and the Gift): Demonstrates that Second Temple Judaism did NOT believe in legalistic 'earning of heaven by merit' (Covenantal Nomism), and that Paul's works of the law (ergon nomou / 4QMMT) referred to Jewish identity markers, not Catholic good works done in charity.",
+        socratic: "Socratic Strike: 'If justification is purely forensic at conversion, why does St. Paul explicitly declare in Romans 2:6-13 that God will render eternal life to those who do good, and that only the doers of the law will be justified on the Day of Judgment?'"
+      },
+      {
+        id: "papacy-peter-rock",
+        tradition: "BAPTIST",
+        traditionLabel: "Baptist / MacArthur",
+        objection: "The Papacy: 'Peter was never bishop of Rome, and Jesus said 'upon this rock' referring to Peter's faith, not Peter's person or office.'",
+        concession: "Rule 10 Concession: Acknowledge that Christ Himself is the ultimate, uncreated Foundation and Chief Cornerstone of the entire Church (1 Cor 3:11, Eph 2:20).",
+        patristic: "St. Cyprian of Carthage (Epistle 59.14): 'They still dare to set sail and carry letters from schismatics to the Chair of Peter and to the principal Church in which sacerdotal unity has its source; nor did they reflect that the Romans are those whose faith was praised by the Apostle, to whom perfidy can have no access.'",
+        academic: "Oscar Cullmann (Peter: Disciple, Apostle, Martyr) & Markus Bockmuehl (Simon Peter in Scripture and Memory): Even leading Protestant historians admit that 'this rock' in Matt 16:18 refers to the historical person of Peter, and that archaeological excavations under St. Peter's Basilica (Margherita Guarducci) definitively prove Peter's Roman martyrdom and tomb.",
+        socratic: "Socratic Strike: 'If Jesus in Aramaic said 'Atta hu Kepha, ve-al kepha hadeh' where the word for rock is identical in both clauses, by what linguistic rule do you split Christ's pun into two different foundations?'"
+      },
+      {
+        id: "deuterocanon-added-trent",
+        tradition: "GENERAL",
+        traditionLabel: "Evangelical General",
+        objection: "The Canon: 'The Catholic Church added the 7 Apocryphal books to the Bible at the Council of Trent (1546) to justify purgatory.'",
+        concession: "Rule 10 Concession: Acknowledge that St. Jerome expressed personal hesitation regarding the Hebrew status of the Deuterocanon in his prefaces, distinguishing between books of the Hebrew canon and church reading.",
+        patristic: "Council of Rome (382 CE) under Pope Damasus I, Council of Hippo (393 CE), and Third Council of Carthage (397 CE): All three councils issued the identical 73-book canon including the 7 Deuterocanonical books (Wisdom, Sirach, Tobit, Judith, Baruch, 1 & 2 Maccabees) over 1,150 years BEFORE Trent!",
+        academic: "Bruce Metzger (The Canon of the New Testament) & Norman Tanner (Decrees of the Ecumenical Councils): Proves the Council of Florence (1442) in the Bull Cantate Domino dogmatically promulgated the exact 73-book canon a century before Trent. Trent merely reiterated what had been universally defined in 382, 397, and 1442.",
+        socratic: "Socratic Strike: 'If Trent invented the Deuterocanon in 1546, why did the Guttenberg Bible of 1455, the Council of Florence in 1442, and the 4th-century Latin Vulgate of 382 contain all seven books?'"
+      },
+      {
+        id: "eucharist-symbolic",
+        tradition: "BAPTIST",
+        traditionLabel: "Evangelical / Baptist",
+        objection: "The Eucharist: 'The Lord's Supper is purely a symbolic memorial; Jesus spoke metaphorically in John 6 when He said 'eat my flesh.'",
+        concession: "Rule 10 Concession: Acknowledge that the Eucharist is indeed a memorial ('Do this in remembrance of Me', Luke 22:19), and that Christ's presence is sacramental and heavenly, not a carnal cannibalistic slaughter.",
+        patristic: "St. Ignatius of Antioch (Letter to the Smyrnaeans 7.1; c. 110 CE): 'They abstain from the Eucharist and from prayer, because they confess not the Eucharist to be the flesh of our Savior Jesus Christ, which suffered for our sins, and which the Father, of His goodness, raised up again.'",
+        academic: "J.N.D. Kelly (Early Christian Doctrines, p. 211): 'Eucharistic teaching, it should be understood at the outset, was in general unquestioningly realist... Ignatius roundly asserts that the bread is the flesh of Jesus... Justin confirms that the consecrated food is the flesh and blood of that incarnate Jesus.'",
+        socratic: "Socratic Strike: 'If the early Church believed the Eucharist was merely a cracker and grape juice symbol, why did the Roman Empire execute Christians on the specific criminal charge of cannibalistic Thyestean banquets?'"
+      },
+      {
+        id: "eastern-orthodoxy-papacy",
+        tradition: "ORTHODOX",
+        traditionLabel: "Eastern Orthodox",
+        objection: "Orthodox Primacy: 'Rome possessed only a primacy of honor, not universal jurisdiction; the 28th Canon of Chalcedon gave Constantinople equal prerogatives.'",
+        concession: "Rule 10 Concession: Acknowledge that the ancient Church exercised a rich synodal governance and that the Eastern Patriarchates enjoyed venerable regional autonomy in liturgy and discipline.",
+        patristic: "Pope St. Leo the Great completely ANNULLED Canon 28 of Chalcedon in 452 CE (Epistle 104 to Emperor Marcian), and the Patriarch of Constantinople, Anatolius, formally apologized and submitted to Leo (Epistle 132 to Leo): 'The entire validity of the acts was reserved for the authority of your Holiness.'",
+        academic: "Francis Dvornik (Byzantium and the Roman Primacy) & Klaus Schatz (Papal Primacy): Proves that the Formula of Pope Hormisdas (519 CE), signed by the Byzantine Emperor and all Eastern patriarchs to end the Acacian Schism, explicitly affirmed that 'in the Apostolic See the Catholic religion has always been preserved unblemished.'",
+        socratic: "Socratic Strike: 'If universal papal jurisdiction is a Frankish heresy, why did all the Eastern bishops at Chalcedon (451 CE) chant 'Peter has spoken through Leo', and why did they petition Pope Leo to ratify their conciliar canons?'"
+      },
+      {
+        id: "purgatory-atonement",
+        tradition: "REFORMED",
+        traditionLabel: "Reformed / Protestant",
+        objection: "Purgatory: 'Purgatory denies the sufficiency of Christ's finished work on the cross; all sins are completely pardoned at once.'",
+        concession: "Rule 10 Concession: Acknowledge that the eternal guilt (reatus culpae) and eternal damnation of sin are 100% paid by the blood of Christ alone; Purgatory is solely temporal purification for sanctification, not a secondary redemption.",
+        patristic: "St. Perpetua (Passio Perpetuae 7-8; 203 CE) praying for her deceased brother Dinocrates until she sees him delivered; St. Cyril of Jerusalem (Catechetical Lectures 23.9): 'We offer this sacrifice for all who have fallen asleep... believing that it will be a very great benefit to the souls for whom the supplication is put up.'",
+        academic: "Jacques Le Goff (The Birth of Purgatory) & J.N.D. Kelly: Confirms that prayer for the dead and belief in post-mortem purification was the universal, undisputed practice of 2nd- and 3rd-century Christianity across all regions.",
+        socratic: "Socratic Strike: 'If nothing unclean can enter heaven (Rev 21:27), and a Christian dies with worldly attachments or venial sins, does God bypass his sanctification, or is his soul purified as through fire, exactly as St. Paul describes in 1 Corinthians 3:15?'"
+      },
+      {
+        id: "intercession-of-saints",
+        tradition: "GENERAL",
+        traditionLabel: "Evangelical General",
+        objection: "Saints: 'Praying to Mary and the saints violates 1 Timothy 2:5 (one mediator) and constitutes communication with the dead.'",
+        concession: "Rule 10 Concession: Acknowledge that Jesus Christ is the sole Mediator of Redemption between God and man; no creature can add to or replace Christ's unique mediation.",
+        patristic: "The Sub Tuum Praesidium (Egyptian Papyrus 470, c. 250 CE): 'Beneath your compassion, we take refuge, O Theotokos; do not despise our petitions in time of trouble.' Plus 3rd-century Catacomb graffiti: 'Peter and Paul, pray for us.'",
+        academic: "Peter Brown (The Cult of the Saints, Chicago): Proves that the veneration and invocation of the martyrs was not a pagan corruption, but the heart of early Christian ecclesial solidarity, experiencing the Communion of Saints across the veil of death.",
+        socratic: "Socratic Strike: 'If asking a fellow Christian on earth to pray for you does not violate Christ's one mediation, why does asking a Christian who is alive in the presence of God before the throne (Rev 5:8, 8:3) suddenly violate it?'"
+      },
+      {
+        id: "baptismal-regeneration",
+        tradition: "BAPTIST",
+        traditionLabel: "Baptist / Evangelical",
+        objection: "Baptism: 'Baptism is an outward symbol of a prior inward conversion; water cannot regenerate or wash away sins.'",
+        concession: "Rule 10 Concession: Acknowledge that water baptism requires faith and repentance in adults, and that an exterior washing without the Holy Spirit is dead ritualism.",
+        patristic: "St. Justin Martyr (First Apology 61; c. 150 CE): 'Then they are brought by us where there is water, and are regenerated in the same manner in which we were ourselves regenerated... for Christ also said, 'Except ye be born again, ye shall not enter into the kingdom of heaven.'",
+        academic: "G.R. Beasley-Murray (Baptism in the New Testament, Paternoster): Even this eminent Baptist scholar conceded that in the New Testament, baptism and regeneration are indissolubly linked and that the Apostles never conceived of an unbaptized Christian.",
+        socratic: "Socratic Strike: 'Why did Ananias command the Apostle Paul in Acts 22:16: 'Rise and be baptized, and WASH AWAY YOUR SINS, calling on His name,' if Paul's sins were already washed away on the Damascus Road?'"
+      },
+      {
+        id: "vatican-ii-trent",
+        tradition: "REFORMED",
+        traditionLabel: "Traditionalist / Skeptic",
+        objection: "Vatican II: 'Vatican II contradicted the Council of Trent by teaching religious liberty and recognizing truth in other religions.'",
+        concession: "Rule 10 Concession: Acknowledge that the pastoral tone, vocabulary, and geopolitical circumstances of Vatican II differed drastically from the defensive Counter-Reformation decrees of Trent.",
+        patristic: "Dignitatis Humanae §1 explicitly affirms: 'It leaves untouched traditional Catholic doctrine on the moral duty of men and societies toward the true religion and toward the one Church of Christ.' Trent condemned forced conversions (Session VII, Canon 9); Vatican II merely unpacked the psychological and spiritual necessity of free assent.",
+        academic: "Avery Cardinal Dulles & Brian Harrison: Demonstrates that Vatican II's civil religious liberty was a limitation on the coercive power of the secular state, perfectly harmonious with Pope Leo XIII (Libertas §33) and St. Thomas Aquinas (ST II-II q. 10 a. 8).",
+        socratic: "Socratic Strike: 'If Vatican II contradicted Trent, can you identify a single dogmatic canon of Trent that was formally anathematized or repealed by the documents of Vatican II?'"
+      }
+    ];
+
+    let currentTradition = "ALL";
+
+    function renderBattlecards(cards) {
+      const grid = document.getElementById("battle-grid");
+      grid.innerHTML = "";
+
+      if (cards.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-dim);">No battlecards match your criteria.</div>`;
+        return;
+      }
+
+      cards.forEach(card => {
+        const el = document.createElement("div");
+        el.className = "battle-card";
+
+        el.innerHTML = `
+          <div class="card-top">
+            <div class="objection-title">${card.objection}</div>
+            <span class="trad-tag">${card.traditionLabel}</span>
+          </div>
+
+          <div class="payload-stack">
+            <div class="box-tier tier-concession">
+              <div class="box-label">Tier 1 • Rule 10 Concession</div>
+              <div>${card.concession}</div>
+            </div>
+
+            <div class="box-tier tier-patristic">
+              <div class="box-label">Tier 2 • Primary Patristic / Scripture Locus [V]</div>
+              <div>${card.patristic}</div>
+            </div>
+
+            <div class="box-tier tier-academic">
+              <div class="box-label">Tier 3 • Protestant / Secular Academic Defeater</div>
+              <div>${card.academic}</div>
+            </div>
+
+            <div class="box-tier tier-socratic">
+              <div class="box-label">Tier 4 • The Socratic Counter-Strike</div>
+              <div>${card.socratic}</div>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-copy" onclick="copyDiscordPayload('${card.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy for Discord
+            </button>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+
+      document.getElementById("counter-badge").innerText = `${cards.length} Battlecards Loaded`;
+    }
+
+    function setTradition(trad, btn) {
+      currentTradition = trad;
+      document.querySelectorAll(".trad-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      filterBattlecards();
+    }
+
+    function filterBattlecards() {
+      const q = document.getElementById("search-input").value.toLowerCase();
+      const filtered = BATTLECARDS.filter(c => {
+        const matchesTrad = (currentTradition === "ALL" || c.tradition === currentTradition);
+        const matchesQ = c.objection.toLowerCase().includes(q) ||
+                         c.concession.toLowerCase().includes(q) ||
+                         c.patristic.toLowerCase().includes(q) ||
+                         c.academic.toLowerCase().includes(q) ||
+                         c.socratic.toLowerCase().includes(q);
+        return matchesTrad && matchesQ;
+      });
+      renderBattlecards(filtered);
+    }
+
+    function copyDiscordPayload(id) {
+      const card = BATTLECARDS.find(c => c.id === id);
+      if (!card) return;
+
+      const payload = 
+`**⚔️ TACTICAL DEFEATER PAYLOAD**
+> **Charge:** ${card.objection}
+> **Tradition:** ${card.traditionLabel}
+
+**1. Historical Concession (Rule 10):**
+${card.concession}
+
+**2. Primary Patristic / Scripture Locus [V]:**
+${card.patristic}
+
+**3. Academic Consensus Defeater:**
+${card.academic}
+
+**4. Socratic Counter-Strike:**
+_${card.socratic}_`;
+
+      navigator.clipboard.writeText(payload).then(() => {
+        alert("Copied formatted Discord payload to clipboard!");
+      });
+    }
+
+    // Initial render
+    renderBattlecards(BATTLECARDS);
+  </script>
+</body>
+</html>

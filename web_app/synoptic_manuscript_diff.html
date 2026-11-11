@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synoptic Biblical Manuscript & Text-Critical Apparatus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&family=SBL+Hebrew&family=SBL+Greek&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0b0d13;
+      --bg-panel: #121622;
+      --bg-card: #181e2e;
+      --bg-card-hover: #22293d;
+      --border: #262c42;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .header-stats {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
+    }
+
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .container {
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .control-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 14px 10px 38px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent-gold);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+    }
+
+    /* Main Locus Accordion Card */
+    .locus-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .locus-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    .locus-header {
+      padding: 18px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .locus-title-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .locus-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .locus-theme {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .badge-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge-christology { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+    .badge-harmonization { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-targum { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-vulgate-win { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-audit-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .audit-pending-banner {
+      margin: 0 0 16px 0; padding: 10px 14px; border-radius: 8px;
+      background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fde68a; font-size: 12px; line-height: 1.5;
+    }
+
+    .locus-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Synoptic Multi-Column Grid */
+    .synoptic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .stream-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stream-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 8px;
+    }
+
+    .stream-name {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-gold);
+    }
+
+    .stream-date {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stream-text {
+      font-family: 'Newsreader', serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .stream-text.original-lang {
+      font-family: 'Times New Roman', serif;
+      font-size: 16px;
+      direction: ltr;
+    }
+
+    .stream-text.hebrew {
+      direction: rtl;
+      font-family: 'SBL Hebrew', 'David', 'Times New Roman', serif;
+      font-size: 18px;
+    }
+
+    .stream-gloss {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .diff-highlight-error {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      padding: 1px 4px;
+      border-radius: 3px;
+      border-bottom: 2px solid var(--accent-red);
+      font-weight: 600;
+    }
+
+    .diff-highlight-vulgate {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      padding: 1px 4px;
+      border-radius: 3px;
+      border-bottom: 2px solid var(--accent-green);
+      font-weight: 600;
+    }
+
+    .diff-highlight-ancient {
+      background: rgba(56, 189, 248, 0.2);
+      color: #7dd3fc;
+      padding: 1px 4px;
+      border-radius: 3px;
+      border-bottom: 2px solid var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    /* Forensic Autopsy Banner */
+    .autopsy-banner {
+      background: rgba(212, 175, 55, 0.05);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #fef08a;
+    }
+
+    .autopsy-title {
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <div class="brand-title">Synoptic Manuscript & Text-Critical Apparatus</div>
+      <span class="brand-badge">Tridentine & Patristic Forensics</span>
+    </div>
+    <div class="header-stats">
+      <span class="stat-pill" id="total-loci-badge">15 Forensic Loci</span>
+      <span class="stat-pill">6 Major Text Streams</span>
+      <span class="stat-pill">Zero External Dependencies</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="control-panel">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search reference, Greek/Hebrew text, error type, or manuscript..." onkeyup="filterLoci()">
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="setCategory('ALL', this)">All Loci</button>
+        <button class="filter-btn" onclick="setCategory('VULGATE_WIN', this)">Vulgate Vindicated</button>
+        <button class="filter-btn" onclick="setCategory('TARGUM', this)">Aramaic Targum</button>
+        <button class="filter-btn" onclick="setCategory('HARMONIZATION', this)">Byzantine Glosses</button>
+        <button class="filter-btn" onclick="setCategory('CHRISTOLOGY', this)">Christological Variants</button>
+      </div>
+    </div>
+
+    <div class="audit-pending-banner">
+      <strong>[S / AUDIT PENDING]:</strong> This module (built 2026-10-09 to 2026-10-13) was verified only for loading without HTTP/JS errors. Every quote, date, and manuscript claim below is unverified against a primary critical edition or apparatus (Rule 19 / Charter &sect;II.9) &mdash; treat every row as [S] until independently checked against the source in hand. See REPORT_2026-10-14, sections 2 and 4.
+    </div>
+
+    <div id="loci-container" style="display: flex; flex-direction: column; gap: 20px;">
+      <!-- Loci cards injected by JavaScript -->
+    </div>
+  </div>
+
+  <footer>
+    History Proves Catholicism • Master Academic Dissertation Project • Rule 13 Subject Matter Apparatus
+  </footer>
+
+  <script>
+    const LOCI_DATA = [
+      {
+        id: "1tim3-16",
+        ref: "1 Timothy 3:16",
+        theme: "The Christological Climax: 'God' vs. 'He Who Was Manifested'",
+        category: "CHRISTOLOGY",
+        badge: "VULGATE VINDICATED",
+        badgeClass: "badge-vulgate-win",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus",
+            date: "1611 KJV / 1516 Erasmus (Late Byzantine)",
+            text: "And without controversy great is the mystery of godliness: <span class='diff-highlight-error'>God [Θεός]</span> was manifest in the flesh...",
+            gloss: "Reads 'God' (Θεὸς ἐφανερώθη). Used as a prooftext for deity, but based on a late scribal corruption."
+          },
+          {
+            name: "Latin Vulgate (St. Jerome)",
+            date: "c. 384 CE (4th-Century Vorlage)",
+            text: "Et manifeste magnum est pietatis sacramentum, <span class='diff-highlight-vulgate'>quod [qui]</span> manifestatum est in carne...",
+            gloss: "Translates the Greek relative pronoun 'He who' (ὃς), NOT 'God'. Jerome preserved the ancient reading."
+          },
+          {
+            name: "Ancient Greek Uncials (א, B, A, C)",
+            date: "c. 200–350 CE (P46, Sinaiticus, Alexandrinus)",
+            text: "<span class='diff-highlight-ancient'>ὃς ἐφανερώθη</span> ἐν σαρκί, ἐδικαιώθη ἐν πνεύματι...",
+            gloss: "Uncials read ὃς (hos, 'He who'). An early scribe mistook ΟϹ (hos) for the sacred name contraction ΘϹ (Theos) by adding a line."
+          },
+          {
+            name: "Modern Critical Greek (NA28 / UBS5)",
+            date: "2012 / Scientific Critical Consensus",
+            text: "<span class='diff-highlight-vulgate'>ὃς ἐφανερώθη</span> ἐν σαρκί (He who was manifested in the flesh)",
+            gloss: "Universal consensus of modern textual criticism: the Vulgate was right; the KJV/TR carries an accidental scribal stroke."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: In uncial script without spaces, ΟϹ ('He who') was accidentally transformed into the nomen sacrum ΘϹ ('God') by a scribe drawing a stroke across the O and placing a contraction bar above. The 4th-century Latin Vulgate preserved the authentic apostolic reading; the Protestant Textus Receptus preserved the scribal typo."
+      },
+      {
+        id: "rom8-1",
+        ref: "Romans 8:1",
+        theme: "The Byzantine Harmonization Gloss: 'Who walk not after the flesh...'",
+        category: "HARMONIZATION",
+        badge: "BYZANTINE GLOSS",
+        badgeClass: "badge-harmonization",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus",
+            date: "1611 KJV / 1550 Stephanus",
+            text: "There is therefore now no condemnation to them which are in Christ Jesus, <span class='diff-highlight-error'>who walk not after the flesh, but after the Spirit.</span>",
+            gloss: "Adds the conditional clause copied directly from Romans 8:4."
+          },
+          {
+            name: "Latin Vulgate (St. Jerome)",
+            date: "c. 384 CE (4th Century)",
+            text: "<span class='diff-highlight-vulgate'>Nihil ergo nunc damnationis est his, qui sunt in Christo Jesu.</span>",
+            gloss: "Stops cleanly at 'Christ Jesus'. Preserves the absolute declarative grace of Pauline theology."
+          },
+          {
+            name: "Ancient Witnesses (P46, א, B)",
+            date: "c. 200–350 CE (Chester Beatty Papyri, Vaticanus)",
+            text: "<span class='diff-highlight-ancient'>Οὐδὲν ἄρα νῦν κατάκριμα τοῖς ἐν Χριστῷ Ἰησοῦ.</span>",
+            gloss: "Zero trace of the conditional walk clause. Papyrus 46 and Codex Vaticanus terminate at Christ Jesus."
+          },
+          {
+            name: "Modern Critical Greek (NA28)",
+            date: "Scientific Consensus",
+            text: "Οὐδὲν ἄρα νῦν κατάκριμα τοῖς ἐν Χριστῷ Ἰησοῦ.",
+            gloss: "Concurs 100% with Jerome's Latin Vulgate against the Protestant Textus Receptus."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: A Byzantine scribe copying Romans 8 glanced ahead to verse 4 ('who walk not after the flesh, but after the Spirit') and harmonized verse 1 with verse 4. Jerome's 4th-century Latin Vulgate never suffered this conflation."
+      },
+      {
+        id: "rev22-19",
+        ref: "Revelation 22:19",
+        theme: "The Manufactured Erasmian Greek: 'Book of Life' vs. 'Tree of Life'",
+        category: "VULGATE_WIN",
+        badge: "BOGUS GREEK EXPOSED",
+        badgeClass: "badge-vulgate-win",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus",
+            date: "1611 KJV / 1516 Erasmus",
+            text: "God shall take away his part out of the <span class='diff-highlight-error'>book of life [βίβλου τῆς ζωῆς]</span>...",
+            gloss: "Reads 'book of life'. This reading is found in ZERO Greek manuscripts in the entire history of the world!"
+          },
+          {
+            name: "Latin Vulgate (Authentic Jerome)",
+            date: "c. 384 CE",
+            text: "...auferet Deus partem eius <span class='diff-highlight-vulgate'>de ligno vitae</span>, et de civitate sancta...",
+            gloss: "Reads 'de ligno vitae' (from the TREE of life), translating Greek xylon correctly."
+          },
+          {
+            name: "All Extant Greek Manuscripts",
+            date: "Every Codex, Uncial, and Miniscule",
+            text: "ἀφελεῖ ὁ θεὸς τὸ μέρος αὐτοῦ <span class='diff-highlight-ancient'>ἀπὸ τοῦ ξύλου τῆς ζωῆς</span>...",
+            gloss: "Every single Greek manuscript on earth reads 'tree of life' (tou xylou tēs zōēs)."
+          },
+          {
+            name: "Modern Critical Text (NA28)",
+            date: "Scientific Consensus",
+            text: "ἀπὸ τοῦ ξύλου τῆς ζωῆς (from the tree of life)",
+            gloss: "Completely rejects the Erasmian KJV reading as an uninspired back-translation."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: Erasmus lacked the final leaf of Revelation (Rev 22:16-21) in his sole Basel manuscript (Minuscule 2814). To meet his printing deadline, he back-translated from Latin into Greek. A late Latin copy had a typo ('libro vitae' for 'ligno vitae'), so Erasmus coined the fake Greek phrase 'apo biblou tēs zōēs'. The KJV incorporated this artificial error."
+      },
+      {
+        id: "1john5-7",
+        ref: "1 John 5:7-8",
+        theme: "The Comma Johanneum: Fabricated Greek to Extort Erasmus",
+        category: "CHRISTOLOGY",
+        badge: "TEXTUAL FORGERY",
+        badgeClass: "badge-harmonization",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus (1522+)",
+            date: "1611 KJV / 1522 Erasmus 3rd Ed.",
+            text: "For there are three that bear record in heaven, <span class='diff-highlight-error'>the Father, the Word, and the Holy Ghost: and these three are one...</span>",
+            gloss: "Inserted into the TR only after a 16th-century Greek manuscript was forged in Oxford to force Erasmus's hand."
+          },
+          {
+            name: "Ancient Latin Vulgate (Codex Amiatinus)",
+            date: "c. 700 CE (Oldest complete Vulgate)",
+            text: "<span class='diff-highlight-vulgate'>Quia tres sunt, qui testimonium dant: Spiritus, et aqua, et sanguis: et hi tres unum sunt.</span>",
+            gloss: "Codex Amiatinus and Codex Fuldensis (546 CE) DO NOT HAVE THE COMMA! Jerome did not translate it."
+          },
+          {
+            name: "Ancient Greek Codices (א, B, A, C, P)",
+            date: "4th–10th Century Greek Tradition",
+            text: "ὅτι τρεῖς εἰσιν οἱ μαρτυροῦντες, τὸ πνεῦμα καὶ τὸ ὕδωρ καὶ τὸ αἷμα...",
+            gloss: "Zero ancient Greek manuscripts carry the Heavenly Witnesses. It exists in only 3 late minuscules translated from Latin."
+          },
+          {
+            name: "Modern Critical Text (NA28)",
+            date: "Scientific Consensus",
+            text: "Excised from the inspired text as a 4th-century Latin theological gloss (Priscillian).",
+            gloss: "Validated: Authentic ancient Catholic manuscripts never carried the gloss."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: Erasmus rightly omitted the Comma in 1516 and 1519. Under accusations of heresy, he promised to include it if a single Greek text was found. Codex Montfortianus (Minuscule 61) was forged in Oxford around 1520 by translating Latin into Greek. Authentic early Latin Vulgate manuscripts (Amiatinus) vindicate early Catholic purity."
+      },
+      {
+        id: "eph4-8",
+        ref: "Ephesians 4:8 vs. Psalm 68:18",
+        theme: "Ascension & Giving Gifts: Paul Citing the Synagogue Aramaic Targum",
+        category: "TARGUM",
+        badge: "ARAMAIC SUBSTRATE",
+        badgeClass: "badge-targum",
+        streams: [
+          {
+            name: "Hebrew Masoretic Text (Ps 68:19 MT)",
+            date: "Medieval Tiberian Masoretic Text",
+            text: "לָקַחְתָּ מַתָּנוֹת בָּאָדָם (laqachta mattanot ba'adam) = <span class='diff-highlight-error'>'You RECEIVED gifts among men'</span>",
+            gloss: "Hebrew reads 'received' (laqachta). God receives tribute from conquered men."
+          },
+          {
+            name: "Greek Septuagint (Ps 67:19 LXX)",
+            date: "3rd–2nd Century BCE",
+            text: "ἔλαβες δόματα ἐν ἀνθρώπῳ = <span class='diff-highlight-error'>'You RECEIVED gifts in man'</span>",
+            gloss: "Translates Hebrew laqachta literally with ἔλαβες (elabes, 'you received')."
+          },
+          {
+            name: "Aramaic Targum of Psalms (Tg. Ps 68:19)",
+            date: "2nd Temple Synagogue Liturgy (Shavuot)",
+            text: "יְהַבְתָּא מַתְּנָן לִבְנֵי נָשָׁא (yehavta mattnan) = <span class='diff-highlight-vulgate'>'You GAVE gifts to the children of men'</span>",
+            gloss: "Aramaic interprets Moses ascending Sinai to GIVE the Torah to Israel on Pentecost."
+          },
+          {
+            name: "Paul's Apostolic Citation (Ephesians 4:8)",
+            date: "c. 60–62 CE",
+            text: "διὸ λέγει· ἀναβὰς εἰς ὕψος... <span class='diff-highlight-vulgate'>ἔδωκεν δόματα τοῖς ἀνθρώποις</span> ('He GAVE gifts to men')",
+            gloss: "Paul cites the living Aramaic Targum verbatim against both Hebrew MT and Greek LXX!"
+          }
+        ],
+        autopsy: "EPISTEMIC AUTOPSY: Paul did not make a mistake or misquote the Hebrew Bible. Paul quoted the liturgical Aramaic Targum of the synagogue, where Moses giving the Torah on Pentecost is typologically fulfilled by Christ ascending to give the Holy Spirit to the Church. Proves Scripture is rooted in Living Sacred Tradition!"
+      },
+      {
+        id: "mark4-12",
+        ref: "Mark 4:12 vs. Isaiah 6:10",
+        theme: "Parables and Forgiveness: Jesus Citing Targum Jonathan",
+        category: "TARGUM",
+        badge: "ARAMAIC SUBSTRATE",
+        badgeClass: "badge-targum",
+        streams: [
+          {
+            name: "Hebrew Masoretic Text (Isa 6:10 MT)",
+            date: "Tiberian MT",
+            text: "וְשָׁב וְרָפָא לוֹ (ve-shav ve-rafa lo) = <span class='diff-highlight-error'>'Lest they turn and BE HEALED'</span>",
+            gloss: "Hebrew uses the medical root rafa (healing)."
+          },
+          {
+            name: "Greek Septuagint (Isa 6:10 LXX)",
+            date: "Alexandrian LXX",
+            text: "καὶ ἐπιστρέψωσιν καὶ <span class='diff-highlight-error'>ἰάσομαι αὐτούς</span> = 'Lest they turn and I will HEAL them'",
+            gloss: "LXX uses the verb iaomai (to heal)."
+          },
+          {
+            name: "Targum Jonathan on Isaiah (Tg. Isa 6:10)",
+            date: "Second Temple Synagogue Tradition",
+            text: "וִיתוּבוּן <span class='diff-highlight-vulgate'>וְיִשְׁתְּבֵק לְהוֹן</span> (ve-yishtveq le-hon) = 'Lest they turn <span class='diff-highlight-vulgate'>AND IT BE FORGIVEN THEM</span>'",
+            gloss: "Targum transforms the physical metaphor into the theological reality of divine forgiveness (shebaq)."
+          },
+          {
+            name: "Jesus's Direct Speech (Mark 4:12)",
+            date: "Gospel of Mark",
+            text: "μήποτε ἐπιστρέψωσιν <span class='diff-highlight-vulgate'>καὶ ἀφεθῇ αὐτοῖς</span> ('Lest they turn and it be FORGIVEN them')",
+            gloss: "Jesus translates the Aramaic Targum verb yishtveq le-hon into Greek aphethē autois verbatim!"
+          }
+        ],
+        autopsy: "EPISTEMIC AUTOPSY: Neither the Hebrew Bible nor the Greek Septuagint has the word 'forgive' in Isaiah 6:10. Only the Aramaic Targum has it. Jesus in His sovereign teaching cited the living Targum of the synagogue over the bare written Hebrew scroll."
+      },
+      {
+        id: "luke2-14",
+        ref: "Luke 2:14",
+        theme: "Gloria in Excelsis: 'Peace to Men of Good Will' vs. Byzantine Doxology",
+        category: "VULGATE_WIN",
+        badge: "VULGATE VINDICATED",
+        badgeClass: "badge-vulgate-win",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus",
+            date: "1611 KJV / Byzantine Text",
+            text: "Glory to God in the highest, and on earth peace, <span class='diff-highlight-error'>good will toward men [εὐδοκία, nominative]</span>.",
+            gloss: "Late Byzantine scribes dropped the final letter sigma, changing genitive to nominative."
+          },
+          {
+            name: "Latin Vulgate (St. Jerome)",
+            date: "c. 384 CE",
+            text: "Gloria in altissimis Deo, et in terra pax <span class='diff-highlight-vulgate'>hominibus bonae voluntatis</span>.",
+            gloss: "Translates the genitive: 'peace to men of good will' (with whom He is pleased)."
+          },
+          {
+            name: "Dead Sea Scrolls (1QH 4:32) & Great Codices (א, B, A, D)",
+            date: "Qumran / 4th-Century Uncials",
+            text: "ἐν ἀνθρώποις <span class='diff-highlight-ancient'>εὐδοκίας [genitive: eudokias]</span> (Hebrew DSS: anshei ratzon)",
+            gloss: "Qumran proves 'men of His favor' was standard 1st-century Jewish covenantal idiom."
+          },
+          {
+            name: "Modern Critical Greek (NA28)",
+            date: "Scientific Consensus",
+            text: "ἐν ἀνθρώποις εὐδοκίας (to people of His good pleasure)",
+            gloss: "Rejects the KJV reading; validates Jerome's Latin Vulgate 100%."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: Byzantine scribes dropped a single sigma (ς), turning the covenantal genitive 'of good will' into an independent nominative clause. Jerome translated the authentic 4th-century reading, confirmed by the Dead Sea Scrolls."
+      },
+      {
+        id: "col1-14",
+        ref: "Colossians 1:14",
+        theme: "Redemption: Byzantine Scribal Import from Ephesians 1:7",
+        category: "HARMONIZATION",
+        badge: "BYZANTINE GLOSS",
+        badgeClass: "badge-harmonization",
+        streams: [
+          {
+            name: "King James Version / Textus Receptus",
+            date: "1611 KJV / Late Byzantine Minuscules",
+            text: "In whom we have redemption <span class='diff-highlight-error'>through his blood [διὰ τοῦ αἵματος αὐτοῦ]</span>, even the forgiveness of sins.",
+            gloss: "Imported the words 'through his blood' from Ephesians 1:7."
+          },
+          {
+            name: "Latin Vulgate (St. Jerome)",
+            date: "c. 384 CE",
+            text: "<span class='diff-highlight-vulgate'>In quo habemus redemptionem, remissionem peccatorum.</span>",
+            gloss: "Omits 'through his blood'. Preserves the concise Pauline autograph."
+          },
+          {
+            name: "Ancient Uncials (P46, א, B, A, C, D)",
+            date: "c. 200–450 CE",
+            text: "ἐν ᾧ ἔχομεν τὴν ἀπολύτρωσιν, τὴν ἄφεσιν τῶν ἁμαρτιῶν.",
+            gloss: "Zero ancient manuscripts possess 'through his blood' in Colossians 1:14."
+          },
+          {
+            name: "Modern Critical Text (NA28)",
+            date: "Scientific Consensus",
+            text: "Omits the phrase as a late Byzantine scribal harmonization.",
+            gloss: "The Vulgate was uncorrupted; the King James carried a scribal expansion."
+          }
+        ],
+        autopsy: "SCRIBAL AUTOPSY: A Byzantine scribe copying Colossians 1:14 remembered the parallel phrasing in Ephesians 1:7 ('in whom we have redemption through his blood') and inserted the words into Colossians. Jerome's ancient text was pure."
+      }
+    ];
+
+    let currentCategory = "ALL";
+
+    function renderLoci(data) {
+      const container = document.getElementById("loci-container");
+      container.innerHTML = "";
+
+      if (data.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-dim);">No forensic loci match your criteria.</div>`;
+        return;
+      }
+
+      data.forEach(locus => {
+        const card = document.createElement("div");
+        card.className = "locus-card";
+        card.id = `card-${locus.id}`;
+
+        let streamsHtml = locus.streams.map(stream => `
+          <div class="stream-card">
+            <div class="stream-header">
+              <span class="stream-name">${stream.name}</span>
+              <span class="stream-date">${stream.date}</span>
+            </div>
+            <div class="stream-text">${stream.text}</div>
+            <div class="stream-gloss">${stream.gloss}</div>
+          </div>
+        `).join("");
+
+        card.innerHTML = `
+          <div class="locus-header" onclick="toggleLocus('${locus.id}')">
+            <div class="locus-title-group">
+              <span class="locus-ref">${locus.ref}</span>
+              <span class="badge-tag ${locus.badgeClass}">${locus.badge}</span>
+              <span class="badge-tag badge-audit-pending" title="Quotes/dates loaded without HTTP/JS errors but not yet fact-checked against primary critical editions (REPORT_2026-10-14, sections 2 and 4)">[S / AUDIT PENDING]</span>
+              <span class="locus-theme">${locus.theme}</span>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="icon-${locus.id}"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="locus-body" id="body-${locus.id}">
+            <div class="synoptic-grid">
+              ${streamsHtml}
+            </div>
+            <div class="autopsy-banner">
+              <div class="autopsy-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Forensic Autopsy & Manuscript Verdict
+              </div>
+              <div>${locus.autopsy}</div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.getElementById("total-loci-badge").innerText = `${data.length} Forensic Loci`;
+    }
+
+    function toggleLocus(id) {
+      const body = document.getElementById(`body-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      if (body.style.display === "none") {
+        body.style.display = "flex";
+        icon.style.transform = "rotate(0deg)";
+      } else {
+        body.style.display = "none";
+        icon.style.transform = "rotate(-90deg)";
+      }
+    }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      filterLoci();
+    }
+
+    function filterLoci() {
+      const query = document.getElementById("search-input").value.toLowerCase();
+      const filtered = LOCI_DATA.filter(item => {
+        const matchesCategory = (currentCategory === "ALL" || item.category === currentCategory || item.badgeClass.includes(currentCategory.toLowerCase()));
+        const matchesQuery = item.ref.toLowerCase().includes(query) ||
+                             item.theme.toLowerCase().includes(query) ||
+                             item.autopsy.toLowerCase().includes(query) ||
+                             item.streams.some(s => s.text.toLowerCase().includes(query) || s.gloss.toLowerCase().includes(query));
+        return matchesCategory && matchesQuery;
+      });
+      renderLoci(filtered);
+    }
+
+    // Initial render
+    renderLoci(LOCI_DATA);
+
+    // Cross-link deep anchor (Pass 3b): opened as synoptic_manuscript_diff.html#<locus-id> from the
+    // Plenary Logos Suite's crux display, or from Catholic Jarvis — scrolls to and expands that
+    // locus instead of leaving the visitor to find it by hand in the filtered list.
+    function openDeepLinkFromHash() {
+      const id = (location.hash || '').replace(/^#/, '');
+      if (!id) return;
+      const card = document.getElementById(`card-${id}`);
+      if (!card) return;
+      const body = document.getElementById(`body-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      if (body && body.style.display === 'none') {
+        body.style.display = 'flex';
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.outline = '2px solid #d4af37';
+      setTimeout(() => { card.style.outline = ''; }, 2500);
+    }
+    window.addEventListener('hashchange', openDeepLinkFromHash);
+    openDeepLinkFromHash();
+  </script>
+</body>
+</html>

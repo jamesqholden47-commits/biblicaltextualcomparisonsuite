@@ -1,0 +1,2992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CatholicJarvis Ultra — Master Work Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0b0d13;
+      --bg-panel: #121622;
+      --bg-card: #191e2e;
+      --bg-card-hover: #22293d;
+      --border: #262c42;
+      --accent-gold: #d4af37;
+      --accent-gold-soft: rgba(212, 175, 55, 0.15);
+      --accent-cyan: #38bdf8;
+      --accent-blue: #6366f1;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Master Header */
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--accent-gold);
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--accent-gold);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Tab Switcher */
+    .nav-tabs {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .nav-btn.active svg {
+      stroke: #0b0d13;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .indicator-live {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-green);
+    }
+
+    .dot-live {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .dot-offline {
+      background: var(--accent-red) !important;
+      box-shadow: 0 0 8px var(--accent-red) !important;
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tab-pane {
+      display: none;
+      height: 100%;
+      overflow-y: auto;
+      padding: 24px 32px;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* Cockpit Grid */
+    .cockpit-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .cockpit-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .cockpit-card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: var(--accent-gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .schedule-table th, .schedule-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .schedule-table th {
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .time-badge {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+      font-size: 11px;
+    }
+
+    .habit-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+
+    .habit-item:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .habit-item.done {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .habit-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--accent-gold);
+    }
+
+    /* Pope Tools Defeaters Deck */
+    .defeater-deck {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .defeater-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .defeater-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-gold);
+    }
+
+    .defeater-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .defeater-title {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      color: var(--accent-gold);
+      font-weight: 700;
+    }
+
+    .defeater-meta {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-v { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .badge-r { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+    .badge-s { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+
+    .defeater-quote {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #cbd5e1;
+      border-left: 2px solid var(--accent-gold);
+      padding-left: 10px;
+      line-height: 1.5;
+    }
+
+    .defeater-original {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.08);
+      padding: 8px 10px;
+      border-radius: 6px;
+      line-height: 1.4;
+      direction: auto;
+    }
+
+    .defeater-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .btn-copy-def {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      align-self: flex-start;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy-def:hover {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+
+    /* Anki Reviewer */
+    .anki-workspace {
+      max-width: 900px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .anki-stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-panel);
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .anki-card-container {
+      flex: 1;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .anki-front {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--text-main);
+      margin-top: 12px;
+    }
+
+    .anki-back {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .anki-back.visible {
+      display: flex;
+    }
+
+    .anki-answer {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+
+    .anki-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-anki-reveal {
+      width: 100%;
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-anki-reveal:hover {
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.5);
+    }
+
+    .btn-grade {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #fff;
+    }
+
+    .btn-grade span { font-size: 10px; font-weight: normal; opacity: 0.8; }
+    .btn-grade-again { background: #dc2626; }
+    .btn-grade-hard { background: #d97706; }
+    .btn-grade-good { background: #2563eb; }
+    .btn-grade-easy { background: #16a34a; }
+
+    /* Career Grid */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .career-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .career-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      color: var(--accent-gold);
+    }
+
+    .rate-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .modal-box {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 650px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .input-field:focus { border-color: var(--accent-gold); }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #262c42; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #384260; }
+
+    /* Tactical Live Debate Arena */
+    .debate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .debate-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .debate-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent-gold);
+    }
+    .callout-box {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .callout-charge {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 3px solid var(--accent-red);
+      color: #fca5a5;
+    }
+    .callout-concession {
+      background: rgba(212, 175, 55, 0.08);
+      border-left: 3px solid var(--accent-gold);
+      color: #fef08a;
+    }
+    .callout-counter {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 3px solid var(--accent-cyan);
+      color: #e0f2fe;
+    }
+    .callout-soundbite {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #a7f3d0;
+      font-family: 'Newsreader', serif;
+      font-size: 14px;
+      font-style: italic;
+    }
+    .btn-action-small {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .btn-action-small:hover, .btn-action-small.active {
+      background: var(--accent-gold);
+      color: #0b0d13;
+      border-color: var(--accent-gold);
+    }
+
+    /* Session Intelligence */
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .session-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s;
+    }
+    .session-card:hover {
+      border-color: var(--accent-cyan);
+    }
+    .topic-pill {
+      font-size: 10px;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 2px 7px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .topic-pill:hover, .topic-pill.active {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    /* Vault Dedup */
+    .kpi-stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .kpi-stat-val {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-gold);
+    }
+    .kpi-stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .vault-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .vault-table th, .vault-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .vault-table th {
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    /* NotebookLM Deep Dive Podcast Player Styles */
+    .podcast-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 14px;
+      overflow: hidden;
+    }
+    .podcast-hero-card {
+      background: linear-gradient(135deg, rgba(25, 30, 46, 0.95), rgba(18, 22, 34, 0.95));
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 18px 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+    }
+    .podcast-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .podcast-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .podcast-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .podcast-player-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-panel);
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .podcast-play-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      border: none;
+      color: #0b0d13;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.15s ease;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+      flex-shrink: 0;
+    }
+    .podcast-play-btn:hover {
+      transform: scale(1.05);
+      background: #e5c358;
+    }
+    .podcast-scrub-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .podcast-range {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+    }
+    .podcast-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+    }
+    .podcast-time-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+    .podcast-speed-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .podcast-speed-btn:hover, .podcast-speed-btn.active {
+      background: var(--accent-gold-soft);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+    .podcast-act-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .podcast-act-pill {
+      font-size: 11px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 3px 9px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .podcast-act-pill:hover {
+      background: var(--accent-cyan);
+      color: #0b0d13;
+      border-color: var(--accent-cyan);
+    }
+    .podcast-transcript-area {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .podcast-turn-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .podcast-turn-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+      background: var(--bg-card-hover);
+    }
+    .podcast-turn-card.active-turn {
+      border-color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.08);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
+    }
+    .podcast-turn-card.active-turn::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 4px;
+      background: var(--accent-gold);
+      border-radius: 0 4px 4px 0;
+    }
+    .turn-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .turn-speaker-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .turn-speaker-rachel {
+      color: #c084fc;
+    }
+    .turn-speaker-leo {
+      color: var(--accent-gold);
+    }
+    .turn-ts-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .turn-ts-btn:hover {
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+    }
+    .turn-body {
+      font-family: 'Newsreader', serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+  </style>
+  <!-- one design system + workspace shell (Phase 0, SUITE_OVERHAUL_PLAN_2026-10-07) -->
+  <link rel="stylesheet" href="/static/jarvis.css?v=20261007f">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand-box">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <div class="brand-title">CatholicJarvis Ultra</div>
+      <span class="brand-badge">Master Work Suite</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-btn active" id="btn-tab-cockpit" onclick="switchTab('cockpit')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Daily Cockpit
+      </button>
+      <button class="nav-btn" id="btn-tab-pope" onclick="switchTab('pope')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Pope Tools
+      </button>
+      <button class="nav-btn" id="btn-tab-anki" onclick="switchTab('anki')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Anki Deck (<span id="due-badge">0</span>)
+      </button>
+      <button class="nav-btn" id="btn-tab-studio" onclick="switchTab('studio')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        PDF Studio (Ava)
+      </button>
+      <button class="nav-btn" id="btn-tab-dossiers" onclick="switchTab('dossiers')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Corpus & Dossiers
+      </button>
+      <button class="nav-btn" id="btn-tab-languages" onclick="switchTab('languages')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Language Lab
+      </button>
+      <button class="nav-btn" id="btn-tab-debates" onclick="switchTab('debates')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        Debate Arena
+      </button>
+      <button class="nav-btn" id="btn-tab-sessions" onclick="switchTab('sessions')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        AI Sessions
+      </button>
+      <button class="nav-btn" id="btn-tab-vaults" onclick="switchTab('vaults')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        Vault Dedup
+      </button>
+      <button class="nav-btn" id="btn-tab-career" onclick="switchTab('career')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Career Blueprint
+      </button>
+      <button class="nav-btn" id="btn-tab-podcast" onclick="switchTab('podcast')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        Deep Dive Podcast
+      </button>
+      <button class="nav-btn" id="btn-tab-manuscript_diff" onclick="switchTab('manuscript_diff')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Manuscript Diff
+      </button>
+      <button class="nav-btn" id="btn-tab-patristic_map" onclick="switchTab('patristic_map')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Patristic Map
+      </button>
+      <button class="nav-btn" id="btn-tab-defeater_tree" onclick="switchTab('defeater_tree')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        Debate Cockpit
+      </button>
+      <button class="nav-btn" id="btn-tab-deuterocanon" onclick="switchTab('deuterocanon')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Deuterocanon
+      </button>
+      <button class="nav-btn" id="btn-tab-contributors" onclick="switchTab('contributors')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Contributors
+      </button>
+      <button class="nav-btn" id="btn-tab-plenary_suite" onclick="switchTab('plenary_suite')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Plenary Logos Suite
+      </button>
+      <button class="nav-btn" id="btn-tab-omitted_verses" onclick="switchTab('omitted_verses')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        Omitted Verses
+      </button>
+      <button class="nav-btn" id="btn-tab-translation_lab" onclick="switchTab('translation_lab')">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Translation Lab
+      </button>
+      <span id="module-nav" style="display: contents;"></span>
+    </div>
+
+    <div class="header-status">
+      <div class="indicator-live" id="daemon-indicator">
+        <div class="dot-live" id="daemon-dot"></div>
+        <span id="daemon-status-text">DAEMON ONLINE</span>
+      </div>
+      <span id="header-port-badge" style="font-size: 10px; background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); padding: 2px 6px; border-radius: 4px;">PORT 8080</span>
+      <button onclick="toggleShortcutsModal()" style="background: none; border: 1px solid var(--border); color: var(--text-dim); border-radius: 4px; padding: 2px 6px; font-size: 11px; cursor: pointer;" title="Keyboard shortcuts (?)">?</button>
+      <span id="header-time" style="color: var(--text-dim);">00:00</span>
+    </div>
+  </header>
+
+  <!-- Content Container -->
+  <div class="content-area">
+    <div id="module-panes" style="display: contents;"></div>
+
+    <!-- TAB 1: DAILY COCKPIT -->
+    <div id="tab-cockpit" class="tab-pane active">
+      <div class="cockpit-grid">
+        
+        <!-- Schedule Column -->
+        <div class="cockpit-card">
+          <h2>
+            <span>Operational Horarium</span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn-copy-def" id="btn-sched-std" style="padding: 2px 8px; font-size: 10px; background: var(--accent-gold); color: #000;" onclick="setScheduleMode('standard')">Full Day</button>
+              <button class="btn-copy-def" id="btn-sched-noon" style="padding: 2px 8px; font-size: 10px;" onclick="setScheduleMode('noon')">⚡ Noon Jumpstart</button>
+            </div>
+          </h2>
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Window</th>
+                <th>Focus Block</th>
+                <th>Mission</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Habits & Priorities Column -->
+        <div class="cockpit-card">
+          <h2>
+            <span>Daily Disciplines Checklist</span>
+            <span id="progress-percent" style="font-size: 12px; color: var(--accent-green); font-family: 'JetBrains Mono', monospace;">0% Done</span>
+          </h2>
+
+          <div class="habit-item" onclick="toggleHabit('liturgy_of_hours')">
+            <div>
+              <strong>Liturgy of the Hours & Mental Prayer</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">Lauds or Rosary completed</div>
+            </div>
+            <input type="checkbox" id="chk-liturgy" onclick="event.stopPropagation(); toggleHabit('liturgy_of_hours')">
+          </div>
+
+          <div class="habit-item" onclick="toggleHabit('hydration_movement')">
+            <div>
+              <strong>Physical Activation & Hydration</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">500ml water + electrolytes + morning movement</div>
+            </div>
+            <input type="checkbox" id="chk-hydration" onclick="event.stopPropagation(); toggleHabit('hydration_movement')">
+          </div>
+
+          <div class="habit-item" onclick="toggleHabit('anki_queue_cleared')">
+            <div>
+              <strong>Anki Active Recall Cleared</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">100% of due flashcards reviewed</div>
+            </div>
+            <input type="checkbox" id="chk-anki" onclick="event.stopPropagation(); toggleHabit('anki_queue_cleared')">
+          </div>
+
+          <div class="habit-item" onclick="toggleHabit('deep_work_dissertation')">
+            <div>
+              <strong>Deep Work: Master Dissertation</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">3 hours unbroken primary source scholarship</div>
+            </div>
+            <input type="checkbox" id="chk-deep" onclick="event.stopPropagation(); toggleHabit('deep_work_dissertation')">
+          </div>
+
+          <div class="habit-item" onclick="toggleHabit('career_asset_shipped')">
+            <div>
+              <strong>Monetization Action Shipped</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">1 Substack post, dossier brief, or client pitch completed</div>
+            </div>
+            <input type="checkbox" id="chk-career" onclick="event.stopPropagation(); toggleHabit('career_asset_shipped')">
+          </div>
+
+          <div class="habit-item" onclick="toggleHabit('evening_examen')">
+            <div>
+              <strong>Evening Examen & Compline</strong>
+              <div style="font-size: 11px; color: var(--text-dim);">Review day in God's presence; nightly resolution</div>
+            </div>
+            <input type="checkbox" id="chk-examen" onclick="event.stopPropagation(); toggleHabit('evening_examen')">
+          </div>
+
+          <div style="margin-top: 18px; padding: 14px; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 8px;">
+            <div style="font-size: 11px; font-weight: 700; color: var(--accent-gold); text-transform: uppercase;">Today's Breakthrough Directive</div>
+            <p style="font-size: 13px; color: #e2e8f0; margin-top: 6px; line-height: 1.4;" id="daily-breakthrough-text">
+              Defend Nasranis empirical control group and synthesize hishtachavah syntax in dissertation.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: POPE TOOLS (AUDITED DEFEATERS DECK) -->
+    <div id="tab-pope" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">Patristic & Biblical Defeater Deck</h2>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">Verified primary editions [V], coordinate philology, and conciliar canons with 1-click clipboard copy.</p>
+        </div>
+        <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); background: rgba(16,185,129,0.12); padding: 4px 10px; border-radius: 4px;">
+          ✓ Audited per Rule 4 & Rule 10
+        </div>
+      </div>
+
+      <div class="defeater-deck" id="defeater-deck-container">
+        <!-- Rendered dynamically from /api/defeaters -->
+      </div>
+    </div>
+
+    <!-- TAB 3: ANKI SPACED REPETITION ENGINE -->
+    <div id="tab-anki" class="tab-pane">
+      <div class="anki-workspace">
+        
+        <!-- Anki Stats Bar -->
+        <div class="anki-stats-bar">
+          <div>
+            <strong>Active Recall Queue:</strong> <span id="anki-due-count" style="color: var(--accent-gold); font-weight: bold;">0</span> due today 
+            (<span id="anki-total-count">0</span> total cards)
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-copy-def" onclick="distillDossierCards()">📚 Distill Dossiers</button>
+            <button class="btn-copy-def" onclick="openAddCardModal()">+ Add Card</button>
+            <button class="btn-copy-def" onclick="exportAnkiTSV()">Export TSV</button>
+          </div>
+        </div>
+
+        <!-- Flashcard Display -->
+        <div class="anki-card-container" id="anki-card-box">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace;" id="anki-card-deck">
+                Patristics & Defeaters
+              </div>
+              <button class="btn-action-small" onclick="playAnkiCardAudio('prompt')" title="Hear prompt aloud via Ava Neural">
+                🔊 Listen
+              </button>
+            </div>
+            <div class="anki-front" id="anki-card-prompt">
+              Click 'Show Answer' to begin your daily spaced repetition session.
+            </div>
+          </div>
+
+          <div class="anki-back" id="anki-card-back">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div class="anki-answer" id="anki-card-answer" style="flex:1;"></div>
+              <button class="btn-action-small" onclick="playAnkiCardAudio('answer')" title="Hear answer aloud via Ava Neural">
+                🔊 Listen
+              </button>
+            </div>
+            <div class="defeater-original" id="anki-card-original" style="display:none;"></div>
+            <div style="font-size: 12px; color: var(--text-dim);" id="anki-card-citation"></div>
+            <div style="font-size: 13px; color: var(--accent-gold); padding: 8px; background: rgba(212,175,55,0.08); border-radius: 6px;" id="anki-card-defeater"></div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="anki-actions" id="anki-actions-reveal">
+            <button class="btn-anki-reveal" onclick="revealAnkiCard()">Show Answer (Space)</button>
+          </div>
+
+          <div class="anki-actions" id="anki-actions-grade" style="display:none;">
+            <button class="btn-grade btn-grade-again" onclick="gradeCard(1)">
+              Again <span id="lbl-grade-1">1d (1)</span>
+            </button>
+            <button class="btn-grade btn-grade-hard" onclick="gradeCard(2)">
+              Hard <span id="lbl-grade-2">2d (2)</span>
+            </button>
+            <button class="btn-grade btn-grade-good" onclick="gradeCard(3)">
+              Good <span id="lbl-grade-3">4d (3)</span>
+            </button>
+            <button class="btn-grade btn-grade-easy" onclick="gradeCard(4)">
+              Easy <span id="lbl-grade-4">7d (4)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: AUDITORY PDF STUDIO (EMBEDDED) -->
+    <div id="tab-studio" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/studio_frame.html" id="studio-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB 5: MASTER CORPUS & DOSSIER TRACKER -->
+    <div id="tab-dossiers" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 16px auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">Master Corpus & Research Dossier Explorer</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
+            Live disk scan of <span id="corpus-stats-label" style="color: var(--accent-cyan); font-weight: 600;">809 documents / 19.7M words</span> across dissertation, aa1, and brain artifacts.
+          </p>
+        </div>
+
+        <!-- Mode Toggle & Re-index -->
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-copy-def" id="btn-view-docs" style="background: var(--accent-gold); color: #000;" onclick="setCorpusViewMode('docs')">📂 Document Catalog</button>
+          <button class="btn-copy-def" id="btn-view-args" onclick="setCorpusViewMode('args')">📜 Argument Register</button>
+          <button class="btn-copy-def" onclick="triggerReindex()">🔄 Re-index</button>
+        </div>
+      </div>
+
+      <!-- Filters Bar (Only for Docs view) -->
+      <div id="corpus-filters-bar" style="max-width: 1400px; margin: 0 auto 14px auto; display: flex; gap: 10px; flex-wrap: wrap;">
+        <input type="text" id="corpus-search-input" class="input-field" placeholder="Search title, path, scripture, or heading..." style="flex: 1; min-width: 240px;" oninput="debounceCorpusSearch()">
+        <select id="corpus-filter-kind" class="input-field" style="width: 180px;" onchange="loadCorpusDocs()">
+          <option value="ALL">All Kinds (Subject + Infra + Prov)</option>
+          <option value="SUBJECT" selected>SUBJECT (Dissertation Candidate)</option>
+          <option value="INFRASTRUCTURE">INFRASTRUCTURE (Project Tooling)</option>
+          <option value="PROVENANCE">PROVENANCE (Session Logs)</option>
+        </select>
+        <select id="corpus-filter-root" class="input-field" style="width: 150px;" onchange="loadCorpusDocs()">
+          <option value="ALL">All Roots</option>
+          <option value="PROJECT">PROJECT</option>
+          <option value="AA1">AA1</option>
+          <option value="BRAIN">BRAIN</option>
+        </select>
+      </div>
+
+      <!-- Container: Documents Table View -->
+      <div id="view-corpus-docs" style="max-width: 1400px; margin: 0 auto; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <table class="schedule-table" style="font-size: 13px;">
+          <thead>
+            <tr>
+              <th style="width: 32%;">Document Title & Relative Path</th>
+              <th style="width: 14%;">Kind / Root</th>
+              <th style="width: 12%;">Words / Size</th>
+              <th style="width: 28%;">Scripture & Source Hits</th>
+              <th style="width: 14%; text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="corpus-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Container: Argument Register View -->
+      <div id="view-corpus-args" style="display: none; max-width: 1400px; margin: 0 auto;">
+        <div class="defeater-deck" id="args-deck-container">
+          <!-- Dynamically populated from /api/arguments -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: TRI-LINGUAL LANGUAGE LABORATORY -->
+    <div id="tab-languages" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto;">
+        <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">Tri-Lingual Sacred Philology Laboratory</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Pedagogical curriculum for Koine Greek, Ecclesiastical Latin, and Biblical Hebrew without burnout.</p>
+      </div>
+
+      <div class="career-grid">
+        
+        <!-- Language 1: Koine Greek -->
+        <div class="career-card" style="border-top: 3px solid var(--accent-gold);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>1. Koine Greek (Priority #1 — High Yield)</h3>
+            <span class="rate-badge">Months 1–6</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            <strong>Why First:</strong> Unlocks both the New Testament and the Ante-Nicene Fathers directly. Top 310 words cover ~80% of NT occurrences.
+          </p>
+          <div style="font-size: 12px; background: var(--bg-card); padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px;">
+            <div><strong>Case System:</strong> Nominative, Genitive, Dative, Accusative, Vocative.</div>
+            <div><strong>Aspect Over Tense:</strong> Aorist (snapshot), Present (imperfective), Perfect (stative).</div>
+            <div><strong>Essential Lemmas:</strong> λόγος (Logos), θεός (God), σάρξ (Flesh), πίστις (Faith), ἐκκλησία (Church).</div>
+          </div>
+          <button class="btn-copy-def" onclick="seedLanguageAnki('greek')">+ Add Greek Core Anki Deck</button>
+        </div>
+
+        <!-- Language 2: Ecclesiastical Latin -->
+        <div class="career-card" style="border-top: 3px solid var(--accent-cyan);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>2. Ecclesiastical Latin (Priority #2 — Scholastic Voice)</h3>
+            <span class="rate-badge">Months 7–12</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            <strong>Why Second:</strong> The official liturgical language of the West. Unlocks the Vulgate, Augustine, Aquinas, Trent, and Vatican I.
+          </p>
+          <div style="font-size: 12px; background: var(--bg-card); padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px;">
+            <div><strong>Natural Method:</strong> Hans Ørberg's <em>Lingua Latina Per Se Illustrata (LLPSI)</em>.</div>
+            <div><strong>5 Declensions:</strong> -a/-ae, -us/-i, -is, -us/-us, -es/-ei.</div>
+            <div><strong>Dogmatic Formulas:</strong> <em>motus in imaginem est motus in rem</em>, <em>ex opere operato</em>.</div>
+          </div>
+          <button class="btn-copy-def" onclick="seedLanguageAnki('latin')">+ Add Latin Core Anki Deck</button>
+        </div>
+
+        <!-- Language 3: Biblical Hebrew -->
+        <div class="career-card" style="border-top: 3px solid var(--accent-green);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>3. Biblical Hebrew (Priority #3 — Philological Scalpel)</h3>
+            <span class="rate-badge">Year 2</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            <strong>Why Third:</strong> Semitic morphology requires focused bandwidth. Unlocks the Tanakh, Dead Sea Scrolls, and Ugaritic comparative studies.
+          </p>
+          <div style="font-size: 12px; background: var(--bg-card); padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px;">
+            <div><strong>Triconsonantal Root:</strong> Shoresh (e.g. ק-ד-ש holiness, ז-ב-ח sacrifice).</div>
+            <div><strong>The 7 Stems:</strong> Qal, Niphal, Piel, Pual, Hiphil, Hophal, Hithpael.</div>
+            <div><strong>Apologetic Anchor:</strong> ח-ו-י (<em>hishtachavah</em> in 1 Chron 29:20).</div>
+          </div>
+          <button class="btn-copy-def" onclick="seedLanguageAnki('hebrew')">+ Add Hebrew Core Anki Deck</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 7: CAREER & MONETIZATION BLUEPRINT -->
+    <div id="tab-career" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto;">
+        <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">Independent Theologian Career & Monetization Blueprint</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">4-stream monetization model converting primary scholarship into sustainable income.</p>
+      </div>
+
+      <div class="career-grid">
+        <div class="career-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>1. Apologetics Dossier Agency</h3>
+            <span class="rate-badge">$500 – $2,500 / Brief</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            Primary source debate briefing packets for prominent Catholic public debaters and podcasters (Pints with Aquinas, Reason & Theology, Jimmy Akin).
+          </p>
+        </div>
+
+        <div class="career-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>2. Paid Substack & KDP Monographs</h3>
+            <span class="rate-badge">$8 – $15/mo • $19/Book</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            Serialization of <em>The Sacred Prototype</em> and <em>History Proves Catholicism</em> into accessible chapters and Amazon KDP paperbacks.
+          </p>
+        </div>
+
+        <div class="career-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>3. Online Seminar Cohorts</h3>
+            <span class="rate-badge">$250 – $450 / Seat</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            4-to-6 week specialized live cohorts on Patristic Ecclesiology and Biblical Hebrew Philology with primary text read-alongs.
+          </p>
+        </div>
+
+        <div class="career-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>4. CatholicJarvis Software Suite</h3>
+            <span class="rate-badge">Work Suite</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+            Distributing the CatholicJarvis suite (Auditory PDF Studio + Anki SM-2 + Pope Tools) for seminarians and researchers.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DEBATE ARENA HUD -->
+    <div id="tab-debates" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">⚔️ Tactical Live Debate Arena HUD</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">1-Click battle cards, concession protocols (Rule 10), fatal counter-facts, and 15s verbal soundbites.</p>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="debate-search-input" class="input-field" placeholder="Search arguments or targets..." style="width: 260px; padding: 6px 12px;" oninput="debounceDebateSearch()">
+          </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="debate-filter-buttons">
+          <button class="btn-action-small active" onclick="filterDebates('')" id="btn-deb-all">All (<span id="deb-count-all">11</span>)</button>
+          <button class="btn-action-small" onclick="filterDebates('Protestant')" id="btn-deb-prot">Protestant & Evangelical (<span id="deb-count-prot">4</span>)</button>
+          <button class="btn-action-small" onclick="filterDebates('Eastern Orthodox')" id="btn-deb-orth">Eastern Orthodox (<span id="deb-count-orth">3</span>)</button>
+          <button class="btn-action-small" onclick="filterDebates('Sedevacantist')" id="btn-deb-sede">Sedevacantist & Traditionalist (<span id="deb-count-sede">2</span>)</button>
+          <button class="btn-action-small" onclick="filterDebates('Secular Skeptic')" id="btn-deb-skep">Secular Skeptic (<span id="deb-count-skep">2</span>)</button>
+        </div>
+      </div>
+
+      <div class="debate-grid" id="debate-cards-container">
+        <!-- Rendered dynamically from /api/debates -->
+      </div>
+    </div>
+
+    <!-- TAB: AI SESSIONS INTELLIGENCE HUB -->
+    <div id="tab-sessions" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">🛰️ AI Session Intelligence Navigator</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">Universal timeline over 524 sessions and 6.95M words across Antigravity & Claude. Zero context bloat.</p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="session-search-input" class="input-field" placeholder="Search 524 sessions (e.g. icon, baptism, aquinas)..." style="width: 320px; padding: 6px 12px;" oninput="debounceSessionSearch()">
+            <select id="session-platform-select" class="input-field" style="width: 170px; padding: 6px 10px;" onchange="filterSessionPlatform()">
+              <option value="">All Platforms</option>
+              <option value="Antigravity">Antigravity (509)</option>
+              <option value="Claude Transcript">Claude Transcript (15)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Topic Pills -->
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 11px; color: var(--text-dim); margin-right: 4px;">Top Topics:</span>
+          <span class="topic-pill" onclick="quickSessionTopic('icon')">icon (187)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('aquinas')">aquinas (186)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('augustine')">augustine (163)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('baptism')">baptism (163)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('dura')">dura (117)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('justification')">justification (115)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('anki')">anki (78)</span>
+          <span class="topic-pill" onclick="quickSessionTopic('substack')">substack (68)</span>
+        </div>
+
+        <div style="font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;" id="session-stats-bar">
+          Loading sessions...
+        </div>
+      </div>
+
+      <div class="session-grid" id="session-cards-container">
+        <!-- Rendered dynamically from /api/sessions -->
+      </div>
+
+      <!-- Pagination Controls -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px; padding-bottom: 20px;" id="session-pagination">
+        <button class="btn-action-small" id="btn-sess-prev" onclick="prevSessionPage()">← Previous</button>
+        <span style="font-size: 12px; font-family: 'JetBrains Mono', monospace;" id="sess-page-lbl">Page 1</span>
+        <button class="btn-action-small" id="btn-sess-next" onclick="nextSessionPage()">Next →</button>
+      </div>
+    </div>
+
+    <!-- TAB: OBSIDIAN VAULT CONCORDANCE & DEDUP -->
+    <div id="tab-vaults" class="tab-pane">
+      <div style="max-width: 1400px; margin: 0 auto 20px auto; display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--accent-gold);">🗺️ Obsidian Vault Concordance & Dedup Engine</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">Full L3 SHA-256 byte-hash concordance across 9 vault roots and contingency backups.</p>
+          </div>
+          <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); background: rgba(56,189,248,0.12); padding: 4px 10px; border-radius: 4px;">
+            L3 Byte-Hash Verified (Rule 6 & Rule 11)
+          </div>
+        </div>
+
+        <!-- KPI Metric Row -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;" id="vault-kpis">
+          <div class="kpi-stat-card">
+            <span class="kpi-stat-lbl">Notes Scanned</span>
+            <span class="kpi-stat-val" id="kpi-scanned">46,501</span>
+          </div>
+          <div class="kpi-stat-card">
+            <span class="kpi-stat-lbl">Unique Documents</span>
+            <span class="kpi-stat-val" id="kpi-unique">45,434</span>
+          </div>
+          <div class="kpi-stat-card">
+            <span class="kpi-stat-lbl">Duplicate Clusters</span>
+            <span class="kpi-stat-val" style="color: var(--accent-red);" id="kpi-clusters">730</span>
+          </div>
+          <div class="kpi-stat-card">
+            <span class="kpi-stat-lbl">Token Waste Prevented</span>
+            <span class="kpi-stat-val" style="color: var(--accent-green);" id="kpi-waste">21.0M words</span>
+          </div>
+        </div>
+
+        <!-- View Tabs & Search -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-action-small active" id="btn-vault-view-clusters" onclick="setVaultView('clusters')">Top Duplicate Clusters (L3)</button>
+            <button class="btn-action-small" id="btn-vault-view-drift" onclick="setVaultView('drift')">Version Drift (12+ Editions)</button>
+            <button class="btn-action-small" id="btn-vault-view-breakdown" onclick="setVaultView('breakdown')">Vault Breakdown</button>
+          </div>
+          <input type="text" id="vault-search-input" class="input-field" placeholder="Search clusters or files..." style="width: 260px; padding: 6px 12px;" oninput="debounceVaultSearch()">
+        </div>
+
+        <div id="vault-view-content" style="background: var(--bg-panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: NOTEBOOKLM DEEP DIVE PODCAST -->
+    <div id="tab-podcast" class="tab-pane">
+      <div class="podcast-container">
+        <audio id="podcast-audio-player" src="/api/podcast/audio/catholic_case_deep_dive" preload="metadata"></audio>
+        
+        <!-- Hero Header & Audio Player -->
+        <div class="podcast-hero-card">
+          <div class="podcast-top-meta">
+            <div>
+              <div class="podcast-title">
+                <span>🎙️ Deep Dive: The Catholic Case (Reader's Edition)</span>
+                <span class="brand-badge" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">OpenNotebookLM Engine</span>
+              </div>
+              <div class="podcast-subtitle" id="podcast-subtitle">
+                Two-host investigative dialogue analyzing the 33-chapter masterwork: Spanish Bible Paradox, Census truth, apostolic succession, and Trinitarian philology against Mexican Pentecostalism.
+              </div>
+              <div style="margin-top: 6px; font-size: 11px; color: var(--text-dim); display: flex; gap: 14px; align-items: center;">
+                <span>👩 <strong>Rachel</strong> (Ava Neural)</span>
+                <span>•</span>
+                <span>👨 <strong>Leo</strong> (Christopher Neural)</span>
+                <span>•</span>
+                <span>⏱️ <span id="podcast-meta-duration">10:59</span></span>
+                <span>•</span>
+                <span>📦 <span id="podcast-meta-turns">43 Turns</span></span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <a id="btn-podcast-download" href="/api/podcast/audio/catholic_case_deep_dive" download="catholic_case_deep_dive.mp3" class="btn-copy-def" style="text-decoration: none; display: flex; align-items: center; gap: 6px; background: rgba(212, 175, 55, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 6px 12px; font-size: 11px;">
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download MP3 (4.1MB)
+              </a>
+              <button class="btn-copy-def" style="padding: 6px 10px; font-size: 11px;" onclick="toggleAutoscroll()" id="btn-toggle-autoscroll">
+                Auto-Scroll: ON
+              </button>
+            </div>
+          </div>
+
+          <!-- Audio Player Bar -->
+          <div class="podcast-player-bar">
+            <button class="podcast-play-btn" id="btn-podcast-play" onclick="togglePodcastPlay()" title="Play / Pause">
+              ▶
+            </button>
+            <div class="podcast-scrub-container">
+              <input type="range" class="podcast-range" id="podcast-scrubber" min="0" max="660" step="0.5" value="0" oninput="seekPodcast(this.value)">
+              <div class="podcast-time-display">
+                <span id="podcast-curr-time">00:00</span>
+                <span id="podcast-total-time">10:59</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 4px;">
+              <button class="podcast-speed-btn active" id="spd-10" onclick="setPodcastSpeed(1.0)">1.0x</button>
+              <button class="podcast-speed-btn" id="spd-12" onclick="setPodcastSpeed(1.25)">1.25x</button>
+              <button class="podcast-speed-btn" id="spd-15" onclick="setPodcastSpeed(1.5)">1.5x</button>
+              <button class="podcast-speed-btn" id="spd-20" onclick="setPodcastSpeed(2.0)">2.0x</button>
+            </div>
+          </div>
+
+          <!-- Quick Jump Acts / Chapters -->
+          <div class="podcast-act-pills">
+            <span style="font-size: 11px; color: var(--text-dim); display: flex; align-items: center; font-family: 'JetBrains Mono', monospace;">CHAPTERS:</span>
+            <button class="podcast-act-pill" onclick="seekPodcast(0.0)">🏛️ Act I: Spanish Bible Paradox (0:00)</button>
+            <button class="podcast-act-pill" onclick="seekPodcast(151.0)">📊 Act II: Census & CIA Memo Debunk (2:31)</button>
+            <button class="podcast-act-pill" onclick="seekPodcast(282.0)">✋ Act III: Apostolic Succession (4:42)</button>
+            <button class="podcast-act-pill" onclick="seekPodcast(384.0)">🕊️ Act IV: Trinity vs Oneness (6:24)</button>
+            <button class="podcast-act-pill" onclick="seekPodcast(534.0)">⚔️ Act V: Street Wisdom (8:54)</button>
+          </div>
+        </div>
+
+        <!-- Synchronized Dialogue Feed Header & Filter -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px;">
+          <div style="font-size: 12px; color: var(--text-muted); font-weight: 500;">
+            Synchronized Interactive Transcript (<span id="podcast-turn-count">43</span> turns) — Click any timestamp or dialogue bubble to seek
+          </div>
+          <input type="text" id="podcast-search-box" class="input-field" placeholder="Search transcript..." style="width: 240px; padding: 4px 10px; font-size: 11px;" oninput="filterPodcastTranscript()">
+        </div>
+
+        <!-- Synchronized Transcript Feed -->
+        <div class="podcast-transcript-area" id="podcast-transcript-feed">
+          <!-- Turns rendered dynamically -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: SYNOPTIC MANUSCRIPT DIFF -->
+    <div id="tab-manuscript_diff" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/synoptic_manuscript_diff.html" id="manuscript-diff-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB: PATRISTIC CONSENSUS MAP -->
+    <div id="tab-patristic_map" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/patristic_consensus_map.html" id="patristic-map-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB: TACTICAL DEFEATER TREE -->
+    <div id="tab-defeater_tree" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/debate_defeater_tree.html" id="defeater-tree-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB: DEUTEROCANON REGISTRY -->
+    <div id="tab-deuterocanon" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/deuterocanon_registry.html" id="deuterocanon-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB: CATHOLIC CONTRIBUTORS -->
+    <div id="tab-contributors" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/static/catholic_contributors.html" id="contributors-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- TAB: PLENARY LOGOS SUITE (73-book Three.js workstation, mounted live from web_app/, 2026-11-10) -->
+    <div id="tab-plenary_suite" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/plenary/plenary_logos_suite.html" id="plenary-suite-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
+    </div>
+
+    <!-- TAB: OMITTED VERSES EXPLORER (legacy standalone tool, mounted live from web_app/) -->
+    <div id="tab-omitted_verses" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/plenary/omitted_verses_explorer.html" id="omitted-verses-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
+    </div>
+
+    <!-- TAB: TRANSLATION EXPLORER (legacy standalone tool, mounted live from web_app/) -->
+    <div id="tab-translation_lab" class="tab-pane" style="padding: 0; height: 100%;">
+      <iframe src="/plenary/translation_explorer.html" id="translation-lab-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
+    </div>
+
+  </div>
+
+  <!-- Modal: File Viewer -->
+  <div class="modal-backdrop" id="modal-file-viewer">
+    <div class="modal-box" style="max-width: 900px; height: 85vh;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <div>
+          <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); font-size: 16px;" id="viewer-doc-title">Document Title</h3>
+          <div style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;" id="viewer-doc-path">path/to/file</div>
+        </div>
+        <button class="btn-copy-def" onclick="closeFileViewer()">Close ✕</button>
+      </div>
+      <div style="flex: 1; overflow-y: auto; padding: 14px 0; font-family: 'Newsreader', serif; font-size: 15px; line-height: 1.7; color: #cbd5e1; white-space: pre-wrap; font-family: 'Inter', sans-serif;" id="viewer-doc-content">
+        Loading document content...
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Anki Card -->
+  <div class="modal-backdrop" id="modal-add-card">
+    <div class="modal-box">
+      <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold);">+ New Spaced Repetition Card</h3>
+      <input type="text" id="new-card-deck" class="input-field" placeholder="Deck (e.g. Patristics, Hebrew, Dogma)">
+      <textarea id="new-card-prompt" class="input-field" placeholder="Prompt / Question" style="height: 60px;"></textarea>
+      <textarea id="new-card-answer" class="input-field" placeholder="Answer / Core Thesis" style="height: 70px;"></textarea>
+      <input type="text" id="new-card-citation" class="input-field" placeholder="Citation Anchor [V] (e.g. Mansi XIII, 377D)">
+      <input type="text" id="new-card-original" class="input-field" placeholder="Original Text (Greek / Hebrew / Latin)">
+      <textarea id="new-card-defeater" class="input-field" placeholder="Theological Defeater Takeaway" style="height: 50px;"></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn-copy-def" onclick="closeAddCardModal()">Cancel</button>
+        <button class="btn-copy-def" style="background: var(--accent-gold); color: #000;" onclick="submitNewCard()">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Keyboard Shortcuts -->
+  <div class="modal-backdrop" id="modal-shortcuts">
+    <div class="modal-box" style="max-width: 500px;">
+      <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold);">⌨️ Keyboard Shortcuts</h3>
+      <div style="font-size: 13px; display: flex; flex-direction: column; gap: 10px; line-height: 1.5;">
+        <div><kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">Space</kbd> : Reveal Anki flashcard answer</div>
+        <div><kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">1</kbd> / <kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">2</kbd> / <kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">3</kbd> / <kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">4</kbd> : Grade Anki card (Again, Hard, Good, Easy)</div>
+        <div><kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">C</kbd> : Clip citation note in Auditory PDF Studio</div>
+        <div><kbd style="background: var(--bg-card); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px;">?</kbd> : Toggle this keyboard shortcut guide</div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+        <button class="btn-copy-def" onclick="toggleShortcutsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── XSS ESCAPE HELPER ────────────────────────────────────────────────────
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ── TOAST NOTIFICATIONS ──────────────────────────────────────────────────
+    function showToast(msg, type = 'info') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = 'position:fixed;top:70px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;';
+        document.body.appendChild(container);
+      }
+      const toast = document.createElement('div');
+      const borderColor = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#d4af37';
+      toast.style.cssText = `background:#1e2230;border:1px solid ${borderColor};color:#fff;padding:10px 16px;border-radius:6px;font-size:12px;font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(0,0,0,0.4);pointer-events:auto;transition:opacity 0.2s;`;
+      toast.textContent = msg;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 200);
+      }, 3000);
+    }
+
+    // ── TAB SWITCHING ────────────────────────────────────────────────────────
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      
+      const targetPane = document.getElementById("tab-" + tabId);
+      if (targetPane) targetPane.classList.add("active");
+
+      const btn = document.getElementById("btn-tab-" + tabId);
+      if (btn) btn.classList.add("active");
+
+      if (tabId === "anki") loadAnkiCards();
+      if (tabId === "pope") loadDefeaters();
+      if (tabId === "debates") loadDebates();
+      if (tabId === "sessions") loadSessions();
+      if (tabId === "vaults") loadVaultConcordance();
+      if (tabId === "podcast") loadPodcastView();
+      if (window.JarvisModules && window.JarvisModules[tabId] && targetPane && !targetPane.dataset.loaded) {
+        targetPane.dataset.loaded = "1";
+        try { window.JarvisModules[tabId].load(targetPane.querySelector(".module-root") || targetPane); }
+        catch (e) { targetPane.innerHTML = '<div style="padding:16px;color:#f87171">Module "' + tabId + '" failed to load: ' + e + '</div>'; }
+      }
+      if (tabId === "dossiers") {
+        if (currentCorpusView === 'docs') loadCorpusDocs();
+        else loadArgumentRegister();
+      }
+    }
+
+    // ── HEALTH CHECK POLLING ────────────────────────────────────────────────
+    function pollHealth() {
+      fetch("/api/health")
+        .then(r => r.json())
+        .then(d => {
+          const dot = document.getElementById("daemon-dot");
+          const statusText = document.getElementById("daemon-status-text");
+          const portBadge = document.getElementById("header-port-badge");
+          
+          if (d.status === "online") {
+            dot.classList.remove("dot-offline");
+            statusText.textContent = "DAEMON ONLINE";
+            if (d.port) portBadge.textContent = "PORT " + d.port;
+            if (d.anki_due_today !== undefined) {
+              document.getElementById("due-badge").textContent = d.anki_due_today;
+            }
+          } else {
+            dot.classList.add("dot-offline");
+            statusText.textContent = "DAEMON DEGRADED";
+          }
+        })
+        .catch(() => {
+          const dot = document.getElementById("daemon-dot");
+          const statusText = document.getElementById("daemon-status-text");
+          dot.classList.add("dot-offline");
+          statusText.textContent = "DAEMON OFFLINE";
+        });
+    }
+    setInterval(pollHealth, 15000);
+    pollHealth();
+
+    // ── DEFEATERS DECK (POPE TOOLS) ──────────────────────────────────────────
+    function loadDefeaters() {
+      fetch("/api/defeaters")
+        .then(r => r.json())
+        .then(defeaters => {
+          const container = document.getElementById("defeater-deck-container");
+          if (!container) return;
+          container.innerHTML = "";
+          
+          defeaters.forEach(d => {
+            const card = document.createElement("div");
+            card.className = "defeater-card";
+            const tagClass = d.provenance_tag === "[V]" ? "badge-v" : d.provenance_tag === "[R]" ? "badge-r" : "badge-s";
+            
+            card.innerHTML = `
+              <div class="defeater-header">
+                <div class="defeater-title">${escapeHtml(d.title)}</div>
+                <span class="defeater-meta ${tagClass}">${escapeHtml(d.provenance_tag)} ${escapeHtml(d.category)}</span>
+              </div>
+              <div class="defeater-quote">
+                "${escapeHtml(d.quote)}"
+              </div>
+              <div class="defeater-original">
+                ${escapeHtml(d.original_text)}
+              </div>
+              <div class="defeater-body">
+                ${escapeHtml(d.body)}
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px;">
+                <button class="btn-copy-def" onclick="copyDefeater(this, ${JSON.stringify(d.copy_text)})">
+                  Copy Defeater
+                </button>
+                <span style="font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">
+                  ${escapeHtml(d.source_locator)}
+                </span>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        });
+    }
+
+    function copyDefeater(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "Copied! ✓";
+        btn.style.background = "#10b981";
+        btn.style.color = "#fff";
+        showToast("Defeater copied to clipboard!", "success");
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.style.background = "";
+          btn.style.color = "";
+        }, 1500);
+      });
+    }
+
+    // ── ANKI SPACED REPETITION ENGINE ────────────────────────────────────────
+    let ankiCards = [];
+    let currentAnkiCard = null;
+    let dueQueue = [];
+
+    function loadAnkiCards() {
+      fetch("/api/anki")
+        .then(r => r.json())
+        .then(data => {
+          ankiCards = data.cards;
+          const now = Date.now() / 1000;
+          dueQueue = ankiCards.filter(c => (c.dueDate || 0) <= now);
+          document.getElementById("due-badge").textContent = dueQueue.length;
+          document.getElementById("anki-due-count").textContent = dueQueue.length;
+          document.getElementById("anki-total-count").textContent = ankiCards.length;
+
+          if (dueQueue.length > 0) {
+            showNextCard();
+          } else {
+            showAnkiEmpty();
+          }
+        });
+    }
+
+    function showNextCard() {
+      if (dueQueue.length === 0) {
+        showAnkiEmpty();
+        return;
+      }
+      currentAnkiCard = dueQueue[0];
+      document.getElementById("anki-card-deck").textContent = currentAnkiCard.deck || "General";
+      document.getElementById("anki-card-prompt").textContent = currentAnkiCard.prompt;
+      document.getElementById("anki-card-answer").textContent = currentAnkiCard.answer;
+      
+      const origEl = document.getElementById("anki-card-original");
+      if (currentAnkiCard.original_text) {
+        origEl.textContent = currentAnkiCard.original_text;
+        origEl.style.display = "block";
+      } else {
+        origEl.style.display = "none";
+      }
+
+      const tag = currentAnkiCard.provenance_tag || "[S]";
+      document.getElementById("anki-card-citation").textContent = currentAnkiCard.citation ? `Citation ${tag}: ${currentAnkiCard.citation}` : "";
+      document.getElementById("anki-card-defeater").textContent = currentAnkiCard.defeater ? `Defeater: ${currentAnkiCard.defeater}` : "";
+
+      // Compute dynamic SM-2 intervals preview
+      const iv = currentAnkiCard.interval || 1;
+      const ease = currentAnkiCard.easeFactor || 2.5;
+      const rep = currentAnkiCard.repetition || 0;
+
+      const ivAgain = "1d (1)";
+      const ivHard = Math.max(1, Math.floor(iv * 1.2)) + "d (2)";
+      let ivGood = (rep === 0 ? 1 : rep === 1 ? 6 : Math.floor(iv * ease)) + "d (3)";
+      let ivEasy = (rep === 0 ? 4 : rep === 1 ? 10 : Math.floor(iv * ease * 1.3)) + "d (4)";
+
+      document.getElementById("lbl-grade-1").textContent = ivAgain;
+      document.getElementById("lbl-grade-2").textContent = ivHard;
+      document.getElementById("lbl-grade-3").textContent = ivGood;
+      document.getElementById("lbl-grade-4").textContent = ivEasy;
+
+      document.getElementById("anki-card-back").classList.remove("visible");
+      document.getElementById("anki-actions-reveal").style.display = "flex";
+      document.getElementById("anki-actions-grade").style.display = "none";
+    }
+
+    function revealAnkiCard() {
+      if (!currentAnkiCard) return;
+      document.getElementById("anki-card-back").classList.add("visible");
+      document.getElementById("anki-actions-reveal").style.display = "none";
+      document.getElementById("anki-actions-grade").style.display = "flex";
+    }
+
+    function gradeCard(grade) {
+      if (!currentAnkiCard) return;
+      fetch("/api/anki/review", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: currentAnkiCard.id, grade: grade })
+      })
+      .then(r => r.json())
+      .then(() => {
+        dueQueue.shift();
+        document.getElementById("due-badge").textContent = dueQueue.length;
+        document.getElementById("anki-due-count").textContent = dueQueue.length;
+        showToast("Card reviewed!", "success");
+        showNextCard();
+      });
+    }
+
+    function showAnkiEmpty() {
+      currentAnkiCard = null;
+      document.getElementById("anki-card-deck").textContent = "Queue Cleared";
+      document.getElementById("anki-card-prompt").textContent = "🎉 Congratulations! All due flashcards are reviewed for today.";
+      document.getElementById("anki-card-back").classList.remove("visible");
+      document.getElementById("anki-actions-reveal").style.display = "none";
+      document.getElementById("anki-actions-grade").style.display = "none";
+    }
+
+    function exportAnkiTSV() {
+      window.location.href = "/api/anki/export";
+      showToast("Exporting Anki TSV deck...", "info");
+    }
+
+    function distillDossierCards() {
+      showToast("Distilling research dossiers into Anki cards...", "info");
+      fetch("/api/anki/distill", { method: "POST" })
+        .then(r => r.json())
+        .then(d => {
+          showToast(`Success: ${d.total_cards} cards in deck`, "success");
+          loadAnkiCards();
+        })
+        .catch(e => showToast("Distillation error: " + e, "error"));
+    }
+
+    function openAddCardModal() {
+      document.getElementById("modal-add-card").classList.add("active");
+    }
+    function closeAddCardModal() {
+      document.getElementById("modal-add-card").classList.remove("active");
+    }
+
+    function submitNewCard() {
+      const payload = {
+        deck: document.getElementById("new-card-deck").value || "General",
+        prompt: document.getElementById("new-card-prompt").value,
+        answer: document.getElementById("new-card-answer").value,
+        citation: document.getElementById("new-card-citation").value,
+        original_text: document.getElementById("new-card-original").value,
+        defeater: document.getElementById("new-card-defeater").value,
+        provenance_tag: "[S]"  // new cards are unverified until audited (2026-10-06)
+      };
+
+      if (!payload.prompt || !payload.answer) {
+        showToast("Prompt and Answer are required.", "error");
+        return;
+      }
+
+      fetch("/api/anki/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(() => {
+        closeAddCardModal();
+        showToast("Card added successfully!", "success");
+        loadAnkiCards();
+      });
+    }
+
+    // ── MASTER CORPUS & DOSSIER LOGIC ────────────────────────────────────────
+    let currentCorpusView = 'docs';
+    let searchDebounceTimer = null;
+
+    function setCorpusViewMode(mode) {
+      currentCorpusView = mode;
+      const btnDocs = document.getElementById("btn-view-docs");
+      const btnArgs = document.getElementById("btn-view-args");
+      const viewDocs = document.getElementById("view-corpus-docs");
+      const viewArgs = document.getElementById("view-corpus-args");
+      const filtersBar = document.getElementById("corpus-filters-bar");
+
+      if (mode === 'docs') {
+        btnDocs.style.background = "var(--accent-gold)";
+        btnDocs.style.color = "#000";
+        btnArgs.style.background = "";
+        btnArgs.style.color = "";
+        viewDocs.style.display = "block";
+        viewArgs.style.display = "none";
+        filtersBar.style.display = "flex";
+        loadCorpusDocs();
+      } else {
+        btnArgs.style.background = "var(--accent-gold)";
+        btnArgs.style.color = "#000";
+        btnDocs.style.background = "";
+        btnDocs.style.color = "";
+        viewDocs.style.display = "none";
+        viewArgs.style.display = "block";
+        filtersBar.style.display = "none";
+        loadArgumentRegister();
+      }
+    }
+
+    function debounceCorpusSearch() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(loadCorpusDocs, 300);
+    }
+
+    function loadCorpusDocs() {
+      const q = document.getElementById("corpus-search-input").value.trim();
+      const kind = document.getElementById("corpus-filter-kind").value;
+      const root = document.getElementById("corpus-filter-root").value;
+
+      let url = `/api/corpus?limit=100`;
+      if (q) url += `&q=${encodeURIComponent(q)}`;
+      if (kind && kind !== "ALL") url += `&kind=${encodeURIComponent(kind)}`;
+      if (root && root !== "ALL") url += `&root=${encodeURIComponent(root)}`;
+
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          const tbody = document.getElementById("corpus-table-body");
+          tbody.innerHTML = "";
+          const docs = data.results || [];
+          document.getElementById("corpus-stats-label").textContent = `${data.total} matching documents`;
+
+          if (docs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 24px; color: var(--text-dim);">No matching documents in corpus index.</td></tr>';
+            return;
+          }
+
+          docs.forEach(doc => {
+            const tr = document.createElement("tr");
+            const kindBadge = doc.kind === "SUBJECT" 
+              ? '<span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-family: monospace;">SUBJECT</span>'
+              : doc.kind === "INFRASTRUCTURE"
+              ? '<span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-family: monospace;">INFRA</span>'
+              : '<span style="background: rgba(168, 85, 247, 0.15); color: #a855f7; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-family: monospace;">PROV</span>';
+            
+            const wordsFmt = (doc.word_count || 0).toLocaleString() + " w";
+            const scriptureBadges = (doc.scripture_refs || []).slice(0, 3).map(s => `<span style="background: rgba(212,175,55,0.1); color: var(--accent-gold); padding: 1px 4px; border-radius: 3px; font-size: 10px; font-family: monospace;">${escapeHtml(s)}</span>`).join(" ");
+            const sourceBadges = (doc.source_hits || []).slice(0, 3).map(s => `<span style="background: rgba(56,189,248,0.1); color: var(--accent-cyan); padding: 1px 4px; border-radius: 3px; font-size: 10px; font-family: monospace;">${escapeHtml(s)}</span>`).join(" ");
+
+            tr.innerHTML = `
+              <td>
+                <strong style="color: var(--accent-gold); font-family: 'Cinzel', serif;">${escapeHtml(doc.title)}</strong>
+                <div style="font-size: 11px; color: var(--text-dim); font-family: monospace; margin-top: 2px; word-break: break-all;">${escapeHtml(doc.rel_path)}</div>
+              </td>
+              <td>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  ${kindBadge}
+                  <span style="font-size: 10px; color: var(--text-dim); font-family: monospace;">${escapeHtml(doc.root)}</span>
+                </div>
+              </td>
+              <td><span style="font-family: monospace; font-size: 11px; color: var(--text-muted);">${wordsFmt}</span></td>
+              <td>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div>${scriptureBadges || '<span style="color:var(--text-dim);font-size:10px;">—</span>'}</div>
+                  <div>${sourceBadges}</div>
+                </div>
+              </td>
+              <td style="text-align: right;">
+                <button class="btn-copy-def" style="padding: 4px 8px; font-size: 11px;" onclick="viewCorpusFile(${JSON.stringify(doc.path)}, ${JSON.stringify(doc.title)})">
+                  👁️ Read
+                </button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    function loadArgumentRegister() {
+      fetch("/api/arguments")
+        .then(r => r.json())
+        .then(args => {
+          const container = document.getElementById("args-deck-container");
+          container.innerHTML = "";
+          
+          args.forEach(a => {
+            const card = document.createElement("div");
+            card.className = "defeater-card";
+            card.innerHTML = `
+              <div class="defeater-header">
+                <div class="defeater-title">${escapeHtml(a.title)}</div>
+                <span class="defeater-meta badge-v">${escapeHtml(a.provenance_tag)} ${escapeHtml(a.status)}</span>
+              </div>
+              <div style="font-size: 13px; color: #e2e8f0; font-weight: 500; line-height: 1.5;">
+                ${escapeHtml(a.thesis)}
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                <strong>Primary Anchors:</strong> ${(a.primary_source_anchors || []).map(escapeHtml).join("<br>")}
+              </div>
+              <div style="font-size: 11px; background: rgba(212,175,55,0.06); padding: 8px; border-radius: 6px; border: 1px solid var(--border);">
+                <strong>Scripture:</strong> ${(a.scripture_anchors || []).map(escapeHtml).join(", ")}<br>
+                <strong style="color: var(--accent-cyan);">Open Loose Ends:</strong> ${escapeHtml(a.loose_ends)}
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        });
+    }
+
+    function viewCorpusFile(path, title) {
+      document.getElementById("viewer-doc-title").textContent = title || "Document Viewer";
+      document.getElementById("viewer-doc-path").textContent = path;
+      document.getElementById("viewer-doc-content").textContent = "Loading file from verified corpus...";
+      document.getElementById("modal-file-viewer").classList.add("active");
+
+      fetch(`/api/corpus/file?path=${encodeURIComponent(path)}`)
+        .then(r => {
+          if (!r.ok) throw new Error("Access rejected or file error (" + r.status + ")");
+          return r.json();
+        })
+        .then(d => {
+          document.getElementById("viewer-doc-content").textContent = d.content;
+        })
+        .catch(err => {
+          document.getElementById("viewer-doc-content").textContent = "Error reading file: " + err.message;
+        });
+    }
+
+    function closeFileViewer() {
+      document.getElementById("modal-file-viewer").classList.remove("active");
+    }
+
+    function triggerReindex() {
+      showToast("Re-indexing corpus...", "info");
+      fetch("/api/corpus/reindex", { method: "POST" })
+        .then(r => r.json())
+        .then(d => {
+          showToast(`Re-indexed ${d.total_files} files (${(d.total_words||0).toLocaleString()} words)!`, "success");
+          loadCorpusDocs();
+        })
+        .catch(() => showToast("Re-indexing failed.", "error"));
+    }
+
+    // ── LANGUAGE LAB SEEDER ──────────────────────────────────────────────────
+    function seedLanguageAnki(lang) {
+      const seedSets = {
+        greek: [
+          { deck: "Koine Greek Core", prompt: "What is the meaning and grammatical significance of λόγος (logos)?", answer: "Word, Divine Reason, Utterance. In John 1:1, Christ is the eternal Logos who was with God (pros ton theon) and was God (theos en ho logos).", citation: "John 1:1, 1:14", original_text: "ἐν ἀρχῇ ἦν ὁ λόγος", defeater: "Eternally distinct in Person, identical in Divine Essence." },
+          { deck: "Koine Greek Core", prompt: "What is the meaning of σάρξ (sarx) in Eucharistic and Christological theology?", answer: "Flesh / physical humanity. In John 6:51-56, Christ insists 'my flesh is true food' (he sarx mou alethos esti brosis) using trogon (chewing), refuting metaphorical reductionism.", citation: "John 6:54-55; Ignatius, Epistle to Smyrnaeans 7", original_text: "ἡ γὰρ σάρξ μου ἀληθής ἐστιν βρῶσις", defeater: "The Apostolic Fathers explicitly define the Eucharist as the selfsame sarx that suffered on the Cross." },
+          { deck: "Koine Greek Core", prompt: "What is the grammatical nuance of πίστις (pistis) and its relationship to obedience?", answer: "Faith / fidelity / trust. Governed by prepositional phrases (pistis eis Christon) and syntactically paired with 'obedience of faith' (hypakoen pisteos) in Rom 1:5 and 16:26.", citation: "Romans 1:5; James 2:24", original_text: "ὑπακοὴν πίστεως ἐν πᾶσιν τοῖς ἔθνεσιν", defeater: "Biblical Greek knows nothing of an unformed faith isolated from loving obedience (fides caritate formata)." }
+        ],
+        latin: [
+          { deck: "Ecclesiastical Latin", prompt: "What is the meaning and dogmatic application of 'motus in imaginem est motus in rem'?", answer: "The motion or reverence directed toward the image passes directly to the prototype/reality it represents. St. Thomas Aquinas applies this to sacred images and the Cross.", citation: "ST III q. 25 a. 3; Nicaea II / St. Basil", original_text: "motus in imaginem est motus in rem", defeater: "Destroys the charge that honouring a crucifix or statue is idolatry, because the honour terminates in the Person depicted." },
+          { deck: "Ecclesiastical Latin", prompt: "What is the theological distinction between 'ex opere operato' and 'ex opere operantis'?", answer: "Ex opere operato = by the very execution of the sacramental act Christ instituted (guaranteeing grace objectively). Ex opere operantis = according to the subjective disposition of the minister or recipient.", citation: "Council of Trent, Session VII, Canon 8 (Denzinger 1608)", original_text: "non ponentibus obicem, conferri gratiam ex opere operato", defeater: "The validity and efficacy of the Sacraments depend on Christ's promise, not the personal moral worthiness of the priest." }
+        ],
+        hebrew: [
+          { deck: "Biblical Hebrew", prompt: "Analyze the root and verbal stem of hishtachavah (הִשְׁתַּחֲוָה) in 1 Chronicles 29:20.", answer: "Root ḥ-w-y in the archaic Hištafel stem (Ugaritic yštḥwy), meaning physical prostration. In 1 Chron 29:20, coordinate syntax links God and the King: vayyištaḥăwū la-YHWH wə-la-meleḵ.", citation: "1 Chron 29:20; MT / Ugaritic", original_text: "וַיִּקְּדוּ וַיִּשְׁתַּחֲווּ לַיהוָה וְלַמֶּלֶךְ", defeater: "Proves that bodily bowing in Scripture is an exterior gesture whose moral character is determined by intention and sacrifice (zevach), not by physical posture." },
+          { deck: "Biblical Hebrew", prompt: "What is the sacrificial significance of the tamid (תָּמִיד) and its fulfillment in Malachi 1:11?", answer: "The continual, perpetual whole-burnt daily offering (olah tamid). Malachi 1:11 prophesies that among the Gentiles a pure offering (minchah tehorah) shall replace animal sacrifices, fulfilled in the Catholic Holy Sacrifice of the Mass.", citation: "Exodus 29:38-42; Numbers 28:3; Malachi 1:11; Didache 14", original_text: "מִנְחָה טְהוֹרָה כִּי־גָדוֹל שְׁמִי בַּגּוֹיִם", defeater: "The Catholic Mass is the literal diachronic fulfillment of the universal Gentile sacrifice foretold by Malachi." }
+        ]
+      };
+
+      const cardsToAdd = seedSets[lang] || [];
+      let added = 0;
+      cardsToAdd.forEach(c => {
+        c.provenance_tag = "[V]";
+        fetch("/api/anki/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(c)
+        }).then(() => {
+          added++;
+          if (added === cardsToAdd.length) {
+            showToast(`Added ${added} ${lang.toUpperCase()} cards to Anki queue!`, "success");
+            loadAnkiCards();
+          }
+        });
+      });
+    }
+
+    // ── HABITS & HORARIUM ────────────────────────────────────────────────────
+    let scheduleState = { habits: {}, date: "" };
+
+    function loadSchedule() {
+      fetch("/api/schedule")
+        .then(r => r.json())
+        .then(data => {
+          const today = new Date().toISOString().slice(0, 10);
+          if (data.date !== today) {
+            // New day reset
+            data.date = today;
+            data.habits = {
+              liturgy_of_hours: false,
+              hydration_movement: false,
+              anki_queue_cleared: false,
+              deep_work_dissertation: false,
+              career_asset_shipped: false,
+              evening_examen: false
+            };
+          }
+          scheduleState = data;
+          renderHabits();
+        })
+        .catch(console.error);
+    }
+
+    function toggleHabit(key) {
+      scheduleState.habits[key] = !scheduleState.habits[key];
+      renderHabits();
+      fetch("/api/schedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(scheduleState)
+      });
+    }
+
+    function renderHabits() {
+      const h = scheduleState.habits || {};
+      const keys = ["liturgy_of_hours", "hydration_movement", "anki_queue_cleared", "deep_work_dissertation", "career_asset_shipped", "evening_examen"];
+      const ids = {
+        liturgy_of_hours: "chk-liturgy",
+        hydration_movement: "chk-hydration",
+        anki_queue_cleared: "chk-anki",
+        deep_work_dissertation: "chk-deep",
+        career_asset_shipped: "chk-career",
+        evening_examen: "chk-examen"
+      };
+
+      let completed = 0;
+      keys.forEach(k => {
+        const chk = document.getElementById(ids[k]);
+        if (chk) chk.checked = !!h[k];
+        if (h[k]) completed++;
+      });
+
+      const pct = Math.round((completed / keys.length) * 100);
+      document.getElementById("progress-percent").textContent = `${pct}% Done`;
+    }
+
+    const SCHEDULE_MODES = {
+      standard: [
+        { time: "07:00 – 08:30", block: "Spiritual Activation", mission: "Lauds/Prime, 500ml electrolytes, movement, sunlight" },
+        { time: "08:30 – 10:00", block: "Anki Recall Queue", mission: "Clear Patristic & conciliar card reviews; establish daily thesis" },
+        { time: "10:00 – 13:00", block: "Deep Work I", mission: "Master Dissertation writing & primary Greek/Hebrew text analysis" },
+        { time: "13:00 – 14:30", block: "Recovery", mission: "High-protein nutrition, outdoor walk, mental pause" },
+        { time: "14:30 – 17:00", block: "Deep Work II (Monetize)", mission: "Substack essay, debate dossier packets, client research pitches" },
+        { time: "17:00 – 18:30", block: "Physical Health", mission: "Resistance training, cardiovascular fitness, household care" },
+        { time: "18:30 – 20:30", block: "Synthesis & Debates", mission: "Discord debate review, community exchange, logging citations" },
+        { time: "20:30 – 22:00", block: "Examen & Rest", mission: "Spiritual examen, Compline, blue-light cutoff, sleep preparation" }
+      ],
+      noon: [
+        { time: "12:00 – 12:30", block: "Arrival & Spiritual Reset", mission: "Sext/Angelus, drop gear, hydration + electrolytes, cold splash" },
+        { time: "12:30 – 13:15", block: "High-Protein Refuel", mission: "Wholesome meal, mental decompression; 10m Ava audio listening" },
+        { time: "13:15 – 14:00", block: "Anki Active Recall Slay", mission: "Clear 100% of due flashcard queue in CatholicJarvis; momentum unlocked" },
+        { time: "14:00 – 17:00", block: "UNBROKEN DEEP WORK", mission: "Dissertation & Master Monograph synthesis; Ava teleprompter read" },
+        { time: "17:00 – 18:15", block: "Physical Movement", mission: "Weight training / outdoor walk in sunlight; mental reset" },
+        { time: "18:15 – 20:00", block: "Career Asset Packaging", mission: "Package 1 debate brief or Substack draft; pitch outreach" },
+        { time: "20:00 – 21:30", block: "Synthesis & Community", mission: "Dinner, community theological debate review, log citations" },
+        { time: "21:30 – 22:30", block: "Compline & Night Examen", mission: "Spiritual examen of day, Compline, sleep preparation" }
+      ]
+    };
+
+    function setScheduleMode(mode) {
+      const tbody = document.getElementById("schedule-tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      const rows = SCHEDULE_MODES[mode] || SCHEDULE_MODES.standard;
+      rows.forEach(r => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><span class="time-badge">${escapeHtml(r.time)}</span></td>
+          <td><strong>${escapeHtml(r.block)}</strong></td>
+          <td>${escapeHtml(r.mission)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const btnStd = document.getElementById("btn-sched-std");
+      const btnNoon = document.getElementById("btn-sched-noon");
+      if (btnStd && btnNoon) {
+        if (mode === "noon") {
+          btnNoon.style.background = "var(--accent-gold)";
+          btnNoon.style.color = "#000";
+          btnStd.style.background = "";
+          btnStd.style.color = "";
+        } else {
+          btnStd.style.background = "var(--accent-gold)";
+          btnStd.style.color = "#000";
+          btnNoon.style.background = "";
+          btnNoon.style.color = "";
+        }
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("header-time").textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleShortcutsModal() {
+      const m = document.getElementById("modal-shortcuts");
+      m.classList.toggle("active");
+    }
+
+    // ── AUDITORY TTS ENGINE (AVA NEURAL) ──────────────────────────────────────
+    let currentGlobalAudio = null;
+    function playTTS(text, voice = "en-US-AvaNeural") {
+      if (!text || !text.trim()) return;
+      if (currentGlobalAudio) {
+        currentGlobalAudio.pause();
+        currentGlobalAudio = null;
+      }
+      showToast("Synthesizing Ava audio...", "info");
+      const url = `/api/tts?text=${encodeURIComponent(text.trim())}&voice=${encodeURIComponent(voice)}`;
+      currentGlobalAudio = new Audio(url);
+      currentGlobalAudio.play().catch(e => {
+        showToast("Audio playback: " + e.message, "error");
+      });
+    }
+
+    function playAnkiCardAudio(part) {
+      if (!currentAnkiCard) return;
+      const text = part === 'prompt' ? currentAnkiCard.prompt : (currentAnkiCard.answer + (currentAnkiCard.defeater ? " " + currentAnkiCard.defeater : ""));
+      playTTS(text);
+    }
+
+    // ── TACTICAL LIVE DEBATE ARENA ───────────────────────────────────────────
+    let allDebateCards = [];
+    let currentDebateFront = "";
+    let debateSearchTimer = null;
+
+    function loadDebates() {
+      fetch("/api/debates")
+        .then(r => r.json())
+        .then(data => {
+          allDebateCards = data.cards || [];
+          document.getElementById("deb-count-all").textContent = allDebateCards.length;
+          document.getElementById("deb-count-prot").textContent = allDebateCards.filter(c => c.front.includes("Protestant")).length;
+          document.getElementById("deb-count-orth").textContent = allDebateCards.filter(c => c.front.includes("Orthodox")).length;
+          document.getElementById("deb-count-sede").textContent = allDebateCards.filter(c => c.front.includes("Sedevacantist")).length;
+          document.getElementById("deb-count-skep").textContent = allDebateCards.filter(c => c.front.includes("Skeptic")).length;
+          renderDebates();
+        })
+        .catch(err => {
+          showToast("Failed to load debate battle cards: " + err.message, "error");
+        });
+    }
+
+    function renderDebates() {
+      const container = document.getElementById("debate-cards-container");
+      if (!container) return;
+      const searchInput = document.getElementById("debate-search-input");
+      const q = (searchInput ? searchInput.value : "").trim().toLowerCase();
+
+      let filtered = allDebateCards;
+      if (currentDebateFront) {
+        filtered = filtered.filter(c => c.front.toLowerCase().includes(currentDebateFront.toLowerCase()));
+      }
+      if (q) {
+        filtered = filtered.filter(c =>
+          c.topic.toLowerCase().includes(q) ||
+          c.target.toLowerCase().includes(q) ||
+          c.charge.toLowerCase().includes(q) ||
+          c.fatal_counter_fact.toLowerCase().includes(q) ||
+          c.verbal_soundbite_15s.toLowerCase().includes(q)
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 40px;">No debate battle cards matched your filter.</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      filtered.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "debate-card";
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--accent-cyan); font-family: 'JetBrains Mono', monospace; font-weight: 600;">
+                ${escapeHtml(c.front)} • <span style="color: var(--text-dim);">${escapeHtml(c.target)}</span>
+              </div>
+              <h3 style="font-family: 'Cinzel', serif; font-size: 16px; color: var(--accent-gold); margin-top: 4px;">
+                ${escapeHtml(c.topic)}
+              </h3>
+            </div>
+            <span class="defeater-meta badge-v">[V] AUDITED</span>
+          </div>
+
+          <div class="callout-box callout-charge">
+            <strong style="color: #ef4444; font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Opponent's Charge:</strong>
+            ${escapeHtml(c.charge)}
+          </div>
+
+          <div class="callout-box callout-concession">
+            <strong style="color: var(--accent-gold); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Concession (Rule 10):</strong>
+            ${escapeHtml(c.concession)}
+          </div>
+
+          <div class="callout-box callout-counter">
+            <strong style="color: var(--accent-cyan); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">Fatal Counter-Fact:</strong>
+            ${escapeHtml(c.fatal_counter_fact)}
+          </div>
+
+          <div style="font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; line-height: 1.4;">
+            <strong style="color: var(--text-muted);">Source Locator:</strong> ${escapeHtml(c.source_locator)}<br>
+            <strong style="color: var(--text-muted);">Proof-Text:</strong> <code style="color: var(--accent-gold);">${escapeHtml(c.proof_text)}</code>
+          </div>
+
+          <div class="callout-box callout-soundbite">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 10px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: bold;">15-Second Verbal Soundbite</span>
+              <button class="btn-action-small" onclick="playTTS(${JSON.stringify(c.verbal_soundbite_15s)})">🔊 Hear Ava</button>
+            </div>
+            "${escapeHtml(c.verbal_soundbite_15s)}"
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-top: auto; padding-top: 6px;">
+            <button class="btn-action-small" style="flex: 1;" onclick="copySoundbite(this, ${JSON.stringify(c.verbal_soundbite_15s)})">
+              📋 Copy 15s Soundbite
+            </button>
+            <button class="btn-action-small" style="flex: 1; background: rgba(212, 175, 55, 0.15); border-color: var(--accent-gold); color: var(--accent-gold);" onclick="copyRefutation(this, ${JSON.stringify(c.copy_paste_text)})">
+              ⚡ Copy Full Refutation
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterDebates(front) {
+      currentDebateFront = front;
+      document.querySelectorAll("#debate-filter-buttons .btn-action-small").forEach(b => b.classList.remove("active"));
+      if (!front) document.getElementById("btn-deb-all").classList.add("active");
+      else if (front === "Protestant") document.getElementById("btn-deb-prot").classList.add("active");
+      else if (front === "Eastern Orthodox") document.getElementById("btn-deb-orth").classList.add("active");
+      else if (front === "Sedevacantist") document.getElementById("btn-deb-sede").classList.add("active");
+      else if (front === "Secular Skeptic") document.getElementById("btn-deb-skep").classList.add("active");
+      renderDebates();
+    }
+
+    function debounceDebateSearch() {
+      clearTimeout(debateSearchTimer);
+      debateSearchTimer = setTimeout(renderDebates, 150);
+    }
+
+    function copySoundbite(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = "✓ Soundbite Copied!";
+        showToast("15s Verbal Soundbite copied to clipboard!", "success");
+        setTimeout(() => { btn.innerHTML = orig; }, 1500);
+      });
+    }
+
+    function copyRefutation(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = "✓ Refutation Copied!";
+        showToast("Full refutation copied to clipboard!", "success");
+        setTimeout(() => { btn.innerHTML = orig; }, 1500);
+      });
+    }
+
+    // ── AI SESSION INTELLIGENCE NAVIGATOR ────────────────────────────────────
+    let currentSessionPage = 1;
+    let totalSessionPages = 1;
+    let sessionSearchTimer = null;
+
+    function loadSessions(page = 1) {
+      currentSessionPage = page;
+      const qInput = document.getElementById("session-search-input");
+      const platSelect = document.getElementById("session-platform-select");
+      const q = (qInput ? qInput.value : "").trim();
+      const plat = platSelect ? platSelect.value : "";
+
+      let url = `/api/sessions?page=${page}&limit=20`;
+      if (q) url += `&query=${encodeURIComponent(q)}`;
+      if (plat) url += `&surface=${encodeURIComponent(plat)}`;
+
+      fetch(url)
+        .then(r => r.json())
+        .then(data => {
+          totalSessionPages = data.total_pages || 1;
+          document.getElementById("sess-page-lbl").textContent = `Page ${data.page} of ${totalSessionPages} (${data.total_sessions} sessions)`;
+          document.getElementById("btn-sess-prev").disabled = (data.page <= 1);
+          document.getElementById("btn-sess-next").disabled = (data.page >= totalSessionPages);
+
+          const statsBar = document.getElementById("session-stats-bar");
+          statsBar.innerHTML = `Showing <strong>${data.sessions.length}</strong> of <strong>${data.total_sessions.toLocaleString()}</strong> indexed research sessions • Total corpus: <strong>${(data.total_words || 0).toLocaleString()}</strong> words`;
+
+          const container = document.getElementById("session-cards-container");
+          if (!container) return;
+          if (data.sessions.length === 0) {
+            container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: var(--text-dim); padding: 40px;">No sessions found matching your criteria.</div>`;
+            return;
+          }
+
+          container.innerHTML = "";
+          data.sessions.forEach(s => {
+            const card = document.createElement("div");
+            card.className = "session-card";
+            const platBadge = s.platform === "Antigravity"
+              ? '<span class="defeater-meta" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan);">ANTIGRAVITY</span>'
+              : '<span class="defeater-meta" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);">CLAUDE</span>';
+
+            const topicTags = (s.topics || []).slice(0, 5).map(t =>
+              `<span style="font-size: 10px; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; color: #cbd5e1;">${escapeHtml(t)}</span>`
+            ).join(" ");
+
+            const artifactsBadges = (s.artifacts || []).map(a =>
+              `<span style="font-size: 10px; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 1px 6px; border-radius: 4px;">📄 ${escapeHtml(typeof a === 'string' ? a : a.name)}</span>`
+            ).join(" ");
+
+            card.innerHTML = `
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div style="font-size: 13px; font-weight: 600; color: #f8fafc; font-family: 'Inter', sans-serif;">
+                  ${escapeHtml(s.title || "Research Session")}
+                </div>
+                ${platBadge}
+              </div>
+
+              <div style="font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; display: flex; gap: 12px;">
+                <span>Turns: <strong style="color: #e2e8f0;">${s.turns_count || 1}</strong></span>
+                <span>Words: <strong style="color: #e2e8f0;">${(s.approx_words || 0).toLocaleString()}</strong></span>
+                <span>${escapeHtml(s.mtime_iso ? s.mtime_iso.slice(0, 10) : "")}</span>
+              </div>
+
+              <div style="font-size: 12px; color: var(--text-muted); line-height: 1.45; background: rgba(0,0,0,0.25); padding: 8px 10px; border-radius: 6px; border-left: 2px solid var(--accent-blue);">
+                <strong style="color: #cbd5e1;">Prompt:</strong> "${escapeHtml((s.first_prompt || "").slice(0, 200))}${s.first_prompt && s.first_prompt.length > 200 ? "..." : ""}"
+              </div>
+
+              <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: auto;">
+                ${topicTags}
+              </div>
+
+              ${artifactsBadges ? `<div style="display: flex; gap: 4px; flex-wrap: wrap; padding-top: 4px;">${artifactsBadges}</div>` : ""}
+            `;
+            container.appendChild(card);
+          });
+        })
+        .catch(err => {
+          showToast("Failed to fetch sessions: " + err.message, "error");
+        });
+    }
+
+    function debounceSessionSearch() {
+      clearTimeout(sessionSearchTimer);
+      sessionSearchTimer = setTimeout(() => loadSessions(1), 250);
+    }
+
+    function filterSessionPlatform() {
+      loadSessions(1);
+    }
+
+    function quickSessionTopic(topic) {
+      const qInput = document.getElementById("session-search-input");
+      if (qInput) {
+        qInput.value = topic;
+        loadSessions(1);
+      }
+    }
+
+    function prevSessionPage() {
+      if (currentSessionPage > 1) loadSessions(currentSessionPage - 1);
+    }
+
+    function nextSessionPage() {
+      if (currentSessionPage < totalSessionPages) loadSessions(currentSessionPage + 1);
+    }
+
+    // ── OBSIDIAN VAULT CONCORDANCE & DEDUP ────────────────────────────────────
+    let vaultConcordanceData = null;
+    let currentVaultView = "clusters";
+    let vaultSearchTimer = null;
+
+    function loadVaultConcordance() {
+      fetch("/api/vaults/concordance?view=summary")
+        .then(r => r.json())
+        .then(data => {
+          if (data.status === "indexing") {
+            document.getElementById("vault-view-content").innerHTML = `<div style="text-align: center; padding: 40px; color: var(--accent-gold);">⚡ Deduplication scan in progress...</div>`;
+            return;
+          }
+          vaultConcordanceData = data;
+          const s = data.summary || {};
+          document.getElementById("kpi-scanned").textContent = (s.total_files_scanned || 0).toLocaleString();
+          document.getElementById("kpi-unique").textContent = (s.total_unique_documents || 0).toLocaleString();
+          document.getElementById("kpi-clusters").textContent = (s.duplicate_clusters_count || 0).toLocaleString();
+          const wordsMB = `${((s.redundant_words_wasted || 0) / 1000000).toFixed(1)}M words (${((s.redundant_bytes_wasted || 0) / 1024 / 1024).toFixed(1)} MB)`;
+          document.getElementById("kpi-waste").textContent = wordsMB;
+
+          renderVaultView();
+        })
+        .catch(err => {
+          showToast("Failed to load vault concordance: " + err.message, "error");
+        });
+    }
+
+    function setVaultView(view) {
+      currentVaultView = view;
+      document.querySelectorAll("#tab-vaults .btn-action-small").forEach(b => b.classList.remove("active"));
+      if (view === "clusters") document.getElementById("btn-vault-view-clusters").classList.add("active");
+      if (view === "drift") document.getElementById("btn-vault-view-drift").classList.add("active");
+      if (view === "breakdown") document.getElementById("btn-vault-view-breakdown").classList.add("active");
+      renderVaultView();
+    }
+
+    function debounceVaultSearch() {
+      clearTimeout(vaultSearchTimer);
+      vaultSearchTimer = setTimeout(renderVaultView, 200);
+    }
+
+    function renderVaultView() {
+      const container = document.getElementById("vault-view-content");
+      if (!container || !vaultConcordanceData) return;
+      const searchInput = document.getElementById("vault-search-input");
+      const q = (searchInput ? searchInput.value : "").trim().toLowerCase();
+
+      if (currentVaultView === "clusters") {
+        fetch(`/api/vaults/concordance?view=clusters&limit=50${q ? '&search=' + encodeURIComponent(q) : ''}`)
+          .then(r => r.json())
+          .then(res => {
+            const items = res.items || [];
+            if (items.length === 0) {
+              container.innerHTML = `<div style="text-align: center; color: var(--text-dim); padding: 20px;">No duplicate clusters found.</div>`;
+              return;
+            }
+            let html = `
+              <div style="font-size: 13px; font-weight: 600; color: var(--accent-gold); margin-bottom: 12px;">
+                Top L3 Byte-Identical Clusters (${items.length} shown)
+              </div>
+              <table class="vault-table">
+                <thead>
+                  <tr>
+                    <th>Document Title</th>
+                    <th>Filename</th>
+                    <th>Duplicate Copies</th>
+                    <th>Size (Bytes)</th>
+                    <th>Canonical Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+            `;
+            items.forEach(cl => {
+              const canon = cl.canonical || {};
+              html += `
+                <tr>
+                  <td><strong style="color: #f1f5f9;">${escapeHtml(cl.title || canon.filename)}</strong></td>
+                  <td><code style="color: var(--accent-cyan); font-size: 11px;">${escapeHtml(canon.filename)}</code></td>
+                  <td><span style="color: var(--accent-red); font-weight: 700; font-family: 'JetBrains Mono', monospace;">${cl.count} copies</span></td>
+                  <td style="font-family: 'JetBrains Mono', monospace;">${(cl.size || 0).toLocaleString()} B</td>
+                  <td style="font-size: 11px; color: var(--text-dim); max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(canon.path)}">
+                    ${escapeHtml(canon.vault_name)}: ${escapeHtml(canon.rel_path)}
+                  </td>
+                </tr>
+              `;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+          });
+      } else if (currentVaultView === "drift") {
+        fetch(`/api/vaults/concordance?view=drift&limit=50${q ? '&search=' + encodeURIComponent(q) : ''}`)
+          .then(r => r.json())
+          .then(res => {
+            const items = res.items || [];
+            if (items.length === 0) {
+              container.innerHTML = `<div style="text-align: center; color: var(--text-dim); padding: 20px;">No version drift entries found.</div>`;
+              return;
+            }
+            let html = `
+              <div style="font-size: 13px; font-weight: 600; color: var(--accent-gold); margin-bottom: 12px;">
+                Version Drift Across Vaults (Same filename, distinct content hashes)
+              </div>
+              <table class="vault-table">
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th>Distinct Versions</th>
+                    <th>Total Instances</th>
+                    <th>Newest Instance Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+            `;
+            items.forEach(dr => {
+              const newest = (dr.variants && dr.variants[0]) || {};
+              html += `
+                <tr>
+                  <td><strong style="color: var(--accent-gold);">${escapeHtml(dr.filename)}</strong></td>
+                  <td><span style="color: var(--accent-red); font-weight: 700; font-family: 'JetBrains Mono', monospace;">${dr.variants_count} versions</span></td>
+                  <td style="font-family: 'JetBrains Mono', monospace;">${dr.instances_count}</td>
+                  <td style="font-size: 11px; color: var(--text-muted);">
+                    ${escapeHtml(newest.vault_name || "")} (${escapeHtml(newest.mtime_iso ? newest.mtime_iso.slice(0, 10) : "")})
+                  </td>
+                </tr>
+              `;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+          });
+      } else if (currentVaultView === "breakdown") {
+        const breakdown = (vaultConcordanceData.summary && vaultConcordanceData.summary.vault_breakdown) || {};
+        let html = `
+          <div style="font-size: 13px; font-weight: 600; color: var(--accent-gold); margin-bottom: 12px;">
+            Markdown File Count by Vault Root
+          </div>
+          <table class="vault-table">
+            <thead>
+              <tr>
+                <th>Vault Root Name</th>
+                <th>Total Markdown Files</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+        Object.entries(breakdown).sort((a, b) => b[1] - a[1]).forEach(([vname, count]) => {
+          html += `
+            <tr>
+              <td><strong style="color: #f1f5f9;">${escapeHtml(vname)}</strong></td>
+              <td style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent-cyan);">${count.toLocaleString()}</td>
+            </tr>
+          `;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+      }
+    }
+
+    // ── OPENNOTEBOOKLM DEEP DIVE PODCAST CONTROLLER ──────────────────────────
+    let podcastData = null;
+    let isAutoscroll = true;
+    let activeTurnId = null;
+    let podcastAudio = null;
+
+    function initPodcastAudio() {
+      if (podcastAudio) return;
+      podcastAudio = document.getElementById("podcast-audio-player");
+      if (!podcastAudio) return;
+
+      podcastAudio.addEventListener("timeupdate", () => {
+        const cur = podcastAudio.currentTime;
+        const dur = podcastAudio.duration || (podcastData ? podcastData.total_duration_seconds : 660);
+        
+        const scrubber = document.getElementById("podcast-scrubber");
+        if (scrubber) {
+          scrubber.max = dur;
+          scrubber.value = cur;
+        }
+        
+        const curEl = document.getElementById("podcast-curr-time");
+        if (curEl) curEl.textContent = formatPodcastTime(cur);
+
+        const totEl = document.getElementById("podcast-total-time");
+        if (totEl && dur) totEl.textContent = formatPodcastTime(dur);
+
+        // Highlight active turn
+        if (podcastData && podcastData.turns) {
+          let foundTurn = null;
+          for (const t of podcastData.turns) {
+            if (cur >= t.start_s && cur <= (t.end_s + 0.35)) {
+              foundTurn = t;
+              break;
+            }
+          }
+          if (foundTurn && foundTurn.turn_id !== activeTurnId) {
+            if (activeTurnId !== null) {
+              const prevCard = document.getElementById(`turn-${activeTurnId}`);
+              if (prevCard) prevCard.classList.remove("active-turn");
+            }
+            activeTurnId = foundTurn.turn_id;
+            const newCard = document.getElementById(`turn-${activeTurnId}`);
+            if (newCard) {
+              newCard.classList.add("active-turn");
+              if (isAutoscroll) {
+                newCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              }
+            }
+          }
+        }
+      });
+
+      podcastAudio.addEventListener("play", () => {
+        const btn = document.getElementById("btn-podcast-play");
+        if (btn) btn.textContent = "⏸";
+      });
+
+      podcastAudio.addEventListener("pause", () => {
+        const btn = document.getElementById("btn-podcast-play");
+        if (btn) btn.textContent = "▶";
+      });
+
+      podcastAudio.addEventListener("ended", () => {
+        const btn = document.getElementById("btn-podcast-play");
+        if (btn) btn.textContent = "▶";
+        if (activeTurnId !== null) {
+          const card = document.getElementById(`turn-${activeTurnId}`);
+          if (card) card.classList.remove("active-turn");
+          activeTurnId = null;
+        }
+      });
+    }
+
+    function formatPodcastTime(seconds) {
+      if (!seconds || isNaN(seconds)) return "00:00";
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function togglePodcastPlay() {
+      initPodcastAudio();
+      if (!podcastAudio) return;
+      if (podcastAudio.paused) {
+        podcastAudio.play().catch(e => console.error("Playback error:", e));
+      } else {
+        podcastAudio.pause();
+      }
+    }
+
+    function seekPodcast(seconds) {
+      initPodcastAudio();
+      if (!podcastAudio) return;
+      podcastAudio.currentTime = parseFloat(seconds);
+      if (podcastAudio.paused) {
+        podcastAudio.play().catch(e => console.error("Playback error:", e));
+      }
+    }
+
+    function setPodcastSpeed(speed) {
+      initPodcastAudio();
+      if (!podcastAudio) return;
+      podcastAudio.playbackRate = speed;
+      document.querySelectorAll(".podcast-speed-btn").forEach(b => b.classList.remove("active"));
+      if (speed === 1.0) document.getElementById("spd-10")?.classList.add("active");
+      if (speed === 1.25) document.getElementById("spd-12")?.classList.add("active");
+      if (speed === 1.5) document.getElementById("spd-15")?.classList.add("active");
+      if (speed === 2.0) document.getElementById("spd-20")?.classList.add("active");
+      showToast(`Playback speed: ${speed}x`, "info");
+    }
+
+    function toggleAutoscroll() {
+      isAutoscroll = !isAutoscroll;
+      const btn = document.getElementById("btn-toggle-autoscroll");
+      if (btn) {
+        btn.textContent = `Auto-Scroll: ${isAutoscroll ? "ON" : "OFF"}`;
+        btn.style.color = isAutoscroll ? "var(--accent-gold)" : "var(--text-dim)";
+      }
+      showToast(`Auto-scroll ${isAutoscroll ? "enabled" : "disabled"}`, "info");
+    }
+
+    function loadPodcastView() {
+      initPodcastAudio();
+      if (podcastData) {
+        renderPodcastTurns(podcastData.turns);
+        return;
+      }
+      fetch("/api/podcast/transcript/catholic_case_deep_dive")
+        .then(r => r.json())
+        .then(data => {
+          podcastData = data;
+          document.getElementById("podcast-meta-duration").textContent = data.duration_formatted || "10:59";
+          document.getElementById("podcast-meta-turns").textContent = `${data.total_turns || 43} Turns`;
+          document.getElementById("podcast-total-time").textContent = data.duration_formatted || "10:59";
+          document.getElementById("podcast-turn-count").textContent = data.total_turns || 43;
+          renderPodcastTurns(data.turns);
+        })
+        .catch(err => {
+          console.error("Error loading podcast transcript:", err);
+          showToast("Failed to load podcast transcript", "error");
+        });
+    }
+
+    function renderPodcastTurns(turns) {
+      const feed = document.getElementById("podcast-transcript-feed");
+      if (!feed) return;
+      feed.innerHTML = "";
+
+      turns.forEach(t => {
+        const isRachel = t.speaker === "Rachel";
+        const avatar = isRachel ? "👩" : "👨";
+        const speakerClass = isRachel ? "turn-speaker-rachel" : "turn-speaker-leo";
+        const role = isRachel ? "Host & Interlocutor" : "Historical Analyst";
+        
+        const card = document.createElement("div");
+        card.className = "podcast-turn-card";
+        card.id = `turn-${t.turn_id}`;
+        if (activeTurnId === t.turn_id) card.classList.add("active-turn");
+
+        card.innerHTML = `
+          <div class="turn-header">
+            <div class="turn-speaker-badge">
+              <span style="font-size: 16px;">${avatar}</span>
+              <span class="${speakerClass}">${escapeHtml(t.speaker)}</span>
+              <span style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">• ${role}</span>
+            </div>
+            <button class="turn-ts-btn" onclick="event.stopPropagation(); seekPodcast(${t.start_s})" title="Jump to timestamp">
+              ⏱ ${formatPodcastTime(t.start_s)}
+            </button>
+          </div>
+          <div class="turn-body">
+            ${escapeHtml(t.text)}
+          </div>
+        `;
+
+        card.onclick = () => seekPodcast(t.start_s);
+        feed.appendChild(card);
+      });
+    }
+
+    function filterPodcastTranscript() {
+      const q = (document.getElementById("podcast-search-box")?.value || "").toLowerCase().trim();
+      if (!podcastData || !podcastData.turns) return;
+      if (!q) {
+        renderPodcastTurns(podcastData.turns);
+        return;
+      }
+      const filtered = podcastData.turns.filter(t => t.text.toLowerCase().includes(q) || t.speaker.toLowerCase().includes(q));
+      renderPodcastTurns(filtered);
+    }
+
+    // ── KEYBOARD SHORTCUTS ───────────────────────────────────────────────────
+    window.addEventListener("keydown", (e) => {
+      if (document.querySelector(".modal-backdrop.active") && !document.getElementById("modal-shortcuts").classList.contains("active")) {
+        return;
+      }
+      if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+
+      if (e.key === "?") {
+        e.preventDefault();
+        toggleShortcutsModal();
+        return;
+      }
+
+      if (document.getElementById("tab-anki").classList.contains("active")) {
+        if (e.code === "Space") {
+          if (document.getElementById("anki-actions-reveal").style.display !== "none") {
+            e.preventDefault();
+            revealAnkiCard();
+          }
+        } else if (e.key === "1") {
+          if (document.getElementById("anki-actions-grade").style.display !== "none") gradeCard(1);
+        } else if (e.key === "2") {
+          if (document.getElementById("anki-actions-grade").style.display !== "none") gradeCard(2);
+        } else if (e.key === "3") {
+          if (document.getElementById("anki-actions-grade").style.display !== "none") gradeCard(3);
+        } else if (e.key === "4") {
+          if (document.getElementById("anki-actions-grade").style.display !== "none") gradeCard(4);
+        }
+      }
+    });
+
+    // ── INITIAL BOOT ─────────────────────────────────────────────────────────
+    setScheduleMode('standard');
+    loadSchedule();
+    loadAnkiCards();
+    loadDefeaters();
+    loadDebates();
+    loadCorpusDocs();
+  </script>
+  <!-- Feature-module host (added 2026-10-03, Claude GUI). Tabs come from static/modules/manifest.json:
+       [{"id": "ledger", "label": "Question Ledger", "script": "ledger.js"}, ...]. Each script registers
+       window.JarvisModules[id] = { load(el) {...} }. One worker owns each module's files. -->
+  <script>
+    window.JarvisModules = window.JarvisModules || {};
+    // Cross-tab bus (2026-10-06): JarvisOpen("reader", {path}) switches to the tab, loads it if needed,
+    // then fires window event "jarvis:open-reader" with the detail. Modules listen for their own event.
+    window.JarvisOpen = function (tabId, detail) {
+      switchTab(tabId);
+      setTimeout(function () {
+        window.dispatchEvent(new CustomEvent("jarvis:open-" + tabId, { detail: detail || {} }));
+      }, 350);
+    };
+    (function loadModuleTabs() {
+      fetch("/static/modules/manifest.json", { cache: "no-store" })
+        .then(r => r.ok ? r.json() : [])
+        .then(list => {
+          const nav = document.getElementById("module-nav");
+          const panes = document.getElementById("module-panes");
+          (list || []).forEach(m => {
+            if (!m || !/^[a-z0-9_-]+$/.test(m.id) || document.getElementById("tab-" + m.id)) return;
+            const btn = document.createElement("button");
+            btn.className = "nav-btn";
+            btn.id = "btn-tab-" + m.id;
+            btn.textContent = m.label || m.id;
+            btn.onclick = () => switchTab(m.id);
+            nav.appendChild(btn);
+            const pane = document.createElement("div");
+            pane.className = "tab-pane";
+            pane.id = "tab-" + m.id;
+            const root = document.createElement("div");
+            root.className = "module-root";
+            pane.appendChild(root);
+            panes.appendChild(pane);
+            const s = document.createElement("script");
+            // cache-bust: a browser kept a stale reader.js after an update (2026-10-06), so modules always reload
+            s.src = "/static/modules/" + encodeURIComponent(m.script || (m.id + ".js")) + "?v=" + Date.now();
+            document.body.appendChild(s);
+          });
+        })
+    })();
+  </script>
+  <script src="/static/libs/three.min.js"></script>
+  <script src="/static/libs/OrbitControls.js"></script>
+  <script src="/static/shell.js?v=20261110a"></script>
+</body>
+</html>

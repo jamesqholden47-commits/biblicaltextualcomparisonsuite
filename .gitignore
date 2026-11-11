@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.bak
+*.bak-*
+catholic_jarvis_suite/data/
+catholic_jarvis_suite/cache/
+catholic_jarvis_suite/audio_cache/
+web_app/notes_shards/
+web_app/sources_cache/
+web_app/plenary_logos_data.json
+web_app/plenary_logos_suite.html
+.DS_Store
