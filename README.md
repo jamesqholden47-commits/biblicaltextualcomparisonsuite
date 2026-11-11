@@ -1,4 +1,4 @@
-# Vorlage Suite
+# Plenary Suite
 
 A self-hosted research workstation for comparative biblical textual criticism and patristics, built
 around the **Plenary Logos Suite**: a 73-book (Protestant 66 + 7 Deuterocanonical) Scripture reader

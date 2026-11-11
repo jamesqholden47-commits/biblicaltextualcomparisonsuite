@@ -1,4 +1,4 @@
-# 🏛️ VORLAGE SUITE
+# 🏛️ PLENARY SUITE
 
 **A Unified Operating Environment for the Independent Theologian-Philosopher**
 
