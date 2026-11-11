@@ -1,7 +1,8 @@
-# CatholicJarvis Suite
+# Biblical Textual Comparison Suite
 
-A self-hosted research workstation for Catholic biblical studies and patristics, built around the
-**Plenary Logos Suite**: a 73-book (Protestant 66 + 7 Deuterocanonical) Scripture reader that
+A self-hosted research workstation for comparative biblical textual criticism and patristics, built
+around the **Plenary Logos Suite**: a 73-book (Protestant 66 + 7 Deuterocanonical) Scripture reader
+that
 synchronizes twelve manuscript/translation witness streams verse-by-verse — Challoner Douay-Rheims,
 Clementine and Nova Vulgata, Brenton's Septuagint, the Westminster Leningrad Codex (Hebrew), the
 Statistical Restoration Greek New Testament, KJV, ASV, WEB, and more — with clickable interlinear
@@ -23,6 +24,12 @@ Hebrew Masoretic Text) rendered as draggable, inspectable planes in 3D space:
 switchable from the full registry:
 
 ![Parallel 4-way view](screenshots/parallel-4-way.jpg)
+
+**Manuscripts** — a teaser of the manuscript-facsimile viewer: IIIF page images (here, Codex
+Vaticanus) rendered in 3D with parchment simulation, paleographic transcription, word-level
+morphological alignment, and citation export:
+
+![Manuscript viewer](screenshots/manuscripts-viewer.webp)
 
 ## Structure
 
