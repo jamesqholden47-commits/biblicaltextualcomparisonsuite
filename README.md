@@ -10,8 +10,48 @@ tokens (Strong's numbers, morphology, lexicon entries), a manuscript-witness app
 variants, and a lazy-loaded study-notes layer that pulls from NET Bible, the SBL Study Bible, the
 New Oxford Annotated Bible, the NIV Study Bible, and the Ignatius Catholic Study Bible.
 
-The rest of the suite is a FastAPI backend with modules for debate research, a manuscript viewer,
-spaced-repetition (Anki-style) review, and a PDF/audio reading studio.
+## Features
+
+### Scripture & manuscripts (self-contained — runs on the bundled/public-domain data)
+
+- **Plenary Logos Suite** — see above: 73-book synchronized reader, 3D witness-stream visualization,
+  clickable interlinear morphology, lazy-loaded study notes.
+- **Manuscripts** — a curated registry of 16 primary witnesses (the great majuscule codices —
+  Vaticanus, Sinaiticus, Alexandrinus, Ephraemi Rescriptus, Bezae, Washingtonianus, Claromontanus;
+  key papyri — P52, P45, P46, P66, P75; plus the Bryennios Codex, Oxyrhynchus 840, the Great Isaiah
+  Scroll, and 4QMMT), each rendered in 3D from its real IIIF facsimile endpoint with parchment-curve
+  simulation, simulated raking-light/UV-multispectral display modes, line-by-line paleographic
+  transcription, word-level morphological alignment (MorphGNT / BDAG / BDB), and one-click SBL
+  citation export.
+- **Verbum Suite** — a from-scratch synoptic exegetical workspace in the spirit of Logos/Verbum
+  Bible software: synchronized Greek NT (NA28/SBLGNT/MorphGNT), Latin Vulgate, English, and Hebrew
+  MT panes; patristic catena commentary (Aquinas, Chrysostom, Cornelius à Lapide, Haydock); a
+  multi-tier morphological interlinear ribbon; and a side-by-side translation-difference comparison
+  engine.
+
+### Research tools (operate on the operator's own file tree — shown here as architecture; they need
+a populated library/notes directory to do anything, not just this repo's code)
+
+- **Organizer & Corpus** — indexes an entire personal document/notes/code tree, classifies every
+  file (subject matter vs. infrastructure vs. provenance), and runs a single SQLite FTS5 full-text
+  index across years of chat logs and notes at once, so one query surfaces both the conversation
+  where an idea came up and the file it ended up in.
+- **Genealogy & Treemap** — a toggle-sortable treemap (by date modified/created/accessed, size, or
+  category) of every note and file ever written, plus a directed "what file caused which file"
+  provenance graph built from citations, wiki-links, and detected parent → child synthesis.
+- **Debate** — reconstructs full argument threads out of pasted chat logs: merges a thread that was
+  pasted again later as it grew (via message fingerprinting), splits each reply into individual
+  argument points, and tracks which points were actually posted in the live exchange versus drafted
+  and never sent.
+- **Study** — an in-browser SM-2 spaced-repetition engine (Anki-compatible TSV export) for
+  vocabulary and argument flashcards, including objection drills generated automatically from
+  harvested debate threads.
+
+### Reading studio
+
+- **PDF/audio reading studio** — neural text-to-speech read-aloud with word-level teleprompter
+  highlighting and chunked auto-scroll, plus a one-key clip-to-corkboard capture that feeds
+  straight into the spaced-repetition queue.
 
 ## Screenshots
 
