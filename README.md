@@ -12,6 +12,18 @@ New Oxford Annotated Bible, the NIV Study Bible, and the Ignatius Catholic Study
 The rest of the suite is a FastAPI backend with modules for debate research, a manuscript viewer,
 spaced-repetition (Anki-style) review, and a PDF/audio reading studio.
 
+## Screenshots
+
+**3D Spatial Strata** — manuscript witness layers (Douay-Rheims, Septuagint, Clementine Vulgate,
+Hebrew Masoretic Text) rendered as draggable, inspectable planes in 3D space:
+
+![3D Spatial Strata view](screenshots/3d-spatial-strata.jpg)
+
+**Parallel (4-Way)** — up to four of the suite's translations read side by side, each independently
+switchable from the full registry:
+
+![Parallel 4-way view](screenshots/parallel-4-way.jpg)
+
 ## Structure
 
 - `catholic_jarvis_suite/` — the FastAPI app: routes, business logic (`modules/`), frontend
