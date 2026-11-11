@@ -29,8 +29,7 @@ New Oxford Annotated Bible, the NIV Study Bible, and the Ignatius Catholic Study
   multi-tier morphological interlinear ribbon; and a side-by-side translation-difference comparison
   engine.
 
-### Research tools (operate on the operator's own file tree — shown here as architecture; they need
-a populated library/notes directory to do anything, not just this repo's code)
+### Research tools (point these at your own folders — see Configuration below)
 
 - **Organizer & Corpus** — indexes an entire personal document/notes/code tree, classifies every
   file (subject matter vs. infrastructure vs. provenance), and runs a single SQLite FTS5 full-text
@@ -88,6 +87,28 @@ python app.py --port 8080
 ```
 
 Open `http://127.0.0.1:8080`.
+
+## Configuration
+
+The Scripture/manuscript features above need nothing configured. The research tools (Organizer,
+Corpus, Genealogy & Treemap, Debate, Study, Reader, Today) read from a personal document tree, and
+every path they use is a setting, not something baked into the code — `modules/paths_config.py` is
+the single place they're all defined, so pointing the suite at your own folders means setting a few
+values there instead of hunting through the module files.
+
+Two ways to override a path, either works:
+
+- **Environment variable** — `JARVIS_<KEY>`, e.g. `JARVIS_HOME=C:\Users\you` or
+  `JARVIS_MEXICO_STUDY=D:\my-notes\some-project`.
+- **`catholic_jarvis_suite/data/jarvis_paths.json`** — a flat JSON object, e.g.
+  `{"home": "C:\\Users\\you", "pdfs_dir": "D:\\Books"}`.
+
+See `DEFAULTS` in `modules/paths_config.py` for the full key list (`home`, `dissertation_project`,
+`mexico_study`, `scholar_decade_plan`, `aa1_vault`, `ag_history_backup`, `pdfs_dir`, `downloads`,
+`ocr_index`, `research_imports_text`, `claude_projects`, `gemini_antigravity_brain`) and what each
+one feeds. `Files` and `Genealogy & Treemap` have their own override file,
+`data/files_roots.json` (a list of `[path, label]` pairs), since they already supported this before
+the rest of the suite did.
 
 ## On the data
 

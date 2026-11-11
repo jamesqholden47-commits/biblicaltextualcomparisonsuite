@@ -11,7 +11,11 @@ import sys
 import json
 from fastapi import APIRouter, HTTPException
 
-FIDELITY_CHECK_DIR = r"C:\Users\Elation\DXM\Clippings\_PROJECT_HistoryProvesCatholicism\09_APPS_CATHOLICJARVIS\_LOG_ANALYSIS_2026-10-03"
+from modules.paths_config import get_path
+
+FIDELITY_CHECK_DIR = os.path.join(
+    get_path("dissertation_project"), "09_APPS_CATHOLICJARVIS", "_LOG_ANALYSIS_2026-10-03"
+)
 if FIDELITY_CHECK_DIR not in sys.path:
     sys.path.insert(0, FIDELITY_CHECK_DIR)
 

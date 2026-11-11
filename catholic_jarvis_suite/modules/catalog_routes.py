@@ -16,6 +16,8 @@ import time
 
 from fastapi import APIRouter, HTTPException
 
+from modules.paths_config import get_path
+
 router = APIRouter(prefix="/api/catalog", tags=["catalog"])
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +25,7 @@ DATA = os.path.join(BASE, "data")
 FILES_JSON = os.path.join(DATA, "ag_output_catalog.json")
 HANGING_JSON = os.path.join(DATA, "hanging_turns.json")
 SCRIPTS = [os.path.join(BASE, "tools", "ag_output_catalog.py"), os.path.join(BASE, "tools", "hanging_turns.py")]
-AG_READABLE = r"C:\Users\Elation\AG_HISTORY_BACKUP\readable"
+AG_READABLE = os.path.join(get_path("ag_history_backup"), "readable")
 
 # requests that are not work: account and app commands typed into a session that had run out
 NOISE = re.compile(r"^\s*(?:/?(?:claude\s+)?log(?:in|out|oit)|--resume|winget\s+upgrade\b.*|test\.?|online back|"

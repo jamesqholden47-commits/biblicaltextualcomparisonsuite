@@ -7,10 +7,12 @@ from datetime import datetime
 
 from fastapi import APIRouter
 
+from modules.paths_config import get_path
+
 router = APIRouter(prefix="/api/today", tags=["today"])
 
-BACKUP_LOG = r"C:\Users\Elation\AG_HISTORY_BACKUP\backup_log.tsv"
-BACKUP_SCRIPT = r"C:\Users\Elation\AG_HISTORY_BACKUP\backup_ag_history.py"
+BACKUP_LOG = os.path.join(get_path("ag_history_backup"), "backup_log.tsv")
+BACKUP_SCRIPT = os.path.join(get_path("ag_history_backup"), "backup_ag_history.py")
 WARN_HOURS = 72
 
 

@@ -44,9 +44,11 @@ import sys
 import threading
 from collections import Counter, defaultdict
 
+from modules.paths_config import get_path
+
 _HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(_HERE, "data")
-PROJECT = r"C:\Users\Elation\DXM\Clippings\_PROJECT_HistoryProvesCatholicism"
+PROJECT = get_path("dissertation_project")
 VOLUMES_DIR = os.path.join(PROJECT, "10_VOLUMES")
 TAXONOMY_FILE = os.path.join(DATA_DIR, "books_taxonomy.json")
 PLAN_FILE = os.path.join(DATA_DIR, "books_plan.json")
@@ -55,7 +57,7 @@ CLASSIFY_CACHE = os.path.join(DATA_DIR, "books_classify_cache.json")
 VAULT_CONCORDANCE = os.path.join(DATA_DIR, "vault_concordance.json")
 LOOSE_REGISTRY = os.path.join(DATA_DIR, "loose_registry.json")
 WORKER_SPEC = os.path.join(PROJECT, "02_CONTROL_AND_STATE", "_WORKER_SPEC")
-DATA_CHECK = r"C:\Users\Elation\Mexico_Protestantism_Study\04_CONSOLIDATED\data_check.py"
+DATA_CHECK = os.path.join(get_path("mexico_study"), "04_CONSOLIDATED", "data_check.py")
 MARKER_RE = re.compile(r"<!-- WORKER COMPLETE: (\S+) -->\s*$")
 PART_WORDS = 40000            # most source words one synthesis job is given
 MIN_VAULT_WORDS = 120          # vault stubs below this are not book material
@@ -144,9 +146,9 @@ DEFAULT_TAXONOMY = {
         {"id": "B-HPC", "title": "History Proves Catholicism (master dissertation)",
          "path": PROJECT + r"\01_MASTER_DISSERTATION\Master_Dissertation_History_Proves_Catholicism_2026-07-04.md"},
         {"id": "B-MEX", "title": "The Catholic Case (Mexico study, Reader's Edition)",
-         "path": r"C:\Users\Elation\Mexico_Protestantism_Study\05_READERS_EDITION\THE_CATHOLIC_CASE_Readers_Edition.md"},
+         "path": get_path("mexico_study") + r"\05_READERS_EDITION\THE_CATHOLIC_CASE_Readers_Edition.md"},
         {"id": "B-SCR", "title": "The Ten-Year Scriptorium",
-         "path": r"C:\Users\Elation\Scholar_Decade_Plan\The_Ten_Year_Scriptorium.md"},
+         "path": get_path("scholar_decade_plan") + r"\The_Ten_Year_Scriptorium.md"},
     ],
     "vault": {
         "include": True,
@@ -230,7 +232,7 @@ def save_overrides(o):
 # ----------------------------------------------------------------------------- the working clone (2026-10-08)
 # James: "dont mess with the original notes ... clone". Sorting and chapter writing read the clone made by
 # tools\make_sorting_clone.py, never the originals. The planner still identifies each source by its original path.
-HOME_DIR = r"C:\Users\Elation"
+HOME_DIR = get_path("home")
 CLONE_DIR = os.path.join(HOME_DIR, "CLONE_FOR_SORTING_2026-10-08__COPIES_NOT_ORIGINALS")
 
 
@@ -256,7 +258,7 @@ def _line_set(path):
 # Many of James's notes are a pasted screenshot plus a line. The text inside those screenshots is already extracted
 # by his screenshot search index (C:\Users\Elation\.ocr_index: _manifest.json maps each image file to <hash>.txt).
 # It now counts as part of the note: for the word count, for sorting, and as an input the drafter must read.
-OCR_DIR = r"C:\Users\Elation\.ocr_index"
+OCR_DIR = get_path("ocr_index")
 OCR_CACHE = os.path.join(DATA_DIR, "books_ocr_cache.json")
 EMBED_RE = re.compile(r"!\[\[([^\]|#]+?\.(?:png|jpe?g|webp|gif|bmp))(?:[|#][^\]]*)?\]\]"
                       r"|!\[[^\]]*\]\(([^)]+?\.(?:png|jpe?g|webp|gif|bmp))\)", re.I)
@@ -339,7 +341,7 @@ def _flush_ocr_cache():
 # copies (USB backup, the DXM parent vault, Desktop Easy...) and his plain-text notes are original sources too.
 EARLIER_VAULT_IDS = ["usb_backup_elation", "dxm_parent", "desktop_easy", "aadesktop_dxm", "usb_backup_protocol",
                      "downloads_backup"]
-TEXT_ROOTS = [r"C:\Users\Elation\Research_Imports\Text_and_Notes"]
+TEXT_ROOTS = [get_path("research_imports_text")]
 
 
 def _earlier_pool(tax, d, excl):

@@ -31,27 +31,29 @@ import re
 import threading
 from collections import Counter, defaultdict
 
+from modules.paths_config import get_path
+
 _HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(_HERE, "data")
 REGISTRY_FILE = os.path.join(DATA_DIR, "loose_registry.json")
 STATUS_FILE = os.path.join(DATA_DIR, "loose_status.json")
 CONFIG_FILE = os.path.join(DATA_DIR, "loose_config.json")
 
-PROJECT = r"C:\Users\Elation\DXM\Clippings\_PROJECT_HistoryProvesCatholicism"
+PROJECT = get_path("dissertation_project")
 DEFAULT_CONFIG = {
     "roots": [
         [PROJECT, "Project"],
-        [r"C:\Users\Elation\Mexico_Protestantism_Study", "Mexico study"],
-        [r"C:\Users\Elation\Scholar_Decade_Plan", "Scriptorium"],
-        [r"C:\Users\Elation\.gemini\antigravity\brain", "Antigravity artifacts"],
+        [get_path("mexico_study"), "Mexico study"],
+        [get_path("scholar_decade_plan"), "Scriptorium"],
+        [get_path("gemini_antigravity_brain"), "Antigravity artifacts"],
     ],
     # Canonical books: a document whose sampled passages are found inside one of these is "integrated".
     "targets": [
         PROJECT + r"\01_MASTER_DISSERTATION\Master_Dissertation_History_Proves_Catholicism_2026-07-04.md",
-        r"C:\Users\Elation\Mexico_Protestantism_Study\05_READERS_EDITION\THE_CATHOLIC_CASE_Readers_Edition.md",
-        r"C:\Users\Elation\Mexico_Protestantism_Study\04_CONSOLIDATED\THE_CATHOLIC_CASE_Consolidated_Dissertation.md",
-        r"C:\Users\Elation\Mexico_Protestantism_Study\04_CONSOLIDATED\APPENDIX_Source_Dossiers_Verbatim.md",
-        r"C:\Users\Elation\Scholar_Decade_Plan\The_Ten_Year_Scriptorium.md",
+        get_path("mexico_study") + r"\05_READERS_EDITION\THE_CATHOLIC_CASE_Readers_Edition.md",
+        get_path("mexico_study") + r"\04_CONSOLIDATED\THE_CATHOLIC_CASE_Consolidated_Dissertation.md",
+        get_path("mexico_study") + r"\04_CONSOLIDATED\APPENDIX_Source_Dossiers_Verbatim.md",
+        get_path("scholar_decade_plan") + r"\The_Ten_Year_Scriptorium.md",
     ],
     # Lower-case path fragments never registered (archives, backups, raw downloads, code, caches).
     "skip": ["\\_session_transcripts", "\\07_archive_old_process", "backup", "\\_build_scripts_", "\\_previous_",
@@ -259,7 +261,7 @@ def scan_producers():
             r["last"] = max(r["last"] or ts, ts)
         r["edits"] += 1
 
-    ag = r"C:\Users\Elation\.gemini\antigravity\brain"
+    ag = get_path("gemini_antigravity_brain")
     for f in glob.glob(os.path.join(ag, "*", ".system_generated", "logs", "transcript_full.jsonl")):
         sid = f.split(os.sep)[-4]
         with open(f, "rb") as fh:
@@ -273,7 +275,7 @@ def scan_producers():
                 for tc in d.get("tool_calls") or []:
                     if tc.get("name") in ("write_to_file", "replace_file_content", "multi_replace_file_content"):
                         add((tc.get("args") or {}).get("TargetFile"), "AG", sid, d.get("created_at"))
-    cl = r"C:\Users\Elation\.claude\projects"
+    cl = get_path("claude_projects")
     for f in glob.glob(os.path.join(cl, "**", "*.jsonl"), recursive=True):
         sid = os.path.basename(f)[:-6]
         with open(f, "rb") as fh:

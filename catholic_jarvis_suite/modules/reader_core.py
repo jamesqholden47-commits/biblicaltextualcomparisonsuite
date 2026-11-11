@@ -12,7 +12,9 @@ import json
 import os
 import re
 
-CHAPTERS_DIR = r"C:\Users\Elation\Mexico_Protestantism_Study\05_READERS_EDITION\chapters"
+from modules.paths_config import get_path
+
+CHAPTERS_DIR = os.path.join(get_path("mexico_study"), "05_READERS_EDITION", "chapters")
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TIERS_DIR = os.path.join(HERE, "data", "tiers")
 

@@ -27,6 +27,7 @@ import zipfile
 from xml.etree import ElementTree
 
 from modules import files_md
+from modules.paths_config import get_path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -40,12 +41,12 @@ DEFAULT_ROOTS = [
     [PROJECT, "Project"],
     [os.path.join(PROJECT, "10_VOLUMES"), "Volumes"],
     [os.path.join(PROJECT, "06_SOURCE_MATERIAL", "RABBINIC_CORPUS_SEFARIA"), "Sefaria"],
-    [r"C:\Users\Elation\aa1", "AA1 vault"],
-    [r"C:\Users\Elation\Mexico_Protestantism_Study", "Mexico study"],
-    [r"C:\Users\Elation\Scholar_Decade_Plan", "Scriptorium"],
-    [r"C:\Users\Elation\AG_HISTORY_BACKUP\readable", "Antigravity history"],
-    [r"C:\Users\Elation\PDFS", "Books (PDFS)"],
-    [r"C:\Users\Elation\Downloads", "Downloads"],
+    [get_path("aa1_vault"), "AA1 vault"],
+    [get_path("mexico_study"), "Mexico study"],
+    [get_path("scholar_decade_plan"), "Scriptorium"],
+    [os.path.join(get_path("ag_history_backup"), "readable"), "Antigravity history"],
+    [get_path("pdfs_dir"), "Books (PDFS)"],
+    [get_path("downloads"), "Downloads"],
 ]
 HIDDEN_DIRS = {"__pycache__", "node_modules", ".git", ".obsidian", ".trash", ".venv", "venv", ".pytest_cache"}
 LINK_ROOT_SKIP = {"Downloads", "Antigravity history", "Books (PDFS)"}     # not note collections: no link index, no wiki resolution

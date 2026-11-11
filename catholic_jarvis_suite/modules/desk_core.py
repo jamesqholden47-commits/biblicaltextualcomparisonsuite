@@ -32,12 +32,14 @@ import threading
 import uuid
 from collections import Counter
 
+from modules.paths_config import get_path
+
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(HERE, "data")
 DATA_FILE = os.path.join(DATA_DIR, "desk_threads.json")
 CORPUS_INDEX = os.path.join(DATA_DIR, "corpus_index.json")
 
-PROJECT_ROOT = r"C:\Users\Elation\DXM\Clippings\_PROJECT_HistoryProvesCatholicism"
+PROJECT_ROOT = get_path("dissertation_project")
 NEVER_DEPLOY = os.path.join(PROJECT_ROOT, "02_CONTROL_AND_STATE", "_NEVER_DEPLOY_LIST.md")
 SPEC_DIR = os.path.join(PROJECT_ROOT, "02_CONTROL_AND_STATE", "_WORKER_SPEC")
 CONTRACT_PATH = os.path.join(SPEC_DIR, "WORKER_CONTRACT.md")

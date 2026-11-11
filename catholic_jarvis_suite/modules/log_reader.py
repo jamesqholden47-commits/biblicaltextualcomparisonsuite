@@ -23,8 +23,10 @@ import json
 import os
 import re
 
-CL_ROOT = r"C:\Users\Elation\.claude\projects"
-AG_ROOT = r"C:\Users\Elation\.gemini\antigravity\brain"
+from modules.paths_config import get_path
+
+CL_ROOT = get_path("claude_projects")
+AG_ROOT = get_path("gemini_antigravity_brain")
 _SUB = os.sep + "subagents" + os.sep
 _HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(_HERE, "data", "_log_cache.json")

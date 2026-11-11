@@ -28,12 +28,14 @@ import re
 import threading
 import time
 
+from modules.paths_config import get_path
+
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INVENTORY = os.path.join(BASE, "data", "drive_inventory.json")
 BOOK_SHELVES = os.path.join(BASE, "data", "book_shelves.json")
 PLACEMENTS = os.path.join(BASE, "data", "organizer_placements.json")   # James's virtual filing: path -> folder / hidden
 PROGRAM_BUCKET = "Program files (hidden)"
-HOME = r"C:\Users\Elation"
+HOME = get_path("home")
 PROJECT_REL = r"DXM\Clippings\_PROJECT_HistoryProvesCatholicism"
 
 BOOK_EXT = {".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".cbz"}
