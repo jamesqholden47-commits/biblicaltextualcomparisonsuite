@@ -68,7 +68,7 @@ switchable from the full registry:
 Vaticanus) rendered in 3D with parchment simulation, paleographic transcription, word-level
 morphological alignment, and citation export:
 
-![Manuscript viewer](screenshots/manuscripts-viewer.webp)
+![Manuscript viewer](screenshots/manuscripts-viewer.jpg)
 
 ## Structure
 
