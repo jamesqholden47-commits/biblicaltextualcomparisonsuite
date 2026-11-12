@@ -17,7 +17,7 @@ import time
 import hashlib
 from typing import List, Dict, Any, Optional
 from fastapi import FastAPI, UploadFile, File, Query, HTTPException, Response
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import fitz  # PyMuPDF
@@ -44,13 +44,99 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 # Mount static files so PDF Studio iframe (/static/studio_frame.html) loads properly
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
+WEB_APP_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "..", "web_app"))
+
+# James's request (2026-11-11): "open any verse jumped to the point in its respective pdf even if
+# we have to create one." Two routes:
+#   /plenary/source_pdf/{key} -- for a note that really was extracted from a source PDF on disk
+#   (NABRE, Ignatius CSB Genesis/Exodus), serve that exact file so the frontend can open it with a
+#   '#page=N' fragment and land on the right page in the browser's own PDF viewer.
+#   /plenary/note_pdf -- for every other source (EPUB/API-derived: NET, NOAB, SBL, NIV, BSB, the 7
+#   HelloAO commentaries, Tyndale profiles), there is no real source PDF to jump into, so this
+#   generates a minimal one-page PDF of that specific note's own text on the fly with PyMuPDF
+#   (already a dependency here, used elsewhere in this file for PDF Studio) -- satisfying "even if
+#   we have to create one" without inventing a fake multi-page "source volume" that never existed.
+# A whitelist, not an arbitrary-path query param: this app otherwise never exposes a route that
+# reads an arbitrary filesystem path named by the client, and this doesn't start now.
+# Built from paths_config.get_path() roots, not hardcoded -- this project already did a whole pass
+# (2026-11-11, "Hardcoded personal paths made configurable") moving every module off literal
+# C:\Users\Elation\... paths for exactly this reason: a different operator pointing this suite at
+# their own folders, and not leaking James's personal folder layout into the public export repo's
+# source. A new feature re-hardcoding paths the same week that pass shipped would undo it.
+try:
+    from modules.paths_config import get_path
+except ImportError:
+    get_path = None
+
+PLENARY_SOURCE_PDFS = {}
+if get_path:
+    PLENARY_SOURCE_PDFS = {
+        # Matches web_app/build_nabre_notes.py's own NABRE_PDF_PATH exactly -- note the Unicode
+        # right-single-quote (U+2019) in "Anna's Archive", not an ASCII apostrophe. A raw string
+        # can't escape its own closing quote character either way, so this is built the same
+        # two-piece way the extractor itself does, not copy-pasted with a `\'` that silently keeps
+        # the backslash.
+        'nabre': os.path.join(get_path('downloads'), (
+            "The Catholic Study Bible - Third Edition (NABRE 2016) -- Donald Senior, John "
+            "Collins, Mary Ann Getty -- 3, 2016 -- Oxford University Press -- "
+            "060eb057dd75baca4149e947f9664dc5 -- Anna\u2019s Archive.pdf"
+        )),
+        # Matches build_notes_shards.py's own PDFS_IGNATIUS_DIR + filenames exactly -- Exodus's
+        # real filename has no "(2011)" suffix, unlike Genesis's; caught by testing this against
+        # disk rather than assuming the two filenames follow the same pattern (Rule 5).
+        'ignatius_gen': os.path.join(get_path('pdfs_dir'), "01_Biblical_Studies_and_Canon",
+            "_AA_ Hahn, Scott & Mitch, Curtis - The Ignatius Catholic Study Bible Genesis (2011).pdf"),
+        'ignatius_exod': os.path.join(get_path('pdfs_dir'), "01_Biblical_Studies_and_Canon",
+            "_AA_ Hahn, Scott & Mitch, Curtis - The Ignatius Catholic Study Bible Exodus.pdf"),
+    }
+
+
+@app.get("/plenary/source_pdf/{key}")
+def plenary_source_pdf(key: str):
+    path = PLENARY_SOURCE_PDFS.get(key)
+    if not path or not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail=f"No source PDF registered/found for '{key}'")
+    return FileResponse(path, media_type="application/pdf", filename=os.path.basename(path))
+
+
+@app.get("/plenary/note_pdf")
+def plenary_note_pdf(src: str = Query(...), ref: str = Query(...), title: str = Query(...), html: str = Query(...), license: str = Query("")):
+    """Generates a single-page PDF of one study note on the fly -- the 'create one' fallback for
+    every source that has no real PDF behind it (API/EPUB-derived commentaries). `html` is the
+    note's own rendered body; tags are stripped for this plain-text rendering since PyMuPDF's
+    insert_textbox takes plain text, not markup."""
+    plain = re.sub(r'<[^>]+>', '', html or '').strip()
+    plain = plain.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"').replace('&#39;', "'")
+    doc = fitz.open()
+    page = doc.new_page(width=612, height=792)  # US Letter
+    margin = 54
+    y = margin
+    page.insert_textbox(fitz.Rect(margin, y, 612 - margin, y + 40), ref, fontsize=18, fontname="hebo", color=(0.1, 0.1, 0.4))
+    y += 44
+    page.insert_textbox(fitz.Rect(margin, y, 612 - margin, y + 30), title, fontsize=12, fontname="hebo", color=(0.3, 0.3, 0.3))
+    y += 34
+    page.insert_textbox(fitz.Rect(margin, y, 612 - margin, 792 - margin - 40), plain, fontsize=10.5, fontname="helv", color=(0, 0, 0))
+    footer = f"Source: {src} — generated by Plenary Suite from its own extracted study-note text (no independent source PDF exists for this entry)."
+    if license:
+        footer += f" License/attribution: {license}"
+    page.insert_textbox(fitz.Rect(margin, 792 - margin - 30, 612 - margin, 792 - margin), footer, fontsize=7.5, fontname="helv", color=(0.5, 0.5, 0.5))
+    buf = io.BytesIO(doc.tobytes())
+    doc.close()
+    return Response(content=buf.getvalue(), media_type="application/pdf", headers={
+        "Content-Disposition": f'inline; filename="{re.sub(r"[^A-Za-z0-9_.-]", "_", ref)}_{src}.pdf"'
+    })
+
 # Plenary Logos Suite integration (2026-11-10): mounted straight from the canonical web_app/
 # workstation directory rather than copying its files into static/ — the suite's own build script
 # (web_app/build_plenary_logos_suite.py) regenerates plenary_logos_suite.html in place, and a copy
 # here would silently drift stale the next time it rebuilds. The other legacy standalone tools
 # (synoptic_manuscript_diff.html etc.) were copied into static/ in an earlier session; this mount
 # is the better pattern and is used for every new cross-suite tab added from here on.
-WEB_APP_DIR = os.path.normpath(os.path.join(BASE_DIR, "..", "web_app"))
+# MUST be registered AFTER the two /plenary/source_pdf and /plenary/note_pdf routes above: a
+# Mount matches on its path PREFIX and, once matched, Starlette never falls through to a route
+# registered later even if the sub-app (StaticFiles) itself 404s -- confirmed the hard way
+# (2026-11-11): registering this mount first made both new routes unreachable, always returning
+# StaticFiles' own 404 instead of either real response.
 if os.path.isdir(WEB_APP_DIR):
     app.mount("/plenary", StaticFiles(directory=WEB_APP_DIR), name="plenary")
 else:
