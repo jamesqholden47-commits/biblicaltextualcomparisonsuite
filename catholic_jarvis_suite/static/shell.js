@@ -14,17 +14,17 @@
   "use strict";
 
   var WORKSPACES = [
-    { id: "today",   label: "Today",          ico: "☀", tabs: [["today", "Today", "sun"], ["cockpit", "Horarium", "clock"]] },
-    { id: "library", label: "Library",        ico: "\u{1F4DA}", tabs: [["files", "Files", "folder-open"], ["organizer", "Organizer", "boxes"], ["navigator", "Genealogy & Treemap", "network"], ["verbum", "Verbum Suite", "scroll"], ["plenary_suite", "Plenary Logos Suite", "layers"], ["manuscripts", "Manuscripts", "scroll-text"], ["reader", "Reader", "book-open"], ["recall", "Search", "search"],
+    { id: "today",   label: "Today",          ico: "sun", tabs: [["today", "Today", "sun"], ["cockpit", "Horarium", "clock"]] },
+    { id: "library", label: "Library",        ico: "library", tabs: [["files", "Files", "folder-open"], ["organizer", "Organizer", "boxes"], ["navigator", "Genealogy & Treemap", "network"], ["verbum", "Verbum Suite", "scroll"], ["plenary_suite", "Plenary Logos Suite", "layers"], ["manuscripts", "Manuscripts", "scroll-text"], ["reader", "Reader", "book-open"], ["recall", "Search", "search"],
                                                                   ["studio", "PDFs", "headphones"], ["dossiers", "Corpus", "database"]] },
-    { id: "books",   label: "Books",          ico: "\u{1F4D6}", tabs: [["books", "Volumes", "library"], ["loose", "Loose Ends", "list-todo"], ["episodes", "Episodes", "mic"],
+    { id: "books",   label: "Books",          ico: "book-open", tabs: [["books", "Volumes", "library"], ["loose", "Loose Ends", "list-todo"], ["episodes", "Episodes", "mic"],
                                                                   ["podcast", "Podcast", "radio"]] },
-    { id: "debate",  label: "Debate",         ico: "⚔", tabs: [["threads", "Threads", "swords"], ["desk", "Compose", "pen-line"], ["packs", "Packs", "package"],
+    { id: "debate",  label: "Debate",         ico: "swords", tabs: [["threads", "Threads", "swords"], ["desk", "Compose", "pen-line"], ["packs", "Packs", "package"],
                                                                   ["drill", "Drill", "target"]] },
-    { id: "patristics", label: "Patristic Arsenal", ico: "📜", tabs: [["manuscript_diff", "Manuscript Diff", "git-compare"], ["patristic_map", "Patristic Map", "map"], ["defeater_tree", "Debate Cockpit", "git-fork"], ["deuterocanon", "Deuterocanon", "book-plus"], ["contributors", "Contributors", "users"], ["omitted_verses", "Omitted Verses", "eye-off"], ["translation_lab", "Translation Lab", "repeat"]] },
-    { id: "study",   label: "Study",          ico: "\u{1F393}", tabs: [["anki", "Anki", "brain"], ["languages", "Languages", "languages"], ["career", "Career", "briefcase"]] },
-    { id: "church",  label: "Church & Life",  ico: "✝", tabs: [["pope_leo", "Pope Leo", "crown"], ["vatican_culture", "Vatican", "landmark"]] },
-    { id: "system",  label: "System",         ico: "⚙", sep: true,
+    { id: "patristics", label: "Patristic Arsenal", ico: "scroll-text", tabs: [["manuscript_diff", "Manuscript Diff", "git-compare"], ["patristic_map", "Patristic Map", "map"], ["defeater_tree", "Debate Cockpit", "git-fork"], ["deuterocanon", "Deuterocanon", "book-plus"], ["contributors", "Contributors", "users"], ["omitted_verses", "Omitted Verses", "eye-off"], ["translation_lab", "Translation Lab", "repeat"]] },
+    { id: "study",   label: "Study",          ico: "graduation-cap", tabs: [["anki", "Anki", "brain"], ["languages", "Languages", "languages"], ["career", "Career", "briefcase"]] },
+    { id: "church",  label: "Church & Life",  ico: "landmark", tabs: [["pope_leo", "Pope Leo", "crown"], ["vatican_culture", "Vatican", "landmark"]] },
+    { id: "system",  label: "System",         ico: "settings", sep: true,
                                               tabs: [["sessions", "Sessions", "history"], ["ledger", "Questions", "help-circle"], ["vaults", "Vault Dedup", "shield"],
                                                      ["audit", "Audit", "shield-check"], ["health", "Health", "activity"]] }
   ];
@@ -97,7 +97,7 @@
       side.appendChild(el("button", {
         class: "j-ws" + (current.ws === w.id ? " active" : ""), id: "j-ws-" + w.id, title: w.label,
         on: { click: function () { goWorkspace(w.id); } }
-      }, [el("span", { class: "j-ico", text: w.ico }), el("span", { class: "j-label", text: w.label }),
+      }, [el("span", { class: "j-ico" }, [el("i", { "data-lucide": w.ico, class: "j-sub-ico" })]), el("span", { class: "j-label", text: w.label }),
           el("span", { class: "j-count", id: "j-wscount-" + w.id })]));
     });
     side.appendChild(el("div", { class: "j-side-foot" }, [
@@ -105,6 +105,7 @@
       el("span", { class: "j-kbd", text: "?" }), " shortcuts"
     ]));
     updateCounts();
+    if (window.lucide && typeof window.lucide.createIcons === "function") window.lucide.createIcons();
   }
 
   function renderSubtabs() {
@@ -122,7 +123,7 @@
     });
     bar.appendChild(el("span", { class: "j-spacer" }));
     bar.appendChild(el("button", { class: "j-search-btn", title: "Search everything (Ctrl+K)", on: { click: openPalette } },
-      ["\u{1F50D} Search", el("span", { class: "j-kbd", text: "Ctrl K" })]));
+      [el("i", { "data-lucide": "search", class: "j-sub-ico" }), " Search", el("span", { class: "j-kbd", text: "Ctrl K" })]));
     if (window.lucide && typeof window.lucide.createIcons === "function") window.lucide.createIcons();
     updateCounts();
   }
