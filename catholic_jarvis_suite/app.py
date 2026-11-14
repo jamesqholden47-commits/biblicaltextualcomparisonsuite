@@ -106,6 +106,16 @@ if get_path:
             "_AA_ Hahn, Scott & Mitch, Curtis - The Ignatius Catholic Study Bible Genesis (2011).pdf"),
         'ignatius_exod': os.path.join(get_path('pdfs_dir'), "01_Biblical_Studies_and_Canon",
             "_AA_ Hahn, Scott & Mitch, Curtis - The Ignatius Catholic Study Bible Exodus.pdf"),
+        'ignatius_sam': os.path.join(get_path('pdfs_dir'), "01_Biblical_Studies_and_Canon",
+            "_AA_ Hahn, Scott, author; Mitch, Curtis; Walters, Dennis; Barber, - The first and second book of Samuel.pdf"),
+        'denzinger': os.path.join(get_path('pdfs_dir'), "04_Theology_Dogma_and_Sacraments",
+            "Denzinger-The-Sources-Of-Catholic-Dogma-reduced.pdf"),
+        'ccc_commentary': os.path.join(get_path('pdfs_dir'), "04_Theology_Dogma_and_Sacraments",
+            "CCC Official Theological Commentary (1).pdf"),
+        'tanner_v1': os.path.join(get_path('pdfs_dir'), "08_Church_History_and_Councils",
+            "Tanner, SJ - Decrees of the Ecumenical Councils, v. 1 OCR (1990).pdf"),
+        'bellarmine_councils': os.path.join(get_path('pdfs_dir'), "08_Church_History_and_Councils",
+            "Robert Bellarmine - On the Councils St Bellarmine.pdf"),
     }
 
 
@@ -177,6 +187,95 @@ def plenary_note_pdf(src: str = Query(...), ref: str = Query(...), title: str = 
     return Response(content=buf.getvalue(), media_type="application/pdf", headers={
         "Content-Disposition": f'inline; filename="{re.sub(r"[^A-Za-z0-9_.-]", "_", ref)}_{src}.pdf"'
     })
+
+
+@app.get("/plenary/magisterial_pdf")
+def plenary_magisterial_pdf(
+    doc_id: str = Query("council"),
+    title: str = Query("Magisterial Document"),
+    citation: str = Query(""),
+    kind: str = Query("Council"),
+    summary: str = Query(""),
+    canons: str = Query(""),
+    refs: str = Query(""),
+    pdf_key: str = Query(""),
+):
+    """Serves a local primary Magisterial source PDF inline when configured and present on disk
+    (e.g., Denzinger, Tanner Councils v.1, Bellarmine On the Councils, CCC Commentary), or falls
+    back cleanly to an on-the-fly structured PDF folio generated via PyMuPDF."""
+    key_clean = (pdf_key or "").strip()
+    if key_clean and key_clean in PLENARY_SOURCE_PDFS:
+        fpath = PLENARY_SOURCE_PDFS[key_clean]
+        if fpath and os.path.isfile(fpath):
+            safe_name = os.path.basename(fpath).replace('"', "'")
+            return FileResponse(
+                fpath,
+                media_type="application/pdf",
+                content_disposition_type="inline",
+                headers={"Content-Disposition": f'inline; filename="{safe_name}"'},
+            )
+
+    doc = fitz.open()
+    page = doc.new_page(width=612, height=792)
+    margin = 52
+    y = margin
+    page.insert_textbox(
+        fitz.Rect(margin, y, 612 - margin, y + 22),
+        f"MAGISTERIAL ENCHIRIDION · {kind.upper()}",
+        fontsize=9.5,
+        fontname="hebo",
+        color=(0.65, 0.42, 0.05),
+    )
+    y += 22
+    page.insert_textbox(
+        fitz.Rect(margin, y, 612 - margin, y + 48),
+        title,
+        fontsize=15.5,
+        fontname="hebo",
+        color=(0.08, 0.14, 0.28),
+    )
+    y += 46
+    if citation:
+        page.insert_textbox(
+            fitz.Rect(margin, y, 612 - margin, y + 22),
+            citation,
+            fontsize=9.5,
+            fontname="helv",
+            color=(0.35, 0.40, 0.48),
+        )
+        y += 24
+    page.draw_line(fitz.Point(margin, y), fitz.Point(612 - margin, y), color=(0.75, 0.78, 0.84), width=0.8)
+    y += 14
+    sections = []
+    if summary:
+        sections.append(f"DOGMATIC SYNTHESIS & CONTEXT:\n{summary.strip()}")
+    if canons:
+        sections.append(f"KEY CANONS / THESES / CONSTITUTIONS:\n{canons.strip()}")
+    if refs:
+        sections.append(f"PRIMARY BIBLICAL LOCI:\n{refs.strip()}")
+    body_text = "\n\n".join(sections) or title
+    page.insert_textbox(
+        fitz.Rect(margin, y, 612 - margin, 792 - margin - 38),
+        body_text,
+        fontsize=10.5,
+        fontname="helv",
+        color=(0.08, 0.09, 0.12),
+    )
+    page.insert_textbox(
+        fitz.Rect(margin, 792 - margin - 26, 612 - margin, 792 - margin),
+        "Generated inline by Plenary Scripture Workstation · Catholic Magisterial Apparatus",
+        fontsize=7.5,
+        fontname="helv",
+        color=(0.48, 0.52, 0.58),
+    )
+    buf = io.BytesIO(doc.tobytes())
+    doc.close()
+    safe_id = re.sub(r"[^A-Za-z0-9_.-]", "_", doc_id or "magisterial")
+    return Response(
+        content=buf.getvalue(),
+        media_type="application/pdf",
+        headers={"Content-Disposition": f'inline; filename="{safe_id}.pdf"'},
+    )
 
 # Plenary Logos Suite integration (2026-11-10): mounted straight from the canonical web_app/
 # workstation directory rather than copying its files into static/ — the suite's own build script

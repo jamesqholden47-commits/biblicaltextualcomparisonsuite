@@ -416,46 +416,91 @@
         body.theme-amoled-obsidian {
             color-scheme: dark;
             --bg-canvas: #000000;
-            --bg-chrome: #050507;
-            --bg-surface: #0a0a0e;
-            --bg-elevated: #14141b;
-            --bg-hover: #1e1e28;
+            --bg-page: #000000;
+            --bg-chrome: #040406;
+            --bg-surface: #09090d;
+            --bg-elevated: #12121a;
+            --bg-hover: #1b1b26;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
             --border-hairline: rgba(255, 255, 255, 0.14);
-            --border-strong: rgba(255, 255, 255, 0.28);
-            --accent-primary: #f8fafc;
+            --border-strong: rgba(255, 255, 255, 0.30);
+            --accent-primary: #fbbf24;
             --accent-secondary: #38bdf8;
-            --accent-soft: rgba(255, 255, 255, 0.09);
-            --rubric-accent: #d9826c;
-            --badge-imp-bg: rgba(52, 211, 153, 0.14);
+            --accent-soft: rgba(251, 191, 36, 0.12);
+            --rubric-accent: #fb7185;
+            --badge-imp-bg: rgba(16, 185, 129, 0.15);
             --badge-imp-fg: #6ee7b7;
-            --badge-imp-bd: rgba(52, 211, 153, 0.34);
-            --shadow-subtle: none;
+            --badge-imp-bd: rgba(52, 211, 153, 0.36);
+            --shadow-subtle: 0 0 0 1px rgba(255, 255, 255, 0.06);
         }
 
         body[data-theme="amoled-gold"],
         body.theme-amoled-gold {
             color-scheme: dark;
             --bg-canvas: #000000;
-            --bg-chrome: #070503;
-            --bg-surface: #0d0a05;
-            --bg-elevated: #171209;
-            --bg-hover: #241c0e;
+            --bg-page: #000000;
+            --bg-chrome: #050402;
+            --bg-surface: #0c0904;
+            --bg-elevated: #161108;
+            --bg-hover: #241b0c;
             --text-primary: #fcf6e8;
             --text-secondary: #eadcc0;
-            --text-muted: #b8a47c;
-            --border-hairline: rgba(212, 175, 55, 0.26);
-            --border-strong: rgba(212, 175, 55, 0.50);
+            --text-muted: #c2ad83;
+            --border-hairline: rgba(212, 175, 55, 0.28);
+            --border-strong: rgba(212, 175, 55, 0.56);
             --accent-primary: #f5c542;
-            --accent-secondary: #d4af37;
-            --accent-soft: rgba(212, 175, 55, 0.16);
-            --rubric-accent: #f5c542;
-            --badge-imp-bg: rgba(212, 175, 55, 0.16);
+            --accent-secondary: #38bdf8;
+            --accent-soft: rgba(212, 175, 55, 0.18);
+            --rubric-accent: #f59e0b;
+            --badge-imp-bg: rgba(212, 175, 55, 0.18);
             --badge-imp-fg: #f5c542;
-            --badge-imp-bd: rgba(212, 175, 55, 0.44);
-            --shadow-subtle: none;
+            --badge-imp-bd: rgba(212, 175, 55, 0.46);
+            --shadow-subtle: 0 0 0 1px rgba(212, 175, 55, 0.14);
+        }
+
+        :root { --bg-page: var(--bg-canvas); }
+
+        /* Pure OLED surface overrides for AMOLED themes so cards & dropdowns never bleed slate-blue */
+        body[data-theme="amoled-obsidian"] .bg-slate-950,
+        body[data-theme="amoled-obsidian"] .bg-slate-950\/95,
+        body[data-theme="amoled-obsidian"] .bg-slate-950\/90,
+        body[data-theme="amoled-obsidian"] .bg-slate-950\/80,
+        body[data-theme="amoled-obsidian"] .bg-slate-950\/70,
+        body[data-theme="amoled-obsidian"] .bg-slate-950\/60,
+        body[data-theme="amoled-gold"] .bg-slate-950,
+        body[data-theme="amoled-gold"] .bg-slate-950\/95,
+        body[data-theme="amoled-gold"] .bg-slate-950\/90,
+        body[data-theme="amoled-gold"] .bg-slate-950\/80,
+        body[data-theme="amoled-gold"] .bg-slate-950\/70,
+        body[data-theme="amoled-gold"] .bg-slate-950\/60 {
+            background-color: var(--bg-canvas) !important;
+        }
+        body[data-theme="amoled-obsidian"] .bg-slate-900,
+        body[data-theme="amoled-obsidian"] .bg-slate-900\/90,
+        body[data-theme="amoled-obsidian"] .bg-slate-900\/80,
+        body[data-theme="amoled-obsidian"] .bg-slate-900\/70,
+        body[data-theme="amoled-obsidian"] .bg-slate-900\/60,
+        body[data-theme="amoled-obsidian"] .bg-slate-900\/50,
+        body[data-theme="amoled-obsidian"] .bg-slate-800,
+        body[data-theme="amoled-obsidian"] .bg-slate-800\/80,
+        body[data-theme="amoled-gold"] .bg-slate-900,
+        body[data-theme="amoled-gold"] .bg-slate-900\/90,
+        body[data-theme="amoled-gold"] .bg-slate-900\/80,
+        body[data-theme="amoled-gold"] .bg-slate-900\/70,
+        body[data-theme="amoled-gold"] .bg-slate-900\/60,
+        body[data-theme="amoled-gold"] .bg-slate-900\/50,
+        body[data-theme="amoled-gold"] .bg-slate-800,
+        body[data-theme="amoled-gold"] .bg-slate-800\/80 {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border-hairline);
+        }
+        body[data-theme="amoled-gold"] .border-slate-800,
+        body[data-theme="amoled-gold"] .border-slate-700,
+        body[data-theme="amoled-obsidian"] .border-slate-800,
+        body[data-theme="amoled-obsidian"] .border-slate-700 {
+            border-color: var(--border-hairline) !important;
         }
 
         select, .suite-select, select option {
@@ -518,63 +563,116 @@
         }
         .comfort-print-page { border: 1px solid var(--border-hairline) !important; }
 
-        /* Light/Sepia/Parchment utility harmonization via CSS variables */
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-950,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-950\/90,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-950\/60,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-\[\#090d16\],
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-\[\#080b12\] {
+        /* Light/Sepia/Parchment utility harmonization via data-theme-mode="light" (never touches AMOLED dark!) */
+        body[data-theme-mode="light"] .bg-slate-950,
+        body[data-theme-mode="light"] .bg-slate-950\/95,
+        body[data-theme-mode="light"] .bg-slate-950\/90,
+        body[data-theme-mode="light"] .bg-slate-950\/80,
+        body[data-theme-mode="light"] .bg-slate-950\/70,
+        body[data-theme-mode="light"] .bg-slate-950\/60,
+        body[data-theme-mode="light"] .bg-\[\#090d16\],
+        body[data-theme-mode="light"] .bg-\[\#080b12\] {
             background-color: var(--bg-surface) !important;
             color: var(--text-primary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900\/90,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900\/80,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900\/70,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900\/60,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-900\/50,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-800,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-slate-800\/80 {
+        body[data-theme-mode="light"] .bg-slate-900,
+        body[data-theme-mode="light"] .bg-slate-900\/90,
+        body[data-theme-mode="light"] .bg-slate-900\/80,
+        body[data-theme-mode="light"] .bg-slate-900\/70,
+        body[data-theme-mode="light"] .bg-slate-900\/60,
+        body[data-theme-mode="light"] .bg-slate-900\/50,
+        body[data-theme-mode="light"] .bg-slate-800,
+        body[data-theme-mode="light"] .bg-slate-800\/80 {
             background-color: var(--bg-elevated) !important;
             color: var(--text-primary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-black\/40,
-        body:not([data-theme="oxford-dark"]):not(.dark) .bg-black\/50 {
+        body[data-theme-mode="light"] .bg-amber-950,
+        body[data-theme-mode="light"] .bg-amber-950\/20,
+        body[data-theme-mode="light"] .bg-amber-950\/40,
+        body[data-theme-mode="light"] .bg-amber-950\/80,
+        body[data-theme-mode="light"] .bg-amber-900\/60 { background-color: rgba(180, 120, 20, 0.10) !important; }
+        body[data-theme-mode="light"] .bg-sky-950\/15,
+        body[data-theme-mode="light"] .bg-sky-950\/20,
+        body[data-theme-mode="light"] .bg-cyan-950,
+        body[data-theme-mode="light"] .bg-cyan-950\/20 { background-color: rgba(14, 116, 144, 0.09) !important; }
+        body[data-theme-mode="light"] .bg-purple-950,
+        body[data-theme-mode="light"] .bg-purple-950\/20,
+        body[data-theme-mode="light"] .bg-violet-950\/20 { background-color: rgba(109, 40, 217, 0.09) !important; }
+        body[data-theme-mode="light"] .bg-emerald-950,
+        body[data-theme-mode="light"] .bg-emerald-950\/20,
+        body[data-theme-mode="light"] .bg-teal-950\/20 { background-color: rgba(16, 110, 72, 0.09) !important; }
+        body[data-theme-mode="light"] .bg-rose-950,
+        body[data-theme-mode="light"] .bg-rose-950\/80,
+        body[data-theme-mode="light"] .bg-rose-950\/20 { background-color: rgba(180, 35, 65, 0.09) !important; }
+        body[data-theme-mode="light"] .bg-black\/40,
+        body[data-theme-mode="light"] .bg-black\/50,
+        body[data-theme-mode="light"] .bg-black\/60 {
             background-color: var(--bg-hover) !important;
             color: var(--text-primary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .border-slate-800,
-        body:not([data-theme="oxford-dark"]):not(.dark) .border-slate-700 {
+        body[data-theme-mode="light"] .border-slate-900,
+        body[data-theme-mode="light"] .border-slate-800,
+        body[data-theme-mode="light"] .border-slate-700 {
             border-color: var(--border-hairline) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-white,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-slate-100,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-slate-200,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-amber-50 {
+        body[data-theme-mode="light"] .text-white,
+        body[data-theme-mode="light"] .text-slate-100,
+        body[data-theme-mode="light"] .text-slate-200,
+        body[data-theme-mode="light"] .text-amber-50,
+        body[data-theme-mode="light"] .text-emerald-100,
+        body[data-theme-mode="light"] .text-amber-100 {
             color: var(--text-primary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-slate-300,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-slate-400 {
+        body[data-theme-mode="light"] .text-slate-300,
+        body[data-theme-mode="light"] .text-slate-400 {
             color: var(--text-secondary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-slate-500 {
+        body[data-theme-mode="light"] .text-slate-500 {
             color: var(--text-muted) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-amber-400,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-amber-300,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-amber-200,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-amber-100 {
+        body[data-theme-mode="light"] .text-amber-400,
+        body[data-theme-mode="light"] .text-amber-300,
+        body[data-theme-mode="light"] .text-amber-200 {
             color: var(--accent-primary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-cyan-400,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-cyan-300,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-sky-400,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-sky-300 {
+        body[data-theme-mode="light"] .text-cyan-400,
+        body[data-theme-mode="light"] .text-cyan-300,
+        body[data-theme-mode="light"] .text-cyan-200,
+        body[data-theme-mode="light"] .text-sky-400,
+        body[data-theme-mode="light"] .text-sky-300,
+        body[data-theme-mode="light"] .text-blue-400,
+        body[data-theme-mode="light"] .text-blue-200 {
             color: var(--accent-secondary) !important;
         }
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-emerald-200,
-        body:not([data-theme="oxford-dark"]):not(.dark) .text-emerald-300 {
-            color: var(--badge-imp-fg) !important;
+        body[data-theme-mode="light"] .text-emerald-400,
+        body[data-theme-mode="light"] .text-emerald-300,
+        body[data-theme-mode="light"] .text-emerald-200,
+        body[data-theme-mode="light"] .text-teal-300 {
+            color: #166534 !important;
+        }
+        body[data-theme-mode="light"] .text-purple-400,
+        body[data-theme-mode="light"] .text-purple-300,
+        body[data-theme-mode="light"] .text-purple-200,
+        body[data-theme-mode="light"] .text-violet-300,
+        body[data-theme-mode="light"] .text-violet-200,
+        body[data-theme-mode="light"] .text-indigo-300,
+        body[data-theme-mode="light"] .text-fuchsia-300 {
+            color: #5b21b6 !important;
+        }
+        body[data-theme-mode="light"] .text-rose-400,
+        body[data-theme-mode="light"] .text-rose-300,
+        body[data-theme-mode="light"] .text-rose-200 {
+            color: #9f1239 !important;
+        }
+        body[data-theme-mode="light"] .hover\:text-white:hover,
+        body[data-theme-mode="light"] .hover\:text-amber-300:hover,
+        body[data-theme-mode="light"] .hover\:text-amber-200:hover {
+            color: var(--text-primary) !important;
+        }
+        body[data-theme-mode="light"] .hover\:bg-slate-800:hover,
+        body[data-theme-mode="light"] .hover\:bg-slate-800\/60:hover,
+        body[data-theme-mode="light"] .hover\:bg-slate-800\/50:hover {
+            background-color: var(--bg-hover) !important;
         }
 
         /* Editorial Badges (stripped of arcade neon glows) */
@@ -618,32 +716,263 @@
         .morph-token:hover { border-color: var(--accent-secondary); background: var(--bg-hover); transform: none; }
         .morph-token.token-active { border-color: var(--accent-primary); background: var(--accent-soft); box-shadow: none; }
 
-        /* Highlight styles (Semantic Color Coding) */
-        .hl-yellow { background-color: rgba(234, 179, 8, 0.22); border-bottom: 2px solid #d4a11c; }
-        .hl-green { background-color: rgba(34, 197, 94, 0.19); border-bottom: 2px solid #2e9e62; }
-        .hl-blue { background-color: rgba(56, 189, 248, 0.19); border-bottom: 2px solid #4d9bc4; }
-        .hl-purple { background-color: rgba(168, 85, 247, 0.21); border-bottom: 2px solid #a855f7; }
-        .hl-rose { background-color: rgba(244, 63, 94, 0.19); border-bottom: 2px solid #c9566a; }
+        /* Highlight styles (Universal Semantic Color Coding — high-contrast across all 6 themes) */
+        .hl-yellow { background-color: rgba(234, 179, 8, 0.24) !important; border-bottom: 2px solid #eab308; box-shadow: inset 3px 0 0 #eab308; }
+        .hl-green  { background-color: rgba(34, 197, 94, 0.20) !important; border-bottom: 2px solid #22c55e; box-shadow: inset 3px 0 0 #22c55e; }
+        .hl-blue   { background-color: rgba(56, 189, 248, 0.21) !important; border-bottom: 2px solid #38bdf8; box-shadow: inset 3px 0 0 #38bdf8; }
+        .hl-purple { background-color: rgba(168, 85, 247, 0.22) !important; border-bottom: 2px solid #a855f7; box-shadow: inset 3px 0 0 #a855f7; }
+        .hl-rose   { background-color: rgba(244, 63, 94, 0.21) !important; border-bottom: 2px solid #f43f5e; box-shadow: inset 3px 0 0 #f43f5e; }
+        body[data-theme-mode="light"] .hl-yellow { background-color: rgba(234, 179, 8, 0.26) !important; border-bottom-color: #b45309; box-shadow: inset 3px 0 0 #b45309; }
+        body[data-theme-mode="light"] .hl-green  { background-color: rgba(34, 197, 94, 0.20) !important; border-bottom-color: #15803d; box-shadow: inset 3px 0 0 #15803d; }
+        body[data-theme-mode="light"] .hl-blue   { background-color: rgba(14, 165, 233, 0.20) !important; border-bottom-color: #0369a1; box-shadow: inset 3px 0 0 #0369a1; }
+        body[data-theme-mode="light"] .hl-purple { background-color: rgba(147, 51, 234, 0.18) !important; border-bottom-color: #7e22ce; box-shadow: inset 3px 0 0 #7e22ce; }
+        body[data-theme-mode="light"] .hl-rose   { background-color: rgba(225, 29, 72, 0.17) !important; border-bottom-color: #be123c; box-shadow: inset 3px 0 0 #be123c; }
 
-        /* Exegesis Devotional Hero Showcase Card & 4K Canvas Grid */
+        .hl-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 9999px;
+            display: inline-block;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+            flex-shrink: 0;
+        }
+        body[data-theme-mode="light"] .hl-dot { border-color: rgba(0, 0, 0, 0.28); }
+        .hl-dot:hover { transform: scale(1.18); }
+        .hl-dot.is-active { transform: scale(1.22); box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 3.5px var(--text-primary); }
+        .hl-dot-yellow { background-color: #eab308; border-color: #fde047; }
+        .hl-dot-green  { background-color: #10b981; border-color: #6ee7b7; }
+        .hl-dot-blue   { background-color: #06b6d4; border-color: #67e8f9; }
+        .hl-dot-purple { background-color: #a855f7; border-color: #d8b4fe; }
+        .hl-dot-rose   { background-color: #f43f5e; border-color: #fda4af; }
+        .hl-dot-clear  {
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+            font-size: 9px;
+            line-height: 11px;
+            text-align: center;
+            font-family: var(--plenary-font-mono);
+        }
+        .hl-tag-pill {
+            font-family: var(--plenary-font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-strong);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
+
+        /* Exegesis Devotional Hero Showcase Card & Universal Sticky Verse Dock */
         .exegesis-devotional-hero {
             position: sticky;
             top: 0;
-            z-index: 20;
-            backdrop-filter: blur(12px);
-            background: var(--bg-page);
+            z-index: 25;
+            background: var(--bg-surface) !important;
             border: 1px solid var(--border-strong);
-            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.55);
-            transition: padding 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.65);
+            transition: padding 0.16s ease, box-shadow 0.16s ease;
+        }
+        body[data-theme-mode="light"] .exegesis-devotional-hero {
+            box-shadow: 0 8px 20px -8px rgba(31, 35, 40, 0.16);
         }
         .exegesis-devotional-hero.is-compact {
-            padding-top: 0.65rem !important;
-            padding-bottom: 0.65rem !important;
+            padding: 0.65rem 1rem !important;
         }
         .exegesis-devotional-hero.is-compact .hero-extended-meta,
-        .exegesis-devotional-hero.is-compact .roman-colophon-divider {
+        .exegesis-devotional-hero.is-compact .roman-colophon-divider,
+        .exegesis-devotional-hero.is-compact .roman-corner {
             display: none !important;
         }
+        .exegesis-devotional-hero.is-compact .hero-verse-body {
+            font-size: 1.02rem !important;
+            line-height: 1.58 !important;
+        }
+
+        /* Universal Docked Active Verse Showcase (non-cropped across Chapter, Parallel, Apostolic, 4K Canvas) */
+        #stickyVerseBar {
+            background: var(--bg-chrome) !important;
+            border-bottom: 1px solid var(--border-strong) !important;
+        }
+        .sticky-verse-full-text {
+            font-family: var(--plenary-serif-font);
+            font-size: 0.98rem;
+            line-height: 1.55;
+            color: var(--text-primary);
+            white-space: normal;
+            word-break: break-word;
+        }
+        .sticky-verse-full-text.is-collapsed {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Editorial Section Cards & Medium/Bottom Row Polish */
+        .layer-card-editorial {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-hairline);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+            transition: border-color 0.14s ease;
+        }
+        .layer-card-editorial:hover { border-color: var(--border-strong); }
+        .layer-header-btn {
+            width: 100%;
+            padding: 0.72rem 1rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: var(--bg-elevated);
+            font-family: var(--plenary-font-ui);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background-color 0.12s ease;
+        }
+        .layer-header-btn:hover { background: var(--bg-hover); }
+        .layer-accent-amber  { border-left: 3px solid #eab308; }
+        .layer-accent-sky    { border-left: 3px solid #38bdf8; }
+        .layer-accent-emerald{ border-left: 3px solid #10b981; }
+        .layer-accent-cyan   { border-left: 3px solid #06b6d4; }
+        .layer-accent-purple { border-left: 3px solid #a855f7; }
+        .layer-accent-rose   { border-left: 3px solid #f43f5e; }
+
+        /* Parallel Interlinear Hover Preview Bar & Clickable Words */
+        .par-morph-ribbon {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 0.75rem;
+            padding: 0.55rem 0.9rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-subtle);
+        }
+        .par-word-clickable {
+            border-radius: 3px;
+            padding: 0 2px;
+            transition: background-color 0.1s ease, color 0.1s ease;
+        }
+        .par-word-clickable:hover {
+            background-color: var(--accent-soft);
+            color: var(--accent-primary);
+            text-decoration: underline dotted;
+        }
+        .par-word-tok {
+            display: inline-block;
+            padding: 1px 4px;
+            margin: 1px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background-color 0.1s ease, border-color 0.1s ease;
+        }
+        .par-word-tok:hover {
+            background: var(--accent-soft);
+            border-color: var(--accent-secondary);
+        }
+
+        /* Theme Swatch Popover */
+        .theme-swatch-popover {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            z-index: 65;
+            width: 17.5rem;
+            background: var(--bg-chrome);
+            border: 1px solid var(--border-strong);
+            border-radius: 0.75rem;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+            padding: 0.5rem;
+        }
+        .theme-swatch-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 0.55rem;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
+            text-align: left;
+            cursor: pointer;
+            font-family: var(--plenary-font-ui);
+            font-size: 12px;
+            color: var(--text-primary);
+            transition: background-color 0.12s ease, border-color 0.12s ease;
+        }
+        .theme-swatch-item:hover { background: var(--bg-hover); }
+        .theme-swatch-item.is-active { background: var(--accent-soft); border-color: var(--accent-primary); font-weight: 600; }
+
+        /* Fallback Tailwind Utilities Omitted in Legacy Compiled CSS */
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .left-0 { left: 0; }
+        .inline-flex { display: inline-flex; }
+        .inline-block { display: inline-block; }
+        .w-3 { width: 0.75rem; }
+        .h-3 { height: 0.75rem; }
+        .w-3\.5 { width: 0.875rem; }
+        .h-3\.5 { height: 0.875rem; }
+        .w-4 { width: 1rem; }
+        .h-4 { height: 1rem; }
+        .w-5 { width: 1.25rem; }
+        .h-5 { height: 1.25rem; }
+        .max-w-3xl { max-width: 48rem; }
+        .max-w-4xl { max-width: 56rem; }
+        .max-w-5xl { max-width: 64rem; }
+        .max-w-6xl { max-width: 72rem; }
+        .max-h-\[70vh\] { max-height: 70vh; }
+        .max-h-\[75vh\] { max-height: 75vh; }
+        .max-h-\[85vh\] { max-height: 85vh; }
+        .max-h-\[88vh\] { max-height: 88vh; }
+        .max-h-\[90vh\] { max-height: 90vh; }
+        .max-h-\[92vh\] { max-height: 92vh; }
+        .bg-black\/85 { background-color: rgba(0, 0, 0, 0.85); }
+        .bg-black\/90 { background-color: rgba(0, 0, 0, 0.90); }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 768px) {
+            .md\:flex-row { flex-direction: row; }
+            .md\:w-72 { width: 18rem; }
+            .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .lg\:grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+            .lg\:inline { display: inline; }
+            .lg\:inline-block { display: inline-block; }
+        }
+        .suite-tools-heading {
+            grid-column: 1 / -1;
+            font-family: var(--plenary-font-mono);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 6px 6px 2px;
+            border-bottom: 1px solid var(--border-hairline);
+            margin-top: 2px;
+        }
+        .suite-tools-heading:first-child { margin-top: 0; }
+        .mag-prose h4 { font-family: var(--plenary-font-ui); font-weight: 700; font-size: 13px; color: var(--accent-primary); margin-top: 0.75rem; margin-bottom: 0.25rem; }
+        .nabre-prose-card p { font-family: var(--plenary-serif-font); font-size: 0.94rem; line-height: 1.72; color: var(--text-primary); }
         body.layout-4k-ultrawide #readerContent > div {
             max-width: 100% !important;
         }
@@ -1245,10 +1574,43 @@
                 <option value="warm-sepia">Warm Sepia</option>
                 <option value="parchment">Parchment</option>
             </select>
-            <button id="btnTheme" onclick="cycleTheme()" class="suite-btn" title="Cycle Editorial Theme">
-                <i data-lucide="palette" class="w-3.5 h-3.5"></i>
-                <span class="hidden lg:inline">Theme</span>
-            </button>
+            <div class="relative">
+                <button id="btnTheme" type="button" onclick="toggleThemePopover()" class="suite-btn" title="Choose Editorial Theme with Swatch Preview">
+                    <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+                    <span class="hidden lg:inline">Theme</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 opacity-70"></i>
+                </button>
+                <div id="themePopover" class="theme-swatch-popover hidden">
+                    <div class="text-[10px] font-mono uppercase tracking-wider px-2 pb-1.5 mb-1 border-b border-slate-800 text-slate-400 flex items-center justify-between">
+                        <span>Editorial Themes (6)</span>
+                        <button type="button" onclick="cycleTheme()" class="text-[10px] hover:underline" style="color:var(--accent-primary);">Next</button>
+                    </div>
+                    <button type="button" data-theme-opt="oxford-dark" onclick="setTheme('oxford-dark'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-slate-600 flex-shrink-0" style="background:linear-gradient(135deg,#11161f 55%,#c9a25e 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">Oxford Dark</div><div class="text-[10px] text-slate-400">Midnight study slate &amp; brass</div></div>
+                    </button>
+                    <button type="button" data-theme-opt="amoled-obsidian" onclick="setTheme('amoled-obsidian'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-slate-600 flex-shrink-0" style="background:linear-gradient(135deg,#000000 55%,#38bdf8 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">AMOLED Obsidian</div><div class="text-[10px] text-slate-400">True black OLED &amp; crisp sky</div></div>
+                    </button>
+                    <button type="button" data-theme-opt="amoled-gold" onclick="setTheme('amoled-gold'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-amber-500/60 flex-shrink-0" style="background:linear-gradient(135deg,#000000 50%,#f5c542 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">AMOLED Gold</div><div class="text-[10px] text-slate-400">True black OLED &amp; Byzantine gold</div></div>
+                    </button>
+                    <button type="button" data-theme-opt="vellum-light" onclick="setTheme('vellum-light'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-slate-400 flex-shrink-0" style="background:linear-gradient(135deg,#f8f6f1 55%,#8a5a19 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">Vellum Light</div><div class="text-[10px] text-slate-400">Crisp archival paper &amp; ink</div></div>
+                    </button>
+                    <button type="button" data-theme-opt="warm-sepia" onclick="setTheme('warm-sepia'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-amber-700/50 flex-shrink-0" style="background:linear-gradient(135deg,#f1e8d6 55%,#85461e 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">Warm Sepia</div><div class="text-[10px] text-slate-400">Soft linen daylight tone</div></div>
+                    </button>
+                    <button type="button" data-theme-opt="parchment" onclick="setTheme('parchment'); toggleThemePopover(false);" class="theme-swatch-item">
+                        <span class="w-4 h-4 rounded border border-amber-800/50 flex-shrink-0" style="background:linear-gradient(135deg,#efe5cf 55%,#7a3e1a 100%);"></span>
+                        <div class="min-w-0 flex-1"><div class="font-medium">Parchment</div><div class="text-[10px] text-slate-400">Classical scriptorium folio</div></div>
+                    </button>
+                </div>
+            </div>
             <button id="btnReadAlong" onclick="toggleReadAlongBar()" class="suite-btn" title="Read-Along Neural Voice">
                 <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
                 <span class="hidden lg:inline">Listen</span>
@@ -1281,6 +1643,7 @@
                     <i data-lucide="chevron-down" class="w-3 h-3 opacity-70"></i>
                 </button>
                 <div id="suiteToolsMenu" class="suite-tools-menu hidden">
+                    <div class="suite-tools-heading">1. Study Guides, Commentaries &amp; Magisterium</div>
                     <button onclick="toggleToolsMenu(false); toggleMasterStudyHubModal()" class="suite-btn" title="Master Study Bible Apparatus &amp; Category Hub">
                         <i data-lucide="compass" class="w-3.5 h-3.5"></i>
                         <span>Master Study Hub</span>
@@ -1289,25 +1652,26 @@
                         <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
                         <span>Councils &amp; Encyclicals</span>
                     </button>
+                    <button id="btnNabreGuide" onclick="toggleToolsMenu(false); toggleNabreGuideModal()" class="suite-btn" title="NABRE Catholic Study Bible (3rd Ed.) 1:1 Companion &amp; Reading Guides">
+                        <i data-lucide="book-open-check" class="w-3.5 h-3.5"></i>
+                        <span>Reading Guides &amp; Intros</span>
+                    </button>
                     <button onclick="toggleToolsMenu(false); toggleMasterStudyHubModal('maps')" class="suite-btn" title="Biblical Maps, Archaeological Plates &amp; Interactive Cartography">
                         <i data-lucide="map" class="w-3.5 h-3.5"></i>
                         <span>Maps &amp; Plates</span>
                     </button>
-                    <button id="btnNabreGuide" onclick="toggleToolsMenu(false); toggleNabreGuideModal()" class="suite-btn" title="NABRE Catholic Study Bible (3rd Ed.) 1:1 Companion">
-                        <i data-lucide="book-open-check" class="w-3.5 h-3.5"></i>
-                        <span>NABRE Guide</span>
-                    </button>
+                    <div class="suite-tools-heading">2. Textual Criticism, Lexicons &amp; Collation</div>
                     <button id="btnCriticalApparatus" onclick="toggleToolsMenu(false); toggleTextCriticalModal()" class="suite-btn" title="Logos Text-Critical Apparatus &amp; 25 Scholarly Critical Editions">
                         <i data-lucide="file-diff" class="w-3.5 h-3.5"></i>
                         <span>Critical Apparatus</span>
                     </button>
                     <button id="btnHexapla" onclick="toggleToolsMenu(false); toggleHexaplaModal()" class="suite-btn" title="Origen's Hexapla 6-Column Synoptic Alignment">
                         <i data-lucide="columns" class="w-3.5 h-3.5"></i>
-                        <span>Hexapla</span>
+                        <span>Origen's Hexapla</span>
                     </button>
                     <button id="btnSynoptics" onclick="toggleToolsMenu(false); toggleSynopticModal()" class="suite-btn" title="Gospel Synoptics Collation Engine">
                         <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                        <span>Synoptics</span>
+                        <span>Synoptic Gospels</span>
                     </button>
                     <button id="btnBibCrit" onclick="toggleToolsMenu(false); toggleBibCritModal()" class="suite-btn" title="BibCrit Hebrew Vorlagen Reconstructor">
                         <i data-lucide="git-branch" class="w-3.5 h-3.5"></i>
@@ -1315,23 +1679,28 @@
                     </button>
                     <button id="btnChiasm" onclick="toggleToolsMenu(false); toggleChiasmModal()" class="suite-btn" title="Biblical Chiasms &amp; Ring Composition Visualizer">
                         <i data-lucide="minimize-2" class="w-3.5 h-3.5"></i>
-                        <span>Chiasms</span>
+                        <span>Chiasm Structures</span>
                     </button>
                     <button id="btnTheolRev" onclick="toggleToolsMenu(false); toggleTheolRevModal()" class="suite-btn" title="Theological Revision &amp; Tendenz Detector">
                         <i data-lucide="scale" class="w-3.5 h-3.5"></i>
-                        <span>Tendenz</span>
+                        <span>Tendenz Detector</span>
+                    </button>
+                    <button onclick="toggleToolsMenu(false); openBibleWordStudyModal()" class="suite-btn" title="Bible Word Study Translation Wheel &amp; Semantic Domains">
+                        <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
+                        <span>Word Study Wheel</span>
                     </button>
                     <button onclick="toggleToolsMenu(false); toggleScribalModal()" class="suite-btn" title="Scribal Tendencies Profiler (MT/LXX stats)">
                         <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
                         <span>Scribal Stats</span>
                     </button>
-                    <button onclick="toggleToolsMenu(false); document.getElementById('transmissionModal').classList.toggle('hidden')" class="suite-btn" title="Manuscript Transmission">
-                        <i data-lucide="git-branch" class="w-3.5 h-3.5"></i>
-                        <span>Transmission</span>
-                    </button>
-                    <button onclick="toggleToolsMenu(false); togglePatristicModal()" class="suite-btn" title="Patristic Citation Tracker &amp; Schaff PDFs">
+                    <div class="suite-tools-heading">3. Patristics, Transmission &amp; Export</div>
+                    <button onclick="toggleToolsMenu(false); togglePatristicModal()" class="suite-btn" title="Patristic Citation Tracker &amp; Schaff ANF/NPNF PDFs">
                         <i data-lucide="scroll-text" class="w-3.5 h-3.5"></i>
                         <span>Patristic Index</span>
+                    </button>
+                    <button onclick="toggleToolsMenu(false); openTransmissionModal()" class="suite-btn" title="Old Testament Manuscript Transmission Stemma">
+                        <i data-lucide="git-fork" class="w-3.5 h-3.5"></i>
+                        <span>Transmission Stemma</span>
                     </button>
                     <button id="btnBlindDrill" onclick="toggleToolsMenu(false); toggleBlindDrill()" class="suite-btn" title="Scholar Mode: Blind Translation Drill">
                         <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
@@ -1700,39 +2069,56 @@
                 </div>
             </div>
 
-            <!-- WORKSPACE TAB BAR (Feature C: multi-tab reading + Link Set sync + 4K Multi-Column & Canvas layout presets) -->
-            <div id="workspaceTabBar" style="min-height: 2rem; overflow-x: auto;" class="bg-slate-950/80 border-b border-slate-800 px-2 flex items-center gap-1 flex-shrink-0 text-[11px] font-mono">
-                <div id="workspaceTabsList" class="flex items-center gap-1"></div>
-                <button onclick="addWorkspaceTab()" class="px-2 py-1 rounded text-slate-400 hover:text-amber-300 hover:bg-slate-800 flex-shrink-0 whitespace-nowrap" title="Open the current reference as a new tab">+ New Tab</button>
-                <span class="text-slate-700 flex-shrink-0">|</span>
-                <div class="flex items-center gap-1 flex-shrink-0 ml-1 whitespace-nowrap">
-                    <span class="text-slate-600 hidden md:inline">Layout:</span>
-                    <button onclick="applyLayoutPreset('standard_1col')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Standard 1-Column Focused Reader">1-Col</button>
-                    <button onclick="applyLayoutPreset('split_reader_notes')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="2-Column Split: Reader + Live Study Notes">2-Col Split</button>
-                    <button onclick="applyLayoutPreset('trinity_3col')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="3-Column Trinity: Devotional Page + Study Notes + Morphology Inspector">3-Col Trinity</button>
-                    <button onclick="applyLayoutPreset('four_col_lab')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="4-Way Parallel Translation Lab">4-Col Parallel</button>
-                    <button onclick="applyLayoutPreset('quad_4k_workbench')" class="px-2 py-1 rounded text-amber-300/90 border border-amber-500/30 hover:bg-amber-500/20 hover:text-white" title="50-Inch 4K Ultra-Wide Quad Workbench (Full-Width Exegesis + Split Commentary + Expanded Inspector)">4K Quad</button>
-                    <button onclick="applyLayoutPreset('canvas_4k_grid')" class="px-2 py-1 rounded text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/20 hover:text-white" title="4K Multi-Card Canvas Grid: Devotional Text + Original Tongues + Study Commentary + Patristics/Councils simultaneously">4K Canvas Grid</button>
-                    <button onclick="applyLayoutPreset('dolls_deep_dive')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Exegesis Workbench view, all 7 layers expanded">Deep Dive</button>
-                    <button onclick="applyLayoutPreset('biblicum_drill')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Exegesis Workbench with Blind Translation Drill on">Biblicum Drill</button>
+            <!-- WORKSPACE TAB BAR (Cleaned compact layout selector + multi-tab sync) -->
+            <div id="workspaceTabBar" style="min-height: 2rem; overflow-x: auto;" class="bg-slate-950/80 border-b border-slate-800 px-3 flex items-center justify-between gap-2 flex-shrink-0 text-[11px] font-mono">
+                <div class="flex items-center gap-1 min-w-0">
+                    <div id="workspaceTabsList" class="flex items-center gap-1"></div>
+                    <button onclick="addWorkspaceTab()" class="px-2 py-0.5 rounded text-slate-400 hover:text-amber-300 hover:bg-slate-800 flex-shrink-0 whitespace-nowrap" title="Open the current reference as a new tab">+ New Tab</button>
+                </div>
+                <div class="flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap">
+                    <button onclick="applyLayoutPreset('standard_1col')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="Standard 1-Column Focused Reader">1-Col</button>
+                    <button onclick="applyLayoutPreset('split_reader_notes')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="2-Column Split: Reader + Live Study Notes">2-Col</button>
+                    <button onclick="applyLayoutPreset('trinity_3col')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="3-Column Trinity: Devotional Page + Study Notes + Morphology Inspector">3-Col</button>
+                    <button onclick="applyLayoutPreset('canvas_4k_grid')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;color:var(--accent-secondary);" title="4K Multi-Card Canvas Grid">4K Canvas</button>
+                    <select id="layoutPresetSelect" onchange="if(this.value){applyLayoutPreset(this.value);}" class="suite-select" style="height:22px;font-size:10px;padding:0 6px;" title="More Workspace Layouts">
+                        <option value="">More Layouts...</option>
+                        <option value="four_col_lab">4-Col Parallel Lab</option>
+                        <option value="quad_4k_workbench">4K Quad Workbench</option>
+                        <option value="dolls_deep_dive">Deep Dive (All 7 Layers)</option>
+                        <option value="biblicum_drill">Biblicum Blind Drill</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- STICKY VERSE REFERENCE BAR & INLINE ACTION MICRO-BAR -->
-            <div id="stickyVerseBar" style="display:none;" class="flex-shrink-0 bg-slate-950/95 border-b border-amber-500/30 px-4 py-1.5 flex items-center gap-2 text-xs font-mono overflow-hidden">
-                <span id="stickyVerseRef" class="text-amber-400 font-bold whitespace-nowrap flex-shrink-0"></span>
-                <span id="stickyVerseSnippet" class="text-slate-200 truncate flex-grow" style="font-family: var(--plenary-serif-font); font-size: 0.92rem;"></span>
-                <div class="flex items-center gap-1 flex-shrink-0">
-                    <button type="button" onclick="stepVerse(-1)" class="suite-btn" style="height:24px;font-size:10px;padding:0 6px;" title="Previous Verse">‹ v</button>
-                    <button type="button" onclick="stepVerse(1)" class="suite-btn" style="height:24px;font-size:10px;padding:0 6px;" title="Next Verse">v ›</button>
-                    <button type="button" id="btnStickyHeroToggle" onclick="toggleExegesisHeroCompact()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Toggle Pinned Devotional Verse Card Compact/Full"><i data-lucide="pin" class="w-3 h-3"></i><span class="hidden md:inline">Pin Card</span></button>
-                    <button type="button" onclick="toggleReadAlongBar(); startReadAlong(true);" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Listen to active verse via Read-Along Neural Voice"><i data-lucide="volume-2" class="w-3 h-3"></i><span class="hidden sm:inline">Listen</span></button>
-                    <button type="button" onclick="openCompareAll25Modal()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Compare all 25 Bible translations for this verse"><i data-lucide="columns-3" class="w-3 h-3"></i><span class="hidden sm:inline">All 25</span></button>
-                    <button type="button" onclick="toggleCommentarySplitPane()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Open side-by-side Study Notes &amp; Commentary for this verse"><i data-lucide="panel-right-open" class="w-3 h-3"></i><span class="hidden sm:inline">Notes</span></button>
-                    <button type="button" id="btnCopyActiveVerse" onclick="copyActiveVerseCitation()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Copy formatted verse citation to clipboard"><i data-lucide="copy" class="w-3 h-3"></i><span class="hidden md:inline" id="btnCopyActiveVerseText">Copy</span></button>
-                    <button type="button" onclick="toggleMasterStudyHubModal()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Open Master Study Bible Apparatus &amp; Reference Hub"><i data-lucide="compass" class="w-3 h-3"></i><span class="hidden lg:inline">Study Hub</span></button>
-                    <button type="button" onclick="toggleNabreGuideModal('book')" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Open Multi-Source Book Introduction &amp; Reading Guide"><i data-lucide="book-open" class="w-3 h-3"></i><span class="hidden lg:inline">Book Intro &amp; RG</span></button>
+            <!-- UNIVERSAL DOCKED ACTIVE-VERSE SHOWCASE (Non-cropped across ALL tabs: Exegesis, Parallel, Chapter, Devotional, Apostolic, 4K Canvas) -->
+            <div id="stickyVerseBar" style="display:none;" class="flex-shrink-0 px-4 py-2 flex flex-col gap-1.5 text-xs">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex flex-wrap items-center gap-2 min-w-0">
+                        <span id="stickyVerseRef" class="font-mono font-bold text-amber-400 whitespace-nowrap"></span>
+                        <span id="stickyVerseStreamBadge" class="suite-badge-bench"></span>
+                        <span id="stickyVerseHlBadge" class="hidden hl-tag-pill"></span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1 font-mono">
+                        <span class="hidden sm:inline text-[10px] text-slate-400 mr-0.5">Tag:</span>
+                        <button type="button" data-hl-color="yellow" onclick="highlightActiveVerse('yellow')" class="hl-dot hl-dot-yellow" title="Gold: Dogma / Magisterium"></button>
+                        <button type="button" data-hl-color="green" onclick="highlightActiveVerse('green')" class="hl-dot hl-dot-green" title="Emerald: Typology / Fulfillment"></button>
+                        <button type="button" data-hl-color="blue" onclick="highlightActiveVerse('blue')" class="hl-dot hl-dot-blue" title="Cyan: Text-Critical / LXX"></button>
+                        <button type="button" data-hl-color="purple" onclick="highlightActiveVerse('purple')" class="hl-dot hl-dot-purple" title="Purple: Patristic / Conciliar"></button>
+                        <button type="button" data-hl-color="rose" onclick="highlightActiveVerse('rose')" class="hl-dot hl-dot-rose" title="Rose: Apologetic Defeater"></button>
+                        <button type="button" data-hl-color="none" onclick="highlightActiveVerse('none')" class="hl-dot hl-dot-clear" title="Clear semantic tag">x</button>
+                        <span class="suite-toolbar-divider"></span>
+                        <button type="button" onclick="stepVerse(-1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Previous Verse">&lsaquo; v</button>
+                        <button type="button" onclick="stepVerse(1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Next Verse">v &rsaquo;</button>
+                        <button type="button" id="btnStickyHeroToggle" onclick="toggleStickyDockExpand()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Expand or compact pinned verse text"><i data-lucide="pin" class="w-3 h-3"></i><span id="btnStickyHeroToggleText">Expand</span></button>
+                        <button type="button" onclick="toggleReadAlongBar(); startReadAlong(true);" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Listen to active verse via Read-Along Neural Voice"><i data-lucide="volume-2" class="w-3 h-3"></i><span class="hidden sm:inline">Listen</span></button>
+                        <button type="button" onclick="openCompareAll25Modal()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Compare all 25 Bible translations for this verse"><i data-lucide="columns-3" class="w-3 h-3"></i><span class="hidden sm:inline">All 25</span></button>
+                        <button type="button" onclick="toggleCommentarySplitPane()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open side-by-side Study Notes &amp; Commentary for this verse"><i data-lucide="panel-right-open" class="w-3 h-3"></i><span class="hidden sm:inline">Notes</span></button>
+                        <button type="button" id="btnCopyActiveVerse" onclick="copyActiveVerseCitation()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Copy formatted verse citation to clipboard"><i data-lucide="copy" class="w-3 h-3"></i><span class="hidden md:inline" id="btnCopyActiveVerseText">Copy</span></button>
+                        <button type="button" onclick="toggleMasterStudyHubModal()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open Master Study Bible Apparatus &amp; Reference Hub"><i data-lucide="compass" class="w-3 h-3"></i><span class="hidden lg:inline">Study Hub</span></button>
+                        <button type="button" onclick="toggleNabreGuideModal('book')" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open Book Introduction &amp; Reading Guide"><i data-lucide="book-open" class="w-3 h-3"></i><span class="hidden lg:inline">Book Intro</span></button>
+                    </div>
                 </div>
+                <div id="stickyVerseSnippet" class="sticky-verse-full-text px-2 py-1 rounded"></div>
             </div>
 
             <!-- Reader Content + Side-by-Side Commentary & Footnote Split Pane -->
@@ -2275,8 +2661,13 @@
             <div class="px-4 py-2.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 bg-slate-900 flex-shrink-0">
                 <div class="flex items-center gap-2 min-w-0">
                     <i data-lucide="file-text" class="w-4 h-4 text-cyan-400 flex-shrink-0"></i>
-                    <span id="inAppPdfTitle" class="font-bold text-xs text-white font-mono truncate">In-App Scholarly PDF Reader</span>
-                    <span class="suite-badge-imp">INLINE VIEWER</span>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <span id="inAppPdfTitle" class="font-bold text-xs text-white font-mono truncate">In-App Scholarly PDF Reader</span>
+                            <span class="suite-badge-imp">INLINE VIEWER</span>
+                        </div>
+                        <div id="inAppPdfSubtitle" class="text-[10px] text-slate-400 font-mono truncate">Direct Inline Folio Viewer</div>
+                    </div>
                 </div>
                 <div class="flex items-center gap-1.5 font-mono text-xs flex-shrink-0">
                     <button type="button" onclick="stepInAppPdfPage(-1)" class="suite-btn" style="height:26px;padding:0 8px;">‹ Page</button>
@@ -3349,9 +3740,22 @@
                     toggleSummon3DPopover(false);
                     toggleTypographyPopover(false);
                     toggleVisibilityPopover(false);
+                    toggleThemePopover(false);
                 }
             });
         });
+
+        function toggleReadAlong() {
+            toggleReadAlongBar();
+            if (typeof startReadAlong === 'function') {
+                setTimeout(() => startReadAlong(true), 40);
+            }
+        }
+
+        function openTransmissionModal() {
+            const tm = document.getElementById('transmissionModal');
+            if (tm) tm.classList.remove('hidden');
+        }
 
         // ====== NAVIGATION & HISTORY STACK ======
         function pushNavHistory(bIdx, cIdx, vIdx) {
@@ -4009,6 +4413,15 @@
         }
 
         let exegesisHeroCompact = localStorage.getItem('plenary_hero_compact') === '1';
+        let stickyDockExpanded = localStorage.getItem('plenary_sticky_dock_expanded') !== '0';
+
+        const HL_SEMANTIC_LABELS = {
+            yellow: { label: 'Dogma / Magisterium', color: '#eab308' },
+            green:  { label: 'Typology / Fulfillment', color: '#10b981' },
+            blue:   { label: 'Text-Critical / LXX', color: '#06b6d4' },
+            purple: { label: 'Patristic / Conciliar', color: '#a855f7' },
+            rose:   { label: 'Apologetic Defeater', color: '#f43f5e' },
+        };
 
         function toggleExegesisHeroCompact() {
             exegesisHeroCompact = !exegesisHeroCompact;
@@ -4017,16 +4430,58 @@
             if (card) card.classList.toggle('is-compact', exegesisHeroCompact);
         }
 
-        // Keeps the current book/chapter/verse visible in a bar above #readerContent regardless of
-        // how far James has scrolled down into the Doll 4/5/6 drawers — see the stickyVerseBar HTML
-        // comment above for why this lives outside the scrolling container instead of inside it.
-        function updateStickyVerseBar(book, chapNum, verseNum, text) {
+        function toggleStickyDockExpand() {
+            stickyDockExpanded = !stickyDockExpanded;
+            localStorage.setItem('plenary_sticky_dock_expanded', stickyDockExpanded ? '1' : '0');
+            const snip = document.getElementById('stickyVerseSnippet');
+            const lbl = document.getElementById('btnStickyHeroToggleText');
+            if (snip) snip.classList.toggle('is-collapsed', !stickyDockExpanded);
+            if (lbl) lbl.textContent = stickyDockExpanded ? 'Compact' : 'Expand';
+        }
+
+        function syncHlDotsAndBadge(activeColor) {
+            document.querySelectorAll('[data-hl-color]').forEach(btn => {
+                btn.classList.toggle('is-active', btn.getAttribute('data-hl-color') === activeColor);
+            });
+            const badge = document.getElementById('stickyVerseHlBadge');
+            if (badge) {
+                const info = HL_SEMANTIC_LABELS[activeColor];
+                if (info) {
+                    badge.textContent = info.label;
+                    badge.style.borderColor = info.color;
+                    badge.style.color = info.color;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+        }
+
+        // Universal Docked Active-Verse Showcase: hidden only inside Exegesis ('dolls') where
+        // #exegesisDevotionalHeroCard itself stays sticky at top, and full interactive uncropped
+        // dock in Parallel, Chapter, Devotional, Apostolic, Study Scroll, and 4K Canvas modes.
+        function updateStickyVerseBar(book, chapNum, verseNum, text, streamMeta, hlColor) {
             const bar = document.getElementById('stickyVerseBar');
             const ref = document.getElementById('stickyVerseRef');
+            const badge = document.getElementById('stickyVerseStreamBadge');
             const snip = document.getElementById('stickyVerseSnippet');
+            const lbl = document.getElementById('btnStickyHeroToggleText');
             if (!bar || !ref || !snip) return;
+
+            if (currentReaderMode === 'dolls') {
+                bar.style.display = 'none';
+                syncHlDotsAndBadge(hlColor || '');
+                return;
+            }
+
             ref.textContent = `${book.name} ${chapNum}:${verseNum}`;
-            snip.textContent = text || '';
+            if (badge) {
+                badge.textContent = streamMeta ? `${streamMeta.short || 'DRA'} · ${streamMeta.tier_badge || 'CATHOLIC'}` : 'DRA · CATHOLIC';
+            }
+            snip.className = `sticky-verse-full-text px-2 py-1 rounded ${stickyDockExpanded ? '' : 'is-collapsed'} ${hlColor ? 'hl-' + hlColor : ''}`;
+            snip.innerHTML = renderInteractiveEnglishProse(text || '', book, chapNum, verseNum, hlColor || '');
+            if (lbl) lbl.textContent = stickyDockExpanded ? 'Compact' : 'Expand';
+            syncHlDotsAndBadge(hlColor || '');
             bar.style.display = 'flex';
         }
 
@@ -4041,8 +4496,9 @@
             const chVersesGr = (book.verses_gr && book.verses_gr[currentChapterIndex]) || [];
             const chVersesHe = (book.verses_he && book.verses_he[currentChapterIndex]) || [];
 
+            const activeHlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${verseNum}`) || '';
             const activeTextEn = enRes.text || (activeCrux ? activeCrux.english : "Text unavailable");
-            updateStickyVerseBar(book, chapNum, verseNum, activeTextEn);
+            updateStickyVerseBar(book, chapNum, verseNum, activeTextEn, enRes.meta, activeHlClass);
             const activeTextLa = chVersesLa[currentVerseIndex] || (activeCrux ? activeCrux.vulgate : "");
             const activeTextGr = chVersesGr[currentVerseIndex] || (activeCrux ? activeCrux.greek_hebrew : "");
             const activeTextHe = chVersesHe[currentVerseIndex] || "";
@@ -4055,7 +4511,6 @@
                     ${chapCruxes.length > 0 ? `<div class="flex flex-wrap items-center gap-1.5">${chapCruxes.map(cx => `<button onclick="onCruxSelectChange('${cx.id}')" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 font-mono text-[11px] transition">§ Crux v.${cx.verse_start}: ${cx.title}</button>`).join('')}</div>` : ''}
                 </div>
             ` : '';
-            const activeHlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${verseNum}`) || '';
             const matchingXRefs = getMatchingCrossRefs(book.id, chapNum, verseNum);
 
             if (currentReaderMode === 'dolls') {
@@ -4228,35 +4683,36 @@
                             <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-800/80">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${activeCrux ? (activeCrux.tier === 'gold' ? 'badge-gold' : 'badge-crimson') : 'badge-sapphire'}">
-                                        ${activeCrux ? activeCrux.tier_name : 'Comfort Print® Exegesis Verse'}
+                                        ${activeCrux ? activeCrux.tier_name : 'Comfort Print Exegesis Verse'}
                                     </span>
                                     <span class="${getApprovalBadgeClass(enRes.meta.approval)}">${escapeHtmlText(enRes.meta.short)} · ${escapeHtmlText(enRes.meta.tier_badge)}</span>
                                     <span class="text-xs font-bold text-amber-300 font-mono">${escapeHtmlText(book.name)} ${chapNum}:${verseNum}</span>
-                                    <span id="doll1-note-indicator" class="text-[11px] font-mono"></span>
                                 </div>
-                                <div class="flex items-center gap-1.5 text-[10px] font-mono">
-                                    <button type="button" onclick="stepVerse(-1)" class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 hover:border-amber-400 text-slate-300" title="Previous Verse">‹ v</button>
-                                    <button type="button" onclick="stepVerse(1)" class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 hover:border-amber-400 text-slate-300" title="Next Verse">v ›</button>
+                                <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                                    <button type="button" onclick="stepVerse(-1)" class="suite-btn" style="height:22px;font-size:10px;padding:0 6px;" title="Previous Verse">&lsaquo; v</button>
+                                    <button type="button" onclick="stepVerse(1)" class="suite-btn" style="height:22px;font-size:10px;padding:0 6px;" title="Next Verse">v &rsaquo;</button>
                                     <button type="button" onclick="toggleReadAlong()" class="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25">Listen</button>
-                                    <button type="button" onclick="copyActiveVerseCitation()" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:border-amber-400 text-slate-300">Copy</button>
+                                    <button type="button" onclick="copyActiveVerseCitation()" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;">Copy</button>
                                     <button type="button" onclick="toggleMasterStudyHubModal('commentary')" class="px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/40 text-amber-300 hover:bg-amber-500/25">Study Hub</button>
-                                    <button type="button" onclick="toggleExegesisHeroCompact()" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:border-cyan-400 text-cyan-300" title="Toggle compact or full devotional pinned verse card">${exegesisHeroCompact ? 'Expand Card' : 'Compact'}</button>
+                                    <button type="button" onclick="toggleExegesisHeroCompact()" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;color:var(--accent-secondary);" title="Toggle compact or full devotional pinned verse card">${exegesisHeroCompact ? 'Expand Card' : 'Compact'}</button>
                                 </div>
                             </div>
+                            <div id="doll1-note-indicator" class="text-[11px] font-mono mb-1.5 flex flex-wrap items-center gap-1 empty:hidden"></div>
                             ${fallbackBanner}
-                            <div onclick="revealBlindDrillDoll1()" class="hero-verse-body text-slate-100 leading-[1.82] text-[1.16rem] tracking-[0.01em] py-1" style="font-family: var(--plenary-serif-font);">
+                            <div onclick="revealBlindDrillDoll1()" class="hero-verse-body text-slate-100 leading-[1.82] text-[1.16rem] tracking-[0.01em] py-1 ${activeHlClass ? 'hl-' + activeHlClass + ' px-2.5 rounded-lg' : ''}" style="font-family: var(--plenary-serif-font);">
                                 ${renderIlluminatedDropCapHtml(activeTextEn, enRes.isFallback ? 'dra' : masterEnId, verseNum)}
-                                ${renderInteractiveEnglishProse(activeTextEn, book, chapNum, verseNum, activeHlClass)}
+                                ${renderInteractiveEnglishProse(activeTextEn, book, chapNum, verseNum, '')}
                             </div>
-                            <div class="mt-2 pt-2 border-t border-slate-800/70 flex flex-wrap items-center justify-between gap-2 text-[11px]">
-                                <div class="text-slate-400 truncate max-w-xl">${activeCrux ? `<strong class="text-amber-300">${escapeHtmlText(activeCrux.title)}:</strong> ${escapeHtmlText(activeCrux.summary)}` : `Click any English word above for Strong's lemma &amp; concordance, or scroll through Layers I–VII while this verse stays pinned.`}</div>
+                            <div class="hero-extended-meta mt-2 pt-2 border-t border-slate-800/70 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+                                <div class="text-slate-400 truncate max-w-xl">${activeCrux ? `<strong class="text-amber-300">${escapeHtmlText(activeCrux.title)}:</strong> ${escapeHtmlText(activeCrux.summary)}` : `Click any word above for Strong's lemma &amp; concordance, or scroll Layers I–VII while this verse stays pinned.`}</div>
                                 <div class="flex items-center gap-1.5 font-mono text-[10px]">
-                                    <span class="text-slate-500">Color Tag:</span>
-                                    <button type="button" onclick="highlightActiveVerse('yellow')" class="w-3.5 h-3.5 rounded-full bg-amber-400/80 border border-amber-300" title="Gold: Dogma / Magisterium"></button>
-                                    <button type="button" onclick="highlightActiveVerse('green')" class="w-3.5 h-3.5 rounded-full bg-emerald-400/80 border border-emerald-300" title="Emerald: Typology / Fulfillment"></button>
-                                    <button type="button" onclick="highlightActiveVerse('blue')" class="w-3.5 h-3.5 rounded-full bg-cyan-400/80 border border-cyan-300" title="Cyan: Text-Critical / LXX"></button>
-                                    <button type="button" onclick="highlightActiveVerse('purple')" class="w-3.5 h-3.5 rounded-full bg-purple-400/80 border border-purple-300" title="Purple: Patristic / Conciliar"></button>
-                                    <button type="button" onclick="highlightActiveVerse('rose')" class="w-3.5 h-3.5 rounded-full bg-rose-400/80 border border-rose-300" title="Rose: Apologetic Defeater"></button>
+                                    <span class="text-slate-500">Semantic Tag:</span>
+                                    <button type="button" data-hl-color="yellow" onclick="highlightActiveVerse('yellow')" class="hl-dot hl-dot-yellow ${activeHlClass === 'yellow' ? 'is-active' : ''}" title="Gold: Dogma / Magisterium"></button>
+                                    <button type="button" data-hl-color="green" onclick="highlightActiveVerse('green')" class="hl-dot hl-dot-green ${activeHlClass === 'green' ? 'is-active' : ''}" title="Emerald: Typology / Fulfillment"></button>
+                                    <button type="button" data-hl-color="blue" onclick="highlightActiveVerse('blue')" class="hl-dot hl-dot-blue ${activeHlClass === 'blue' ? 'is-active' : ''}" title="Cyan: Text-Critical / LXX"></button>
+                                    <button type="button" data-hl-color="purple" onclick="highlightActiveVerse('purple')" class="hl-dot hl-dot-purple ${activeHlClass === 'purple' ? 'is-active' : ''}" title="Purple: Patristic / Conciliar"></button>
+                                    <button type="button" data-hl-color="rose" onclick="highlightActiveVerse('rose')" class="hl-dot hl-dot-rose ${activeHlClass === 'rose' ? 'is-active' : ''}" title="Rose: Apologetic Defeater"></button>
+                                    <button type="button" data-hl-color="none" onclick="highlightActiveVerse('none')" class="hl-dot hl-dot-clear" title="Clear semantic tag">x</button>
                                 </div>
                             </div>
                             ${activeCrux ? renderLegacyToolCrossLinks(activeCrux.id) : ''}
@@ -4274,82 +4730,82 @@
                                 <button type="button" data-exegesis-pill="doll7" onclick="setExegesisLayerFilter('doll7')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll7' ? 'is-active' : ''}">VII. Patristics &amp; Maps</button>
                             </div>
                             <div class="flex items-center gap-1 text-[10px] font-mono">
-                                <button type="button" onclick="expandAllActiveDolls()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-slate-300">Expand All</button>
-                                <button type="button" onclick="collapseAllActiveDolls()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-slate-300">Collapse</button>
+                                <button type="button" onclick="expandAllActiveDolls()" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;">Expand All</button>
+                                <button type="button" onclick="collapseAllActiveDolls()" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;">Collapse</button>
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll1" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll1' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll1')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-amber-400"><i data-lucide="book-open" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>I. Canonical Reading Text (${escapeHtmlText(enRes.isFallback ? `${enRes.requestedMeta.short} → DRA Fallback` : enRes.meta.name)}) <span class="text-[10px] text-slate-400 font-normal">• Click any word to inspect</span></span>
+                        <div data-exegesis-layer="doll1" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll1' ? 'hidden ' : ''}layer-card-editorial layer-accent-amber">
+                            <button onclick="toggleDollDrawer('doll1')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="book-open" class="w-4 h-4 text-amber-400"></i><span>I. Canonical Reading Text (${escapeHtmlText(enRes.isFallback ? `${enRes.requestedMeta.short} → DRA Fallback` : enRes.meta.name)})</span><span class="text-[11px] font-normal text-slate-400 hidden sm:inline">Click any word for Strong's alignment</span></span>
                                 <i id="icon-doll1" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll1" onclick="revealBlindDrillDoll1()" class="px-5 py-4 border-t border-slate-800 bg-slate-950 text-slate-100 font-serif text-base leading-relaxed">
+                            <div id="drawer-doll1" onclick="revealBlindDrillDoll1()" class="px-5 py-4 border-t border-slate-800 text-slate-100 font-serif text-base leading-relaxed">
                                 ${fallbackBanner}
                                 ${renderInteractiveEnglishProse(activeTextEn, book, chapNum, verseNum, activeHlClass)}
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll2" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll2' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll2')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="compass" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>II. Translation Rationale &amp; Syntax</span>
+                        <div data-exegesis-layer="doll2" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll2' ? 'hidden ' : ''}layer-card-editorial layer-accent-sky">
+                            <button onclick="toggleDollDrawer('doll2')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="compass" class="w-4 h-4 text-sky-400"></i><span>II. Translation Rationale &amp; Syntax</span></span>
                                 <i id="icon-doll2" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll2" class="px-5 py-4 border-t border-slate-800 bg-slate-950 text-xs text-slate-300 leading-relaxed">
+                            <div id="drawer-doll2" class="px-5 py-4 border-t border-slate-800 text-sm text-slate-300 leading-relaxed" style="font-family:var(--plenary-font-ui);">
                                 <p>${activeCrux ? activeCrux.summary : "Translated from ancient Apostolic and Church-approved Catholic textual streams (DRA Imprimatur / Clementine & Nova Vulgata / Septuagint LXX / Critical GNT), preserving doctrinal accuracy over dynamic paraphrase."}</p>
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll3" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll3' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll3')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-emerald-400"><i data-lucide="languages" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>III. Original Tongues &amp; Interlinear Morphology</span>
+                        <div data-exegesis-layer="doll3" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll3' ? 'hidden ' : ''}layer-card-editorial layer-accent-emerald">
+                            <button onclick="toggleDollDrawer('doll3')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="languages" class="w-4 h-4 text-emerald-400"></i><span>III. Original Tongues &amp; Interlinear Morphology</span><span class="text-[11px] font-normal text-slate-400 hidden sm:inline">Greek · Hebrew · Latin</span></span>
                                 <i id="icon-doll3" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll3" class="px-4 py-4 border-t border-slate-800 bg-slate-950">
+                            <div id="drawer-doll3" class="px-4 py-4 border-t border-slate-800">
                                 ${liveTokenInterlinear}
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll4" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll4' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll4')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-amber-300"><i data-lucide="columns-3" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>IV. Manuscript Apparatus &amp; ${(APP_DATA.translation_registry || []).length}-Witness Streams</span>
+                        <div data-exegesis-layer="doll4" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll4' ? 'hidden ' : ''}layer-card-editorial layer-accent-cyan">
+                            <button onclick="toggleDollDrawer('doll4')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="columns-3" class="w-4 h-4 text-cyan-400"></i><span>IV. Manuscript Apparatus &amp; ${(APP_DATA.translation_registry || []).length}-Witness Streams</span></span>
                                 <i id="icon-doll4" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll4" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                            <div id="drawer-doll4" class="px-5 py-4 border-t border-slate-800 space-y-3">
                                 ${apparatusHtml}
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll5" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll5' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll5')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-purple-400"><i data-lucide="scroll-text" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>V. Patristic Catena &amp; Conciliar Reception</span>
+                        <div data-exegesis-layer="doll5" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll5' ? 'hidden ' : ''}layer-card-editorial layer-accent-purple">
+                            <button onclick="toggleDollDrawer('doll5')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="scroll-text" class="w-4 h-4 text-purple-400"></i><span>V. Patristic Catena &amp; Magisterial Reception</span><span class="text-[11px] font-normal text-slate-400 hidden sm:inline">Councils · Encyclicals · Fathers</span></span>
                                 <i id="icon-doll5" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll5" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                            <div id="drawer-doll5" class="px-5 py-4 border-t border-slate-800 space-y-3">
                                 ${patristicHtml}
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll6" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll6' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll6')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="message-square-quote" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>VI. Multi-Tradition Study Commentary <span class="text-[10px] text-slate-400 font-normal">• Ignatius (Scott Hahn) + NABRE + Haydock + Critical Study Bibles</span></span>
+                        <div data-exegesis-layer="doll6" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll6' ? 'hidden ' : ''}layer-card-editorial layer-accent-sky">
+                            <button onclick="toggleDollDrawer('doll6')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="message-square-quote" class="w-4 h-4 text-sky-400"></i><span>VI. Multi-Tradition Study Commentary</span><span class="text-[11px] font-normal text-slate-400 hidden sm:inline">Ignatius (Scott Hahn) · NABRE · Haydock · Critical Study Bibles</span></span>
                                 <i id="icon-doll6" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll6" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                            <div id="drawer-doll6" class="px-5 py-4 border-t border-slate-800 space-y-3">
                                 <div id="doll6-filter-row" class="hidden flex flex-wrap items-center gap-1.5 text-[10px] font-mono"></div>
                                 <div id="doll6-notes-content" class="text-xs text-slate-400 italic">Loading study notes shard...</div>
                             </div>
                         </div>
 
-                        <div data-exegesis-layer="doll7" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll7' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
-                            <button onclick="toggleDollDrawer('doll7')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-purple-300"><i data-lucide="library" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>VII. Verse Patristics &amp; Study Media <span class="text-[10px] text-slate-400 font-normal">• Church Fathers + Maps/Manuscripts/Audio</span></span>
+                        <div data-exegesis-layer="doll7" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll7' ? 'hidden ' : ''}layer-card-editorial layer-accent-purple">
+                            <button onclick="toggleDollDrawer('doll7')" class="layer-header-btn">
+                                <span class="flex items-center gap-2"><i data-lucide="library" class="w-4 h-4 text-purple-300"></i><span>VII. Verse Patristics, Biblical Maps &amp; Study Media</span></span>
                                 <i id="icon-doll7" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
-                            <div id="drawer-doll7" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                            <div id="drawer-doll7" class="px-5 py-4 border-t border-slate-800 space-y-3">
                                 <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs font-mono">
-                                    <button type="button" id="doll7-tab-patristics" onclick="setPatristicsMediaTab('patristics')" class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-semibold"><i data-lucide="scroll-text" class="w-3 h-3 inline-block align-middle mr-1"></i>Patristics</button>
-                                    <button type="button" id="doll7-tab-media" onclick="setPatristicsMediaTab('media')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700"><i data-lucide="image" class="w-3 h-3 inline-block align-middle mr-1"></i>Study Media</button>
+                                    <button type="button" id="doll7-tab-patristics" onclick="setPatristicsMediaTab('patristics')" class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-semibold"><i data-lucide="scroll-text" class="w-3 h-3 inline-block align-middle mr-1"></i>Patristics &amp; Councils</button>
+                                    <button type="button" id="doll7-tab-media" onclick="setPatristicsMediaTab('media')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700"><i data-lucide="image" class="w-3 h-3 inline-block align-middle mr-1"></i>Maps &amp; Study Media</button>
                                     <span id="doll7-status" class="ml-auto text-[10px] text-slate-500"></span>
                                 </div>
                                 <div id="doll7-panel-content" class="text-xs text-slate-300 space-y-2">Loading verse patristics &amp; media...</div>
@@ -4379,6 +4835,7 @@
                     const hasData = rawStreamCh.length > 0;
                     const rowCount = Math.max(draCh.length, rawStreamCh.length);
                     if (rowCount > maxRowCount) maxRowCount = rowCount;
+                    const streamLang = meta.lang === 'gr' ? 'Greek' : meta.lang === 'he' ? 'Hebrew' : meta.lang === 'la' ? 'Latin' : 'English';
                     let rowsHtml = '';
                     if (!hasData) {
                         const probe = getRawStreamVerse(book, sid, currentChapterIndex, currentVerseIndex);
@@ -4390,17 +4847,17 @@
                             const hasNote = (colIdx === 0 && localStorage.getItem(`notes_${book.id}_${chapNum}_${idx + 1}`)) ? ' <i data-lucide="file-text" class="w-3 h-3 inline-block align-baseline text-amber-400"></i>' : '';
                             const activeBorder = (idx === currentVerseIndex) ? 'bg-slate-800 suite-pill-active' : 'hover:bg-slate-800/50';
                             const displayTxt = txt || `[Merged / omitted at v.${idx + 1} in ${meta.short}]`;
-                            const renderedBody = (parallelDiffEnabled && colIdx > 0 && txt && baseCh[idx])
-                                ? renderParallelWordDiff(baseCh[idx], txt)
+                            const renderedBody = txt
+                                ? buildParallelVerseWords(displayTxt, streamLang, (parallelDiffEnabled && colIdx > 0 ? baseCh[idx] : ''), idx, colIdx)
                                 : escapeHtmlText(displayTxt);
                             rowsHtml += `<p id="par-col-${colIdx}-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer p-1.5 rounded transition ${activeBorder} ${hlCls ? 'hl-' + hlCls : ''} ${!txt ? 'text-slate-500 italic' : ''}" ${meta.lang === 'he' ? 'dir="rtl"' : ''}><sup class="font-mono text-[10px] mr-1" style="color:${meta.color}" dir="ltr">${idx + 1}</sup> ${renderedBody}${hasNote}</p>`;
                         }
                     }
                     return `
-                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2 min-w-0">
                             <div class="border-b border-slate-800 pb-2 space-y-1">
                                 <div class="flex items-center justify-between gap-1">
-                                    <span class="text-[10px] font-mono font-bold" style="color:${meta.color}">STREAM ${colIdx + 1}</span>
+                                    <span class="text-[10px] font-mono font-bold" style="color:${meta.color}">STREAM ${colIdx + 1} · ${streamLang.toUpperCase()}</span>
                                     <div class="flex items-center gap-1">
                                         <span class="${bdgCls}">${escapeHtmlText(meta.tier_badge)}</span>
                                         ${parallelCols.length > 2 ? `<button onclick="removeParallelCol(${colIdx})" class="text-[10px] font-mono text-slate-500 hover:text-rose-400 px-1" title="Remove stream">&times;</button>` : ''}
@@ -4411,7 +4868,7 @@
                                     <span class="text-[10px] font-mono text-slate-400 flex-shrink-0">${book.abbr} ${chapNum}</span>
                                 </div>
                             </div>
-                            <div id="par-scroll-${colIdx}" class="par-scroll-pane space-y-2 font-serif text-xs leading-relaxed text-slate-200 max-h-[70vh] overflow-y-auto pr-1 ${meta.lang === 'he' ? 'text-right' : ''}">
+                            <div id="par-scroll-${colIdx}" class="par-scroll-pane space-y-2 font-serif text-xs leading-relaxed text-slate-200 max-h-[64vh] overflow-y-auto pr-1 ${meta.lang === 'he' ? 'text-right' : ''}">
                                 ${rowsHtml}
                             </div>
                         </div>
@@ -4423,14 +4880,22 @@
                     return `<button type="button" id="par-anchor-${idx}" onclick="selectVerse(${idx})" class="w-full text-center py-1 rounded font-mono text-[11px] transition ${isCur ? 'bg-amber-500/25 text-amber-300 font-bold border border-amber-500/50' : 'text-slate-400 hover:text-white hover:bg-slate-800'}">${chapNum}:${idx + 1}</button>`;
                 }).join('');
 
+                const colCountDesktop = Math.min(parallelCols.length, 4);
+                const parGridStyle = parallelCols.length > 4
+                    ? ''
+                    : `grid-template-columns: repeat(${colCountDesktop}, minmax(240px, 1fr));`;
                 const parGridClass = parallelCols.length > 4
-                    ? 'flex gap-3 overflow-x-auto pb-2 flex-1 min-w-0 [&>div]:min-w-[300px] [&>div]:flex-1'
-                    : `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${Math.min(parallelCols.length, 4)} gap-3 flex-1 min-w-0`;
+                    ? 'flex gap-3 overflow-x-auto pb-2 flex-1 min-w-0 [&>div]:min-w-[290px] [&>div]:flex-1'
+                    : 'grid gap-3 flex-1 min-w-0';
+
                 container.innerHTML = `
-                    <div class="max-w-full mx-auto space-y-4">
+                    <div class="max-w-full mx-auto space-y-3">
                         ${chapMetaBar}
-                        <div class="flex flex-wrap items-center justify-between gap-2 -mb-1">
-                            <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Translation Stream (${parallelCols.length} active)</button>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Translation Stream (${parallelCols.length} active)</button>
+                                <span class="text-[11px] text-slate-400 font-mono">Hover any word to preview Strong's &amp; morphology · Click to inspect</span>
+                            </div>
                             <div class="flex items-center gap-4">
                                 <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 cursor-pointer select-none" title="Highlight word-level differences against Stream 1">
                                     <input type="checkbox" id="parallelDiffToggle" ${parallelDiffEnabled ? 'checked' : ''} onchange="setParallelDiff(this.checked)" class="accent-emerald-400">
@@ -4442,14 +4907,27 @@
                                 </label>
                             </div>
                         </div>
+
+                        <!-- Live Parallel Hover Morphology & Interlinear Inspector Ribbon -->
+                        <div id="parMorphRibbon" class="par-morph-ribbon text-xs">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 font-mono text-[10px] font-bold uppercase">Parallel Morphology</span>
+                                <span id="parMorphPreviewText" class="text-slate-200 font-serif">Move over or click any word in English, Greek, Hebrew, or Latin columns below to inspect lemma, parsing &amp; Strong's lexicon.</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                                <button type="button" onclick="openBibleWordStudyModal()" class="suite-btn" style="height:22px;font-size:10px;padding:0 8px;">Word Study</button>
+                                <button type="button" onclick="openConcordanceForInspected()" class="suite-btn" style="height:22px;font-size:10px;padding:0 8px;">Concordance</button>
+                            </div>
+                        </div>
+
                         <div class="flex items-start gap-2">
                             <div class="sticky left-0 z-10 w-14 flex-shrink-0 bg-slate-950/95 border border-slate-800 rounded-xl p-2 space-y-1.5">
                                 <div class="text-[9px] font-mono uppercase text-center text-amber-400 font-bold border-b border-slate-800 pb-1">Anchor</div>
-                                <div id="par-scroll-anchor" class="max-h-[70vh] overflow-y-auto space-y-1 pr-0.5">
+                                <div id="par-scroll-anchor" class="max-h-[64vh] overflow-y-auto space-y-1 pr-0.5">
                                     ${anchorRowsHtml}
                                 </div>
                             </div>
-                            <div class="${parGridClass}">
+                            <div class="${parGridClass}" style="${parGridStyle}">
                                 ${colHtml}
                             </div>
                         </div>
@@ -4761,6 +5239,124 @@
                 attachSplitScrollAnchor();
             }
             refreshIcons();
+        }
+
+        function resolveParallelWordQuickInfo(lang, surface, verseNum) {
+            const book = APP_DATA.books[currentBookIndex];
+            const chapNum = currentChapterIndex + 1;
+            const vNum = verseNum || (currentVerseIndex + 1);
+            if (lang === 'Greek') {
+                const info = lookupGreekMorph(surface) || {};
+                const se = getStrongsEntry(info.strong);
+                return {
+                    lang: 'Greek',
+                    word: surface,
+                    translit: transliterateGreek(surface),
+                    strong: info.strong || '',
+                    pos: info.pos || 'Koine Greek',
+                    lemma: se ? se.lemma : (info.norm || surface),
+                    gloss: se ? se.def : 'Greek NT / Septuagint word'
+                };
+            }
+            if (lang === 'Hebrew') {
+                const info = lookupHebrewMorph(surface) || {};
+                const se = getStrongsEntry(info.strong);
+                return {
+                    lang: 'Hebrew',
+                    word: surface,
+                    translit: se ? se.translit : (info.norm || ''),
+                    strong: info.strong || '',
+                    pos: info.pos || 'Biblical Hebrew',
+                    lemma: se ? se.lemma : (info.norm || surface),
+                    gloss: se ? se.def : 'Hebrew Masoretic (WLC) token'
+                };
+            }
+            if (lang === 'Latin') {
+                return {
+                    lang: 'Latin',
+                    word: surface,
+                    translit: surface.toLowerCase(),
+                    strong: 'VULG',
+                    pos: 'Vulgate Latin',
+                    lemma: surface.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/gi, ''),
+                    gloss: 'Clementine / Nova Vulgata canonical witness'
+                };
+            }
+            const clean = normalizeEnglishToken(surface);
+            const strongId = resolveEnglishWordStrong(clean, book, chapNum, vNum);
+            const se = getStrongsEntry(strongId);
+            return {
+                lang: se && strongId && strongId.startsWith('H') ? 'Hebrew' : (strongId ? 'Greek' : 'English'),
+                word: surface,
+                translit: se ? se.translit : clean,
+                strong: strongId || 'EN',
+                pos: strongId ? `Aligned -> ${strongId}` : 'English Token',
+                lemma: se ? se.lemma : clean,
+                gloss: se ? se.def : 'Click word to run English / Strong concordance lookup'
+            };
+        }
+
+        function previewParallelWord(lang, surface, vNum) {
+            const box = document.getElementById('parMorphPreviewText');
+            if (!box || (visibilityPrefs && visibilityPrefs.markers && visibilityPrefs.markers.morphologyHover === false)) return;
+            const info = resolveParallelWordQuickInfo(lang, surface, vNum);
+            const glossShort = (info.gloss || '').length > 135 ? info.gloss.slice(0, 132) + '...' : (info.gloss || '');
+            box.innerHTML = `<strong class="text-amber-300 font-serif text-sm">${escapeHtmlText(info.word)}</strong> `
+                + `<span class="text-emerald-300 font-mono text-[11px] ml-1">${escapeHtmlText(info.lemma)}</span> `
+                + (info.translit ? `<span class="text-slate-400 italic text-xs">(${escapeHtmlText(info.translit)})</span> ` : '')
+                + `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 font-mono text-[10px] mx-1">${escapeHtmlText(info.strong || info.lang)}</span>`
+                + (info.pos ? `<span class="text-purple-300 font-mono text-[10px] mr-1">[${escapeHtmlText(info.pos)}]</span>` : '')
+                + `<span class="text-slate-300 text-xs">${escapeHtmlText(glossShort)}</span>`;
+            if (info.strong && /^[GH]\d+$/.test(info.strong)) {
+                window.__activeInspectedStrong = info.strong;
+            }
+        }
+
+        function clickParallelWord(lang, surface, vIdx) {
+            if (typeof vIdx === 'number' && vIdx !== currentVerseIndex) {
+                currentVerseIndex = vIdx;
+                const vs = document.getElementById('verseSelector');
+                if (vs) vs.value = String(vIdx);
+                const book = APP_DATA.books[currentBookIndex];
+                const chapNum = currentChapterIndex + 1;
+                const verseNum = vIdx + 1;
+                const enRes = getEnglishStreamResult(book, currentChapterIndex, currentVerseIndex, masterEnId);
+                const hl = localStorage.getItem(`hl_${book.id}_${chapNum}_${verseNum}`) || '';
+                updateStickyVerseBar(book, chapNum, verseNum, enRes.text || '', enRes.meta, hl);
+                document.querySelectorAll('[id^="par-col-"][class*="suite-pill-active"]').forEach(el => {
+                    el.classList.remove('bg-slate-800', 'suite-pill-active');
+                });
+                for (let ci = 0; ci < parallelCols.length; ci++) {
+                    const pEl = document.getElementById(`par-col-${ci}-${vIdx}`);
+                    if (pEl) pEl.classList.add('bg-slate-800', 'suite-pill-active');
+                }
+            }
+            previewParallelWord(lang, surface, (vIdx || currentVerseIndex) + 1);
+            if (lang === 'English') {
+                inspectEnglishWord(surface, 0);
+            } else {
+                inspectScriptWord(lang, surface, 0);
+            }
+        }
+
+        function buildParallelVerseWords(text, lang, baseTextForDiff, vIdx, colIdx) {
+            const normWord = (w) => w.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+            const baseSet = baseTextForDiff
+                ? new Set(String(baseTextForDiff).split(/\s+/).map(normWord).filter(Boolean))
+                : null;
+            const tokens = String(text || '').split(/(\s+)/);
+            const vNum = vIdx + 1;
+            const clsBase = (lang === 'English') ? 'par-word-clickable' : 'par-word-tok';
+            return tokens.map(tok => {
+                if (/^\s+$/.test(tok)) return tok;
+                const cleanSurf = tok.replace(/[.,;:!?()"'\[\]«»·—]/g, '');
+                if (!cleanSurf) return escapeHtmlText(tok);
+                const nw = normWord(tok);
+                const diffCls = (baseSet && nw && !baseSet.has(nw))
+                    ? ' bg-emerald-500/20 text-emerald-300 border-b border-emerald-500/50'
+                    : '';
+                return `<span class="${clsBase}${diffCls}" onmouseenter="previewParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vNum})" onclick="event.stopPropagation(); clickParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vIdx})">${escapeHtmlText(tok)}</span>`;
+            }).join('');
         }
 
         function setParallelDiff(on) {
@@ -6496,12 +7092,19 @@
 
         function formatNabreProseHtml(rawText) {
             if (!rawText) return '<div class="italic text-slate-500">No text extracted for this section.</div>';
-            return String(rawText)
-                .split(/\n\s*\n/)
-                .map(p => p.trim())
-                .filter(Boolean)
-                .map(p => `<p class="font-serif text-sm text-slate-200 leading-relaxed mb-3">${escapeHtmlText(p)}</p>`)
-                .join('');
+            const cleaned = String(rawText).replace(/\r\n/g, '\n').trim();
+            const blocks = cleaned.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+            const parts = (blocks.length > 1 ? blocks : cleaned.split(/\n/).map(p => p.trim()).filter(Boolean));
+            return parts.map(p => {
+                const isHeading = p.length <= 90 && (
+                    /^(?:CHAPTERS?|SECTION|PART|OUTLINE|INTRODUCTION|OVERVIEW|THEMES?)\b/i.test(p)
+                    || (/^[A-Z0-9][A-Za-z0-9\s,:\-–—()';.]{2,72}$/.test(p) && !/[.!?]$/.test(p))
+                );
+                if (isHeading) {
+                    return `<h4 class="font-semibold text-sm text-amber-300 mt-4 mb-1.5 pb-1 border-b border-slate-800" style="font-family:var(--plenary-font-ui);">${escapeHtmlText(p)}</h4>`;
+                }
+                return `<p class="font-serif text-[0.95rem] text-slate-200 leading-[1.72] mb-3">${escapeHtmlText(p)}</p>`;
+            }).join('');
         }
 
         function jumpToNabrePassage(bookId, chap, verse) {
@@ -7014,8 +7617,13 @@
 
         function highlightActiveVerse(color) {
             const key = `hl_${getActiveRefKey()}`;
-            if (color === 'none') localStorage.removeItem(key);
-            else localStorage.setItem(key, color);
+            if (!color || color === 'none') {
+                localStorage.removeItem(key);
+                syncHlDotsAndBadge('');
+            } else {
+                localStorage.setItem(key, color);
+                syncHlDotsAndBadge(color);
+            }
             updateLibraryBadge();
             renderReader();
         }
@@ -7047,19 +7655,36 @@
 
         function setTheme(theme) {
             const next = normalizeThemeName(theme);
+            const isLight = ['vellum-light', 'warm-sepia', 'parchment'].includes(next);
             const body = document.body;
             body.classList.remove(
                 'dark', 'theme-light', 'theme-sepia', 'theme-parchment',
-                'oxford-dark', 'theme-oxford-dark', 'vellum-light', 'theme-vellum-light',
-                'warm-sepia', 'theme-warm-sepia', 'parchment'
+                'oxford-dark', 'theme-oxford-dark',
+                'amoled-obsidian', 'theme-amoled-obsidian',
+                'amoled-gold', 'theme-amoled-gold',
+                'vellum-light', 'theme-vellum-light',
+                'warm-sepia', 'theme-warm-sepia',
+                'parchment'
             );
             body.classList.add(next, `theme-${next}`);
-            if (next === 'oxford-dark') body.classList.add('dark');
+            if (!isLight) body.classList.add('dark');
             body.setAttribute('data-theme', next);
+            body.setAttribute('data-theme-mode', isLight ? 'light' : 'dark');
             document.documentElement.setAttribute('data-theme', next);
+            document.documentElement.setAttribute('data-theme-mode', isLight ? 'light' : 'dark');
             const sel = document.getElementById('themeSelector');
             if (sel) sel.value = next;
+            document.querySelectorAll('#themePopover [data-theme-opt]').forEach(btn => {
+                btn.classList.toggle('is-active', btn.getAttribute('data-theme-opt') === next);
+            });
             localStorage.setItem('plenary_theme', next);
+        }
+
+        function toggleThemePopover(forceState) {
+            const pop = document.getElementById('themePopover');
+            if (!pop) return;
+            const willOpen = (typeof forceState === 'boolean') ? forceState : pop.classList.contains('hidden');
+            pop.classList.toggle('hidden', !willOpen);
         }
 
         function initTheme() {
@@ -9344,11 +9969,30 @@
             }
         }
 
+        function matchApparatusEntryToActiveVerse(entries, getter) {
+            if (!Array.isArray(entries) || entries.length === 0) return null;
+            const book = APP_DATA && APP_DATA.books && APP_DATA.books[currentBookIndex];
+            if (!book) return entries[0];
+            const chap = currentChapterIndex + 1;
+            const verse = currentVerseIndex + 1;
+            const bNames = [book.name, book.abbr, book.id].filter(Boolean).map(s => s.toLowerCase());
+            const exactRef = new RegExp(`\\b(${bNames.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\s+${chap}:${verse}\\b`, 'i');
+            const chapRef = new RegExp(`\\b(${bNames.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\s+${chap}\\b`, 'i');
+            const bookRef = new RegExp(`\\b(${bNames.map(x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\b`, 'i');
+            return entries.find(e => exactRef.test(getter(e)))
+                || entries.find(e => chapRef.test(getter(e)))
+                || entries.find(e => bookRef.test(getter(e)))
+                || entries[0];
+        }
+
         function initTextCriticalModal() {
             const cruxes = APP_DATA.text_critical_apparatus || [];
             const listEl = document.getElementById('tcCruxList');
             if (!listEl) return;
             listEl.innerHTML = '';
+
+            const matched = matchApparatusEntryToActiveVerse(cruxes, c => `${c.verse_range || ''} ${c.title || ''}`);
+            if (matched && matched.id) currentTcCruxId = matched.id;
 
             cruxes.forEach(c => {
                 const item = document.createElement('button');
@@ -9478,16 +10122,18 @@
         function initChiasmModal() {
             const chiasmData = (APP_DATA.biblical_chiasms || {}).entries || [];
             const selectEl = document.getElementById('chiasmSelect');
-            if (!selectEl || selectEl.options.length > 0 || chiasmData.length === 0) return;
-
-            chiasmData.forEach(ch => {
-                const opt = document.createElement('option');
-                opt.value = ch.id;
-                opt.textContent = `${ch.locus} — ${ch.title}`;
-                selectEl.appendChild(opt);
-            });
-
-            renderChiasmView(chiasmData[0].id);
+            if (!selectEl || chiasmData.length === 0) return;
+            if (selectEl.options.length === 0) {
+                chiasmData.forEach(ch => {
+                    const opt = document.createElement('option');
+                    opt.value = ch.id;
+                    opt.textContent = `${ch.locus} — ${ch.title}`;
+                    selectEl.appendChild(opt);
+                });
+            }
+            const hit = matchApparatusEntryToActiveVerse(chiasmData, ch => `${ch.locus || ''} ${ch.pericope || ''} ${ch.title || ''}`) || chiasmData[0];
+            selectEl.value = hit.id;
+            renderChiasmView(hit.id);
         }
 
         function renderChiasmView(chiasmId) {
@@ -9568,16 +10214,18 @@
         function initTheolRevModal() {
             const revData = (APP_DATA.theological_revisions || {}).entries || [];
             const selectEl = document.getElementById('theolRevSelect');
-            if (!selectEl || selectEl.options.length > 0 || revData.length === 0) return;
-
-            revData.forEach(rev => {
-                const opt = document.createElement('option');
-                opt.value = rev.id;
-                opt.textContent = `${rev.locus} — ${rev.title}`;
-                selectEl.appendChild(opt);
-            });
-
-            renderTheolRevView(revData[0].id);
+            if (!selectEl || revData.length === 0) return;
+            if (selectEl.options.length === 0) {
+                revData.forEach(rev => {
+                    const opt = document.createElement('option');
+                    opt.value = rev.id;
+                    opt.textContent = `${rev.locus} — ${rev.title}`;
+                    selectEl.appendChild(opt);
+                });
+            }
+            const hit = matchApparatusEntryToActiveVerse(revData, rev => `${rev.locus || ''} ${rev.title || ''}`) || revData[0];
+            selectEl.value = hit.id;
+            renderTheolRevView(hit.id);
         }
 
         function renderTheolRevView(revId) {
@@ -9928,7 +10576,9 @@
             });
 
             if (hexData.length > 0) {
-                renderHexaplaView(hexData[0].id);
+                const hit = matchApparatusEntryToActiveVerse(hexData, p => `${p.reference || ''} ${p.title || ''}`) || hexData[0];
+                selectEl.value = hit.id;
+                renderHexaplaView(hit.id);
             }
         }
 
@@ -10036,7 +10686,9 @@
             });
 
             if (synData.length > 0) {
-                renderSynopticsView(synData[0].id);
+                const hit = matchApparatusEntryToActiveVerse(synData, p => `${Object.values(p.passages || {}).map(x => x.ref || '').join(' ')} ${p.title || ''}`) || synData[0];
+                selectEl.value = hit.id;
+                renderSynopticsView(hit.id);
             }
         }
 
@@ -10123,16 +10775,18 @@
         function initChiasmModal() {
             const chiasmData = (APP_DATA.biblical_chiasms || {}).entries || [];
             const selectEl = document.getElementById('chiasmSelect');
-            if (!selectEl || selectEl.options.length > 0 || chiasmData.length === 0) return;
-
-            chiasmData.forEach(ch => {
-                const opt = document.createElement('option');
-                opt.value = ch.id;
-                opt.textContent = `${ch.locus} — ${ch.title}`;
-                selectEl.appendChild(opt);
-            });
-
-            renderChiasmView(chiasmData[0].id);
+            if (!selectEl || chiasmData.length === 0) return;
+            if (selectEl.options.length === 0) {
+                chiasmData.forEach(ch => {
+                    const opt = document.createElement('option');
+                    opt.value = ch.id;
+                    opt.textContent = `${ch.locus} — ${ch.title}`;
+                    selectEl.appendChild(opt);
+                });
+            }
+            const hit = matchApparatusEntryToActiveVerse(chiasmData, ch => `${ch.locus || ''} ${ch.pericope || ''} ${ch.title || ''}`) || chiasmData[0];
+            selectEl.value = hit.id;
+            renderChiasmView(hit.id);
         }
 
         function renderChiasmView(chiasmId) {
@@ -10213,16 +10867,18 @@
         function initTheolRevModal() {
             const revData = (APP_DATA.theological_revisions || {}).entries || [];
             const selectEl = document.getElementById('theolRevSelect');
-            if (!selectEl || selectEl.options.length > 0 || revData.length === 0) return;
-
-            revData.forEach(rev => {
-                const opt = document.createElement('option');
-                opt.value = rev.id;
-                opt.textContent = `${rev.locus} — ${rev.title}`;
-                selectEl.appendChild(opt);
-            });
-
-            renderTheolRevView(revData[0].id);
+            if (!selectEl || revData.length === 0) return;
+            if (selectEl.options.length === 0) {
+                revData.forEach(rev => {
+                    const opt = document.createElement('option');
+                    opt.value = rev.id;
+                    opt.textContent = `${rev.locus} — ${rev.title}`;
+                    selectEl.appendChild(opt);
+                });
+            }
+            const hit = matchApparatusEntryToActiveVerse(revData, rev => `${rev.locus || ''} ${rev.title || ''}`) || revData[0];
+            selectEl.value = hit.id;
+            renderTheolRevView(hit.id);
         }
 
         function renderTheolRevView(revId) {
@@ -10306,16 +10962,18 @@
         function initBibCritModal() {
             const vorlData = (APP_DATA.bibcrit_vorlagen || {}).entries || [];
             const selectEl = document.getElementById('bibcritLocusSelect');
-            if (!selectEl || selectEl.options.length > 0 || vorlData.length === 0) return;
-
-            vorlData.forEach(entry => {
-                const opt = document.createElement('option');
-                opt.value = entry.id;
-                opt.textContent = `${entry.locus} — ${entry.category} (${entry.significance_tier})`;
-                selectEl.appendChild(opt);
-            });
-
-            renderBibCritView(vorlData[0].id);
+            if (!selectEl || vorlData.length === 0) return;
+            if (selectEl.options.length === 0) {
+                vorlData.forEach(entry => {
+                    const opt = document.createElement('option');
+                    opt.value = entry.id;
+                    opt.textContent = `${entry.locus} — ${entry.category} (${entry.significance_tier})`;
+                    selectEl.appendChild(opt);
+                });
+            }
+            const hit = matchApparatusEntryToActiveVerse(vorlData, e => `${e.locus || ''} ${e.pericope || ''}`) || vorlData[0];
+            selectEl.value = hit.id;
+            renderBibCritView(hit.id);
         }
 
         function renderBibCritView(locusId) {
@@ -10618,48 +11276,146 @@
         // ========================================================
         // --- 9. MAGISTERIAL COUNCILS & PAPAL ENCYCLICALS ENCHIRIDION ---
         // ========================================================
+        let selectedMagDocId = 'nicaea_i_325';
+
         const MAGISTERIAL_ENCHIRIDION = [
             {
                 id: 'nicaea_i_325',
                 kind: 'Council',
+                year: '325',
                 title: 'First Council of Nicaea (AD 325) — Creed & Homoousios',
                 citation: 'Denzinger-Hünermann (DH) 125–126 · Tanner I, 5',
+                pdf_key: 'tanner_v1',
+                pdf_page: 5,
                 books: ['gen', 'prov', 'john', 'col', 'heb'],
                 refs: [['john', 1, 1], ['john', 1, 14], ['john', 10, 30], ['col', 1, 15], ['heb', 1, 3]],
-                summary: 'Defines the Eternal Son as "God from God, Light from Light, true God from true God, begotten not made, consubstantial (homoousios) with the Father, through Whom all things were made" against Arian subordinationism.'
+                summary: 'Defines the Eternal Son as "God from God, Light from Light, true God from true God, begotten not made, consubstantial (homoousios) with the Father, through Whom all things were made" against Arian subordinationism.',
+                canons: [
+                    'We believe in one Lord Jesus Christ, the Son of God, only-begotten of the Father, of the substance (ousias) of the Father.',
+                    'True God from true God, begotten not made, consubstantial (homoousios) with the Father, through whom all things came into being.',
+                    'Anathema against those who say "there was a time when he was not" or that the Son is of a different hypostasis or created out of nothing.'
+                ]
+            },
+            {
+                id: 'constantinople_i_381',
+                kind: 'Council',
+                year: '381',
+                title: 'First Council of Constantinople (AD 381) — Divinity of the Holy Spirit',
+                citation: 'DH 150 · Tanner I, 24',
+                pdf_key: 'tanner_v1',
+                pdf_page: 24,
+                books: ['gen', 'ps', 'isa', 'john', 'acts', 'rom', '1cor', '2cor'],
+                refs: [['gen', 1, 2], ['john', 15, 26], ['acts', 5, 3], ['1cor', 3, 16], ['2cor', 3, 17]],
+                summary: 'Expands the Nicene Symbol to confess the Holy Spirit as "the Lord and Giver of Life, who proceeds from the Father, who with the Father and the Son is adored and glorified, who has spoken through the prophets."',
+                canons: [
+                    'Confesses the full co-equal deity and adoration of the Holy Spirit against Macedonian Pneumatomachians.',
+                    'Proclaims one, holy, catholic, and apostolic Church and one baptism for the remission of sins.'
+                ]
             },
             {
                 id: 'ephesus_431',
                 kind: 'Council',
+                year: '431',
                 title: 'Council of Ephesus (AD 431) — Theotokos & Hypostatic Union',
-                citation: 'DH 250–263 · St. Cyril of Alexandria, Second Letter to Nestorius',
+                citation: 'DH 250–263 · St. Cyril of Alexandria, Second Letter to Nestorius · Tanner I, 40',
+                pdf_key: 'tanner_v1',
+                pdf_page: 40,
                 books: ['isa', 'matt', 'luke', 'john', 'gal'],
                 refs: [['isa', 7, 14], ['luke', 1, 35], ['luke', 1, 43], ['john', 1, 14], ['gal', 4, 4]],
-                summary: 'Dogmatically defines that the Blessed Virgin Mary is truly Mother of God (Theotokos) because the Eternal Word united human nature to Himself hypostatically in her womb.'
+                summary: 'Dogmatically defines that the Blessed Virgin Mary is truly Mother of God (Theotokos) because the Eternal Word united human nature to Himself hypostatically in her womb.',
+                canons: [
+                    'Canon 1 (Cyril): If anyone does not confess that Emmanuel is God in truth and therefore the Holy Virgin is Theotokos (Mother of God), let him be anathema.',
+                    'Rejects Nestorian division of Christ into two Sons joined merely by moral conjunction.'
+                ]
             },
             {
                 id: 'chalcedon_451',
                 kind: 'Council',
+                year: '451',
                 title: 'Council of Chalcedon (AD 451) — Two Natures in One Divine Person',
-                citation: 'DH 301–302 · Tome of Pope St. Leo the Great',
+                citation: 'DH 301–302 · Tome of Pope St. Leo the Great · Tanner I, 86',
+                pdf_key: 'tanner_v1',
+                pdf_page: 86,
                 books: ['john', 'rom', 'phil', 'heb', '1john'],
                 refs: [['john', 1, 14], ['phil', 2, 6], ['phil', 2, 7], ['heb', 2, 14], ['heb', 4, 15]],
-                summary: 'Confesses one and the same Christ in two natures, without confusion, without change, without division, without separation, the properties of each nature preserved in one Prosopon and one Hypostasis.'
+                summary: 'Confesses one and the same Christ in two natures, without confusion, without change, without division, without separation, the properties of each nature preserved in one Prosopon and one Hypostasis.',
+                canons: [
+                    'Prefaced by "Peter has spoken through Leo" — affirming Papal doctrinal authority alongside conciliar definition.',
+                    'Guards both genuine humanity and full divinity against Monophysite absorption and Nestorian separation.'
+                ]
+            },
+            {
+                id: 'constantinople_ii_553',
+                kind: 'Council',
+                year: '553',
+                title: 'Second Council of Constantinople (AD 553) — Neo-Chalcedonian Christology',
+                citation: 'DH 421–438 · Tanner I, 114',
+                pdf_key: 'tanner_v1',
+                pdf_page: 114,
+                books: ['john', '1cor', 'gal', 'col'],
+                refs: [['john', 1, 14], ['1cor', 2, 8], ['gal', 4, 4]],
+                summary: 'Clarifies Chalcedon by affirming that one of the Holy Trinity suffered in the flesh and that Christ has one composite hypostasis acting across two natures.'
+            },
+            {
+                id: 'nicaea_ii_787',
+                kind: 'Council',
+                year: '787',
+                title: 'Second Council of Nicaea (AD 787) — Veneration of Sacred Icons & Incarnation',
+                citation: 'DH 600–609 · Tanner I, 133',
+                pdf_key: 'tanner_v1',
+                pdf_page: 133,
+                books: ['exod', 'num', '1kgs', 'john', 'col', 'heb'],
+                refs: [['exod', 25, 18], ['num', 21, 8], ['john', 1, 14], ['col', 1, 15]],
+                summary: 'Defines that because the invisible Word truly became visible flesh (Col 1:15), sacred icons of Christ, Mary, and the saints receive relative honor of veneration (timetike proskynesis), strictly distinct from divine adoration (latreia).'
+            },
+            {
+                id: 'lateran_iv_1215',
+                kind: 'Council',
+                year: '1215',
+                title: 'Fourth Lateran Council (1215) — Creation, Trinity, Sacraments & Transubstantiation',
+                citation: 'DH 800–808 · Tanner I, 230',
+                pdf_key: 'tanner_v1',
+                pdf_page: 230,
+                books: ['gen', 'ps', 'matt', 'john', 'rom', '1cor'],
+                refs: [['gen', 1, 1], ['matt', 28, 19], ['john', 6, 53], ['1cor', 11, 24]],
+                summary: 'Codifies the term transubstantiation for the Eucharistic conversion, defines creation ex nihilo from the beginning of time, and formulates the analogy of being between Creator and creature (DH 806).'
+            },
+            {
+                id: 'florence_1439_1442',
+                kind: 'Council',
+                year: '1439',
+                title: 'Council of Florence (1439–1442) — Canon of Scripture, Filioque & Seven Sacraments',
+                citation: 'DH 1300–1353 · Laetentur Caeli & Cantate Domino · Tanner I, 523',
+                pdf_key: 'tanner_v1',
+                pdf_page: 523,
+                books: ['gen', 'tob', 'jdt', 'wis', 'sir', '1macc', '2macc', 'matt', 'john', 'jas'],
+                refs: [['john', 15, 26], ['john', 16, 14], ['2macc', 12, 46], ['jas', 5, 14]],
+                summary: 'Proclaims the reunion decree Laetentur Caeli on the Filioque and Roman Primacy, lists all 73 books of the Catholic Bible including the Deuterocanonicals before Trent, and summarizes the Seven Sacraments.'
             },
             {
                 id: 'trent_sess4_1546',
                 kind: 'Council',
+                year: '1546',
                 title: 'Council of Trent, Session IV (1546) — Canonical Scriptures & Apostolic Tradition',
                 citation: 'DH 1501–1508 · Decree on Sacred Books and Traditions',
+                pdf_key: 'denzinger',
+                pdf_page: 256,
                 books: ['gen', 'tob', 'jdt', 'wis', 'sir', 'bar', '1macc', '2macc', '2thess', '2tim', '2pet'],
                 refs: [['gen', 1, 1], ['2macc', 12, 46], ['2thess', 2, 15], ['2tim', 3, 16]],
-                summary: 'Receives and venerates with equal pious affection all 73 books of the Old and New Testaments (including the Deuterocanonical books transmitted in the Septuagint and Latin Vulgate) together with unwritten Apostolic Traditions.'
+                summary: 'Receives and venerates with equal pious affection all 73 books of the Old and New Testaments (including the Deuterocanonical books transmitted in the Septuagint and Latin Vulgate) together with unwritten Apostolic Traditions.',
+                canons: [
+                    'Enumerates the full 46-book Old Testament and 27-book New Testament canon.',
+                    'Declares the Latin Vulgate "authentic" for public lectures, disputations, and preaching without forbidding recourse to original Hebrew/Greek manuscripts (explained in Divino Afflante Spiritu).'
+                ]
             },
             {
                 id: 'trent_sess5_1546',
                 kind: 'Council',
-                title: 'Council of Trent, Session V (1546) — Decree on Original Sin & the Protoevangelium',
+                year: '1546',
+                title: 'Council of Trent, Session V (1546) — Decree on Original Sin & Protoevangelium',
                 citation: 'DH 1510–1516',
+                pdf_key: 'denzinger',
+                pdf_page: 260,
                 books: ['gen', 'ps', 'rom', '1cor'],
                 refs: [['gen', 3, 1], ['gen', 3, 15], ['ps', 51, 5], ['rom', 5, 12], ['rom', 5, 19]],
                 summary: 'Defines the transmission of Adam’s transgression and its remission through the merits of Jesus Christ applied in Baptism, while affirming the Immaculate Virgin Mary predicted in Genesis 3:15.'
@@ -10667,76 +11423,221 @@
             {
                 id: 'trent_sess6_1547',
                 kind: 'Council',
+                year: '1547',
                 title: 'Council of Trent, Session VI (1547) — Decree & 33 Canons on Justification',
                 citation: 'DH 1520–1583',
+                pdf_key: 'denzinger',
+                pdf_page: 265,
                 books: ['gen', 'rom', '1cor', 'gal', 'eph', 'jas'],
                 refs: [['gen', 15, 6], ['rom', 3, 28], ['rom', 5, 5], ['gal', 5, 6], ['jas', 2, 24]],
-                summary: 'Defines justification as not merely forensic non-imputation, but true interior sanctification and renewal of the inner man through the infusion of charity, faith working through love (Gal 5:6), and cooperation with grace (Jas 2:24).'
+                summary: 'Defines justification as not merely forensic non-imputation, but true interior sanctification and renewal of the inner man through the infusion of charity, faith working through love (Gal 5:6), and cooperation with grace (Jas 2:24).',
+                canons: [
+                    'Canon 9: Anathema if anyone says the ungodly is justified by faith alone without preparation or movement of the will.',
+                    'Canon 11: Justification includes both remission of sins and the grace/charity poured into hearts by the Holy Spirit (Rom 5:5).',
+                    'Canon 24: Good works done in Christ truly merit an increase of grace and eternal life.'
+                ]
+            },
+            {
+                id: 'trent_sess7_14_sacraments',
+                kind: 'Council',
+                year: '1551',
+                title: 'Council of Trent, Sessions VII & XIV (1547–1551) — Sacraments, Penance & Anointing',
+                citation: 'DH 1600–1719',
+                pdf_key: 'denzinger',
+                pdf_page: 280,
+                books: ['john', 'acts', 'rom', 'jas'],
+                refs: [['john', 3, 5], ['john', 20, 22], ['john', 20, 23], ['acts', 8, 17], ['jas', 5, 14]],
+                summary: 'Defines the efficacy of all seven sacraments ex opere operato, the judicial ministry of sacramental absolution given to the Apostles in John 20:22–23, and Anointing of the Sick from James 5:14–15.'
             },
             {
                 id: 'trent_sess13_22_eucharist',
                 kind: 'Council',
-                title: 'Council of Trent, Sessions XIII (1551) & XXII (1562) — Real Presence & Sacrifice of the Mass',
+                year: '1562',
+                title: 'Council of Trent, Sessions XIII (1551) & XXII (1562) — Real Presence & Mass Sacrifice',
                 citation: 'DH 1635–1661, 1738–1759',
+                pdf_key: 'denzinger',
+                pdf_page: 289,
                 books: ['gen', 'exod', 'mal', 'matt', 'mark', 'luke', 'john', '1cor', 'heb'],
                 refs: [['gen', 14, 18], ['exod', 12, 8], ['mal', 1, 11], ['matt', 26, 26], ['john', 6, 51], ['john', 6, 53], ['1cor', 10, 16], ['1cor', 11, 24]],
                 summary: 'Defines the substantial presence of Christ’s Body, Blood, Soul, and Divinity via transubstantiation and the propitiatory Eucharistic Sacrifice prefigured by Melchizedek (Gen 14:18) and foretold by Malachi (Mal 1:11).'
             },
             {
+                id: 'trent_sess23_25_orders',
+                kind: 'Council',
+                year: '1563',
+                title: 'Council of Trent, Sessions XXIII & XXV (1563) — Priesthood, Purgatory & Saints',
+                citation: 'DH 1763–1825',
+                pdf_key: 'denzinger',
+                pdf_page: 312,
+                books: ['1cor', '2cor', '1tim', '2tim', '2macc', 'rev'],
+                refs: [['2macc', 12, 46], ['1cor', 3, 15], ['1tim', 4, 14], ['2tim', 1, 6], ['rev', 5, 8]],
+                summary: 'Defines the visible sacrificial priesthood of the New Covenant conferred by Holy Orders, suffrages for the faithful departed in Purgatory, and the intercession and veneration of saints and relics.'
+            },
+            {
+                id: 'ineffabilis_deus_1854',
+                kind: 'Encyclical',
+                year: '1854',
+                title: 'Pope Pius IX — Ineffabilis Deus (1854): Dogma of the Immaculate Conception',
+                citation: 'DH 2803 · Apostolic Constitution',
+                pdf_key: 'denzinger',
+                pdf_page: 432,
+                books: ['gen', 'luke', 'eph', 'rev'],
+                refs: [['gen', 3, 15], ['luke', 1, 28], ['luke', 1, 42], ['rev', 12, 1]],
+                summary: 'Defines ex cathedra that Mary, from the first instant of her conception, by a singular grace and privilege of Almighty God in view of the merits of Jesus Christ, was preserved free from all stain of Original Sin (kecharitomene, Luke 1:28).'
+            },
+            {
                 id: 'vatican_i_dei_filius_1870',
                 kind: 'Council',
-                title: 'First Vatican Council (1870) — Dogmatic Constitution Dei Filius & Pastor Aeternus',
+                year: '1870',
+                title: 'First Vatican Council (1870) — Dei Filius & Pastor Aeternus (Petrine Primacy)',
                 citation: 'DH 3000–3075',
+                pdf_key: 'denzinger',
+                pdf_page: 444,
                 books: ['gen', 'wis', 'matt', 'luke', 'john', 'rom'],
                 refs: [['gen', 1, 1], ['wis', 13, 1], ['matt', 16, 18], ['matt', 16, 19], ['luke', 22, 32], ['john', 21, 15], ['rom', 1, 20]],
                 summary: 'Defines creation ex nihilo (Gen 1:1), the natural knowability of God from created things (Wis 13:1; Rom 1:20), plenary biblical inspiration, and the primacy and infallible Magisterium of the Petrine See (Matt 16:18; Luke 22:32).'
             },
             {
-                id: 'vatican_ii_dei_verbum_1965',
-                kind: 'Council',
-                title: 'Second Vatican Council (1965) — Dogmatic Constitution Dei Verbum on Divine Revelation',
-                citation: 'Dei Verbum §§1–26 · DH 4201–4235',
-                books: ['gen', 'exod', 'isa', 'matt', 'luke', 'john', '2tim', '2pet'],
-                refs: [['gen', 1, 1], ['john', 1, 1], ['john', 1, 14], ['2tim', 3, 16], ['2pet', 1, 20]],
-                summary: 'Articulates the unity of Sacred Tradition, Sacred Scripture, and the living Magisterium (§10), asserting that Scripture teaches solidly, faithfully, and without error that truth which God wanted put into sacred writings for the sake of salvation (§11), and mandating exegesis in the same Spirit in which it was written (§12).'
+                id: 'enc_aeterni_patris_1879',
+                kind: 'Encyclical',
+                year: '1879',
+                title: 'Pope Leo XIII — Aeterni Patris (1879): Christian Philosophy & Thomistic Synthesis',
+                citation: 'ASS 12 (1879) 97–115 · DH 3135–3140',
+                books: ['wis', 'acts', 'rom', 'col'],
+                refs: [['wis', 13, 5], ['acts', 17, 23], ['rom', 1, 20], ['col', 2, 8]],
+                summary: 'Demonstrates how the Church Fathers (Justin, Irenaeus, Clement, Origen, Augustine) and St. Thomas Aquinas harmonize revealed theology with sound metaphysics against modern rationalism and fideism.'
             },
             {
                 id: 'enc_providentissimus_deus_1893',
                 kind: 'Encyclical',
-                title: 'Pope Leo XIII — Providentissimus Deus (1893): On the Study of Holy Scripture',
-                citation: 'ASS 26 (1893–94) 269–292 · EB 81–134',
+                year: '1893',
+                title: 'Pope Leo XIII — Providentissimus Deus (1893): Charter on Study of Holy Scripture',
+                citation: 'ASS 26 (1893–94) 269–292 · DH 3280–3294',
+                pdf_key: 'denzinger',
+                pdf_page: 486,
                 books: ['gen', 'ps', 'wis', 'john', '2tim'],
                 refs: [['gen', 1, 1], ['gen', 1, 3], ['gen', 2, 7], ['2tim', 3, 16]],
-                summary: 'Establishes the charter of modern Catholic biblical scholarship: defends plenary inspiration across all canonical parts, the harmony of natural science and Genesis creation accounts, and the authority of the Fathers and original biblical tongues.'
+                summary: 'Establishes the charter of modern Catholic biblical scholarship: defends plenary inspiration across all canonical parts, harmony with natural science, and recourse to the Fathers and original tongues.'
+            },
+            {
+                id: 'enc_spiritus_paraclitus_1920',
+                kind: 'Encyclical',
+                year: '1920',
+                title: 'Pope Benedict XV — Spiritus Paraclitus (1920): St. Jerome & Biblical Inerrancy',
+                citation: 'AAS 12 (1920) 385–422 · DH 3650–3654',
+                books: ['ps', 'isa', 'matt', '2tim', '2pet'],
+                refs: [['matt', 5, 18], ['2tim', 3, 16], ['2pet', 1, 20]],
+                summary: 'Celebrates the 1500th anniversary of St. Jerome ("Ignorance of the Scriptures is ignorance of Christ"), affirming total biblical inspiration and historical trustworthiness grounded in Christ’s own use of Scripture.'
             },
             {
                 id: 'enc_divino_afflante_spiritu_1943',
                 kind: 'Encyclical',
+                year: '1943',
                 title: 'Pope Pius XII — Divino Afflante Spiritu (1943): Original Texts & Literary Genres',
                 citation: 'AAS 35 (1943) 297–325 · DH 3825–3831',
+                pdf_key: 'denzinger',
+                pdf_page: 562,
                 books: ['gen', 'exod', 'ps', 'isa', 'matt', 'rom', 'heb'],
                 refs: [['gen', 1, 1], ['gen', 2, 4], ['ps', 110, 1], ['isa', 7, 14], ['heb', 1, 1]],
-                summary: 'Mandates recourse to the original Hebrew, Aramaic, and Greek texts alongside the Latin Vulgate (explaining Trent’s "authentic" juridical meaning) and integrates ancient Near Eastern literary genres into Catholic literal and spiritual exegesis.'
+                summary: 'Mandates recourse to the original Hebrew, Aramaic, and Greek texts alongside the Latin Vulgate (explaining Trent’s juridical meaning) and integrates ancient Near Eastern literary genres into Catholic literal and spiritual exegesis.'
             },
             {
                 id: 'enc_humani_generis_1950',
                 kind: 'Encyclical',
-                title: 'Pope Pius XII — Humani Generis (1950): Monogenism, Genesis 1–11 & Doctrinal Guardrails',
+                year: '1950',
+                title: 'Pope Pius XII — Humani Generis (1950): Monogenism, Gen 1–11 & Doctrinal Guardrails',
                 citation: 'AAS 42 (1950) 561–578 · DH 3875–3899',
+                pdf_key: 'denzinger',
+                pdf_page: 572,
                 books: ['gen', 'rom', '1cor'],
                 refs: [['gen', 1, 26], ['gen', 2, 7], ['gen', 3, 1], ['rom', 5, 12], ['1cor', 15, 22]],
                 summary: 'Affirms the true historical sense of Genesis 1–11 in its sacred literary forms and rejects polygenism as irreconcilable with the dogma of Original Sin transmitted from a single first parent Adam.'
             },
             {
+                id: 'munificentissimus_deus_1950',
+                kind: 'Encyclical',
+                year: '1950',
+                title: 'Pope Pius XII — Munificentissimus Deus (1950): Bodily Assumption of Mary',
+                citation: 'AAS 42 (1950) 753–771 · DH 3900–3904',
+                pdf_key: 'denzinger',
+                pdf_page: 579,
+                books: ['gen', 'ps', 'luke', '1cor', 'rev'],
+                refs: [['gen', 3, 15], ['ps', 132, 8], ['1cor', 15, 54], ['rev', 12, 1]],
+                summary: 'Defines ex cathedra that the Immaculate Mother of God, having completed the course of her earthly life, was assumed body and soul into heavenly glory as the New Eve and Queen of Revelation 12.'
+            },
+            {
+                id: 'vatican_ii_lumen_gentium_1964',
+                kind: 'Council',
+                year: '1964',
+                title: 'Second Vatican Council (1964) — Lumen Gentium: Mystery of the Church & Petrine College',
+                citation: 'LG §§1–69 · DH 4101–4179',
+                pdf_key: 'ccc_commentary',
+                pdf_page: 1,
+                books: ['exod', 'isa', 'matt', 'acts', '1cor', 'eph', '1pet'],
+                refs: [['exod', 19, 6], ['matt', 16, 18], ['eph', 2, 20], ['1pet', 2, 9]],
+                summary: 'Expounds the Church as Sacrament of Communion, Mystical Body of Christ, and New People of God subsisting in the Catholic Church governed by the successor of Peter and the bishops in communion with him.'
+            },
+            {
+                id: 'vatican_ii_dei_verbum_1965',
+                kind: 'Council',
+                year: '1965',
+                title: 'Second Vatican Council (1965) — Dei Verbum: Sacred Tradition, Scripture & Exegesis',
+                citation: 'Dei Verbum §§1–26 · DH 4201–4235',
+                pdf_key: 'ccc_commentary',
+                pdf_page: 1,
+                books: ['gen', 'exod', 'isa', 'matt', 'luke', 'john', '2tim', '2pet'],
+                refs: [['gen', 1, 1], ['john', 1, 1], ['john', 1, 14], ['2tim', 3, 16], ['2pet', 1, 20]],
+                summary: 'Articulates the unity of Sacred Tradition, Sacred Scripture, and the living Magisterium (§10), asserting that Scripture teaches solidly, faithfully, and without error that truth which God wanted put into sacred writings for salvation (§11), and mandating exegesis in the same Spirit in which it was written (§12).',
+                canons: [
+                    'DV §9–10: Sacred Tradition and Sacred Scripture form one sacred deposit of the word of God entrusted to the Church.',
+                    'DV §12: Must attend to content and unity of the whole Scripture, the living Tradition of the whole Church, and the Analogy of Faith.'
+                ]
+            },
+            {
+                id: 'enc_fides_et_ratio_1998',
+                kind: 'Encyclical',
+                year: '1998',
+                title: 'Pope St. John Paul II — Fides et Ratio (1998): Faith, Reason & Sapiential Scripture',
+                citation: 'AAS 91 (1999) 5–88',
+                books: ['prov', 'wis', 'john', 'rom', '1cor', 'col'],
+                refs: [['wis', 13, 1], ['john', 1, 1], ['rom', 1, 20], ['1cor', 1, 22]],
+                summary: 'Unites biblical Wisdom theology (Proverbs, Wisdom 13) with Pauline kerygma (Rom 1:20; 1 Cor 1), showing that faith and reason are two wings on which the human spirit rises to contemplation of truth.'
+            },
+            {
                 id: 'enc_verbum_domini_2010',
                 kind: 'Encyclical',
-                title: 'Pope Benedict XVI — Verbum Domini (2010): The Word of the Lord in the Life of the Church',
+                year: '2010',
+                title: 'Pope Benedict XVI — Verbum Domini (2010): Canonical Exegesis & Analogy of Faith',
                 citation: 'AAS 102 (2010) 681–787',
                 books: ['gen', 'ps', 'isa', 'john', 'rom', 'heb', 'rev'],
                 refs: [['gen', 1, 1], ['john', 1, 1], ['john', 1, 14], ['heb', 4, 12]],
                 summary: 'Synthesizes historical-critical method (Method B) with canonical and theological exegesis (Method C), showing that historical philology reaches completion only when read within the living subject of the People of God and the Analogy of Faith.'
             }
         ];
+
+        function openMagisterialInAppPdf(docId) {
+            const m = MAGISTERIAL_ENCHIRIDION.find(x => x.id === docId) || MAGISTERIAL_ENCHIRIDION[0];
+            if (!m) return;
+            const canonsStr = (m.canons || []).map((c, idx) => `${idx + 1}. ${c}`).join('\n');
+            const refsStr = (m.refs || []).map(r => `${r[0].toUpperCase()} ${r[1]}:${r[2]}`).join(' · ');
+            const params = new URLSearchParams({
+                doc_id: m.id,
+                title: m.title,
+                citation: m.citation || '',
+                kind: m.kind || 'Council',
+                summary: m.summary || '',
+                canons: canonsStr,
+                refs: refsStr,
+                pdf_key: m.pdf_key || ''
+            });
+            const page = m.pdf_page || 1;
+            openInAppPdfModal(`/plenary/magisterial_pdf?${params.toString()}`, `Magisterial Source — ${m.title}`, page);
+        }
+
+        function selectMagisterialDoc(docId) {
+            selectedMagDocId = docId;
+            renderMasterStudyHubContent();
+        }
 
         function renderMagisterialEnchiridionForVerse(bookId, chapNum, verseNum) {
             const exact = MAGISTERIAL_ENCHIRIDION.filter(m =>
@@ -10746,18 +11647,22 @@
             if (!bookWide.length) return '';
 
             return `
-                <div class="pt-2 border-t border-slate-800 space-y-2">
+                <div class="pt-3 border-t border-slate-800 space-y-2">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-mono font-bold text-amber-300 uppercase tracking-wider">Magisterial Councils &amp; Papal Encyclicals (${exact.length > 0 ? 'Direct Locus Match' : 'Canonical Book Reception'})</span>
-                        <button type="button" onclick="toggleMasterStudyHubModal('patristics_councils')" class="text-[10px] font-mono text-cyan-300 hover:underline">Open Full Enchiridion →</button>
+                        <span class="text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">Magisterial Councils &amp; Papal Encyclicals (${exact.length > 0 ? 'Direct Locus Match' : 'Canonical Book Reception'})</span>
+                        <button type="button" onclick="toggleMasterStudyHubModal('councils')" class="text-[10px] font-mono text-cyan-300 hover:underline">Open Full Enchiridion Reader &rarr;</button>
                     </div>
                     ${bookWide.map(m => `
-                        <div class="p-3 rounded-lg border ${m.kind === 'Council' ? 'border-amber-500/40 bg-amber-950/15' : 'border-sky-500/40 bg-sky-950/15'} space-y-1">
+                        <div class="p-3 rounded-lg border ${m.kind === 'Council' ? 'border-amber-500/40 bg-amber-950/15' : 'border-sky-500/40 bg-sky-950/15'} space-y-1.5">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <span class="text-xs font-bold ${m.kind === 'Council' ? 'text-amber-300' : 'text-sky-300'}">${escapeHtmlText(m.title)}</span>
                                 <span class="px-1.5 py-0.5 rounded text-[9px] font-mono uppercase ${m.kind === 'Council' ? 'bg-amber-500/20 text-amber-200 border border-amber-500/40' : 'bg-sky-500/20 text-sky-200 border border-sky-500/40'}">${escapeHtmlText(m.kind)} · ${escapeHtmlText(m.citation)}</span>
                             </div>
                             <div class="text-xs text-slate-200 leading-relaxed font-serif">${escapeHtmlText(m.summary)}</div>
+                            <div class="flex flex-wrap items-center gap-2 pt-1 font-mono text-[10px]">
+                                <button type="button" onclick="openMagisterialInAppPdf('${escapeJsArg(m.id)}')" class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25">Open In-App PDF &rarr;</button>
+                                <button type="button" onclick="selectedMagDocId='${escapeJsArg(m.id)}'; toggleMasterStudyHubModal('councils');" class="text-amber-300 hover:underline">Read Canons &amp; Proofs</button>
+                            </div>
                         </div>
                     `).join('')}
                 </div>
@@ -10767,7 +11672,32 @@
         // ========================================================
         // --- 10. MASTER STUDY BIBLE APPARATUS & REFERENCE HUB ---
         // ========================================================
-        let masterHubActiveCategory = 'reading_guides';
+        const HUB_CATEGORY_ALIASES = {
+            reading_guides: 'guides',
+            commentary: 'commentaries',
+            word_studies: 'words',
+            charts_diagrams: 'charts',
+            maps_media: 'maps',
+            patristics_councils: 'councils',
+            concordance_xrefs: 'concordance',
+        };
+
+        const HUB_TIER_ALIASES = {
+            tier1_catholic: '1',
+            tier2_critical: '2',
+            tier3_patristic: '3',
+            tier4_comparative: '4',
+        };
+
+        function normalizeHubCategory(cat) {
+            return HUB_CATEGORY_ALIASES[cat] || cat || 'guides';
+        }
+
+        function normalizeHubTier(tier) {
+            return HUB_TIER_ALIASES[tier] || String(tier || 'all');
+        }
+
+        let masterHubActiveCategory = 'guides';
         let masterHubActiveTier = 'all';
 
         const SOURCE_TIER_MAP = {
@@ -10802,7 +11732,7 @@
             const modal = document.getElementById('masterStudyHubModal');
             if (!modal) return;
             if (initialCategory) {
-                masterHubActiveCategory = initialCategory;
+                masterHubActiveCategory = normalizeHubCategory(initialCategory);
                 modal.classList.remove('hidden');
             } else if (modal.classList.contains('hidden')) {
                 modal.classList.remove('hidden');
@@ -10817,53 +11747,55 @@
         }
 
         function setMasterStudyHubCategory(cat) {
-            masterHubActiveCategory = cat || 'reading_guides';
+            masterHubActiveCategory = normalizeHubCategory(cat);
             syncMasterStudyHubButtons();
             renderMasterStudyHubContent();
         }
 
         function setMasterStudyHubTier(tier) {
-            masterHubActiveTier = tier || 'all';
+            masterHubActiveTier = normalizeHubTier(tier);
             syncMasterStudyHubButtons();
             renderMasterStudyHubContent();
         }
 
         function syncMasterStudyHubButtons() {
-            ['reading_guides', 'commentary', 'word_studies', 'charts_diagrams', 'dictionaries', 'maps_media', 'patristics_councils', 'concordance_xrefs'].forEach(cat => {
-                const btn = document.getElementById(`mshCat-${cat}`);
-                if (!btn) return;
-                btn.className = (cat === masterHubActiveCategory)
-                    ? 'px-2.5 py-1 rounded border transition bg-amber-500/20 text-amber-300 border-amber-500/40 font-semibold'
+            const curCat = normalizeHubCategory(masterHubActiveCategory);
+            const curTier = normalizeHubTier(masterHubActiveTier);
+            document.querySelectorAll('#studyHubCatBar [data-hub-cat]').forEach(btn => {
+                const isAct = btn.getAttribute('data-hub-cat') === curCat;
+                btn.className = isAct
+                    ? 'px-2.5 py-1 rounded border transition bg-amber-500/20 text-amber-300 border-amber-500/40 font-bold'
                     : 'px-2.5 py-1 rounded border transition bg-slate-800 text-slate-300 border-slate-700 hover:text-white';
             });
-            ['all', 'tier1_catholic', 'tier2_critical', 'tier3_patristic', 'tier4_comparative'].forEach(t => {
-                const btn = document.getElementById(`mshTier-${t}`);
-                if (!btn) return;
-                btn.className = (t === masterHubActiveTier)
-                    ? 'px-2 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/50 font-semibold'
+            document.querySelectorAll('#studyHubTierBar [data-hub-tier]').forEach(btn => {
+                const isAct = btn.getAttribute('data-hub-tier') === curTier;
+                btn.className = isAct
+                    ? 'px-2 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/50 font-bold'
                     : 'px-2 py-0.5 rounded border bg-slate-900 text-slate-400 border-slate-800 hover:text-white';
             });
         }
 
         function matchesHubTier(tierNum) {
-            if (masterHubActiveTier === 'all') return true;
-            if (masterHubActiveTier === 'tier1_catholic') return tierNum === 1;
-            if (masterHubActiveTier === 'tier2_critical') return tierNum === 2;
-            if (masterHubActiveTier === 'tier3_patristic') return tierNum === 3;
-            if (masterHubActiveTier === 'tier4_comparative') return tierNum === 4;
-            return true;
+            const curTier = normalizeHubTier(masterHubActiveTier);
+            if (curTier === 'all') return true;
+            return String(tierNum) === curTier;
         }
 
         function renderMasterStudyHubContent() {
             const body = document.getElementById('masterStudyHubBody');
             if (!body) return;
-            const q = ((document.getElementById('masterStudyHubSearch') || {}).value || '').trim().toLowerCase();
+            const searchEl = document.getElementById('studyHubSearchInput') || document.getElementById('masterStudyHubSearch');
+            const q = ((searchEl && searchEl.value) || '').trim().toLowerCase();
             const book = (APP_DATA && APP_DATA.books && APP_DATA.books[currentBookIndex]) || { id: 'gen', name: 'Genesis', abbr: 'Gen' };
             const chapNum = currentChapterIndex + 1;
             const verseNum = currentVerseIndex + 1;
+            const ctxEl = document.getElementById('studyHubContextLabel');
+            if (ctxEl) ctxEl.textContent = `${book.abbr} ${chapNum}:${verseNum}`;
+
+            const curCat = normalizeHubCategory(masterHubActiveCategory);
             const nabreData = window.__PLENARY_NABRE_STUDY_GUIDE || {};
 
-            if (masterHubActiveCategory === 'reading_guides') {
+            if (curCat === 'guides') {
                 const bg = (nabreData.books && nabreData.books[book.id]) || null;
                 const articles = (nabreData.general_articles || []).filter(a => !q || a.title.toLowerCase().includes(q) || (a.text || '').toLowerCase().includes(q));
                 const divs = (nabreData.division_essays || []).filter(d => !q || d.title.toLowerCase().includes(q) || (d.text || '').toLowerCase().includes(q));
@@ -10872,9 +11804,9 @@
                         <div class="p-4 rounded-xl border border-amber-500/40 bg-slate-950 flex flex-wrap items-center justify-between gap-2">
                             <div>
                                 <div class="text-[10px] font-mono uppercase text-amber-400">CATEGORY 1 · MASTER READING GUIDES, BOOK INTRODUCTIONS &amp; ESSAYS</div>
-                                <h3 class="text-base font-bold text-white">Active Book: ${escapeHtmlText(book.name)} (${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}) + All 73 Canonical Introductions</h3>
+                                <h3 class="text-base font-bold text-white" style="font-family:var(--plenary-font-ui);">Active Book: ${escapeHtmlText(book.name)} (${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}) + All 73 Canonical Introductions</h3>
                             </div>
-                            <div class="flex items-center gap-2 font-mono text-xs">
+                            <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
                                 <button onclick="toggleMasterStudyHubModal(); toggleNabreGuideModal('book');" class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30">Open Dedicated Reading Guide Window</button>
                                 ${bg && bg.intro_pdf_page ? `<button onclick="openNabrePdfAtPage(${bg.intro_pdf_page})" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30">Open Intro in In-App PDF (p. ${bg.intro_pdf_page})</button>` : ''}
                             </div>
@@ -10884,14 +11816,14 @@
                             <div class="text-xs font-mono font-bold text-amber-300 uppercase">General Study Bible Essays &amp; Division Introductions (${articles.length + divs.length})</div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 ${articles.map((a, idx) => `
-                                    <div class="p-3 rounded-lg border border-slate-800 bg-slate-900/70 space-y-1.5">
+                                    <div class="p-3.5 rounded-lg border border-slate-800 bg-slate-900/70 space-y-1.5">
                                         <div class="flex items-center justify-between gap-2">
-                                            <span class="font-bold text-xs text-sky-300">${escapeHtmlText(a.title)}</span>
+                                            <span class="font-bold text-xs text-sky-300" style="font-family:var(--plenary-font-ui);">${escapeHtmlText(a.title)}</span>
                                             <span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${SOURCE_TIER_LABELS[1].cls}">TIER 1 · CATHOLIC</span>
                                         </div>
-                                        <div class="text-[11px] text-slate-300 line-clamp-3 font-serif">${escapeHtmlText((a.text || '').slice(0, 260))}...</div>
-                                        <div class="flex items-center gap-2 pt-1 font-mono text-[10px]">
-                                            <button onclick="toggleMasterStudyHubModal(); nabreSelectedArticleIdx=${idx}; toggleNabreGuideModal('articles');" class="text-amber-300 hover:underline">Read Full Essay →</button>
+                                        <div class="text-xs text-slate-300 line-clamp-3 font-serif leading-relaxed">${escapeHtmlText((a.text || '').slice(0, 280))}...</div>
+                                        <div class="flex items-center gap-3 pt-1 font-mono text-[10px]">
+                                            <button onclick="toggleMasterStudyHubModal(); nabreSelectedArticleIdx=${idx}; toggleNabreGuideModal('articles');" class="text-amber-300 hover:underline">Read Full Essay &rarr;</button>
                                             <button onclick="openNabrePdfAtPage(${a.pdf_page})" class="text-cyan-300 hover:underline">In-App PDF (p. ${a.pdf_page})</button>
                                         </div>
                                     </div>
@@ -10903,7 +11835,7 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'commentary') {
+            if (curCat === 'commentaries') {
                 body.innerHTML = `<div class="p-4 text-xs text-slate-400 font-mono">Loading and ranking all 18 Study Bible &amp; Commentary streams for ${escapeHtmlText(book.name)} ${chapNum}:${verseNum} by Scholarly Reliability Tier...</div>`;
                 loadBookNotesShard(book.id, (shardData) => {
                     const chapObj = (shardData && shardData.chapters && shardData.chapters[String(chapNum)]) || {};
@@ -10924,7 +11856,7 @@
                             <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-950 flex flex-wrap items-center justify-between gap-2 text-xs">
                                 <div>
                                     <span class="font-mono font-bold text-amber-300">CATEGORY 2 · 18-SOURCE STUDY COMMENTARY &amp; TRANSLATOR NOTES</span>
-                                    <span class="text-slate-400 ml-2">Showing ${filtered.length} notes for ${escapeHtmlText(book.name)} ${chapNum}${q ? ' (Chapter-Wide Search)' : ':' + verseNum} sorted Tier 1 (Catholic Magisterial) → Tier 4</span>
+                                    <span class="text-slate-400 ml-2">Showing ${filtered.length} notes for ${escapeHtmlText(book.name)} ${chapNum}${q ? ' (Chapter-Wide Search)' : ':' + verseNum} sorted Tier 1 (Catholic Magisterial) &rarr; Tier 4</span>
                                 </div>
                             </div>
                             <div class="space-y-2.5">
@@ -10952,14 +11884,14 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'word_studies') {
+            if (curCat === 'words') {
                 const profiles = Object.values((APP_DATA.bible_word_study && APP_DATA.bible_word_study.profiles) || {});
                 const filtered = profiles.filter(p => !q || (p.lemma || '').toLowerCase().includes(q) || (p.strong_id || '').toLowerCase().includes(q) || (p.definition || '').toLowerCase().includes(q) || (p.translit || '').toLowerCase().includes(q));
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div class="p-3.5 rounded-xl border border-emerald-500/30 bg-slate-950 flex flex-wrap items-center justify-between gap-2 text-xs">
                             <div><strong class="font-mono text-emerald-300">CATEGORY 3 · WORD STUDIES, STRONG'S LEXICON &amp; SEPTUAGINT EQUIVALENTS (${filtered.length} Profiles)</strong></div>
-                            <button onclick="toggleMasterStudyHubModal(); toggleBWSModal();" class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-[11px]">Open Interactive Translation Wheel →</button>
+                            <button onclick="toggleMasterStudyHubModal(); toggleBWSModal();" class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-[11px]">Open Interactive Translation Wheel &rarr;</button>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             ${filtered.map(p => `
@@ -10969,7 +11901,7 @@
                                             <span class="text-lg font-serif font-bold text-emerald-300">${escapeHtmlText(p.lemma)}</span>
                                             <span class="text-xs font-mono text-slate-400 ml-1">(${escapeHtmlText(p.translit || '')} · ${escapeHtmlText(p.strong_id)})</span>
                                         </div>
-                                        <button onclick="toggleMasterStudyHubModal(); openBibleWordStudyModal('${escapeJsArg(p.strong_id)}');" class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono">Open Word Study →</button>
+                                        <button onclick="toggleMasterStudyHubModal(); openBibleWordStudyModal('${escapeJsArg(p.strong_id)}');" class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono">Open Word Study &rarr;</button>
                                     </div>
                                     <div class="text-xs text-slate-300 leading-relaxed">${escapeHtmlText(p.definition || '')}</div>
                                     ${p.patristic_notes ? `<div class="text-[11px] text-purple-300/90 italic border-t border-slate-800/80 pt-1"><strong>Patristic Reception:</strong> ${escapeHtmlText(p.patristic_notes)}</div>` : ''}
@@ -10981,7 +11913,7 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'charts_diagrams') {
+            if (curCat === 'charts') {
                 const chiasms = ((APP_DATA.biblical_chiasms && APP_DATA.biblical_chiasms.entries) || []).filter(c => !q || c.title.toLowerCase().includes(q) || c.locus.toLowerCase().includes(q));
                 const vorlagen = ((APP_DATA.bibcrit_vorlagen && APP_DATA.bibcrit_vorlagen.entries) || []).filter(v => !q || v.locus.toLowerCase().includes(q) || v.pericope.toLowerCase().includes(q));
                 const revisions = ((APP_DATA.theological_revisions && APP_DATA.theological_revisions.entries) || []).filter(r => !q || r.title.toLowerCase().includes(q) || r.locus.toLowerCase().includes(q));
@@ -11000,7 +11932,7 @@
                                     <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/90 space-y-1">
                                         <div class="flex items-center justify-between gap-2">
                                             <span class="font-bold text-xs text-violet-300">${escapeHtmlText(c.locus)} — ${escapeHtmlText(c.title)}</span>
-                                            <button onclick="toggleMasterStudyHubModal(); toggleChiasmModal(); renderChiasmView('${escapeJsArg(c.id)}');" class="text-[10px] font-mono text-amber-300 hover:underline">Inspect Diagram →</button>
+                                            <button onclick="toggleMasterStudyHubModal(); toggleChiasmModal(); renderChiasmView('${escapeJsArg(c.id)}');" class="text-[10px] font-mono text-amber-300 hover:underline">Inspect Diagram &rarr;</button>
                                         </div>
                                         <div class="text-[11px] text-slate-300"><strong>Apex (${escapeHtmlText(c.center_verse)}):</strong> ${escapeHtmlText(c.center_theology)}</div>
                                     </div>
@@ -11014,7 +11946,7 @@
                                     <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/90 space-y-1">
                                         <div class="flex items-center justify-between gap-2">
                                             <span class="font-bold text-xs text-cyan-300">${escapeHtmlText(v.locus)} — ${escapeHtmlText(v.pericope)}</span>
-                                            <button onclick="toggleMasterStudyHubModal(); toggleBibCritModal(); renderBibCritView('${escapeJsArg(v.id)}');" class="text-[10px] font-mono text-cyan-300 hover:underline">Open Collation →</button>
+                                            <button onclick="toggleMasterStudyHubModal(); toggleBibCritModal(); renderBibCritView('${escapeJsArg(v.id)}');" class="text-[10px] font-mono text-cyan-300 hover:underline">Open Collation &rarr;</button>
                                         </div>
                                         <div class="text-[11px] text-slate-300 line-clamp-2">${escapeHtmlText(v.scholarly_analysis)}</div>
                                     </div>
@@ -11026,7 +11958,7 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'dictionaries') {
+            if (curCat === 'dictionaries') {
                 const gl = (nabreData.glossary || []).filter(g => !q || g.term.toLowerCase().includes(q) || g.def.toLowerCase().includes(q));
                 body.innerHTML = `
                     <div class="space-y-3">
@@ -11050,7 +11982,7 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'maps_media') {
+            if (curCat === 'maps') {
                 body.innerHTML = `
                     <div class="space-y-4">
                         ${renderCuratedMapsGalleryHtml(book.id)}
@@ -11062,7 +11994,7 @@
                     if (!el) return;
                     const media = (data && data.media) || [];
                     if (!media.length) {
-                        el.innerHTML = `<div class="p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400">No additional archaeological plates specifically bound to ${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}; use the interactive SVG Biblical Maps above to inspect routes and sanctuaries.</div>`;
+                        el.innerHTML = `<div class="p-3 rounded-xl border border-slate-800 bg-slate-950 text-slate-400">Showing interactive Biblical Cartography above for ${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}.</div>`;
                         return;
                     }
                     el.innerHTML = `<div class="text-[11px] font-mono font-bold text-cyan-300 uppercase mb-2">Bound Archaeological &amp; Manuscript Plates (${media.length})</div><div class="grid grid-cols-1 md:grid-cols-2 gap-3">` + media.map(m => {
@@ -11077,60 +12009,106 @@
                 return;
             }
 
-            if (masterHubActiveCategory === 'patristics_councils') {
-                const magFiltered = MAGISTERIAL_ENCHIRIDION.filter(m => !q || m.title.toLowerCase().includes(q) || m.summary.toLowerCase().includes(q) || m.citation.toLowerCase().includes(q));
+            if (curCat === 'councils') {
+                const magFiltered = MAGISTERIAL_ENCHIRIDION.filter(m =>
+                    !q || m.title.toLowerCase().includes(q) || m.summary.toLowerCase().includes(q) || m.citation.toLowerCase().includes(q) || (m.canons || []).some(c => c.toLowerCase().includes(q))
+                );
+                const activeDoc = magFiltered.find(m => m.id === selectedMagDocId) || magFiltered[0] || MAGISTERIAL_ENCHIRIDION[0];
                 const patGroups = buildPatristicIndex();
                 body.innerHTML = `
                     <div class="space-y-4">
                         <div class="p-3.5 rounded-xl border border-purple-500/40 bg-slate-950 flex flex-wrap items-center justify-between gap-2 text-xs">
-                            <div><strong class="font-mono text-purple-300">CATEGORY 7 · ECUMENICAL COUNCILS, PAPAL ENCYCLICALS &amp; PATRISTIC CATENA</strong></div>
-                            <button onclick="toggleMasterStudyHubModal(); togglePatristicModal();" class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono text-[11px]">Open Full Patristic Citation Index (${patGroups.length} Fathers) →</button>
+                            <div>
+                                <strong class="font-mono text-purple-300">CATEGORY 7 · MAGISTERIAL ENCHIRIDION (26 COUNCILS &amp; PAPAL ENCYCLICALS)</strong>
+                                <span class="text-slate-400 ml-2">Master–Detail Reader with Primary Source PDFs</span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                                <button onclick="openInAppPdfModal('/plenary/source_pdf/denzinger', 'Denzinger — Sources of Catholic Dogma', 1)" class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30">Denzinger PDF</button>
+                                <button onclick="openInAppPdfModal('/plenary/source_pdf/tanner_v1', 'Tanner SJ — Decrees of Ecumenical Councils Vol. I', 1)" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30">Tanner Councils PDF</button>
+                                <button onclick="toggleMasterStudyHubModal(); togglePatristicModal();" class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40">Patristic Index (${patGroups.length} Fathers)</button>
+                            </div>
                         </div>
-                        <div class="space-y-2.5">
-                            <div class="text-xs font-mono font-bold text-amber-300 uppercase">Ecumenical Councils &amp; Papal Biblical Encyclicals (${magFiltered.length})</div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                ${magFiltered.map(m => `
-                                    <div class="p-3.5 rounded-xl border ${m.kind === 'Council' ? 'border-amber-500/40 bg-amber-950/15' : 'border-sky-500/40 bg-sky-950/15'} space-y-2">
-                                        <div class="flex items-center justify-between gap-2">
-                                            <span class="font-bold text-xs ${m.kind === 'Council' ? 'text-amber-300' : 'text-sky-300'}">${escapeHtmlText(m.title)}</span>
-                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${SOURCE_TIER_LABELS[1].cls}">${escapeHtmlText(m.kind.toUpperCase())}</span>
+
+                        <div class="flex flex-col md:flex-row gap-4" style="min-height: 28rem;">
+                            <div class="w-full md:w-72 flex-shrink-0 border border-slate-800 bg-slate-950 rounded-xl p-2.5 space-y-1.5 overflow-y-auto" style="max-height: 58vh;">
+                                <div class="text-[10px] font-mono uppercase text-slate-400 font-bold px-1 pb-1 border-b border-slate-800">Councils &amp; Encyclicals (${magFiltered.length})</div>
+                                ${magFiltered.map(m => {
+                                    const isSel = activeDoc && m.id === activeDoc.id;
+                                    return `<button type="button" onclick="selectMagisterialDoc('${escapeJsArg(m.id)}')" class="w-full text-left p-2 rounded-lg border transition text-xs ${isSel ? (m.kind === 'Council' ? 'bg-amber-500/20 border-amber-500/50 text-amber-200 font-semibold' : 'bg-sky-500/20 border-sky-500/50 text-sky-200 font-semibold') : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:bg-slate-800'}">
+                                        <div class="flex items-center justify-between gap-1 text-[10px] font-mono mb-0.5">
+                                            <span class="${m.kind === 'Council' ? 'text-amber-400' : 'text-sky-400'}">${escapeHtmlText(m.kind)} · ${escapeHtmlText(m.year || '')}</span>
                                         </div>
-                                        <div class="text-[10px] font-mono text-slate-400">${escapeHtmlText(m.citation)}</div>
-                                        <div class="text-xs text-slate-200 font-serif leading-relaxed">${escapeHtmlText(m.summary)}</div>
-                                        <div class="flex flex-wrap gap-1.5 pt-1">
-                                            ${m.refs.map(r => `<button onclick="toggleMasterStudyHubModal(); jumpToReference('${r[0]}', ${r[1]}, ${r[2]});" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:border-amber-400 text-amber-300 font-mono text-[10px]">Jump ${r[0].toUpperCase()} ${r[1]}:${r[2]} →</button>`).join('')}
+                                        <div class="leading-snug">${escapeHtmlText(m.title)}</div>
+                                    </button>`;
+                                }).join('') || '<div class="p-3 text-slate-400 italic text-xs">No documents match your filter.</div>'}
+                            </div>
+
+                            ${activeDoc ? `
+                                <div class="flex-1 border border-slate-800 bg-slate-950 rounded-xl p-5 space-y-4 overflow-y-auto" style="max-height: 58vh;">
+                                    <div class="border-b border-slate-800 pb-3 flex flex-wrap items-start justify-between gap-3">
+                                        <div>
+                                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                                <span class="px-2 py-0.5 rounded text-[10px] font-mono border ${SOURCE_TIER_LABELS[1].cls}">${escapeHtmlText(activeDoc.kind.toUpperCase())} · TIER 1 MAGISTERIAL</span>
+                                                <span class="text-xs font-mono text-slate-400">${escapeHtmlText(activeDoc.citation)}</span>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-white font-serif">${escapeHtmlText(activeDoc.title)}</h3>
+                                        </div>
+                                        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                                            <button type="button" onclick="openMagisterialInAppPdf('${escapeJsArg(activeDoc.id)}')" class="px-3 py-1.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 font-bold">Open In-App PDF &rarr;</button>
                                         </div>
                                     </div>
-                                `).join('')}
-                            </div>
+                                    <div class="space-y-1.5">
+                                        <div class="text-[11px] font-mono font-bold uppercase text-amber-300">Dogmatic Teaching &amp; Scriptural Synthesis</div>
+                                        <p class="text-sm font-serif text-slate-200 leading-relaxed">${escapeHtmlText(activeDoc.summary)}</p>
+                                    </div>
+                                    ${activeDoc.canons && activeDoc.canons.length ? `
+                                        <div class="space-y-2 p-3.5 rounded-lg border border-slate-800 bg-slate-900/70">
+                                            <div class="text-[11px] font-mono font-bold uppercase text-sky-300">Key Canons &amp; Constitutions</div>
+                                            <ul class="space-y-1.5 text-xs font-serif text-slate-200 list-disc list-inside">
+                                                ${activeDoc.canons.map(c => `<li class="leading-relaxed">${escapeHtmlText(c)}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    ` : ''}
+                                    <div class="space-y-2 pt-2 border-t border-slate-800">
+                                        <div class="text-[11px] font-mono font-bold uppercase text-emerald-300">Primary Scriptural Proof Loci (Click to Jump in Reader)</div>
+                                        <div class="flex flex-wrap gap-1.5">
+                                            ${(activeDoc.refs || []).map(r => `<button type="button" onclick="toggleMasterStudyHubModal(); jumpToReference('${r[0]}', ${r[1]}, ${r[2]});" class="px-2.5 py-1 rounded bg-slate-900 border border-slate-700 hover:border-amber-400 text-amber-300 font-mono text-[11px]">Jump ${r[0].toUpperCase()} ${r[1]}:${r[2]} &rarr;</button>`).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
                 return;
             }
 
-            if (masterHubActiveCategory === 'concordance_xrefs') {
+            if (curCat === 'concordance') {
                 const xrefs = (APP_DATA.cross_refs || []).filter(xr => !q || (xr.title || '').toLowerCase().includes(q) || (xr.note || '').toLowerCase().includes(q));
                 body.innerHTML = `
                     <div class="space-y-3">
                         <div class="p-3.5 rounded-xl border border-cyan-500/30 bg-slate-950 flex flex-wrap items-center justify-between gap-2 text-xs">
                             <div><strong class="font-mono text-cyan-300">CATEGORY 8 · WHOLE-BIBLE CONCORDANCE &amp; TYPOLOGICAL CROSS-REFERENCES (${xrefs.length} Chains)</strong></div>
-                            <button onclick="toggleMasterStudyHubModal(); openConcordanceForInspected();" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-mono text-[11px]">Launch Lemma Concordance →</button>
+                            <button onclick="toggleMasterStudyHubModal(); openConcordanceForInspected();" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-mono text-[11px]">Launch Lemma Concordance &rarr;</button>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            ${xrefs.map(xr => `
-                                <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-950/90 space-y-1.5">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="font-bold text-xs text-amber-300">${escapeHtmlText(xr.title)}</span>
-                                        <div class="flex items-center gap-1">
-                                            <button onclick="toggleMasterStudyHubModal(); jumpToReference('${xr.from[0]}', ${xr.from[1]}, ${xr.from[2]});" class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 font-mono text-[10px]">${xr.from[0].toUpperCase()} ${xr.from[1]}:${xr.from[2]}</button>
-                                            <span class="text-slate-500">↔</span>
-                                            <button onclick="toggleMasterStudyHubModal(); jumpToReference('${xr.to[0]}', ${xr.to[1]}, ${xr.to[2]});" class="px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[10px]">${xr.to[0].toUpperCase()} ${xr.to[1]}:${xr.to[2]}</button>
+                            ${xrefs.map(xr => {
+                                const srcRef = xr.from || xr.a || ['gen', 1, 1];
+                                const dstRef = xr.to || xr.b || ['john', 1, 1];
+                                return `
+                                    <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-950/90 space-y-1.5">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="font-bold text-xs text-amber-300">${escapeHtmlText(xr.title || 'Canonical Chain')}</span>
+                                            <div class="flex items-center gap-1">
+                                                <button onclick="toggleMasterStudyHubModal(); jumpToReference('${srcRef[0]}', ${srcRef[1]}, ${srcRef[2]});" class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 font-mono text-[10px]">${String(srcRef[0]).toUpperCase()} ${srcRef[1]}:${srcRef[2]}</button>
+                                                <span class="text-slate-500">&harr;</span>
+                                                <button onclick="toggleMasterStudyHubModal(); jumpToReference('${dstRef[0]}', ${dstRef[1]}, ${dstRef[2]});" class="px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[10px]">${String(dstRef[0]).toUpperCase()} ${dstRef[1]}:${dstRef[2]}</button>
+                                            </div>
                                         </div>
+                                        <div class="text-xs text-slate-300 leading-relaxed">${escapeHtmlText(xr.note || '')}</div>
                                     </div>
-                                    <div class="text-xs text-slate-300 leading-relaxed">${escapeHtmlText(xr.note)}</div>
-                                </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
