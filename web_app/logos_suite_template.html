@@ -309,46 +309,54 @@
 
         body[data-theme="amoled-obsidian"],
         body.theme-amoled-obsidian {
+            color-scheme: dark;
             --bg-canvas: #000000;
             --bg-chrome: #050507;
-            --bg-surface: #0a0a0d;
-            --bg-elevated: #121218;
-            --bg-hover: #1b1b24;
-            --text-primary: #f1f5f9;
+            --bg-surface: #0a0a0e;
+            --bg-elevated: #14141b;
+            --bg-hover: #1e1e28;
+            --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
-            --border-hairline: rgba(255, 255, 255, 0.12);
-            --border-strong: rgba(255, 255, 255, 0.24);
-            --accent-primary: #e2e8f0;
+            --border-hairline: rgba(255, 255, 255, 0.14);
+            --border-strong: rgba(255, 255, 255, 0.28);
+            --accent-primary: #f8fafc;
             --accent-secondary: #38bdf8;
-            --accent-soft: rgba(255, 255, 255, 0.08);
-            --rubric-accent: #c97b63;
-            --badge-imp-bg: rgba(52, 211, 153, 0.12);
+            --accent-soft: rgba(255, 255, 255, 0.09);
+            --rubric-accent: #d9826c;
+            --badge-imp-bg: rgba(52, 211, 153, 0.14);
             --badge-imp-fg: #6ee7b7;
-            --badge-imp-bd: rgba(52, 211, 153, 0.30);
+            --badge-imp-bd: rgba(52, 211, 153, 0.34);
             --shadow-subtle: none;
         }
 
         body[data-theme="amoled-gold"],
         body.theme-amoled-gold {
+            color-scheme: dark;
             --bg-canvas: #000000;
-            --bg-chrome: #060503;
-            --bg-surface: #0b0905;
-            --bg-elevated: #141008;
-            --bg-hover: #1f190c;
-            --text-primary: #faf3e0;
-            --text-secondary: #e2d3b0;
-            --text-muted: #a69572;
-            --border-hairline: rgba(212, 175, 55, 0.22);
-            --border-strong: rgba(212, 175, 55, 0.44);
+            --bg-chrome: #070503;
+            --bg-surface: #0d0a05;
+            --bg-elevated: #171209;
+            --bg-hover: #241c0e;
+            --text-primary: #fcf6e8;
+            --text-secondary: #eadcc0;
+            --text-muted: #b8a47c;
+            --border-hairline: rgba(212, 175, 55, 0.26);
+            --border-strong: rgba(212, 175, 55, 0.50);
             --accent-primary: #f5c542;
             --accent-secondary: #d4af37;
-            --accent-soft: rgba(212, 175, 55, 0.14);
-            --rubric-accent: #d4af37;
-            --badge-imp-bg: rgba(212, 175, 55, 0.15);
+            --accent-soft: rgba(212, 175, 55, 0.16);
+            --rubric-accent: #f5c542;
+            --badge-imp-bg: rgba(212, 175, 55, 0.16);
             --badge-imp-fg: #f5c542;
-            --badge-imp-bd: rgba(212, 175, 55, 0.40);
+            --badge-imp-bd: rgba(212, 175, 55, 0.44);
             --shadow-subtle: none;
+        }
+
+        select, .suite-select, select option {
+            background-color: var(--bg-elevated) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--border-strong) !important;
         }
 
         /* Universal Semantic Color Coding & Accessibility Overrides */
