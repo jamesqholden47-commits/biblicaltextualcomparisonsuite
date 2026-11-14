@@ -307,6 +307,85 @@
             --shadow-subtle: 0 2px 10px rgba(41, 30, 20, 0.08);
         }
 
+        body[data-theme="amoled-obsidian"],
+        body.theme-amoled-obsidian {
+            --bg-canvas: #000000;
+            --bg-chrome: #050507;
+            --bg-surface: #0a0a0d;
+            --bg-elevated: #121218;
+            --bg-hover: #1b1b24;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-hairline: rgba(255, 255, 255, 0.12);
+            --border-strong: rgba(255, 255, 255, 0.24);
+            --accent-primary: #e2e8f0;
+            --accent-secondary: #38bdf8;
+            --accent-soft: rgba(255, 255, 255, 0.08);
+            --rubric-accent: #c97b63;
+            --badge-imp-bg: rgba(52, 211, 153, 0.12);
+            --badge-imp-fg: #6ee7b7;
+            --badge-imp-bd: rgba(52, 211, 153, 0.30);
+            --shadow-subtle: none;
+        }
+
+        body[data-theme="amoled-gold"],
+        body.theme-amoled-gold {
+            --bg-canvas: #000000;
+            --bg-chrome: #060503;
+            --bg-surface: #0b0905;
+            --bg-elevated: #141008;
+            --bg-hover: #1f190c;
+            --text-primary: #faf3e0;
+            --text-secondary: #e2d3b0;
+            --text-muted: #a69572;
+            --border-hairline: rgba(212, 175, 55, 0.22);
+            --border-strong: rgba(212, 175, 55, 0.44);
+            --accent-primary: #f5c542;
+            --accent-secondary: #d4af37;
+            --accent-soft: rgba(212, 175, 55, 0.14);
+            --rubric-accent: #d4af37;
+            --badge-imp-bg: rgba(212, 175, 55, 0.15);
+            --badge-imp-fg: #f5c542;
+            --badge-imp-bd: rgba(212, 175, 55, 0.40);
+            --shadow-subtle: none;
+        }
+
+        /* Universal Semantic Color Coding & Accessibility Overrides */
+        :root {
+            --plenary-font-weight: 400;
+            --tier-catholic: #d4af37;
+            --tier-protestant: #38bdf8;
+            --tier-patristic: #a78bfa;
+            --tier-critical: #34d399;
+        }
+        body { font-weight: var(--plenary-font-weight, 400); }
+        #readerContent, #splitCommentaryList, .split-note-card { font-weight: var(--plenary-font-weight, 400); }
+        body[data-a11y-contrast="high"] {
+            --border-hairline: var(--border-strong);
+        }
+        body[data-a11y-contrast="high"] #readerContent,
+        body[data-a11y-contrast="high"] .split-note-card {
+            color: var(--text-primary) !important;
+            opacity: 1 !important;
+        }
+        body[data-a11y-spacing="large"] .suite-btn,
+        body[data-a11y-spacing="large"] .suite-seg-btn {
+            height: 36px;
+            padding: 0 12px;
+            font-size: 13px;
+        }
+        body[data-a11y-spacing="large"] .fn-word-anchor {
+            padding: 1px 3px;
+        }
+        body[data-a11y-motion="reduced"] *,
+        body[data-a11y-motion="reduced"] *::before,
+        body[data-a11y-motion="reduced"] *::after {
+            transition: none !important;
+            animation: none !important;
+            scroll-behavior: auto !important;
+        }
+
         /* Unified surface & hairline-border bindings */
         body { background-color: var(--bg-canvas) !important; color: var(--text-primary) !important; }
         header, #canonSidebar, #inspectorPane, #workspaceTabBar, #stickyVerseBar, #commentarySplitPane {
@@ -928,13 +1007,19 @@
 
             <select id="themeSelector" onchange="setTheme(this.value)" class="suite-select hidden xl:inline-block" style="height:28px;" title="Select Editorial Theme">
                 <option value="oxford-dark">Oxford Dark</option>
+                <option value="amoled-obsidian">AMOLED Obsidian</option>
+                <option value="amoled-gold">AMOLED Gold</option>
                 <option value="vellum-light">Vellum Light</option>
                 <option value="warm-sepia">Warm Sepia</option>
                 <option value="parchment">Parchment</option>
             </select>
-            <button id="btnTheme" onclick="cycleTheme()" class="suite-btn" title="Cycle Editorial Theme (Oxford Dark / Vellum Light / Warm Sepia / Parchment)">
+            <button id="btnTheme" onclick="cycleTheme()" class="suite-btn" title="Cycle Editorial Theme">
                 <i data-lucide="palette" class="w-3.5 h-3.5"></i>
                 <span class="hidden lg:inline">Theme</span>
+            </button>
+            <button id="btnReadAlong" onclick="toggleReadAlongBar()" class="suite-btn" title="Read-Along Neural Voice">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                <span class="hidden lg:inline">Listen</span>
             </button>
 
             <button id="btnOrnament" onclick="toggleOrnament()" class="suite-btn is-active" aria-pressed="true" title="Toggle Roman / Medieval Scriptorium Ornamentation">
@@ -1233,6 +1318,13 @@
                             <option value="charis">Charis SIL (Bible Press)</option>
                             <option value="caslon_arno">Arno Pro / Adobe Caslon</option>
                             <option value="bembo">Bembo Std (Classical)</option>
+                            <option value="crimson_pro">Crimson Pro (Editorial)</option>
+                            <option value="eb_garamond">EB Garamond (Renaissance)</option>
+                            <option value="literata">Literata (Book Reader)</option>
+                            <option value="lora">Lora (Warm Serif)</option>
+                            <option value="source_serif">Source Serif 4 (Scholarly)</option>
+                            <option value="inter_sans">Inter (Clean Sans-Serif)</option>
+                            <option value="opendyslexic">OpenDyslexic / Readable Sans</option>
                         </select>
                     </div>
                     <div>
@@ -1250,6 +1342,25 @@
                     <div>
                         <div class="flex justify-between mb-1"><span>Paragraph Spacing</span><span id="typoParaSpacingVal">0.85em</span></div>
                         <input id="typoParaSpacingSlider" type="range" min="0.25" max="1.50" step="0.05" value="0.85" oninput="updateTypographyPref('paraSpacingEm', Number(this.value))" class="w-full cursor-pointer">
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 space-y-2">
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Accessibility</div>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>Universal Boldness</span><span id="a11yWeightVal">400</span></div>
+                            <input id="a11yWeightSlider" type="range" min="400" max="700" step="100" value="400" oninput="updateA11yPref('fontWeight', Number(this.value))" class="w-full cursor-pointer">
+                        </div>
+                        <label class="flex items-center justify-between gap-2 cursor-pointer">
+                            <span>High Contrast</span>
+                            <input id="a11yContrastChk" type="checkbox" onchange="updateA11yPref('highContrast', this.checked)">
+                        </label>
+                        <label class="flex items-center justify-between gap-2 cursor-pointer">
+                            <span>Larger Hit Targets</span>
+                            <input id="a11ySpacingChk" type="checkbox" onchange="updateA11yPref('largeSpacing', this.checked)">
+                        </label>
+                        <label class="flex items-center justify-between gap-2 cursor-pointer">
+                            <span>Reduced Motion</span>
+                            <input id="a11yMotionChk" type="checkbox" onchange="updateA11yPref('reducedMotion', this.checked)">
+                        </label>
                     </div>
                 </div>
             </div>
@@ -5291,6 +5402,149 @@
             }
         }
 
+        // ====== UNIVERSAL ACCESSIBILITY & NEURAL READ-ALONG VOICE ======
+        const EXTRA_FONT_STACKS = {
+            crimson_pro: "'Crimson Pro', Georgia, serif",
+            eb_garamond: "'EB Garamond', Garamond, Georgia, serif",
+            literata: "'Literata', Georgia, serif",
+            lora: "'Lora', Georgia, serif",
+            source_serif: "'Source Serif 4', Georgia, serif",
+            inter_sans: "'Inter', system-ui, -apple-system, sans-serif",
+            opendyslexic: "'OpenDyslexic', 'Comic Sans MS', 'Verdana', sans-serif",
+        };
+        let a11yPrefs = (() => {
+            try { return JSON.parse(localStorage.getItem('plenary_a11y_prefs') || '{}'); } catch { return {}; }
+        })();
+
+        function applyA11yPrefs() {
+            const w = Number(a11yPrefs.fontWeight || 400);
+            document.documentElement.style.setProperty('--plenary-font-weight', String(w));
+            document.body.setAttribute('data-a11y-contrast', a11yPrefs.highContrast ? 'high' : 'normal');
+            document.body.setAttribute('data-a11y-spacing', a11yPrefs.largeSpacing ? 'large' : 'normal');
+            document.body.setAttribute('data-a11y-motion', a11yPrefs.reducedMotion ? 'reduced' : 'normal');
+            const wEl = document.getElementById('a11yWeightSlider');
+            const wVal = document.getElementById('a11yWeightVal');
+            if (wEl) wEl.value = String(w);
+            if (wVal) wVal.textContent = String(w);
+            const cEl = document.getElementById('a11yContrastChk');
+            if (cEl) cEl.checked = !!a11yPrefs.highContrast;
+            const sEl = document.getElementById('a11ySpacingChk');
+            if (sEl) sEl.checked = !!a11yPrefs.largeSpacing;
+            const mEl = document.getElementById('a11yMotionChk');
+            if (mEl) mEl.checked = !!a11yPrefs.reducedMotion;
+            if (typographyPrefs && EXTRA_FONT_STACKS[typographyPrefs.fontFamily]) {
+                document.documentElement.style.setProperty('--plenary-serif-font', EXTRA_FONT_STACKS[typographyPrefs.fontFamily]);
+            }
+        }
+
+        function updateA11yPref(key, value) {
+            a11yPrefs[key] = value;
+            try { localStorage.setItem('plenary_a11y_prefs', JSON.stringify(a11yPrefs)); } catch {}
+            applyA11yPrefs();
+        }
+
+        let readAlongAudio = null;
+        let readAlongPlaying = false;
+        let readAlongVoice = localStorage.getItem('plenary_tts_voice') || 'en-US-AvaNeural';
+        let readAlongRate = localStorage.getItem('plenary_tts_rate') || '+0%';
+
+        function ensureReadAlongBar() {
+            let bar = document.getElementById('readAlongBar');
+            if (bar) return bar;
+            bar = document.createElement('div');
+            bar.id = 'readAlongBar';
+            bar.className = 'hidden fixed bottom-4 right-4 z-50 flex items-center gap-2 px-3 py-2 rounded-lg border shadow-xl text-xs font-mono';
+            bar.style.background = 'var(--bg-chrome)';
+            bar.style.borderColor = 'var(--border-strong)';
+            bar.style.color = 'var(--text-primary)';
+            bar.innerHTML = `
+                <button id="raPlayBtn" type="button" onclick="toggleReadAlongPlay()" class="suite-btn is-active">Play</button>
+                <button type="button" onclick="stopReadAlong()" class="suite-btn">Stop</button>
+                <select id="raVoiceSel" onchange="readAlongVoice=this.value; localStorage.setItem('plenary_tts_voice', this.value);" class="suite-select" style="height:26px;">
+                    <option value="en-US-AvaNeural">Ava Neural (US)</option>
+                    <option value="en-US-AndrewNeural">Andrew Neural (US)</option>
+                    <option value="en-GB-SoniaNeural">Sonia Neural (UK)</option>
+                    <option value="en-US-BrianNeural">Brian Neural (US)</option>
+                </select>
+                <select id="raRateSel" onchange="readAlongRate=this.value; localStorage.setItem('plenary_tts_rate', this.value);" class="suite-select" style="height:26px;">
+                    <option value="-20%">0.8x</option>
+                    <option value="+0%" selected>1.0x</option>
+                    <option value="+25%">1.25x</option>
+                    <option value="+50%">1.5x</option>
+                </select>
+                <span id="raStatus" class="text-[10px] opacity-80">Ready</span>
+                <button type="button" onclick="toggleReadAlongBar(false)" class="suite-btn" title="Close">×</button>
+            `;
+            document.body.appendChild(bar);
+            const vs = document.getElementById('raVoiceSel');
+            const rs = document.getElementById('raRateSel');
+            if (vs) vs.value = readAlongVoice;
+            if (rs) rs.value = readAlongRate;
+            return bar;
+        }
+
+        function toggleReadAlongBar(forceState) {
+            const bar = ensureReadAlongBar();
+            const show = typeof forceState === 'boolean' ? forceState : bar.classList.contains('hidden');
+            bar.classList.toggle('hidden', !show);
+            const btn = document.getElementById('btnReadAlong');
+            if (btn) btn.classList.toggle('is-active', show);
+        }
+
+        function stopReadAlong() {
+            readAlongPlaying = false;
+            if (readAlongAudio) {
+                try { readAlongAudio.pause(); } catch {}
+                readAlongAudio = null;
+            }
+            const pb = document.getElementById('raPlayBtn');
+            const st = document.getElementById('raStatus');
+            if (pb) pb.textContent = 'Play';
+            if (st) st.textContent = 'Stopped';
+        }
+
+        function toggleReadAlongPlay() {
+            if (readAlongPlaying) {
+                stopReadAlong();
+            } else {
+                readAlongPlaying = true;
+                playReadAlongVerse();
+            }
+        }
+
+        function playReadAlongVerse() {
+            if (!readAlongPlaying || !APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            const chArr = (book && book.verses_en && book.verses_en[currentChapterIndex]) || [];
+            const txt = chArr[currentVerseIndex];
+            if (!txt) { stopReadAlong(); return; }
+            const pb = document.getElementById('raPlayBtn');
+            const st = document.getElementById('raStatus');
+            if (pb) pb.textContent = 'Pause';
+            if (st) st.textContent = `${book.abbr} ${currentChapterIndex + 1}:${currentVerseIndex + 1}`;
+            const url = `/api/tts?text=${encodeURIComponent(txt)}&voice=${encodeURIComponent(readAlongVoice)}&rate=${encodeURIComponent(readAlongRate)}`;
+            if (readAlongAudio) { try { readAlongAudio.pause(); } catch {} }
+            readAlongAudio = new Audio(url);
+            readAlongAudio.onended = () => {
+                if (!readAlongPlaying) return;
+                if (currentVerseIndex + 1 < chArr.length) {
+                    selectVerse(currentVerseIndex + 1);
+                    playReadAlongVerse();
+                } else {
+                    stopReadAlong();
+                }
+            };
+            readAlongAudio.onerror = () => {
+                if (st) st.textContent = 'TTS unavailable';
+                stopReadAlong();
+            };
+            readAlongAudio.play().catch(() => stopReadAlong());
+        }
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('DOMContentLoaded', () => { try { applyA11yPrefs(); } catch {} });
+        }
+
         // ====== NABRE CATHOLIC STUDY BIBLE (3RD ED. 2016) 1:1 COMPANION ENGINE ======
         let nabreGuideActiveTab = 'book';
         let nabreGuideScriptLoading = false;
@@ -5802,7 +6056,7 @@
         }
 
         // ====== THEME SWITCHER (4 Editorial Themes: oxford-dark, vellum-light, warm-sepia, parchment) ======
-        const PLENARY_THEMES = ['oxford-dark', 'vellum-light', 'warm-sepia', 'parchment'];
+        const PLENARY_THEMES = ['oxford-dark', 'amoled-obsidian', 'amoled-gold', 'vellum-light', 'warm-sepia', 'parchment'];
         const PLENARY_THEME_ALIASES = {
             dark: 'oxford-dark',
             light: 'vellum-light',
