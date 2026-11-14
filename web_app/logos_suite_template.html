@@ -5782,7 +5782,28 @@
 
             if (nabreGuideActiveTab === 'book') {
                 const bg = data.books && data.books[curBook.id];
-                bodyEl.innerHTML = renderNabreBookGuideCard(curBook, bg, q);
+                bodyEl.innerHTML = renderNabreBookGuideCard(curBook, bg, q)
+                    + `<div id="allStudyIntrosBlock" class="mt-4 pt-4 border-t border-slate-800 space-y-2"><div class="text-xs font-mono text-amber-400">Loading all Study Bible opening notes for ${escapeHtmlText(curBook.name)} 1:1...</div></div>`;
+                fetch(`/api/plenary/verse_notes/${encodeURIComponent(curBook.id)}/1/1`)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(vn => {
+                        const target = document.getElementById('allStudyIntrosBlock');
+                        if (!target) return;
+                        const notes = (vn && Array.isArray(vn.notes) ? vn.notes : []).filter(n => n.src !== 'nabre' && n.src !== 'nabre_rg');
+                        if (!notes.length) {
+                            target.innerHTML = '<div class="text-xs text-slate-400 italic">No additional Study Bible opening notes found for 1:1.</div>';
+                            return;
+                        }
+                        target.innerHTML = `<div class="text-xs font-mono font-bold uppercase tracking-wider text-amber-300 mb-2">All Study Bible Opening Notes (${escapeHtmlText(curBook.name)} 1:1 · ${notes.length})</div>`
+                            + notes.slice(0, 20).map(n => {
+                                const badge = SOURCE_BADGE[n.src] || { label: n.src || 'Note', cls: 'text-slate-300 border-slate-700 bg-slate-800' };
+                                return `<div class="p-3 rounded-lg border border-slate-800 bg-slate-900/60 space-y-1">
+                                    <div class="flex items-center gap-2"><span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>${n.title ? `<span class="text-xs font-semibold">${escapeHtmlText(n.title)}</span>` : ''}</div>
+                                    <div class="text-xs leading-relaxed opacity-90">${n.body || n.html || ''}</div>
+                                </div>`;
+                            }).join('');
+                    })
+                    .catch(() => {});
                 return;
             }
 
