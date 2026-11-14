@@ -139,10 +139,11 @@ body.j-shell header { height: 48px; }
 .j-sub .j-count { color: var(--text-dim); font: var(--fs-xs) var(--font-mono); margin-left: 4px; }
 #j-subtabs .j-spacer { flex: 1; }
 .j-search-btn {
-  display: flex; align-items: center; gap: var(--sp-2); background: var(--bg-card); border: 1px solid var(--border);
-  color: var(--text-dim); border-radius: 6px; padding: 4px 10px; font: var(--fs-sm) var(--font-ui); cursor: pointer; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: var(--sp-2); height: 30px; background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-dim); border-radius: 6px; padding: 0 10px; font: var(--fs-sm) var(--font-ui); cursor: pointer; white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
 }
-.j-search-btn:hover { color: var(--text-main); border-color: var(--text-dim); }
+.j-search-btn:hover { color: var(--text-main); border-color: var(--text-dim); background: var(--bg-card-hover); }
 
 /* ── stale-server banner ──────────────────────────────────────────────────────── */
 #j-banner { display: none; background: var(--accent-gold-soft); color: var(--accent-gold); border-bottom: 1px solid var(--accent-gold);
@@ -194,14 +195,33 @@ body.j-shell header { height: 48px; }
 #j-peek-parts { display: flex; gap: var(--sp-2); align-items: center; padding: 6px var(--sp-4); border-top: 1px solid var(--border); font: var(--fs-xs) var(--font-ui); color: var(--text-dim); }
 
 /* ── shared components ────────────────────────────────────────────────────────── */
-.j-btn {
+.j-btn,
+.btn-copy-def,
+.btn-action-small {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 30px;
   background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px;
-  padding: 5px 10px; font: 600 var(--fs-sm) var(--font-ui); cursor: pointer; white-space: nowrap;
+  padding: 0 11px; font: 600 var(--fs-sm)/1 var(--font-ui); cursor: pointer; white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
-.j-btn:hover { border-color: var(--text-dim); }
-.j-btn.primary { background: var(--accent-gold); border-color: var(--accent-gold); color: var(--on-gold); }
-.j-btn.ghost { background: none; border-color: transparent; color: var(--text-muted); }
-.j-btn.ghost:hover { color: var(--text-main); background: var(--bg-card); }
+.j-btn:hover,
+.btn-copy-def:hover,
+.btn-action-small:hover {
+  background: var(--bg-card-hover); border-color: var(--text-dim); color: var(--text-main);
+}
+.j-btn.primary,
+.btn-action-small.active {
+  background: var(--accent-gold); border-color: var(--accent-gold); color: var(--on-gold);
+}
+.j-btn.primary:hover,
+.btn-action-small.active:hover {
+  background: var(--accent-gold); border-color: var(--accent-gold); color: var(--on-gold); filter: brightness(1.06);
+}
+.j-btn.ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
+.j-btn.ghost:hover { color: var(--text-main); background: var(--bg-card); border-color: var(--border); }
+
+svg.lucide { width: 14px; height: 14px; vertical-align: -2px; flex-shrink: 0; stroke-width: 1.75; }
+h2 svg.lucide, h3 svg.lucide { width: 17px; height: 17px; vertical-align: -3px; margin-right: 4px; }
+.j-btn svg.lucide, .btn-copy-def svg.lucide, .btn-action-small svg.lucide, .podcast-act-pill svg.lucide { width: 13px; height: 13px; vertical-align: -2px; }
 .j-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--sp-4); }
 .j-row { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--border); }
 .j-empty { color: var(--text-dim); font: var(--fs-md) var(--font-ui); padding: var(--sp-6); text-align: center; }
