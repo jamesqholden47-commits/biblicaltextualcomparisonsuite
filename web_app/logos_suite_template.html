@@ -1021,6 +1021,10 @@
                 <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
                 <span class="hidden lg:inline">Listen</span>
             </button>
+            <button id="btnCompareAll25" onclick="openCompareAll25Modal()" class="suite-btn" title="BibleHub-style: Compare All 25 Translations for Current Verse">
+                <i data-lucide="columns-3" class="w-3.5 h-3.5"></i>
+                <span class="hidden xl:inline">All 25</span>
+            </button>
 
             <button id="btnOrnament" onclick="toggleOrnament()" class="suite-btn is-active" aria-pressed="true" title="Toggle Roman / Medieval Scriptorium Ornamentation">
                 <i data-lucide="feather" class="w-3.5 h-3.5"></i>
@@ -5543,6 +5547,55 @@
 
         if (typeof window !== 'undefined') {
             window.addEventListener('DOMContentLoaded', () => { try { applyA11yPrefs(); } catch {} });
+        }
+
+        function openCompareAll25Modal() {
+            if (!APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            if (!book) return;
+            const chapNum = currentChapterIndex + 1;
+            const vNum = currentVerseIndex + 1;
+            let modal = document.getElementById('compareAll25Modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'compareAll25Modal';
+                modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75';
+                modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
+                document.body.appendChild(modal);
+            }
+            const rows = [];
+            const pushRow = (id, label, text, tierColor) => {
+                if (!text) return;
+                rows.push(`
+                    <div class="p-3 rounded-lg border flex flex-col gap-1" style="border-color: var(--border-hairline); background: var(--bg-surface);">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[11px] font-mono font-bold" style="color: ${tierColor};">${escapeHtmlText(label)}</span>
+                            <button type="button" onclick="navigator.clipboard && navigator.clipboard.writeText('${escapeJsArg(`${book.abbr} ${chapNum}:${vNum} (${id.toUpperCase()}): ${text}`)}')" class="suite-btn" style="height:22px; font-size:10px;">Copy</button>
+                        </div>
+                        <div class="text-sm leading-relaxed">${escapeHtmlText(text)}</div>
+                    </div>
+                `);
+            };
+            pushRow('dra', 'DRA · Challoner Douay-Rheims', (book.verses_en && book.verses_en[currentChapterIndex] || [])[currentVerseIndex], 'var(--tier-catholic)');
+            pushRow('vul', 'VUL · Clementine Vulgate', (book.verses_la && book.verses_la[currentChapterIndex] || [])[currentVerseIndex], 'var(--tier-catholic)');
+            pushRow('gr', 'GR · Septuagint / Critical GNT', (book.verses_gr && book.verses_gr[currentChapterIndex] || [])[currentVerseIndex], 'var(--tier-critical)');
+            pushRow('he', 'HE · Westminster Leningrad Codex', (book.verses_he && book.verses_he[currentChapterIndex] || [])[currentVerseIndex], 'var(--tier-critical)');
+            (APP_DATA.translation_registry || []).forEach(tr => {
+                if (['dra', 'vul', 'gr', 'he'].includes(tr.id)) return;
+                const txt = book.tr && book.tr[tr.id] && book.tr[tr.id][currentChapterIndex] && book.tr[tr.id][currentChapterIndex][currentVerseIndex];
+                const col = tr.group === 'catholic' ? 'var(--tier-catholic)' : 'var(--tier-protestant)';
+                if (txt) pushRow(tr.id, `${tr.short || tr.id.toUpperCase()} · ${tr.name}`, txt, col);
+            });
+            modal.innerHTML = `
+                <div class="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-xl border shadow-2xl overflow-hidden" style="background: var(--bg-chrome); border-color: var(--border-strong); color: var(--text-primary);">
+                    <div class="px-4 py-3 border-b flex items-center justify-between" style="border-color: var(--border-hairline);">
+                        <div class="font-serif font-bold text-base">${escapeHtmlText(book.name)} ${chapNum}:${vNum} — All Available Translations (${rows.length})</div>
+                        <button type="button" onclick="document.getElementById('compareAll25Modal').classList.add('hidden')" class="suite-btn">Close</button>
+                    </div>
+                    <div class="p-4 overflow-y-auto space-y-2.5">${rows.join('') || '<div class="text-xs opacity-70">No translation streams loaded for this verse.</div>'}</div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
         }
 
         // ====== NABRE CATHOLIC STUDY BIBLE (3RD ED. 2016) 1:1 COMPANION ENGINE ======
