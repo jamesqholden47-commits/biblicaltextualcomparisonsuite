@@ -284,7 +284,10 @@ class TopicTaggingTests(unittest.TestCase):
         self.assertIn("rev 21", ENG.match_topics("Rev\n21:21"))
 
     def test_regenerated_index_keeps_the_keys_app_py_reads(self):
-        with open(os.path.join(APP_DIR, "data", "ai_session_index.json"), encoding="utf-8") as fh:
+        index_path = os.path.join(APP_DIR, "data", "ai_session_index.json")
+        if not os.path.isfile(index_path):
+            self.skipTest("ai_session_index.json not yet generated in data/")
+        with open(index_path, encoding="utf-8") as fh:
             d = json.load(fh)
         for k in ("sessions", "total_words", "top_topics", "total_sessions"):
             self.assertIn(k, d)
@@ -347,6 +350,74 @@ class LiveTests(unittest.TestCase):
                         self.assertEqual(x["copy"], f"{x['path']}:{x['line']}")
                     for s, e in x["highlights"]:
                         self.assertTrue(0 <= s < e <= len(x["snippet"]))
+
+    def test_export_csv_returns_well_formed_download(self):
+        """New 2026-11-12 feature: /api/recall/export. Checks it's a real CSV download (headers,
+        Content-Disposition), not just a 200, and that every row parses with the right field
+        count -- a CSV that LOOKS fine in a raw text diff can still be malformed if a field with
+        an embedded newline isn't quoted correctly."""
+        import csv
+        import io
+        resp = self.client.get("/api/recall/export", params={"q": "grace"})
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.headers["content-type"], "text/csv; charset=utf-8")
+        self.assertIn("attachment; filename=", resp.headers["content-disposition"])
+        total = int(resp.headers["x-recall-export-total-matches"])
+        included = int(resp.headers["x-recall-export-rows-included"])
+        self.assertGreater(total, 0)
+        rows = list(csv.reader(io.StringIO(resp.text)))
+        self.assertEqual(rows[0], ["type", "surface", "role", "date", "title", "rel_path", "line", "score", "snippet"])
+        self.assertEqual(len(rows) - 1, included, "CSV data-row count must match the reported rows-included header")
+        self.assertTrue(all(len(r) == len(rows[0]) for r in rows), "every CSV row must have the same column count as the header")
+
+    def test_export_pages_past_the_200_row_search_cap(self):
+        """recall_index.search() hard-caps `limit` at 200 internally -- export must page past that
+        for a query with more matches than one page, not silently hand back only the first 200."""
+        resp = self.client.get("/api/recall/export", params={"q": "grace"})
+        total = int(resp.headers["x-recall-export-total-matches"])
+        included = int(resp.headers["x-recall-export-rows-included"])
+        if total <= 200:
+            self.skipTest("the 'grace' corpus shrank below 200 matches; can't exercise pagination")
+        self.assertGreater(included, 200, "export should page past the single-call 200-row cap")
+
+    def test_saved_search_round_trips_and_cleans_up_after_itself(self):
+        """New 2026-11-12 feature: /api/recall/saved (list/save/delete). Uses a throwaway name so
+        a failed run never leaves real clutter in data/recall_saved_searches.json -- deletes it in
+        a `finally` even if an assertion above it fails."""
+        name = "__pytest_tmp_saved_search__"
+        created = self.client.post("/api/recall/saved", json={
+            "name": name, "q": "grace", "surface": None, "scope": "all",
+            "role": None, "mode": "all", "sort": "rank"})
+        self.assertEqual(created.status_code, 200, created.text)
+        sid = created.json()["id"]
+        try:
+            listed = self.client.get("/api/recall/saved").json()["searches"]
+            self.assertIn(sid, [s["id"] for s in listed])
+            match = next(s for s in listed if s["id"] == sid)
+            self.assertEqual(match["name"], name)
+            self.assertEqual(match["q"], "grace")
+        finally:
+            gone = self.client.delete(f"/api/recall/saved/{sid}")
+            self.assertEqual(gone.status_code, 200)
+        listed_after = self.client.get("/api/recall/saved").json()["searches"]
+        self.assertNotIn(sid, [s["id"] for s in listed_after])
+
+    def test_delete_unknown_saved_search_is_404(self):
+        resp = self.client.delete("/api/recall/saved/not-a-real-id")
+        self.assertEqual(resp.status_code, 404)
+
+    def test_save_search_requires_a_name(self):
+        resp = self.client.post("/api/recall/saved", json={"name": "   ", "q": "grace"})
+        self.assertEqual(resp.status_code, 400)
+
+    def test_export_respects_the_row_cap_and_reports_truncation(self):
+        from modules import recall_routes as RR
+        resp = self.client.get("/api/recall/export", params={"q": "the"})  # a deliberately broad query
+        included = int(resp.headers["x-recall-export-rows-included"])
+        total = int(resp.headers["x-recall-export-total-matches"])
+        self.assertLessEqual(included, RR.EXPORT_MAX_ROWS)
+        expected_truncated = "true" if total > included else "false"
+        self.assertEqual(resp.headers["x-recall-export-truncated"], expected_truncated)
 
     def test_t1_t6_hit_is_a_real_message(self):
         d = self.client.get("/api/recall/search", params={"q": "T1-T6", "scope": "conversations", "limit": 20}).json()

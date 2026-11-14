@@ -589,6 +589,41 @@ def raw(path):
 
 # ----------------------------------------------------------------------------- where is this going?
 _conc = {"mtime": 0, "drift": {}, "dups": {}}
+_loose_reg_cache = {"mtime": 0, "by_path": {}}
+_loose_stat_cache = {"mtime": 0, "marks": {}}
+
+
+def _loose_lookup(key):
+    reg_file = os.path.join(DATA_DIR, "loose_registry.json")
+    stat_file = os.path.join(DATA_DIR, "loose_status.json")
+    try:
+        rm = os.path.getmtime(reg_file)
+    except OSError:
+        rm = 0
+    if rm and rm != _loose_reg_cache["mtime"]:
+        reg = _read_json(reg_file, {}) or {}
+        _loose_reg_cache["by_path"] = {
+            os.path.normcase(d.get("path", "")): d for d in reg.get("docs", []) if d.get("path")
+        }
+        _loose_reg_cache["mtime"] = rm
+    doc = _loose_reg_cache["by_path"].get(key)
+    if not doc:
+        return None
+    try:
+        sm = os.path.getmtime(stat_file)
+    except OSError:
+        sm = 0
+    if sm and sm != _loose_stat_cache["mtime"]:
+        _loose_stat_cache["marks"] = (_read_json(stat_file, {}) or {}).get("marks", {})
+        _loose_stat_cache["mtime"] = sm
+    return {
+        "id": doc.get("id"),
+        "kind": doc.get("kind"),
+        "integrated_into": doc.get("integrated_into"),
+        "open_items": len(doc.get("open_items") or []),
+        "thread": doc.get("thread"),
+        "mark": _loose_stat_cache["marks"].get(doc.get("id")),
+    }
 
 
 def _concordance():
@@ -624,13 +659,9 @@ def where(path):
         out["source_id"] = sid
     except Exception as e:  # noqa: BLE001 — no plan yet, or Volumes not loaded
         out["volumes"] = {"state": "unknown", "note": str(e)[:200]}
-    reg = _read_json(os.path.join(DATA_DIR, "loose_registry.json"), {}) or {}
-    doc = next((d for d in reg.get("docs", []) if os.path.normcase(d.get("path", "")) == key), None)
-    if doc:
-        marks = (_read_json(os.path.join(DATA_DIR, "loose_status.json"), {}) or {}).get("marks", {})
-        out["loose"] = {"id": doc.get("id"), "kind": doc.get("kind"), "integrated_into": doc.get("integrated_into"),
-                        "open_items": len(doc.get("open_items") or []), "thread": doc.get("thread"),
-                        "mark": marks.get(doc.get("id"))}
+    loose_hit = _loose_lookup(key)
+    if loose_hit:
+        out["loose"] = loose_hit
     c = _concordance()
     vs = c["drift"].get(key)
     if vs:

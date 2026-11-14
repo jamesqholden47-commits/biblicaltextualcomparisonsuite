@@ -169,8 +169,98 @@
       opt(sort, "rank", "Best match");
       opt(sort, "newest", "Newest first");
       opt(sort, "oldest", "Oldest first");
-      [q, surface, scope, role, mode, sort].forEach(function (n) { bar.appendChild(n); });
+      var exportBtn = el("button", "rc-btn", "Export CSV");
+      exportBtn.type = "button";
+      exportBtn.title = "Download the current search as a CSV (up to 2,000 rows)";
+      var savedSel = el("select", "rc-sel");
+      opt(savedSel, "", "Saved searches...");
+      var saveBtn = el("button", "rc-btn", "Save search");
+      saveBtn.type = "button";
+      saveBtn.title = "Save the current query and filters under a name, to run again later";
+      var deleteSavedBtn = el("button", "rc-btn", "Delete saved");
+      deleteSavedBtn.type = "button";
+      deleteSavedBtn.title = "Remove the selected saved search from the list";
+      deleteSavedBtn.style.display = "none";
+      [q, surface, scope, role, mode, sort, exportBtn, savedSel, saveBtn, deleteSavedBtn].forEach(function (n) { bar.appendChild(n); });
       wrap.appendChild(bar);
+
+      // Same filters as the live search, without pagination -- /api/recall/export pages
+      // internally server-side, so this always exports the full (capped) result set, not just
+      // the page currently shown on screen.
+      function exportParams() {
+        var p = new URLSearchParams();
+        p.set("q", q.value);
+        if (surface.value) p.set("surface", surface.value);
+        if (scope.value !== "all") p.set("scope", scope.value);
+        if (role.value) p.set("role", role.value);
+        p.set("mode", mode.value);
+        p.set("sort", sort.value);
+        return p.toString();
+      }
+      exportBtn.addEventListener("click", function () {
+        var old = exportBtn.textContent;
+        exportBtn.textContent = "exporting...";
+        exportBtn.disabled = true;
+        var a = document.createElement("a");
+        a.href = "/api/recall/export?" + exportParams();
+        a.style.display = "none";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { exportBtn.textContent = old; exportBtn.disabled = false; }, 800);
+      });
+
+      // ── saved searches (2026-11-12) ────────────────────────────────────────
+      var SAVED_BY_ID = {};
+      function loadSavedFull() {
+        fetch("/api/recall/saved").then(function (r) { return r.json(); }).then(function (d) {
+          while (savedSel.options.length > 1) savedSel.remove(1);
+          SAVED_BY_ID = {};
+          (d.searches || []).forEach(function (s) {
+            SAVED_BY_ID[s.id] = s;
+            opt(savedSel, s.id, s.name + "  (" + s.q + ")");
+          });
+        }).catch(function () { /* saved list is a convenience, not required for search to work */ });
+      }
+      savedSel.addEventListener("change", function () {
+        var s = SAVED_BY_ID[savedSel.value];
+        deleteSavedBtn.style.display = s ? "" : "none";
+        if (!s) return;
+        q.value = s.q || "";
+        surface.value = s.surface || "";
+        scope.value = s.scope || "all";
+        role.value = s.role || "";
+        mode.value = s.mode || "all";
+        sort.value = s.sort || "rank";
+        run(false);
+      });
+      deleteSavedBtn.addEventListener("click", function () {
+        var s = SAVED_BY_ID[savedSel.value];
+        if (!s) return;
+        deleteSavedBtn.disabled = true;
+        fetch("/api/recall/saved/" + encodeURIComponent(s.id), { method: "DELETE" })
+          .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); })
+          .then(function () { deleteSavedBtn.style.display = "none"; loadSavedFull(); })
+          .catch(function (e) { alert("Couldn't delete: " + e); })
+          .then(function () { deleteSavedBtn.disabled = false; });
+      });
+      saveBtn.addEventListener("click", function () {
+        if (!q.value.trim()) { alert("Type a search first."); return; }
+        var name = prompt("Save this search as:", q.value.slice(0, 60));
+        if (!name || !name.trim()) return;
+        saveBtn.disabled = true;
+        fetch("/api/recall/saved", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(), q: q.value, surface: surface.value || null, scope: scope.value,
+            role: role.value || null, mode: mode.value, sort: sort.value,
+          }),
+        }).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+          .then(function () { loadSavedFull(); })
+          .catch(function (e) { alert("Couldn't save: " + e); })
+          .then(function () { saveBtn.disabled = false; });
+      });
 
       var statusRow = el("div", "rc-status");
       var statusText = el("span", "", "checking index...");
@@ -298,6 +388,7 @@
       if (pendingQ !== null) { var pq = pendingQ; pendingQ = null; recallApi.search(pq); }
 
       loadStatus();
+      loadSavedFull();
       q.focus();
     }
   };

@@ -302,8 +302,7 @@ def cached_producers():
     (path|size|mtime of every source log, the same key log_reader uses) is unchanged."""
     try:
         from modules import log_reader
-        cl, ag = log_reader._sources()
-        fp = log_reader._fingerprint(cl + ag)
+        fp = log_reader.source_fingerprint()
     except Exception:
         fp = None
     if fp and os.path.exists(PRODUCERS_FILE):

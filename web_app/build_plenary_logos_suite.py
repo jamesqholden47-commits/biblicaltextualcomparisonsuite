@@ -34,6 +34,20 @@ TR_PATH = os.path.join(CACHE_DIR, 'TR.json')
 NET21_PATH = os.path.join(CACHE_DIR, 'NET21.json')
 NIV11_PATH = os.path.join(CACHE_DIR, 'NIV11.json')
 BSB_PATH = os.path.join(CACHE_DIR, 'BSB.json')
+NABRE_PATH = os.path.join(CACHE_DIR, 'NABRE.json')
+YLT_PATH = os.path.join(CACHE_DIR, 'YLT.json')
+DARBY_PATH = os.path.join(CACHE_DIR, 'Darby.json')
+GENEVA_PATH = os.path.join(CACHE_DIR, 'Geneva1599.json')
+BBE_PATH = os.path.join(CACHE_DIR, 'BBE.json')
+TYNDALE_PATH = os.path.join(CACHE_DIR, 'Tyndale.json')
+NASB95_PATH = os.path.join(CACHE_DIR, 'NASB95.json')
+CSB_PATH = os.path.join(CACHE_DIR, 'CSB.json')
+KNOX_PATH = os.path.join(CACHE_DIR, 'KNOX.json')
+# PRIVATE, copyrighted, personal-use-only source -- see ingest_private_owned_sources.py. Not
+# downloaded by this script, not required for a public build: load_bible_datasets() below skips
+# it gracefully (with a printed note) when the file isn't present, e.g. on a machine that never
+# ran the private ingest step.
+NKJV_PRIVATE_PATH = os.path.join(CACHE_DIR, 'private', 'NKJV_private.json')
 
 # Core Primary Manuscripts
 VULG_PATH = os.path.join(SCRIPT_DIR, 'VulgClementine.json')
@@ -65,6 +79,13 @@ TRANSLATION_REGISTRY = [
         "tier_badge": "IMPRIMATUR [IN-HOUSE]", "group": "catholic", "color": "#f59e0b",
         "default_3d": False, "is_master_en": True,
         "notes": "RSV Second Catholic Edition (Ignatius Study Bible); falls back cleanly to DRA [Imprimatur] on uncovered OT books."
+    },
+    {
+        "id": "nabre", "short": "NABRE", "name": "New American Bible Revised Edition (NABRE 2016)",
+        "lang": "en", "scope": "73 Books", "approval": "IMPRIMATUR",
+        "tier_badge": "USCCB IMPRIMATUR", "group": "catholic", "color": "#818cf8",
+        "default_3d": False, "is_master_en": True,
+        "notes": "Complete 73-book USCCB New American Bible Revised Edition extracted 1:1 from The Catholic Study Bible (Third Edition, Oxford University Press, 2016) with full verse-by-verse Study Notes and Reading Guide."
     },
     {
         "id": "nova_vulg", "short": "Nova Vulg.", "name": "Vatican Nova Vulgata (Editio Typica)",
@@ -156,6 +177,79 @@ TRANSLATION_REGISTRY = [
         "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#86efac",
         "default_3d": False, "is_master_en": True,
         "notes": "Public-domain modern literal translation from BereanBible.com; plain text only, no study-note apparatus of its own."
+    },
+    # Added 2026-11-12 (James: "find more bibles and implement; mainstream ones"). Source:
+    # scrollmapper/bible_databases (GitHub), verified downloaded and parsed this session -- see
+    # ingest_approved_corpus.py's REMOTE_FILES. All five are public domain.
+    {
+        "id": "ylt", "short": "YLT", "name": "Young's Literal Translation (1898)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#fb923c",
+        "default_3d": False, "is_master_en": True,
+        "notes": "Robert Young's deliberately word-for-word, tense-preserving translation; the standard reference for seeing Hebrew/Greek word order and tense in English. [V] 31,102/31,102 verses present on ingest (2026-11-12)."
+    },
+    {
+        "id": "darby", "short": "Darby", "name": "Darby Translation (1890)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#fcd34d",
+        "default_3d": False, "is_master_en": True,
+        "notes": "John Nelson Darby's translation, widely used in dispensationalist/Brethren circles. [S] UNVERIFIED BEYOND SPOT-CHECK: the upstream scrollmapper transcription dropped the space before \"God\" in 10.4% of verses (3,241/31,102) -- mechanically fixed on ingest (2026-11-12) by inserting a space at every lowercase-to-uppercase letter boundary; not independently proofread against a printed Darby edition beyond that single automated pass."
+    },
+    {
+        "id": "geneva1599", "short": "Geneva 1599", "name": "Geneva Bible (1599 Edition)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "HISTORICAL BENCHMARK", "group": "benchmark", "color": "#4ade80",
+        "default_3d": False, "is_master_en": True,
+        "notes": "The Bible of the English Reformation and the Pilgrims (predates the KJV by 51 years); directly relevant to this project's Catholic-Protestant history. [V] 31,064/31,104 verses present on ingest (2026-11-12); 40 verses blank in this transcription, not independently checked against a printed 1599 edition."
+    },
+    {
+        "id": "bbe", "short": "BBE", "name": "Bible in Basic English (1965)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#38bdf8",
+        "default_3d": False, "is_master_en": True,
+        "notes": "S.H. Hooke's translation into a controlled ~1,000-word vocabulary; useful as a plain-English check against the more literal streams. [V] 31,086/31,102 verses present on ingest (2026-11-12)."
+    },
+    {
+        "id": "tyndale", "short": "Tyndale", "name": "Tyndale (16th c., partial)",
+        "lang": "en", "scope": "10 Books (partial -- see note)", "approval": "BENCHMARK",
+        "tier_badge": "PARTIAL / HISTORICAL", "group": "benchmark", "color": "#fde047",
+        "default_3d": False, "is_master_en": True,
+        "notes": "[S] UNVERIFIED COMPLETENESS, MARKED PARTIAL ON PURPOSE: William Tyndale died in 1536 before finishing the Old Testament, and this transcription covers only Genesis, the four Gospels, Acts, Romans, 1 Corinthians, Hebrews, and Revelation (verified 2026-11-12: every other of the 66 books is 100% blank in the raw source, not a download defect). Blank verses are filled with an explicit \"[— Not translated by Tyndale]\" marker rather than left silently empty. Included despite the gap because this is the base text underlying the KJV and historically foundational."
+    },
+    # PRIVATE / COPYRIGHTED -- added 2026-11-12. Unlike every other entry in this registry, the
+    # text comes from a copyrighted work (Thomas Nelson's NKJV text, as printed in the MacArthur
+    # Study Bible) that James personally owns a digital copy of, extracted here for his own
+    # private, non-distributed use only. "private": True is a marker for any future build/export
+    # tooling to filter on; it is not currently read by the frontend, which is why this is ALSO
+    # enforced at the data layer (see ingest_private_owned_sources.py and the .gitignore entries
+    # it adds) -- a flag a script forgets to check is not a safeguard by itself.
+    {
+        "id": "nkjv", "short": "NKJV", "name": "New King James Version (NKJV)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "PRIVATE / COPYRIGHTED", "group": "benchmark", "color": "#f472b6",
+        "default_3d": False, "is_master_en": True, "private": True,
+        "notes": "COPYRIGHTED (Thomas Nelson) -- extracted from James's own purchased ePub (The MacArthur Study Bible, NKJV) for personal use only. Never included in the public GitHub export in any form. [V] 31,102/31,102 verses present; chapter counts for Genesis (50), Exodus (40), Psalms (150), Matthew (28), Revelation (22), and Jude (1) independently cross-checked against the known printed NKJV on ingest (2026-11-12)."
+    },
+    {
+        "id": "nasb95", "short": "NASB 1995", "name": "New American Standard Bible (1995)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#38bdf8",
+        "default_3d": False, "is_master_en": True,
+        "notes": "Lockman Foundation New American Standard Bible (1995 Update); premier formal-equivalence literal translation for evangelical and academic comparative study. [V] 31,053 verses across 66 books aligned to Catholic 73-book canon."
+    },
+    {
+        "id": "csb", "short": "CSB", "name": "Christian Standard Bible (CSB)",
+        "lang": "en", "scope": "66 Books", "approval": "BENCHMARK",
+        "tier_badge": "66-BOOK BENCHMARK", "group": "benchmark", "color": "#34d399",
+        "default_3d": False, "is_master_en": True,
+        "notes": "Holman / Baker Christian Standard Bible; modern optimal-equivalence translation paired with the Baker Illustrated Study Bible apparatus. [V] 31,034 verses across 66 books aligned to Catholic 73-book canon."
+    },
+    {
+        "id": "knox", "short": "Knox", "name": "The Knox Bible (Baronius Press)",
+        "lang": "en", "scope": "73 Books", "approval": "IMPRIMATUR",
+        "tier_badge": "IMPRIMATUR", "group": "catholic", "color": "#c084fc",
+        "default_3d": False, "is_master_en": True,
+        "notes": "Msgr. Ronald Knox's acclaimed literary Catholic translation from the Latin Vulgate with Imprimatur, published by Baronius Press. [V] Extracted from Baronius Press edition."
     }
 ]
 
@@ -1003,7 +1097,8 @@ PRELOADED_CRUXES = [
         "apparatus": [
             {"witness": "Latin Vulgate (Clementine Edition / Council of Trent)", "text": "Pater, Verbum, et Spiritus Sanctus: et hi tres unum sunt", "note": "Received liturgical text of the Western Catholic Church.", "tier": "crimson"},
             {"witness": "Old Latin (Itala / Codex Speculum, 5th c.)", "text": "Testified by St. Cyprian (c. 250 AD) and Priscillian (c. 385 AD).", "note": "Proves the reading was known in the West centuries before the Vulgate standardization.", "tier": "crimson"},
-            {"witness": "NA28 / Modern Critical Greek Text", "text": "OMITS Heavenly Witnesses", "note": "Reading present in Greek only in Codex Montfortianus (16th c.) and Ottobonianus (15th c.).", "tier": "sapphire"}
+            {"witness": "NA28 / Modern Critical Greek Text", "text": "OMITS Heavenly Witnesses", "note": "Reading present in Greek only in Codex Montfortianus (16th c.) and Ottobonianus (15th c.).", "tier": "sapphire"},
+            {"witness": "Byzantine Majority Text (this suite's own Byz stream, verified directly)", "text": "οτι τρεις εισιν οι μαρτυρουντες -- 'for there are three that testify', continuing straight into v.8's 'the Spirit, the water, and the blood' with no mention of heaven, Father, Word, or Holy Spirit.", "note": "The Byzantine/Majority text-type -- not the same thing as the Textus Receptus, even though both are sometimes loosely called 'the traditional text' -- does NOT carry the Comma either; this suite's own TR stream confirms the Comma IS present there, showing the two labels are not interchangeable for this exact verse.", "tier": "slate"}
         ],
         "patristics": [
             {"father": "St. Cyprian of Carthage", "work": "De Catholicae Ecclesiae Unitate 6 (c. 251 AD)", "text": "‘The Lord says: I and the Father are one; and again it is written of the Father, and of the Son, and of the Holy Spirit: And these three are one.’"},
@@ -1090,6 +1185,742 @@ PRELOADED_CRUXES = [
             "uncial_text": "ΚΡΑΤΕΙΤΕ ΤΑC ΠΑΡΑΔΟCΕΙC ΕΙΤΕ ΔΙΑ ΛΟΓΟΥ ΕΙΤΕ ΔΙ ΕΠΙCΤΟΛΗC ΗΜΩΝ",
             "hebrew_mt": "[NEW TESTAMENT EXCLUSIVE]",
             "vorlage_dss": "Apostolic depositum fidei (Sacred Tradition & Sacred Scripture co-equal)"
+        }
+    },
+    {
+        "id": "jer10-doxology",
+        "book_id": "jer",
+        "chapter": 10,
+        "verse_start": 6,
+        "verse_end": 8,
+        "title": "The LORD's Doxology: Present in the Masoretic Text, Absent from the Septuagint",
+        "ref": "Jeremiah 10:6–8",
+        "tier": "gold",
+        "tier_name": "Tier 1: Ancient Vorlage Divergence",
+        "summary": "LXX Jeremiah runs roughly a seventh shorter than the Masoretic Text throughout the book, and chapter 10 is the clearest single-chapter illustration: verses 6–8 (this doxology praising the LORD's incomparable greatness) and verse 10 simply have no Greek counterpart at all in Rahlfs' critical text. St. Jerome himself noted in his Preface to Jeremiah that the Hebrew he translated ran markedly longer than the Greek he had before him. Modern scholarship (so Emanuel Tov, who treats Jeremiah as the paradigm case for two divergent literary editions of a biblical book) reads this as the Greek translator working from an older, shorter Hebrew edition, not as a careless omission.",
+        "english": "There is none like you, O LORD; you are great, and your name is great in might. Who would not fear you, O King of the nations? For this is your due; for among all the wise ones of the nations and in all their kingdoms there is none like you.",
+        "vulgate": "Non est similis tui, Domine: magnus es tu, et magnum nomen tuum in fortitudine. Quis non timebit te, o Rex Gentium?",
+        "greek_hebrew": "[no corresponding Greek text exists in LXX Jeremiah 10 for this material]",
+        "interlinear": [
+            {"w": "מֵאֵין כָּמוֹךָ", "t": "me'ein kamokha", "pos": "Phrase", "lemma": "אַיִן", "strong": "H369", "m": "there is none like you"},
+            {"w": "יְהוָה", "t": "YHWH", "pos": "N-proper", "lemma": "יְהוָה", "strong": "H3068", "m": "the LORD"},
+            {"w": "גָּדוֹל", "t": "gadol", "pos": "Adj-ms", "lemma": "גָּדוֹל", "strong": "H1419", "m": "great"}
+        ],
+        "apparatus": [
+            {"witness": "Jeremiah 10:6–8 (Hebrew MT / BHS)", "text": "מֵאֵין כָּמוֹךָ יְהוָה גָּדוֹל אַתָּה וְגָדוֹל שִׁמְךָ בִּגְבוּרָה...", "note": "A doxology on the LORD's incomparable greatness, framed as a contrast to the idol-polemic surrounding it.", "tier": "gold"},
+            {"witness": "Jeremiah 10 (LXX Rahlfs / Codex Vaticanus B)", "text": "ABSENT — no Greek text corresponds to MT vv. 6–8 (v. 10 is likewise absent)", "note": "The chapter proceeds directly from the idol-polemic to its continuation without this material.", "tier": "gold"},
+            {"witness": "St. Jerome, Preface to Jeremiah (Prologus in Jeremia)", "text": "Notes in general terms that his Hebrew exemplar ran considerably longer than the Greek text available to him for this book.", "note": "An ancient witness to the same length-discrepancy modern critics describe, not a verse-by-verse commentary on v. 6 specifically.", "tier": "sapphire"}
+        ],
+        "patristics": [
+            {"father": "St. Jerome", "work": "Preface to Jeremiah", "text": "Jerome's own preface records his awareness that the Hebrew Jeremiah he translated for the Vulgate was noticeably fuller than the Greek text circulating in his day — a general observation about the book's length, not a specific comment on this doxology."}
+        ],
+        "strata_3d": {
+            "top_text": "There is none like you, O LORD; you are great, and your name is great in might",
+            "greek_text": "[no Greek text — absent from LXX]",
+            "uncial_text": "[ABSENT FROM CODEX VATICANUS / SINAITICUS]",
+            "hebrew_mt": "מֵאֵין כָּמוֹךָ יְהוָה גָּדוֹל אַתָּה וְגָדוֹל שִׁמְךָ בִּגְבוּרָה",
+            "vorlage_dss": "Shorter Hebrew Vorlage underlying LXX (no Qumran Jeremiah fragment survives for this exact verse)"
+        }
+    },
+    {
+        "id": "1sam17-goliath",
+        "book_id": "1sam",
+        "chapter": 17,
+        "verse_start": 12,
+        "verse_end": 31,
+        "title": "David Re-Introduced to Saul: A Whole Scene Absent from the Shorter Septuagint",
+        "ref": "1 Samuel 17:12–31",
+        "tier": "gold",
+        "tier_name": "Tier 1: Ancient Vorlage Divergence",
+        "summary": "Codex Vaticanus's Greek text of 1 Samuel 17–18 (the Old Greek, generally agreed to be the more original translation) is markedly shorter than the Masoretic Text — it lacks this entire scene re-introducing David as Jesse's son, his errand to the battle camp, and his conversation with Eliab, moving directly from Goliath's challenge to the duel. Emanuel Tov uses this exact passage as his standard teaching example for two coexisting literary editions of a biblical book, rather than a simple scribal slip: the shorter Greek text reads as a self-consistent, non-repetitive narrative in its own right (David has already been introduced in chapter 16), while the longer Hebrew text re-introduces him as if for the first time.",
+        "english": "Now David was the son of an Ephrathite of Bethlehem in Judah, named Jesse, who had eight sons. In the days of Saul this man was already old, advanced in years... [continuing through v. 31, David's errand to his brothers and his exchange with Eliab]",
+        "vulgate": "David autem erat filius viri Ephrathaei, de quo supra dictum est, de Bethlehem Juda, cui nomen Isai, qui habebat octo filios...",
+        "greek_hebrew": "[this entire span has no corresponding text in Codex Vaticanus's Old Greek]",
+        "interlinear": [
+            {"w": "וְדָוִד", "t": "weDavid", "pos": "Conj-N-proper", "lemma": "דָּוִד", "strong": "H1732", "m": "and David"},
+            {"w": "בֶּן", "t": "ben", "pos": "N-ms-cs", "lemma": "בֵּן", "strong": "H1121", "m": "son of"},
+            {"w": "אִישׁ", "t": "'ish", "pos": "N-ms", "lemma": "אִישׁ", "strong": "H376", "m": "man / a certain man"}
+        ],
+        "apparatus": [
+            {"witness": "1 Samuel 17:12–31 (Hebrew MT / BHS)", "text": "David re-introduced as Jesse's youngest son; sent by his father to the battle line with provisions; overhears Goliath's taunt; rebuked by his brother Eliab.", "note": "A self-contained narrative unit found only in the longer (proto-Masoretic) edition.", "tier": "gold"},
+            {"witness": "1 Samuel 17 (LXX Codex Vaticanus B, Old Greek)", "text": "ABSENT — the Greek text moves directly from Goliath's challenge (17:11) to the duel's aftermath material it does retain later in the chapter.", "note": "Standard textbook example (Tov, Textual Criticism of the Hebrew Bible) of a shorter, internally coherent literary edition.", "tier": "gold"},
+            {"witness": "4QSamᵃ (Dead Sea Scrolls, Qumran Cave 4)", "text": "Too fragmentary at this exact span to settle which edition is earlier here", "note": "4QSamᵃ does support the LXX's shorter/divergent text elsewhere in Samuel (see the Nahash-Ammonite crux), which is why scholars take the LXX's shorter 1 Sam 17 seriously rather than dismissing it as mere abridgment.", "tier": "sapphire"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "This is a modern, comparative text-critical observation rather than a point of ancient doctrinal controversy — no Church Father is known to have commented on the length difference between the Greek and Hebrew editions of this specific scene, since the discipline of comparing manuscript traditions this way is a later development. Noted here honestly rather than inventing a patristic citation that does not exist."}
+        ],
+        "strata_3d": {
+            "top_text": "Now David was the son of an Ephrathite of Bethlehem in Judah, named Jesse",
+            "greek_text": "[no Greek text — absent from Codex Vaticanus]",
+            "uncial_text": "[ABSENT FROM CODEX VATICANUS]",
+            "hebrew_mt": "וְדָוִד בֶּן אִישׁ אֶפְרָתִי הַזֶּה מִבֵּית לֶחֶם יְהוּדָה",
+            "vorlage_dss": "Two coexisting literary editions (shorter Old Greek vs. longer proto-MT), per Tov"
+        }
+    },
+    {
+        "id": "exod1-seventy",
+        "book_id": "exod",
+        "chapter": 1,
+        "verse_start": 5,
+        "verse_end": 5,
+        "title": "Seventy Souls or Seventy-Five? The Descendants of Jacob in Egypt",
+        "ref": "Exodus 1:5 / Acts 7:14",
+        "tier": "gold",
+        "tier_name": "Tier 1: Ancient Vorlage Divergence",
+        "summary": "The Masoretic Text counts seventy persons of Jacob's house who came into Egypt; the Septuagint counts seventy-five. This is not a simple translation choice: a Qumran fragment of Exodus (4QExodᵇ) supports the Septuagint's seventy-five, and Stephen's speech in Acts 7:14 follows the same seventy-five — meaning the New Testament's own wording here agrees with the Greek/Qumran tradition against the later Hebrew textual tradition that became the Masoretic Text.",
+        "english": "All the descendants of Jacob were seventy persons; Joseph was already in Egypt.",
+        "vulgate": "Erant igitur omnes animae eorum qui egressi sunt de femore Jacob, septuaginta: Joseph autem in Aegypto erat.",
+        "greek_hebrew": "ἦσαν δὲ πᾶσαι ψυχαὶ ἐξ Ἰακὼβ πέντε καὶ ἑβδομήκοντα",
+        "interlinear": [
+            {"w": "πέντε καὶ ἑβδομήκοντα", "t": "pente kai hebdomēkonta", "pos": "Num", "lemma": "ἑβδομήκοντα", "strong": "G1440", "m": "seventy-five (five and seventy)"},
+            {"w": "שִׁבְעִים נָפֶשׁ", "t": "shiv'im nafesh", "pos": "Num-N", "lemma": "שִׁבְעִים", "strong": "H7657", "m": "seventy persons"}
+        ],
+        "apparatus": [
+            {"witness": "Exodus 1:5 (Hebrew MT / BHS)", "text": "שִׁבְעִים נָפֶשׁ (shiv'im nafesh)", "note": "Seventy persons — matches the genealogical count given in Genesis 46:27 MT.", "tier": "gold"},
+            {"witness": "Exodus 1:5 (LXX Rahlfs)", "text": "πέντε καὶ ἑβδομήκοντα ψυχαί", "note": "Seventy-five souls — the LXX's own Genesis 46:27 also reads seventy-five, by including five additional grandsons of Joseph through Manasseh and Ephraim.", "tier": "gold"},
+            {"witness": "4QExodᵇ (Dead Sea Scrolls, Qumran Cave 4)", "text": "Supports the LXX's seventy-five against the MT's seventy", "note": "A pre-Masoretic Hebrew witness agreeing with the Greek, not a Greek invention.", "tier": "gold"},
+            {"witness": "Acts 7:14 (NA28)", "text": "ἐν ψυχαῖς ἑβδομήκοντα πέντε (en psychais hebdomēkonta pente)", "note": "St. Stephen's speech follows the LXX/4QExodᵇ count of seventy-five, not the Masoretic seventy.", "tier": "gold"}
+        ],
+        "patristics": [
+            {"father": "Origen", "work": "Hexapla (methodology)", "text": "Origen's six-column Hexapla was built precisely to register numeral and wording differences like this one between the Hebrew text of his day and the Septuagint, marking Greek pluses against the Hebrew with an obelus; no specific surviving fragment of his notes on this exact verse is being quoted here — this records his general method, not an invented quotation."}
+        ],
+        "strata_3d": {
+            "top_text": "All the descendants of Jacob were seventy-five persons",
+            "greek_text": "ἦσαν δὲ πᾶσαι ψυχαὶ ἐξ Ἰακὼβ πέντε καὶ ἑβδομήκοντα",
+            "uncial_text": "ΗCΑΝ ΔΕ ΠΑCΑΙ ΨΥΧΑΙ ΕΞ ΙΑΚΩΒ ΠΕΝΤΕ ΚΑΙ ΕΒΔΟΜΗΚΟΝΤΑ",
+            "hebrew_mt": "שִׁבְעִים נָפֶשׁ (Seventy persons — MT)",
+            "vorlage_dss": "פנתה וחמש / seventy-five, per 4QExodᵇ (matches LXX and Acts 7:14)"
+        }
+    },
+    {
+        "id": "deut32-sonsofgod",
+        "book_id": "deut",
+        "chapter": 32,
+        "verse_start": 8,
+        "verse_end": 8,
+        "title": "Sons of Israel or Sons of God? The Song of Moses and the Division of the Nations",
+        "ref": "Deuteronomy 32:8",
+        "tier": "gold",
+        "tier_name": "Tier 1: Ancient Vorlage Divergence",
+        "summary": "One of the most discussed Vorlage divergences in all of Dead Sea Scrolls scholarship. The Masoretic Text says the Most High fixed the boundaries of the nations 'according to the number of the sons of Israel' — a strange anchor point, since Israel did not yet exist as a nation at the time the Song describes. The Septuagint instead reads 'according to the number of the angels of God,' envisioning the nations apportioned among the members of the divine council. A Qumran fragment, 4QDeutʲ, confirms a Hebrew reading close to the Septuagint's ('sons of God'), supporting the now widely held view (so Tov, and the DSS editor Julie Duncan) that later scribal discomfort with the divine-council imagery led to the Masoretic Text's substitution of 'sons of Israel.'",
+        "english": "When the Most High gave to the nations their inheritance, when he divided mankind, he fixed the borders of the peoples according to the number of the sons of God.",
+        "vulgate": "Quando dividebat Altissimus gentes, quando separabat filios Adam, constituit terminos populorum juxta numerum filiorum Israel.",
+        "greek_hebrew": "ὅτε διεμέριζεν ὁ Ὕψιστος ἔθνη... ἔστησεν ὅρια ἐθνῶν κατὰ ἀριθμὸν ἀγγέλων θεοῦ",
+        "interlinear": [
+            {"w": "κατὰ ἀριθμὸν ἀγγέλων θεοῦ", "t": "kata arithmon angelōn theou", "pos": "Phrase", "lemma": "ἄγγελος", "strong": "G32", "m": "according to the number of the angels of God"},
+            {"w": "לְמִסְפַּר בְּנֵי יִשְׂרָאֵל", "t": "lemispar benei Yisra'el", "pos": "Phrase", "lemma": "יִשְׂרָאֵל", "strong": "H3478", "m": "according to the number of the sons of Israel (MT, later reading)"},
+            {"w": "בְּנֵי אֱלֹהִים", "t": "benei Elohim", "pos": "Phrase", "lemma": "אֱלֹהִים", "strong": "H430", "m": "sons of God (4QDeutʲ reading, agrees with LXX)"}
+        ],
+        "apparatus": [
+            {"witness": "Deuteronomy 32:8 (Hebrew MT / BHS, the received Masoretic reading)", "text": "לְמִסְפַּר בְּנֵי יִשְׂרָאֵל", "note": "'According to the number of the sons of Israel' — widely regarded by scholars as the later, theologically adjusted reading.", "tier": "gold"},
+            {"witness": "Deuteronomy 32:8 (LXX Rahlfs)", "text": "κατὰ ἀριθμὸν ἀγγέλων θεοῦ", "note": "'According to the number of the angels of God' — envisions a divine council presiding over the nations.", "tier": "gold"},
+            {"witness": "4QDeutʲ (Dead Sea Scrolls, Qumran Cave 4)", "text": "בני אלהים (benei Elohim) — 'sons of God'", "note": "A pre-Masoretic Hebrew manuscript supporting the LXX's divine-council reading against the later MT.", "tier": "gold"}
+        ],
+        "patristics": [
+            {"father": "Origen", "work": "De Principiis / Contra Celsum (general angelology of the nations)", "text": "Origen's broader teaching that different nations were placed under the charge of different angelic powers draws on exactly this kind of 'divine council' reading of Deuteronomy 32:8–9 current in his Greek Old Testament — noted here as his general angelological framework, not as a verse-by-verse commentary quotation on this precise verse."}
+        ],
+        "strata_3d": {
+            "top_text": "according to the number of the angels of God",
+            "greek_text": "κατὰ ἀριθμὸν ἀγγέλων θεοῦ",
+            "uncial_text": "ΚΑΤΑ ΑΡΙΘΜΟΝ ΑΓΓΕΛΩΝ ΘΕΟΥ",
+            "hebrew_mt": "לְמִסְפַּר בְּנֵי יִשְׂרָאֵל (sons of Israel — later MT reading)",
+            "vorlage_dss": "בני אלהים / sons of God, per 4QDeutʲ (agrees with LXX against MT)"
+        }
+    },
+    {
+        "id": "job2-wife-speech",
+        "book_id": "job",
+        "chapter": 2,
+        "verse_start": 9,
+        "verse_end": 9,
+        "title": "Job's Wife's Extended Lament: A Septuagint Plus Absent from the Masoretic Text",
+        "ref": "Job 2:9",
+        "tier": "gold",
+        "tier_name": "Tier 1: Ancient Vorlage Divergence",
+        "summary": "Most of the divergences catalogued elsewhere in this suite are LXX-shorter-than-MT; this one runs the other way. Where the Masoretic Text gives Job's wife a single terse line ('Curse God and die'), the Septuagint (Rahlfs) expands it into a substantial additional lament in her own voice, reflecting on her own hardships and the length of Job's suffering before she reaches the same demand. LXX Job as a whole is noticeably shorter than the MT overall (closer to a sixth shorter), which makes this particular plus at 2:9 stand out as a case worth its own entry: whatever Hebrew Vorlage the Greek translator worked from here, at this one verse, carried more than the text that became the Masoretic tradition.",
+        "english": "Then his wife said to him, 'Do you still hold fast your integrity? Curse God and die.'",
+        "vulgate": "Dixit autem illi uxor sua: Adhuc tu permanes in simplicitate tua? benedic Deo, et morere.",
+        "greek_hebrew": "εἶτα εἶπεν αὐτῷ ἡ γυνὴ αὐτοῦ... [extended lament follows in LXX, absent from MT] ...ἀλλὰ εἰπόν τι ῥῆμα εἰς Κύριον καὶ τελεύτα",
+        "interlinear": [
+            {"w": "חֹדְקָתְךָ", "t": "tumatkha", "pos": "N-fs", "lemma": "תֻּמָּה", "strong": "H8538", "m": "your integrity (MT, brief form)"},
+            {"w": "εἰπόν τι ῥῆμα εἰς Κύριον", "t": "eipon ti rhēma eis Kyrion", "pos": "Phrase", "lemma": "ῥῆμα", "strong": "G4487", "m": "say some word against the Lord (LXX's own phrasing of the demand, after the added lament)"}
+        ],
+        "apparatus": [
+            {"witness": "Job 2:9 (Hebrew MT / BHS)", "text": "עֹדְךָ מַחֲזִיק בְּתֻמָּתֶךָ בָּרֵךְ אֱלֹהִים וָמֻת", "note": "A single short line: 'Do you still hold fast your integrity? Curse God and die.'", "tier": "gold"},
+            {"witness": "Job 2:9 (LXX Rahlfs, Codex Sinaiticus/Vaticanus)", "text": "An extended additional speech in Job's wife's own voice, surveying her own and her household's suffering, before arriving at the same demand in different words.", "note": "A well-attested Septuagint plus, found across the major uncials, not a late scribal addition to one manuscript.", "tier": "gold"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "This Septuagint plus is discussed in modern critical commentaries (e.g. the Anchor Bible Job volume); no specific patristic sermon or commentary singling out this exact addition is being claimed here — noted honestly rather than attributing an invented citation to a Church Father."}
+        ],
+        "strata_3d": {
+            "top_text": "Do you still hold fast your integrity? Curse God and die.",
+            "greek_text": "[LXX adds an extended lament here before this same demand]",
+            "uncial_text": "[CODEX SINAITICUS / VATICANUS CARRY THE LONGER GREEK TEXT]",
+            "hebrew_mt": "עֹדְךָ מַחֲזִיק בְּתֻמָּתֶךָ בָּרֵךְ אֱלֹהִים וָמֻת",
+            "vorlage_dss": "No Qumran Job fragment survives at this exact verse to adjudicate which edition is earlier"
+        }
+    },
+    {
+        "id": "prov31-displaced",
+        "book_id": "prov",
+        "chapter": 31,
+        "verse_start": 10,
+        "verse_end": 10,
+        "title": "The Excellent Wife, Relocated: Proverbs' Different Macro-Structure in Greek",
+        "ref": "Proverbs 31:10",
+        "tier": "sapphire",
+        "tier_name": "Tier 2: Structural / Redactional Divergence",
+        "summary": "This isn't a wording difference at a single point, but a difference in the whole book's architecture. From chapter 24 onward, the Septuagint rearranges large blocks of Proverbs relative to the Masoretic Text's order: the material that sits as MT chapters 30–31 (the Sayings of Agur, the Sayings of King Lemuel, and this acrostic poem on the capable wife) is distributed earlier in the Greek text, interleaved among chapters 24–29 rather than appearing as a single closing unit. Septuagint specialists studying Proverbs' translation technique treat this as one of the book's most distinctive features; whether it reflects a genuinely different Hebrew arrangement available to the Greek translator, or an editorial choice made in Greek, remains debated — the surviving Qumran fragments of Proverbs are too limited (small portions of chapters 1–2 and 13–15 only) to settle which edition's order is older.",
+        "english": "An excellent wife, who can find? She is far more precious than jewels.",
+        "vulgate": "Mulierem fortem quis inveniet? procul et de ultimis finibus pretium ejus.",
+        "greek_hebrew": "γυναῖκα ἀνδρείαν τίς εὑρήσει; τιμιωτέρα δέ ἐστιν λίθων πολυτελῶν ἡ τοιαύτη",
+        "interlinear": [
+            {"w": "אֵֽשֶׁת־חַיִל", "t": "'eshet-chayil", "pos": "N-fs-cs", "lemma": "חַיִל", "strong": "H2428", "m": "a woman of valor / an excellent wife"},
+            {"w": "γυναῖκα ἀνδρείαν", "t": "gynaika andreian", "pos": "N-AFS", "lemma": "ἀνδρεῖος", "strong": "G407", "m": "a courageous / excellent wife"}
+        ],
+        "apparatus": [
+            {"witness": "Proverbs 31:10 (Hebrew MT / BHS)", "text": "This verse opens the closing acrostic poem (31:10–31), positioned as the Hebrew book's final unit, after the Sayings of Agur (ch. 30) and King Lemuel (31:1–9).", "note": "Standard Masoretic book-ending position.", "tier": "sapphire"},
+            {"witness": "Proverbs (LXX Rahlfs, overall structure)", "text": "The Greek text interleaves what MT keeps together as chapters 30–31 among chapters 24–29 instead — per the ordering documented in Septuagint scholarship, MT 30:1–14 follows Greek 24:22, MT 30:15–31:9 follows Greek 24:34, and this acrostic (MT 31:10–31) follows Greek 29:27.", "note": "A structural rearrangement across many chapters, not a single-verse wording variant.", "tier": "sapphire"},
+            {"witness": "Qumran Proverbs fragments (4QProvᵃ, 4QProvᵇ)", "text": "Only small portions of chapters 1–2 and 13–15 survive", "note": "Too limited to confirm or rule out a different Hebrew Vorlage behind the Greek's rearrangement.", "tier": "slate"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "The ancient Fathers who commented on Proverbs generally worked from whichever text form (Greek East or Hebrew-based Latin West) was in front of them, without remarking on the difference in macro-structure itself — noted honestly rather than inventing a specific patristic comment on this structural point."}
+        ],
+        "strata_3d": {
+            "top_text": "An excellent wife, who can find? She is far more precious than jewels.",
+            "greek_text": "γυναῖκα ἀνδρείαν τίς εὑρήσει; τιμιωτέρα δέ ἐστιν λίθων πολυτελῶν ἡ τοιαύτη",
+            "uncial_text": "ΓΥΝΑΙΚΑ ΑΝΔΡΕΙΑΝ ΤΙΣ ΕΥΡΗΣΕΙ ΤΙΜΙΩΤΕΡΑ ΔΕ ΕΣΤΙΝ ΛΙΘΩΝ ΠΟΛΥΤΕΛΩΝ Η ΤΟΙΑΥΤΗ",
+            "hebrew_mt": "אֵֽשֶׁת־חַיִל מִי יִמְצָא (closing acrostic, MT book-ending position)",
+            "vorlage_dss": "Same poem, relocated earlier in the Greek's chapter order (after LXX 29:27 rather than at the close)"
+        }
+    },
+    {
+        "id": "gen5-patriarch-ages",
+        "book_id": "gen",
+        "chapter": 5,
+        "verse_start": 3,
+        "verse_end": 32,
+        "title": "The Antediluvian Patriarchs' Ages: A Chapter-Wide Numerical Discrepancy, Not a Single Variant",
+        "ref": "Genesis 5:3-32",
+        "tier": "ruby",
+        "tier_name": "Tier 3: Numerical Discrepancy",
+        "summary": "Every figure below was read directly out of this suite's own Hebrew (WLC/TAHOT) and Greek (Rahlfs LXX) text for Genesis 5, not taken from a secondary table. Across the ten pre-flood patriarchs, the Septuagint's age-at-son's-birth figure is 100 years higher than the Masoretic Text's for six of them (Adam, Seth, Enosh, Kenan, Mahalalel, Enoch) -- a real, systematic pattern, not a copying accident, since it recurs at six independent points. But the pattern is NOT uniform, which is itself the more interesting fact: Jared and Noah are identical in both texts, Lamech differs by only +6 (182 MT vs. 188 LXX), and Methuselah runs the OTHER direction, 20 years LOWER in the LXX (187 MT vs. 167 LXX). That last one is not a minor curiosity -- on the Masoretic Text's own figures, Methuselah's death year lands within a year of the flood (a point long noted in discussions of Genesis's chronology), which the Septuagint's lower figure for him quietly avoids. Specialists in the transmission history of Genesis's chronology (Ronald Hendel's work on the LXX Genesis genealogies is the standard reference point here) treat this as evidence of a deliberate, late editorial revision of the numbers in one textual tradition or the other, not random scribal drift -- though which direction the revision ran, and why, remains debated.",
+        "english": "And Adam lived a hundred and thirty years, and begot a son to his own image and likeness, and called his name Seth.",
+        "vulgate": "Vixit autem Adam centum triginta annis: et genuit ad imaginem et similitudinem suam, vocavitque nomen ejus Seth.",
+        "greek_hebrew": "ἔζησεν δὲ Αδαμ διακόσια καὶ τριάκοντα ἔτη καὶ ἐγέννησεν κατὰ τὴν ἰδέαν αὐτοῦ καὶ κατὰ τὴν εἰκόνα αὐτοῦ καὶ ἐπωνόμασεν τὸ ὄνομα αὐτοῦ Σηθ",
+        "interlinear": [
+            {"w": "שְׁלֹשִׁים וּמְאַת שָׁנָה", "t": "shloshim u-me'at shanah", "pos": "Num", "lemma": "מֵאָה", "strong": "H3967", "m": "thirty and a hundred years (MT: 130)"},
+            {"w": "διακόσια καὶ τριάκοντα ἔτη", "t": "diakosia kai triakonta etē", "pos": "Num-N", "lemma": "διακόσιοι", "strong": "G1250", "m": "two hundred and thirty years (LXX: 230)"}
+        ],
+        "apparatus": [
+            {"witness": "Adam (Gen 5:3)", "text": "MT: 130 years. LXX: 230 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Seth (Gen 5:6)", "text": "MT: 105 years. LXX: 205 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Enosh (Gen 5:9)", "text": "MT: 90 years. LXX: 190 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Kenan (Gen 5:12)", "text": "MT: 70 years. LXX: 170 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Mahalalel (Gen 5:15)", "text": "MT: 65 years. LXX: 165 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Jared (Gen 5:18)", "text": "MT: 162 years. LXX: 162 years.", "note": "IDENTICAL -- breaks the +100 pattern.", "tier": "slate"},
+            {"witness": "Enoch (Gen 5:21)", "text": "MT: 65 years. LXX: 165 years.", "note": "+100 in LXX.", "tier": "ruby"},
+            {"witness": "Methuselah (Gen 5:25)", "text": "MT: 187 years. LXX: 167 years.", "note": "-20 in LXX -- the pattern reverses. On MT's own chronology Methuselah's death coincides almost exactly with the flood year; LXX's lower figure changes that.", "tier": "ruby"},
+            {"witness": "Lamech (Gen 5:28)", "text": "MT: 182 years. LXX: 188 years.", "note": "+6 only -- neither identical nor the full +100.", "tier": "slate"},
+            {"witness": "Noah (Gen 5:32)", "text": "MT: 500 years. LXX: 500 years.", "note": "IDENTICAL.", "tier": "slate"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "St. Augustine (City of God, Book XV) discusses the Genesis 5/11 chronological discrepancies between the Hebrew and Greek texts at length and explicitly prefers the Septuagint's longer chronology in places -- a real patristic engagement with this exact numerical problem, though the precise verse-by-verse figures he cites should be checked against a critical edition of City of God before quoting him directly, not assumed from this summary."}
+        ],
+        "strata_3d": {
+            "top_text": "And Adam lived a hundred and thirty years, and begot a son to his own image and likeness.",
+            "greek_text": "ἔζησεν δὲ Αδαμ διακόσια καὶ τριάκοντα ἔτη καὶ ἐγέννησεν κατὰ τὴν ἰδέαν αὐτοῦ",
+            "uncial_text": "ΕΖΗΣΕΝ ΔΕ ΑΔΑΜ ΔΙΑΚΟΣΙΑ ΚΑΙ ΤΡΙΑΚΟΝΤΑ ΕΤΗ ΚΑΙ ΕΓΕΝΝΗΣΕΝ ΚΑΤΑ ΤΗΝ ΙΔΕΑΝ ΑΥΤΟΥ",
+            "hebrew_mt": "וַֽיְחִי אָדָם שְׁלֹשִׁים וּמְאַת שָׁנָה וַיּוֹלֶד בִּדְמוּתוֹ כְּצַלְמוֹ",
+            "vorlage_dss": "No Qumran Genesis 5 fragment survives to adjudicate which figure set is earlier"
+        }
+    },
+    {
+        "id": "isa53-servant-light",
+        "book_id": "isa",
+        "chapter": 53,
+        "verse_start": 11,
+        "verse_end": 11,
+        "title": "‘He Shall See Light’: A Qumran Reading the Masoretic Text Lost",
+        "ref": "Isaiah 53:11",
+        "tier": "emerald",
+        "tier_name": "Tier 4: Ancient Witness Bridge (DSS)",
+        "summary": "The Masoretic Text reads מֵעֲמַל נַפְשׁוֹ יִרְאֶה יִש׀ְבָע -- ‘from the travail of his soul he will see, he will be satisfied’ -- with no stated object for ‘he will see’, a gap long noted as grammatically awkward. The Septuagint supplies one: δεῖξαι αὐτῷ φῶς, ‘to show him light’. For centuries this LXX reading had no Hebrew witness behind it and could be read as the translator's own theological gloss. The Great Isaiah Scroll from Qumran Cave 1 (1QIsaᵃ), over a thousand years older than the medieval Masoretic codices, changes that: this suite's own manuscript registry (built from a direct transcription of the scroll) records יִרְאֶה אוֹר at this exact point -- ‘he will see LIGHT’ -- the same word the LXX translates. The DSS reading sides with the Greek against the later Masoretic tradition, which appears to have lost the word (most plausibly through a scribal eye-skip given the repeated י-ר-א sequence in the surrounding text, though the exact mechanism isn't itself attested, only inferred). This is one of the most frequently cited Qumran-confirms-LXX-against-MT cases in Isaiah scholarship, alongside Deuteronomy 32:8 (already covered elsewhere in this suite's cruxes).",
+        "english": "Of the travail of his soul, he shall see and be filled: by his knowledge shall this my just servant justify many, and he shall bear their iniquities.",
+        "vulgate": "Pro eo quod laboravit anima ejus, videbit et saturabitur: in scientia sua justificabit ipse justus servus meus multos, et iniquitates eorum ipse portabit.",
+        "greek_hebrew": "ἀπὸ τοῦ πόνου τῆς ψυχῆς αὐτοῦ δεῖξαι αὐτῷ φῶς καὶ πλάσαι τῇ συνέσει",
+        "interlinear": [
+            {"w": "יִרְאֶה", "t": "yir'eh", "pos": "V-Qal-impf-3ms", "lemma": "ראה", "strong": "H7200", "m": "he will see (MT: no object follows)"},
+            {"w": "יִרְאֶה אוֹר", "t": "yir'eh 'or", "pos": "V + N", "lemma": "אור", "strong": "H216", "m": "he will see LIGHT (1QIsaᵃ reading)"},
+            {"w": "δεῖξαι αὐτῷ φῶς", "t": "deixai auto phos", "pos": "V + N", "lemma": "φῶς", "strong": "G5457", "m": "to show him light (LXX, matches 1QIsaᵃ)"}
+        ],
+        "apparatus": [
+            {"witness": "Isaiah 53:11 (Hebrew MT / Leningrad Codex)", "text": "מֵעֲמַל נַפְשׁוֹ יִרְאֶה יִש׀ְבָע -- 'from the travail of his soul he will see, he will be satisfied'. No object stated for 'he will see'.", "note": "The textual gap this crux is about.", "tier": "slate"},
+            {"witness": "1QIsaᵃ (Great Isaiah Scroll, Qumran Cave 1, c. 2nd c. BC)", "text": "יִרְאֶה אוֹר -- 'he will see LIGHT'. Transcription per this suite's own Manuscripts registry (Codex entry for 1QIsaᵃ, column 44).", "note": "The earliest surviving Hebrew witness to this verse, and it has the word MT lacks.", "tier": "emerald"},
+            {"witness": "Isaiah 53:11 (LXX Rahlfs)", "text": "ἀπὸ τοῦ πόνου τῆς ψυχῆς αὐτοῦ δεῖξαι αὐτῷ φῶς -- 'to show him light'. Matches 1QIsaᵃ's 'light' exactly, confirming the Greek is a real translation of a Hebrew Vorlage, not an invented theological gloss.", "note": "DSS + LXX agree against MT.", "tier": "emerald"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Patristic citations of Isaiah 53 (e.g. in Justin Martyr's Dialogue with Trypho, Eusebius) regularly follow the LXX text, and so regularly include 'light' at this point -- but this needs checking against each Father's actual Greek text before quoting a specific one by name, not assumed from the general pattern."}
+        ],
+        "strata_3d": {
+            "top_text": "Of the travail of his soul, he shall see [light] and be filled.",
+            "greek_text": "ἀπὸ τοῦ πόνου τῆς ψυχῆς αὐτοῦ δεῖξαι αὐτῷ φῶς",
+            "uncial_text": "ΑΠΟ ΤΟΥ ΠΟΝΟΥ ΤΗΣ ΨΥΧΗΣ ΑΥΤΟΥ ΔΕΙΞΑΙ ΑΥΤΩ ΦΩΣ",
+            "hebrew_mt": "מֵעֲמַל נַפְשׁוֹ יִרְאֶה יִש׀ְבָע (no 'light')",
+            "vorlage_dss": "1QIsaᵃ: יִרְאֶה אוֹר -- 'he will see light', matching the LXX exactly"
+        }
+    },
+    {
+        "id": "exod24-place-not-god",
+        "book_id": "exod",
+        "chapter": 24,
+        "verse_start": 10,
+        "verse_end": 10,
+        "title": "'They Saw the God of Israel' Becomes 'They Saw the Place': Softening a Direct Vision of God",
+        "ref": "Exodus 24:10",
+        "tier": "topaz",
+        "tier_name": "Tier 5: Theological Revision",
+        "summary": "The Hebrew is direct and grammatically unambiguous: Moses, Aaron, Nadab, Abihu and seventy elders 'saw the God of Israel' (וַיִּרְאוּ אֵת אֱלֹהֵי יִשְׂרָאֵל) -- God himself is the grammatical object of 'saw'. The Septuagint will not let the sentence say that: it inserts an object that isn't in the Hebrew at all, 'the place' (τὸν τόπον), so the verse now reads 'they saw THE PLACE WHERE the God of Israel stood' -- the elders see a location God occupies, not God directly. This is not an isolated translation quirk; it is one of the best-known instances of a broader, well-documented LXX translation tendency to soften or reroute passages that otherwise describe seeing God's own person directly (compare the LXX's handling of other divine-appearance texts), discussed at length in scholarship on Septuagint translation technique (e.g. Wevers' notes on the Greek Exodus). Whether this reflects a settled theological conviction (that God's essence cannot literally be seen) or a more cautious, almost reflexive avoidance of the bare Hebrew idiom is itself debated -- stated honestly as an open question, not resolved here.",
+        "english": "And they saw the God of Israel: and under his feet as it were a work of sapphire stone, and as the heaven, when clear.",
+        "vulgate": "Et viderunt Deum Israel: et sub pedibus ejus quasi opus lapidis sapphirini, et quasi caelum, cum serenum est.",
+        "greek_hebrew": "καὶ εἶδον τὸν τόπον οὗ εἱστήκει ἐκεῖ ὁ θεὸς τοῦ Ισραηλ καὶ τὰ ὑπὸ τοὺς πόδας αὐτοῦ ὡσεὶ ἔργον πλίνθου σαπφείρου",
+        "interlinear": [
+            {"w": "וַיִּרְאוּ אֵת אֱלֹהֵי יִשְׂרָאֵל", "t": "vayir'u 'et 'elohei Yisra'el", "pos": "V + obj + N", "lemma": "אֱלֹהִים", "strong": "H430", "m": "and they saw [direct object:] the God of Israel"},
+            {"w": "εἶδον τὸν τόπον οὗ εἱστήκει ... ὁ θεὸς", "t": "eidon ton topon hou heistēkei ho theos", "pos": "V + N(obj) + V + N", "lemma": "τόπος", "strong": "G5117", "m": "they saw THE PLACE where God stood (God is no longer the grammatical object)"}
+        ],
+        "apparatus": [
+            {"witness": "Exodus 24:10 (Hebrew MT)", "text": "וַיִּרְאוּ אֵת אֱלֹהֵי יִשְׂרָאֵל -- 'and they saw the God of Israel'. God himself is the direct object of 'saw'.", "note": "Direct, unmediated vision of God, stated plainly.", "tier": "slate"},
+            {"witness": "Exodus 24:10 (LXX Rahlfs)", "text": "καὶ εἶδον τὸν τόπον οὗ εἱστήκει ἐκεῖ ὁ θεὸς τοῦ Ισραηλ -- 'and they saw THE PLACE WHERE the God of Israel stood'. 'The place' is inserted; it has no Hebrew counterpart in this verse.", "note": "The object of sight is relocated from God himself to the ground he stands on.", "tier": "topaz"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Discussions of the invisibility/incomprehensibility of God's essence (e.g. in Patristic exegesis of theophany texts generally) often appeal to passages like this one, but which specific Father cites this exact verse, and in which text-form, needs checking against a critical edition before naming one -- not assumed from the general pattern of theophany-caution in patristic exegesis."}
+        ],
+        "strata_3d": {
+            "top_text": "And they saw the God of Israel: and under his feet as it were a work of sapphire stone.",
+            "greek_text": "καὶ εἶδον τὸν τόπον οὗ εἱστήκει ἐκεῖ ὁ θεὸς τοῦ Ισραηλ",
+            "uncial_text": "ΚΑΙ ΕΙΔΟΝ ΤΟΝ ΤΟΠΟΝ ΟΥ ΕΙΣΤΗΚΕΙ ΕΚΕΙ Ο ΘΕΟΣ ΤΟΥ ΙΣΡΑΗΛ",
+            "hebrew_mt": "וַיִּרְאוּ אֵת אֱלֹהֵי יִשְׂרָאֵל (no 'place' -- God himself is the object)",
+            "vorlage_dss": "No Qumran Exodus 24 fragment survives at this exact verse to adjudicate"
+        }
+    },
+    {
+        "id": "matt2-hosea11-outofegypt",
+        "book_id": "matt",
+        "chapter": 2,
+        "verse_start": 15,
+        "verse_end": 15,
+        "title": "'Out of Egypt I Called My Son': Matthew's Quotation Matches the Hebrew, Not the Greek Bible He Usually Used",
+        "ref": "Matthew 2:15 (quoting Hosea 11:1)",
+        "tier": "sapphire",
+        "tier_name": "Tier 6: NT Use of the OT",
+        "summary": "Matthew applies Hosea 11:1 -- originally a historical statement about God calling the nation Israel out of Egyptian slavery at the Exodus, not a prediction about an individual -- to the infant Jesus' return from Egypt after Herod's death. That reuse (a corporate statement about Israel read typologically of Israel's representative) is itself the classic case study in New Testament use-of-the-OT scholarship (Beale & Carson's edited commentary on the subject treats this verse at length). But there is a second, more technical question this suite's own corpus can actually check: which TEXT did Matthew quote? His Greek, ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου ('out of Egypt I called MY SON', singular), matches the Hebrew MT's בְּנִי ('my son', singular) far more closely than it matches the Septuagint of Hosea 11:1, which actually reads τὰ τέκνα αὐτοῦ ('HIS CHILDREN', plural) -- a different translation choice entirely. Matthew is therefore not simply reproducing his usual Greek Bible here; he (or his source) is working closer to the Hebrew wording than the standard LXX rendering gets, exactly the kind of MT-vs-LXX-vs-independent-rendering question BibCrit's own NT-use-of-OT tool is built to surface.",
+        "english": "And was there until the death of Herod: that it might be fulfilled which the Lord spoke by the prophet, saying: Out of Egypt have I called my son.",
+        "vulgate": "Et erat ibi usque ad obitum Herodis: ut adimpleretur quod dictum est a Domino per prophetam dicentem: Ex Aegypto vocavi filium meum.",
+        "greek_hebrew": "ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου",
+        "interlinear": [
+            {"w": "מִמִּצְרַיִם קָרָאתִי לִבְנִי", "t": "mi-Mitzrayim qara'ti li-veni", "pos": "P + V + N", "lemma": "בֵּן", "strong": "H1121", "m": "out of Egypt I called/summoned, to/for my SON (singular) -- MT Hosea 11:1"},
+            {"w": "ἐξ Αἰγύπτου μετεκάλεσα τὰ τέκνα αὐτοῦ", "t": "ex Aigyptou metekalesa ta tekna autou", "pos": "P + V + N(pl)", "lemma": "τέκνον", "strong": "G5043", "m": "out of Egypt I summoned HIS CHILDREN (plural) -- LXX Hosea 11:1"},
+            {"w": "ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου", "t": "ex Aigyptou ekalesa ton huion mou", "pos": "P + V + N(sg)", "lemma": "υἱός", "strong": "G5207", "m": "out of Egypt I called MY SON (singular) -- Matthew 2:15, matching the Hebrew's number, not the LXX's"}
+        ],
+        "apparatus": [
+            {"witness": "Hosea 11:1 (Hebrew MT)", "text": "וּמִמִּצְרַיִם קָרָאתִי לִבְנִי -- 'and out of Egypt I called/summoned for my son' (singular, 'my son').", "note": "Matthew's number (singular) agrees with this.", "tier": "slate"},
+            {"witness": "Hosea 11:1 (LXX Rahlfs)", "text": "καὶ ἐξ Αἰγύπτου μετεκάλεσα τὰ τέκνα αὐτοῦ -- 'and out of Egypt I summoned his children' (plural, 'his children', not 'my son').", "note": "A real, different translation choice -- Matthew does NOT simply reproduce this.", "tier": "sapphire"},
+            {"witness": "Matthew 2:15 (NA28/SBLGNT)", "text": "ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου -- 'out of Egypt I called my son' (singular).", "note": "Matches the Hebrew's singular 'my son' against the LXX's plural 'his children' -- an independent rendering, or a different Greek tradition, not a straight LXX quotation.", "tier": "sapphire"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Patristic commentary on Matthew's infancy narrative (e.g. in catena traditions on Matthew 2) regularly treats this as a messianic fulfillment citation without remarking on the MT/LXX wording difference itself -- noted honestly rather than inventing a specific Father's comment on this precise philological point."}
+        ],
+        "strata_3d": {
+            "top_text": "Out of Egypt have I called my son.",
+            "greek_text": "ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου",
+            "uncial_text": "ΕΞ ΑΙΓΥΠΤΟΥ ΕΚΑΛΕΣΑ ΤΟΝ ΥΙΟΝ ΜΟΥ",
+            "hebrew_mt": "וּמִמִּצְרַיִם קָרָאתִי לִבְנִי (Hosea 11:1 -- 'my son', singular, matches Matthew)",
+            "vorlage_dss": "No Qumran Hosea fragment survives at 11:1 to adjudicate the Hebrew Vorlage behind the LXX's plural rendering"
+        }
+    },
+    {
+        "id": "1sam1-threebulls-backtranslation",
+        "book_id": "1sam",
+        "chapter": 1,
+        "verse_start": 24,
+        "verse_end": 24,
+        "title": "'Three Bulls' or 'A Three-Year-Old Bull'? Reconstructing the Hebrew Behind the Greek",
+        "ref": "1 Samuel 1:24",
+        "tier": "amethyst",
+        "tier_name": "Tier 7: Back-Translation Workbench",
+        "summary": "This is the classic textbook case (used this way in Emanuel Tov's standard introduction to Hebrew Bible textual criticism) for reconstructing a Hebrew reading behind a Greek translation rather than just noting that the two disagree. The Masoretic Text has Hannah bring the boy Samuel to Shiloh 'with three bulls' (בְּפָרִים שְׁלֹשָׁה, bulls-plural + 'three'). The Septuagint instead has her bring him 'with A bull, three years old' (ἐν μόσχῳ τριετίζοντι, bull-SINGULAR + an adjective describing its age). Those two readings are not two different events or a loose paraphrase -- they are what you get from splitting and vocalizing the SAME string of Hebrew consonants two different ways: בפרים שלשה ('with bulls, three' = three bulls) versus בפר משלש / בפר מְשֻׁלָּשׁ ('with a bull, triple-year-old' = a three-year-old bull), a difference of exactly where one word ends and the next begins, not a difference in wording. Reconstructing the Greek's underlying Hebrew this way -- rather than assuming the Greek translator simply made something up -- is the basic method BibCrit's own Back-Translation Workbench is built to formalize. Some standard treatments of Samuel's textual history also point to Qumran's Samuel scrolls (4QSamᵃ) as independent Hebrew support for a reading closer to the Greek here, which this project has not independently verified against a primary transcription and so is flagged as reported, not confirmed in-house.",
+        "english": "And after she had weaned him, she carried him with her, with three bullocks, and three bushels of flour, and a bottle of wine, and she brought him to the house of the Lord in Silo.",
+        "vulgate": "Et adduxit eum secum, postquam ablactaverat, cum tribus bobus, et tribus modiis farinae, et amphora vini, et adduxit eum ad domum Domini in Silo.",
+        "greek_hebrew": "καὶ ἀνέβη μετ᾿ αὐτοῦ εἰς Σηλωμ ἐν μόσχῳ τριετίζοντι καὶ ἄρτοις καὶ οιφι σεμιδάλεως καὶ νεβελ οἴνου",
+        "interlinear": [
+            {"w": "בְּפָרִים שְׁלֹשָׁה", "t": "be-farim shloshah", "pos": "P + N(pl) + Num", "lemma": "פַּר", "strong": "H6499", "m": "with bulls, three [of them] -- MT's actual reading"},
+            {"w": "ἐν μόσχῳ τριετίζοντι", "t": "en moschō trietizonti", "pos": "P + N(sg) + Ptc", "lemma": "μόσχος", "strong": "G3448", "m": "with a bull, being three years old -- LXX's actual reading"},
+            {"w": "*בְּפַר מְשֻׁלָּשׁ (reconstructed)", "t": "*be-far meshullash", "pos": "P + N(sg) + Adj", "lemma": "שׁלשׁ", "strong": "H8027", "m": "with a bull, triple/third-year -- the Hebrew the LXX's wording implies, basis: same consonants as MT, divided and vocalized differently, not a different word choice"}
+        ],
+        "apparatus": [
+            {"witness": "1 Samuel 1:24 (Hebrew MT)", "text": "בְּפָרִים שְׁלֹשָׁה -- 'with bulls, three' = three bulls (plural noun + cardinal number).", "note": "The received Masoretic word-division and vocalization of this consonant string.", "tier": "slate"},
+            {"witness": "1 Samuel 1:24 (LXX Rahlfs)", "text": "ἐν μόσχῳ τριετίζοντι -- 'with a bull, three-year-old' (singular noun + age-descriptor participle).", "note": "Not a paraphrase or an error -- the natural Greek rendering of a DIFFERENT word-division of the same consonants.", "tier": "amethyst"},
+            {"witness": "Reconstructed Hebrew Vorlage behind the LXX (hypothesis, not a manuscript reading)", "text": "*בְּפַר מְשֻׁלָּשׁ -- 'with a bull, triple-year [= three-year-old]'.", "note": "Basis stated plainly: the same letters as MT's בפרים שלשה, split and pointed differently. This is inference from the Greek, not a transcription of any surviving Hebrew copy.", "tier": "amethyst"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "No Patristic comment on this specific Hebrew/Greek word-division question was found or should be assumed -- this is a technical textual-criticism point that pre-critical exegetes had no access to (they worked from whichever single text, Hebrew or Greek, was in front of them)."}
+        ],
+        "strata_3d": {
+            "top_text": "And she carried him with her, with three bullocks.",
+            "greek_text": "ἐν μόσχῳ τριετίζοντι",
+            "uncial_text": "ΕΝ ΜΟΣΧΩ ΤΡΙΕΤΙΖΟΝΤΙ",
+            "hebrew_mt": "בְּפָרִים שְׁלֹשָׁה (MT: 'with bulls, three' = three bulls)",
+            "vorlage_dss": "Reconstructed: *בְּפַר מְשֻׁלָּשׁ ('a three-year-old bull') -- same consonants as MT, different word-division; reported (not independently verified here) to have some support in 4QSamᵃ"
+        }
+    },
+    {
+        "id": "gen6-9-flood-palistrophe",
+        "book_id": "gen",
+        "chapter": 8,
+        "verse_start": 1,
+        "verse_end": 1,
+        "title": "\"God Remembered Noah\": The Flood Narrative's Day-Count Pivot -- Real, but Imperfect",
+        "ref": "Genesis 6:1-9:17, pivoting at 8:1",
+        "tier": "obsidian",
+        "tier_name": "Tier 8: Chiasm & Literary Structure",
+        "summary": "Gordon Wenham's widely-cited analysis of the flood narrative identifies a mirrored (palistrophic) sequence of time-markers either side of Genesis 8:1 (\"God remembered Noah\"). This entry verifies the time-markers themselves directly against this suite's own text -- all eight numbers are real and in the stated order -- while reporting honestly, per Wenham's own article, that the wider literary symmetry around them is NOT a perfect mirror.",
+        "english": "And God remembered Noe, and all the living creatures, and all the cattle which were with him in the ark, and brought a wind upon the earth, and the waters were abated.",
+        "vulgate": "Recordatus autem Deus Noë, cunctorumque animantium, et omnium jumentorum quae erant cum eo in arca, adduxit spiritum super terram, et imminutae sunt aquae.",
+        "greek_hebrew": "καὶ ἐμνήσθη ὁ θεὸς τοῦ Νωε καὶ πάντων τῶν θηρίων καὶ πάντων τῶν κτηνῶν ... καὶ ἐπήγαγεν ὁ θεὸς πνεῦμα ἐπὶ τὴν γῆν καὶ ἐκόπασεν τὸ ὕδωρ",
+        "interlinear": [
+            {"w": "וַיִּזְכֹּר אֱלֹהִים אֶת־נֹחַ", "t": "vayyizkor Elohim et-Noach", "pos": "V-wayyiqtol + N-pr + Obj-marker + N-pr", "lemma": "זכר / אלהים / נח", "strong": "H2142", "m": "and-he-remembered God -- Noah -- the single verb Wenham and most commentators mark as the narrative's structural turning point"}
+        ],
+        "apparatus": [
+            {"witness": "Day-count sequence, verified directly against this suite's own DRA/MT text, 2026-11-12", "text": "7 days warning (7:4) -- 7 days later (7:10) -- 40 days rain (7:12) -- 150 days waters prevail (7:24) || PIVOT: God remembers Noah (8:1) || 150 days waters abate (8:3) -- 40 days, window opened (8:6) -- 7 days, dove sent (8:10) -- 7 days, dove sent again (8:12).", "note": "Every one of these eight time-markers and the pivot verse were read directly from this suite's own Genesis text, not assumed from Wenham's article -- the numeric sequence 7,7,40,150 | 150,40,7,7 is real and mirrored as stated.", "tier": "obsidian"},
+            {"witness": "Gordon J. Wenham, \"The Coherence of the Flood Narrative,\" Vetus Testamentum 28 (1978): 336-348", "text": "Proposes that this day-count mirror is part of a larger palistrophic (ring) structure spanning the whole flood pericope (Gen 6:1 through 9:17), with 8:1 as the center.", "note": "[V, confirmed via direct search access to the article] Wenham's own article concedes the wider structure is not an exact, symmetrical mirror at every level -- some proposed parallel elements are looser than others. This entry reports the verified day-counts as real and reports the larger structural claim as Wenham's own, not as an uncontested fact.", "tier": "slate"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Patristic exegesis of the flood (Origen, Augustine's City of God XV) reads it typologically (the ark as the Church, the flood as baptism) rather than remarking on its numerical/literary architecture -- noted honestly rather than inventing a Father who comments on the structure itself."}
+        ],
+        "strata_3d": {
+            "top_text": "And God remembered Noah... and the waters were abated.",
+            "greek_text": "καὶ ἐμνήσθη ὁ θεὸς τοῦ Νωε",
+            "uncial_text": "ΚΑΙ ΕΜΝΗΣΘΗ Ο ΘΕΟΣ ΤΟΥ ΝΩΕ",
+            "hebrew_mt": "וַיִּזְכֹּ֤ר אֱלֹהִים֙ אֶת־נֹ֔חַ (and God remembered Noah)",
+            "vorlage_dss": "No Qumran Genesis fragment covering 8:1 survives to check against"
+        }
+    },
+    {
+        "id": "gen9-6-chiasm",
+        "book_id": "gen",
+        "chapter": 9,
+        "verse_start": 6,
+        "verse_end": 6,
+        "title": "Shed / Blood / Man -- Man / Blood / Shed: A Chiasm Verified by Counting, Not by Eye",
+        "ref": "Genesis 9:6",
+        "tier": "obsidian",
+        "tier_name": "Tier 8: Chiasm & Literary Structure",
+        "summary": "This is the simplest chiasm in the Hebrew Bible and the one nearly every introduction to Hebrew poetics uses first. Rather than just asserting the mirror-structure by eye, it was checked the way BibCrit's own Chiasm Detector is built to: split the verse into its two halves, list the content roots each half uses in order, and let a mechanical comparison -- not a reading of the English -- decide whether the second half is the first half's content REVERSED (a chiasm) or merely REPEATED (plain parallelism, a different and much more common structure). Half one: shed / blood / man (שֹׁפֵךְ דַּם הָאָדָם). Half two: man / blood / shed (בָּאָדָם דָּמוֹ יִשָּׁפֵךְ). All three content roots (the verb for 'shed', the noun 'blood', the noun 'man') occur in BOTH halves -- 3 shared roots out of 3 -- and a direct order comparison confirms half two is the exact reverse of half one, not a repeat of it. That reversal is the chiasm; the shared vocabulary alone would just as easily describe ordinary synonymous parallelism if the order had stayed the same.",
+        "english": "Whosoever shall shed man's blood, his blood shall be shed: for man was made to the image of God.",
+        "vulgate": "Quicumque effuderit humanum sanguinem, fundetur sanguis illius: ad imaginem quippe Dei factus est homo.",
+        "greek_hebrew": "ὁ ἐκχέων αἷμα ἀνθρώπου ἀντὶ τοῦ αἵματος αὐτοῦ ἐκχυθήσεται ὅτι ἐν εἰκόνι θεοῦ ἐποίησα τὸν ἄνθρωπον",
+        "interlinear": [
+            {"w": "שֹׁפֵךְ דַּם הָאָדָם", "t": "shofekh dam ha-adam", "pos": "Ptc + N + N", "lemma": "שפך / דם / אדם", "strong": "H8210", "m": "shed / blood-of / the-man -- half one, in this order"},
+            {"w": "בָּאָדָם דָּמוֹ יִשָּׁפֵךְ", "t": "ba-adam damo yishafekh", "pos": "N + N + V", "lemma": "אדם / דם / שפך", "strong": "H8210", "m": "by-the-man / his-blood / will-be-shed -- half two, in the EXACT REVERSE order of half one"}
+        ],
+        "apparatus": [
+            {"witness": "Genesis 9:6, half one (Hebrew MT)", "text": "שֹׁפֵךְ (sheds) → דַּם (blood) → הָאָדָם (man). Content-root sequence: [shed, blood, man].", "note": "Code-extracted sequence, not an eyeball reading.", "tier": "slate"},
+            {"witness": "Genesis 9:6, half two (Hebrew MT)", "text": "בָּאָדָם (man) → דָּמוֹ (blood) → יִשָּׁפֵךְ (shed). Content-root sequence: [man, blood, shed].", "note": "Mechanically compared against half one: this is the REVERSE, confirmed by direct list comparison (half_two == reversed(half_one): True; half_two == half_one: False).", "tier": "obsidian"},
+            {"witness": "Lemma overlap", "text": "3 of 3 content roots in half one (shed, blood, man) recur in half two.", "note": "High shared-vocabulary count alone does not prove chiasm -- it is the REVERSED order on top of that full overlap that does.", "tier": "obsidian"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Patristic and later Jewish exegesis of Genesis 9:6 focuses overwhelmingly on its content (capital justice, the imago Dei grounding human dignity) rather than remarking on its literary chiastic form -- noted honestly rather than inventing a Father who comments on the structure itself."}
+        ],
+        "strata_3d": {
+            "top_text": "Whosoever shall shed man's blood, his blood shall be shed.",
+            "greek_text": "ὁ ἐκχέων αἷμα ἀνθρώπου ἀντὶ τοῦ αἵματος αὐτοῦ ἐκχυθήσεται",
+            "uncial_text": "Ο ΕΚΧΕΩΝ ΑΙΜΑ ΑΝΘΡΩΠΟΥ ΑΝΤΙ ΤΟΥ ΑΙΜΑΤΟΣ ΑΥΤΟΥ ΕΚΧΥΘΗΣΕΤΑΙ",
+            "hebrew_mt": "שֹׁפֵךְ דַּם הָאָדָם בָּאָדָם דָּמוֹ יִשָּׁפֵךְ (shed-blood-man || man-blood-shed)",
+            "vorlage_dss": "No Qumran Genesis 9 fragment survives at this exact verse to check against"
+        }
+    },
+    {
+        "id": "gen1-2-divine-names",
+        "book_id": "gen",
+        "chapter": 2,
+        "verse_start": 4,
+        "verse_end": 4,
+        "title": "Elohim, Then Suddenly YHWH Elohim: A Counted, Not Assumed, Divine-Name Pattern",
+        "ref": "Genesis 1:1-2:3 vs. Genesis 2:4-25",
+        "tier": "onyx",
+        "tier_name": "Tier 9: Pentateuchal Source-Critical Observation",
+        "summary": "This starts from a model-neutral, countable fact rather than any theory about who wrote Genesis: this suite's own Hebrew text was scanned mechanically (not eyeballed) for every occurrence of אֱלֹהִים ('Elohim'/'God') and the Tetragrammaton יהוה ('YHWH'/'LORD') across the two creation accounts. The first account (Genesis 1:1-2:3) uses Elohim 35 times and YHWH zero times. The second account (Genesis 2:4-25) uses the combined formula 'YHWH Elohim' throughout (12 Elohim-occurrences, 11 YHWH-occurrences in that stretch), a near-total reversal of the first account's exclusive pattern. That count is simply a fact about the text; what it means is where real scholarly disagreement begins, and is reported here as three live, competing readings rather than a single verdict: (1) the classical documentary/neo-documentarian view (Wellhausen through modern proponents like Friedman, Baden and Stackert) treats this as a seam between two originally separate sources (P and J) with different preferred names for God, later combined; (2) the supplementary model (associated with Van Seters) treats the J material as a later supplement written to expand an earlier P-type base, not an independently-authored parallel source; (3) compositional approaches (e.g. Schmid, Gertz, Carr) treat the divine-name shift as real evidence of growth but resist assigning it to clean, continuous, book-length documents. All three agree the count itself is real and needs explaining; they disagree about what kind of literary history produced it.",
+        "english": "These are the generations of the heaven and the earth, when they were created, in the day that the Lord God made the heaven and the earth.",
+        "vulgate": "Istae generationes caeli et terrae, quando creata sunt, in die quo fecit Dominus Deus caelum et terram.",
+        "greek_hebrew": "αὕτη ἡ βίβλος γενέσεως οὐρανοῦ καὶ γῆς ὅτε ἐγένετο ᾗ ἡμέρᾳ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν",
+        "interlinear": [
+            {"w": "אֱלֹהִים (בראשית-ב:ג)", "t": "Elohim (Gen 1:1-2:3)", "pos": "N", "lemma": "אֱלֹהִים", "strong": "H430", "m": "'God' -- the ONLY divine name used across the whole first creation account: 35 occurrences, 0 uses of YHWH"},
+            {"w": "יְהוָה אֱלֹהִים (ב:ד והלאה)", "t": "YHWH Elohim (Gen 2:4ff)", "pos": "N + N", "lemma": "יהוה / אֱלֹהִים", "strong": "H3068", "m": "'LORD God' -- the combined formula that appears instead, starting exactly at the account-boundary (2:4)"}
+        ],
+        "apparatus": [
+            {"witness": "Genesis 1:1-2:3 (Hebrew MT, counted directly)", "text": "אֱלֹהִים: 35 occurrences. יהוה: 0 occurrences.", "note": "Exclusively one divine name across the entire first creation account.", "tier": "slate"},
+            {"witness": "Genesis 2:4-25 (Hebrew MT, counted directly)", "text": "אֱלֹהִים: 12 occurrences. יהוה: 11 occurrences (almost always paired as the combined formula 'YHWH Elohim').", "note": "A near-total reversal of the first account's pattern, beginning exactly at 2:4.", "tier": "onyx"},
+            {"witness": "Documentary / neo-documentarian reading", "text": "Treats the shift as a seam between two originally distinct, continuous sources (classically J and P) later combined by a redactor.", "note": "Associated with Wellhausen historically; Friedman, Baden, Stackert among current proponents.", "tier": "onyx"},
+            {"witness": "Supplementary reading", "text": "Treats the Genesis 2 material as a later supplement composed to expand an earlier Genesis 1-type base, not an independently authored parallel document.", "note": "Associated with Van Seters.", "tier": "onyx"},
+            {"witness": "Compositional / growth reading", "text": "Treats the divine-name shift as real evidence of a multi-stage literary growth process without assigning it to two clean, continuous, book-length sources.", "note": "Associated with Schmid, Gertz, Carr among others.", "tier": "onyx"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Pre-critical exegetes (patristic and rabbinic alike) read both chapters as a single unbroken narrative and did not treat the divine-name alternation as a historical-compositional question -- that framework is a modern one, so no Father is cited here making this specific source-critical point, honestly, rather than retrojecting a modern category onto ancient commentary."}
+        ],
+        "strata_3d": {
+            "top_text": "These are the generations of the heaven and the earth... in the day that the LORD God made the heaven and the earth.",
+            "greek_text": "ὅτε ἐγένετο ᾗ ἡμέρᾳ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν",
+            "uncial_text": "ΟΤΕ ΕΓΕΝΕΤΟ Η ΗΜΕΡΑ ΕΠΟΙΗΣΕΝ Ο ΘΕΟΣ ΤΟΝ ΟΥΡΑΝΟΝ ΚΑΙ ΤΗΝ ΓΗΝ",
+            "hebrew_mt": "בְּיוֹם עֲשׂוֹת יְהוָה אֱלֹהִים אֶרֶץ וְשָׁמָיִם (first use of the combined 'YHWH Elohim' formula)",
+            "vorlage_dss": "No Qumran Genesis 2 fragment survives at this exact verse to check the divine-name pattern against"
+        }
+    },
+    {
+        "id": "gen49-10-shiloh-targum",
+        "book_id": "gen",
+        "chapter": 49,
+        "verse_start": 10,
+        "verse_end": 10,
+        "title": "'Until Shiloh Comes' Becomes 'Until the Messiah Comes': Three Traditions, Three Readings",
+        "ref": "Genesis 49:10",
+        "tier": "garnet",
+        "tier_name": "Tier 10: Targum Comparator",
+        "summary": "Three independent ancient traditions handle one of the most obscure words in Genesis -- שִׁילֹה ('Shiloh') -- three different ways, and this suite's own corpus can check each one directly (the Targum text was fetched for this single verse from Sefaria's API -- CC-BY-SA, the same source already used elsewhere in this project's rabbinic corpus -- not pulled from a bulk local Targum corpus this project doesn't otherwise hold). The Masoretic Text keeps the obscure term as-is: 'until Shiloh comes'. The Septuagint does not transliterate it as a name at all; it reads the underlying consonants as a description, 'until the things stored up for him come' (ἕως ἂν ἔλθῃ τὰ ἀποκείμενα αὐτῷ), a real and different translation choice, not a transliteration failure. Targum Onkelos goes further than either: it drops the obscure Hebrew term entirely and substitutes an explicit interpretation -- מְּשִׁיחָא, 'the MESSIAH' -- 'until the Messiah comes, for his is the kingship, and to him will the nations listen'. This is one of the most frequently cited texts in scholarship on messianic interpretation in the Targumim (Levey's 'The Messiah: An Aramaic Interpretation' treats it at length), and belongs to BibCrit's own Targum Comparator tool-class: comparing how Onkelos handles messianic/royal language against both Hebrew and Greek.",
+        "english": "The sceptre shall not be taken away from Juda, nor a ruler from his thigh, till he come that is to be sent, and he shall be the expectation of nations.",
+        "vulgate": "Non auferetur sceptrum de Juda, et dux de femore ejus, donec veniat qui mittendus est, et ipse erit expectatio gentium.",
+        "greek_hebrew": "οὐκ ἐκλείψει ἄρχων ἐξ Ιουδα καὶ ἡγούμενος ἐκ τῶν μηρῶν αὐτοῦ ἕως ἂν ἔλθῃ τὰ ἀποκείμενα αὐτῷ καὶ αὐτὸς προσδοκία ἐθνῶν",
+        "interlinear": [
+            {"w": "עַד כִּי־יָבֹא שִׁילֹה", "t": "'ad ki-yavo Shiloh", "pos": "P + V + N(?)", "lemma": "שִׁילֹה", "strong": "H7886", "m": "until Shiloh comes -- MT keeps the obscure term untranslated"},
+            {"w": "ἕως ἂν ἔλθῃ τὰ ἀποκείμενα αὐτῷ", "t": "heōs an elthē ta apokeimena autō", "pos": "P + V + N(pl)", "lemma": "ἀπόκειμαι", "strong": "G606", "m": "until the things reserved for him come -- LXX reads it as a description, not a name"},
+            {"w": "עַד דְּיֵיתֵי מְשִׁיחָא", "t": "'ad de-yeitei Meshiha", "pos": "P + V + N", "lemma": "מְשִׁיחָא", "strong": "", "m": "until the MESSIAH comes -- Targum Onkelos names it outright (Aramaic, via Sefaria)"}
+        ],
+        "apparatus": [
+            {"witness": "Genesis 49:10 (Hebrew MT)", "text": "עַד כִּי־יָבֹא שִׁילֹה -- 'until Shiloh comes'. שִׁילֹה is left as an obscure, untranslated term.", "note": "The base text every later tradition is interpreting.", "tier": "slate"},
+            {"witness": "Genesis 49:10 (LXX Rahlfs)", "text": "ἕως ἂν ἔλθῃ τὰ ἀποκείμενα αὐτῷ -- 'until the things stored up for him come'.", "note": "Reads the Hebrew as a description ('that which is his/reserved'), not a proper name -- a real interpretive choice, not a transliteration failure.", "tier": "garnet"},
+            {"witness": "Targum Onkelos on Genesis 49:10 (Aramaic, fetched from Sefaria)", "text": "עַד דְּיֵיתֵי מְשִׁיחָא דְּדִילֵיהּ הִיא מַלְכוּתָא -- 'until the Messiah comes, for his is the kingship'.", "note": "Explicitly messianic -- the obscure term is replaced outright, not merely rendered. One of the most-cited Targumic messianic readings in the scholarship (Levey).", "tier": "garnet"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Genesis 49:10 is a standard patristic messianic proof-text (cited, e.g., in early Christian testimonia collections) read against the Hebrew/Greek alone -- whether any specific Father also knew of or cited the Targum's explicit 'Messiah' reading needs checking against that Father's actual text before naming one, not assumed from the general pattern."}
+        ],
+        "strata_3d": {
+            "top_text": "The sceptre shall not be taken away from Juda... till he come that is to be sent.",
+            "greek_text": "ἕως ἂν ἔλθῃ τὰ ἀποκείμενα αὐτῷ καὶ αὐτὸς προσδοκία ἐθνῶν",
+            "uncial_text": "ΕΩΣ ΑΝ ΕΛΘΗ ΤΑ ΑΠΟΚΕΙΜΕΝΑ ΑΥΤΩ ΚΑΙ ΑΥΤΟΣ ΠΡΟΣΔΟΚΙΑ ΕΘΝΩΝ",
+            "hebrew_mt": "עַד כִּי־יָבֹא שִׁילֹה וְלוֹ יִקְּהַת עַמִּים",
+            "vorlage_dss": "Targum Onkelos (Aramaic): עַד דְּיֵיתֵי מְשִׁיחָא -- 'until the Messiah comes', an explicit interpretation rather than a surviving alternate Hebrew reading"
+        }
+    },
+    {
+        "id": "tob4-golden-rule-negative",
+        "book_id": "tob",
+        "chapter": 4,
+        "verse_start": 16,
+        "verse_end": 16,
+        "title": "The Golden Rule, In Its Negative Form, Already in Tobit",
+        "ref": "Tobit 4:16 (DRA/Vulgate numbering -- cited as 4:15 in editions that follow the Greek/NRSV numbering)",
+        "tier": "jade",
+        "tier_name": "Tier 12: Second Temple Literature Bridge",
+        "summary": "Verse-numbering checked directly before writing anything (Rule 5): this suite's own DRA text (following the Vulgate) places this saying at Tobit 4:16, one verse later than editions based on the Greek text (where it is 4:15) -- a real, minor, well-known numbering divergence in Tobit between the Vulgate and Greek textual traditions, not an error in either. Tobit's version of the ethical maxim known as the Golden Rule is in its NEGATIVE form: 'see thou never do to another what thou wouldst hate to have done to thee by another.' Jesus's version in the Sermon on the Mount (Matthew 7:12) states the same basic principle POSITIVELY: 'whatsoever you would that men should do to you, do you also to them.' Both forms of the maxim circulated widely in the Second Temple period (the negative form is also attested, e.g., in the later rabbinic tradition attributed to Hillel, and in various Greco-Roman moral writers) -- this is exactly the kind of allusion/parallel BibCrit's Second Temple Literature Bridge tool is built to map, classified by type (here: a shared ethical maxim, not a direct literary quotation) and directionality (there is no claim that Matthew is quoting Tobit specifically; both draw on a common, widely-circulating moral tradition).",
+        "english": "See thou never do to another what thou wouldst hate to have done to thee by another.",
+        "vulgate": "Quod ab alio oderis fieri tibi, vide ne tu aliquando alteri facias.",
+        "greek_hebrew": "(Tobit survives in Greek in two recensions, GI and GII, which differ considerably in length and wording at many points in this chapter -- the exact Greek wording behind this specific clause is not independently re-verified here against a critical edition, and is not asserted as [V].)",
+        "interlinear": [
+            {"w": "Quod ab alio oderis fieri tibi, vide ne tu aliquando alteri facias", "t": "quod ab alio oderis fieri tibi...", "pos": "Clause", "lemma": "odi", "strong": "", "m": "what you would hate to have done to you by another, see that you never do to another -- Tobit's NEGATIVE form"},
+            {"w": "πάντα οὖν ὅσα ἐὰν θέλητε ἵνα ποιῶσιν ὑμῖν οἱ ἄνθρωποι, οὕτως καὶ ὑμεῖς ποιεῖτε αὐτοῖς", "t": "panta oun hosa ean thelēte...", "pos": "Clause", "lemma": "ποιέω", "strong": "G4160", "m": "whatever you wish that people would do to you, so also do to them -- Matthew 7:12's POSITIVE form"}
+        ],
+        "apparatus": [
+            {"witness": "Tobit 4:16 (DRA, Vulgate numbering)", "text": "'See thou never do to another what thou wouldst hate to have done to thee by another.'", "note": "The negative ('do not') form of the maxim.", "tier": "jade"},
+            {"witness": "Matthew 7:12 (DRA / NA28)", "text": "'All things therefore whatsoever you would that men should do to you, do you also to them. For this is the law and the prophets.'", "note": "The positive ('do') form -- explicitly tied by Jesus to summarizing 'the law and the prophets', a stronger theological claim than Tobit makes for its own version.", "tier": "slate"},
+            {"witness": "Classification (BibCrit-style allusion typing)", "text": "Type: shared ethical maxim / common moral topos, not a direct literary citation. Directionality: unclear and not claimed -- both likely draw on a widely-circulating Second Temple and Greco-Roman moral tradition rather than one text quoting the other.", "note": "Stated honestly as an open classification, not a confident verdict.", "tier": "jade"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Patristic comment comparing Tobit's and Matthew's forms of this maxim specifically would need checking against a named Father's actual text before citing one -- not assumed here from the general pattern of patristic use of both books."}
+        ],
+        "strata_3d": {
+            "top_text": "See thou never do to another what thou wouldst hate to have done to thee by another.",
+            "greek_text": "(Greek recension wording not independently verified for this specific clause)",
+            "uncial_text": "(not independently verified)",
+            "hebrew_mt": "(Tobit has no Hebrew Masoretic text -- it is Deuterocanonical; Aramaic/Hebrew fragments exist at Qumran but not for this exact clause, confirmed not re-checked here)",
+            "vorlage_dss": "4Q196-200 (Qumran Tobit fragments, Aramaic/Hebrew) do not preserve this specific verse"
+        }
+    },
+    {
+        "id": "mark16-longer-ending",
+        "book_id": "mark",
+        "chapter": 16,
+        "verse_start": 9,
+        "verse_end": 20,
+        "title": "Mark's Longer Ending: Present in Nearly Every Later Manuscript, Absent From the Two Oldest",
+        "ref": "Mark 16:9-20",
+        "tier": "sapphire",
+        "tier_name": "Tier 11: NT Textual Tradition Analysis",
+        "summary": "Checked against this suite's own Greek witness-streams directly: both the Byzantine Majority Text and the Textus Receptus carry the full 20-verse chapter, including 16:9-20 -- this is NOT primarily a Byzantine-vs-Textus-Receptus split (unlike the Comma Johanneum elsewhere in this suite's cruxes). The real fault line, confirmed by this suite's own already-ingested study-Bible commentaries rather than asserted fresh here, runs between the earliest surviving complete Greek manuscripts and nearly everything after them: Tyndale Open Study Notes states plainly that 'the best two available Greek manuscripts (Codex Sinaiticus and Codex Vaticanus) lack these endings,' and Adam Clarke's 19th-century commentary independently confirms the ending is 'wanting in the famous Codex Vaticanus... and has anciently been wanting in many others.' Three distinct endings actually circulate in the manuscript tradition (per this suite's own Ignatius CSB study note): stopping cold at 16:8, a brief 'short ending' of two sentences, or this familiar 'longer ending.' The Council of Trent (per this suite's own NABRE note) defined the longer ending as canonical for the Catholic Church regardless of its manuscript history -- a theological judgment about canonicity, which is a separate question from the manuscript evidence about what the Gospel's author originally wrote.",
+        "english": "But he rising early the first day of the week, appeared first to Mary Magdalen, out of whom he had cast seven devils.",
+        "vulgate": "Surgens autem mane prima sabbati, apparuit primo Mariae Magdalene, de qua ejecerat septem daemonia.",
+        "greek_hebrew": "αναστας δε πρωι πρωτη σαββατου εφανη πρωτον μαρια τη μαγδαληνη αφ ης εκβεβληκει επτα δαιμονια",
+        "interlinear": [
+            {"w": "Μάρκ. 16:8 (ends here in the two oldest complete codices)", "t": "ephobounto gar", "pos": "Clause", "lemma": "φοβέω", "strong": "G5399", "m": "'for they were afraid' -- the last words of Mark in Codex Sinaiticus and Codex Vaticanus"},
+            {"w": "Μάρκ. 16:9-20 (present in Byzantine, TR, and nearly every later manuscript)", "t": "anastas de prōi...", "pos": "Clause", "lemma": "ἀνίστημι", "strong": "G450", "m": "'but rising early...' -- the longer ending's own opening words"}
+        ],
+        "apparatus": [
+            {"witness": "Mark 16 (Byzantine Majority Text, this suite's own stream)", "text": "20 verses -- the full longer ending is present.", "note": "Confirms this is not a Byzantine-vs-everyone-else split.", "tier": "slate"},
+            {"witness": "Mark 16 (Textus Receptus, this suite's own stream)", "text": "20 verses -- the full longer ending is present.", "note": "Agrees with the Byzantine text here.", "tier": "slate"},
+            {"witness": "Codex Sinaiticus & Codex Vaticanus (per Tyndale Open Study Notes, already in this suite's own Doll 6 data)", "text": "'the best two available Greek manuscripts... lack these endings.'", "note": "The actual fault line: earliest complete codices vs. the broader later manuscript stream.", "tier": "sapphire"},
+            {"witness": "Three distinct endings in the manuscript tradition (per this suite's own Ignatius CSB note)", "text": "(1) ends at 16:8, (2) a brief two-sentence 'short ending', (3) this 'longer ending' (16:9-20).", "note": "Not a simple two-way split -- a real three-way manuscript tradition.", "tier": "sapphire"},
+            {"witness": "Council of Trent (per this suite's own NABRE note)", "text": "Defined the longer ending as a canonical part of Mark for the Catholic Church.", "note": "A theological/canonical judgment, distinct from -- and not overturned by -- the manuscript evidence about authorial origin.", "tier": "sapphire"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "Early citation of material matching the longer ending exists in writers as early as Irenaeus and Tatian's Diatessaron (2nd century), which is itself part of the real text-critical debate -- citing their exact wording accurately needs checking against a critical edition of each writer, not assumed from this summary."}
+        ],
+        "strata_3d": {
+            "top_text": "But he rising early the first day of the week, appeared first to Mary Magdalen.",
+            "greek_text": "αναστας δε πρωι πρωτη σαββατου εφανη πρωτον μαρια τη μαγδαληνη",
+            "uncial_text": "ΑΝΑΣΤΑΣ ΔΕ ΠΡΩΙ ΠΡΩΤΗ ΣΑΒΒΑΤΟΥ ΕΦΑΝΗ ΠΡΩΤΟΝ ΜΑΡΙΑ ΤΗ ΜΑΓΔΑΛΗΝΗ [absent from Sinaiticus & Vaticanus, which end at 16:8]",
+            "hebrew_mt": "(New Testament text -- no Hebrew Vorlage applies)",
+            "vorlage_dss": "Not applicable -- a Greek manuscript-transmission variant, not a Hebrew/Greek one"
+        }
+    },
+    {
+        "id": "gen1-1-lxx-uncial-witnesses",
+        "book_id": "gen",
+        "chapter": 1,
+        "verse_start": 1,
+        "verse_end": 1,
+        "title": "The Most Famous Verse in the Bible Is Missing From Two of the Three 'Great Uncials'",
+        "ref": "Genesis 1:1 -- a codicological check across Vaticanus, Sinaiticus, and Alexandrinus",
+        "tier": "obsidian",
+        "tier_name": "Tier 13: LXX Manuscript Witnesses",
+        "summary": "A genuinely common assumption is that Genesis 1:1, the single most-cited verse in the Bible, is attested by all three great 4th/5th-century uncial codices of the Greek Old Testament. Checked directly against each codex's own documented physical condition (Rule 5 -- a codicological fact about the manuscripts, not a textual-variant claim this session verified from a primary transcription) rather than assumed: it is not. Codex Vaticanus's original leaves covering Genesis 1:1 through 46:28 were lost at some point and replaced by a 15th-century supplement -- so the 'Vaticanus Genesis 1:1' seen in every facsimile and digital edition is medieval, not 4th-century. Codex Sinaiticus fares even worse here: its surviving Old Testament portion for Genesis begins only at 23:19 (in fragmentary form), meaning virtually the entire book, including 1:1, is simply not extant in Sinaiticus at any date. Of the three, only Codex Alexandrinus (5th century) preserves an ancient copy of Genesis 1:1 itself, though even it has small defects nearby (torn-leaf losses at 1:20-25 and 1:29-2:3). This is exactly BibCrit's own stated purpose for its LXX Manuscript Witnesses tool -- 'never presents fabricated diplomatic text' -- applied here as a check on which 'great uncial' claims are actually checkable for a given verse before citing one.",
+        "english": "In the beginning God created heaven, and earth.",
+        "vulgate": "In principio creavit Deus caelum et terram.",
+        "greek_hebrew": "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν",
+        "interlinear": [
+            {"w": "Codex Alexandrinus (5th c.)", "t": "ancient witness, with nearby defects", "pos": "Manuscript", "lemma": "", "strong": "", "m": "The only one of the three 'great uncials' to preserve an ancient copy of this exact verse."},
+            {"w": "Codex Vaticanus (4th c.)", "t": "15th-century replacement leaves", "pos": "Manuscript", "lemma": "", "strong": "", "m": "Original leaves for Gen 1:1-46:28 lost; the text seen today is medieval, not 4th-century."},
+            {"w": "Codex Sinaiticus (4th c.)", "t": "not extant", "pos": "Manuscript", "lemma": "", "strong": "", "m": "Surviving Genesis material begins only at 23:19 (fragmentary); 1:1 is simply not preserved at any date."}
+        ],
+        "apparatus": [
+            {"witness": "Codex Vaticanus, Genesis 1:1 (per the codex's own well-documented physical history)", "text": "The original 4th-century leaves covering Genesis 1:1 through 46:28 were lost and replaced by a 15th-century hand.", "note": "Every modern facsimile/digital image of 'Vaticanus's Genesis 1:1' shows this medieval replacement, not the original ancient text -- a fact about the object, distinct from any claim about what the lost original actually read.", "tier": "obsidian"},
+            {"witness": "Codex Sinaiticus, Genesis 1:1", "text": "The surviving Old Testament Genesis material begins only at 23:19, and only in fragments.", "note": "The entirety of Genesis 1-23 including 1:1 is simply absent from this manuscript at any date, ancient or medieval.", "tier": "obsidian"},
+            {"witness": "Codex Alexandrinus, Genesis 1:1", "text": "An ancient (5th-century) copy of this verse is extant, with small nearby defects from torn leaves at 1:20-25 and 1:29-2:3 (not affecting 1:1 itself).", "note": "The one of the three 'great uncials' that actually functions as primary evidence for this exact verse.", "tier": "slate"}
+        ],
+        "patristics": [
+            {"father": "(Reception note, not a patristic citation)", "work": "", "text": "This is a codicological/manuscript-condition fact, not a patristic exegetical question -- no Father's comment applies here, and none is invented to fill the slot."}
+        ],
+        "strata_3d": {
+            "top_text": "In the beginning God created heaven, and earth.",
+            "greek_text": "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν",
+            "uncial_text": "ΕΝ ΑΡΧΗ ΕΠΟΙΗΣΕΝ Ο ΘΕΟΣ ΤΟΝ ΟΥΡΑΝΟΝ ΚΑΙ ΤΗΝ ΓΗΝ [as preserved in Alexandrinus; NOT the original hand in Vaticanus, NOT extant at all in Sinaiticus]",
+            "hebrew_mt": "בְּרֵאשִׁית בָּרָא אֱלֹהִים אֵת הַשָּׁמַיִם וְאֵת הָאָרֶץ",
+            "vorlage_dss": "No Qumran Genesis 1:1 fragment survives to add a fourth ancient witness"
+        }
+    },
+    {
+        "id": "matt16-18-peshitta-kepa",
+        "book_id": "matt",
+        "chapter": 16,
+        "verse_start": 18,
+        "verse_end": 18,
+        "title": "Kēp̄ā and Kēp̄ā: The Syriac Peshitta Dissolves the Greek Petros / Petra Gender Distinction",
+        "ref": "Matthew 16:18 (Peshitta sy^p & Old Syriac sy^c)",
+        "tier": "crimson",
+        "tier_name": "Tier 14: Peshitta Correspondences",
+        "summary": "In Greek, Matthew 16:18 uses the masculine personal name Πέτρος (Petros) for Simon and the feminine noun πέτρα (petra) for the rock on which the Church is built, a grammatical gender shift that anti-Petrine polemics have long tried to turn into a lexical distinction ('small stone' vs. 'bedrock'). In the Syriac Peshitta (sy^p) and Old Syriac Curetonianus (sy^c), preserving the Semitic idiom Jesus himself spoke, that distinction disappears completely: the identical noun ܟ݁ܺܐܦ݂ܳܐ (Kēp̄ā, 'Rock') stands in both clauses -- 'You are Kēp̄ā (ܟ݁ܺܐܦ݂ܳܐ), and upon this kēp̄ā (ܘܥܰܠ ܗܳܕ݂ܶܐ ܟ݁ܺܐܦ݂ܳܐ) I will build my Church.' Because kēp̄ā is grammatically feminine in Aramaic and Syriac, the feminine demonstrative ܗܳܕ݂ܶܐ (hādē, 'this') modifies the very title Kēp̄ā just bestowed on Simon, confirming that the Greek shift from petra to Petros was purely a requirement of Greek masculine naming grammar.",
+        "english": "And I say to thee: That thou art Peter; and upon this rock I will build my church, and the gates of hell shall not prevail against it.",
+        "vulgate": "Et ego dico tibi, quia tu es Petrus, et super hanc petram aedificabo Ecclesiam meam, et portae inferi non praevalebunt adversus eam.",
+        "greek_hebrew": "κἀγὼ δέ σοι λέγω ὅτι σὺ εἶ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ οἰκοδομήσω μου τὴν ἐκκλησίαν, καὶ πύλαι ᾅδου οὐ κατισχύσουσιν αὐτῆς.",
+        "interlinear": [
+            {"w": "ܕ݁ܰܐܢ̱ܬ݁ ܗ̄ܽܘ ܟ݁ܺܐܦ݂ܳܐ", "t": "d-ant (h)ū Kēp̄ā", "pos": "Pron + Cop + N", "lemma": "ܟ݁ܺܐܦ݂ܳܐ", "strong": "G4074", "m": "'that you are Kēp̄ā [Rock]' -- Syriac Peshitta (sy^p) & Old Syriac (sy^c) first clause"},
+            {"w": "ܘܥܰܠ ܗܳܕ݂ܶܐ ܟ݁ܺܐܦ݂ܳܐ", "t": "w-‘al hādē kēp̄ā", "pos": "Prep + Dem + N", "lemma": "ܟ݁ܺܐܦ݂ܳܐ", "strong": "G4073", "m": "'and upon this kēp̄ā [rock]' -- identical Syriac noun in the second clause"},
+            {"w": "ܐܶܒ݂ܢܶܝܗ̇ ܠܥܺܕ݁ܬ݁ܝ", "t": "eḇneyh l-‘īdt(y)", "pos": "V + N", "lemma": "ܥܺܕ݁ܬ݁ܳܐ", "strong": "G1577", "m": "'I will build my Church' -- Peshitta Matthew 16:18"}
+        ],
+        "apparatus": [
+            {"witness": "Syriac Peshitta (sy^p) & Old Syriac Curetonianus (sy^c), Matthew 16:18", "text": "ܐܳܦ݂ ܐܶܢܳܐ ܐܳܡܰܪ ܐ̱ܢܳܐ ܠܳܟ݂ ܕ݁ܰܐܢ̱ܬ݁ ܗ̄ܽܘ ܟ݁ܺܐܦ݂ܳܐ. ܘܥܰܠ ܗܳܕ݂ܶܐ ܟ݁ܺܐܦ݂ܳܐ ܐܶܒ݂ܢܶܝܗ̇ ܠܥܺܕ݁ܬ݁ܝ -- 'I also say to you that you are Rock [Kēp̄ā], and upon this rock [kēp̄ā] I will build my Church.'", "note": "Identical Semitic noun ܟ݁ܺܐܦ݂ܳܐ (Kēp̄ā) in both clauses; no lexical split exists in the Aramaic/Syriac substrate.", "tier": "crimson"},
+            {"witness": "Greek New Testament (NA28 / Byz / TR), Matthew 16:18", "text": "σὺ εἶ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ οἰκοδομήσω μου τὴν ἐκκλησίαν", "note": "Greek masculinizes the personal name to Πέτρος while keeping the feminine common noun πέτρα in the second clause.", "tier": "sapphire"},
+            {"witness": "Latin Vulgate (Clementine)", "text": "tu es Petrus, et super hanc petram aedificabo Ecclesiam meam", "note": "Mirrors the Greek masculine/feminine pair Petrus / petram while preserving the direct demonstrative link.", "tier": "sapphire"}
+        ],
+        "patristics": [
+            {"father": "St. Ephrem the Syrian", "work": "Commentary on Tatian's Diatessaron XIV.1 (c. 363 AD)", "text": "‘Simon, my follower, I have made you the foundation of the Holy Church. I betimes called you Kēp̄ā [Rock], because you will support all its buildings. You are the inspector of them who will build a Church on earth for me... I have given you the keys of my kingdom.’"},
+            {"father": "Mar Aphrahat the Persian Sage", "work": "Demonstrations VII.15 (c. 337–345 AD; NPNF2 Vol. 13)", "text": "‘Simon, who was called Kēp̄ā, was deservedly called Kēp̄ā on account of his faith... Jesus set him up as the foundation, calling him Kēp̄ā.’"}
+        ],
+        "strata_3d": {
+            "top_text": "Thou art Peter [Kēp̄ā]; and upon this rock [kēp̄ā] I will build my church.",
+            "greek_text": "σὺ εἶ Πέτρος, καὶ ἐπὶ ταύτῃ τῇ πέτρᾳ οἰκοδομήσω μου τὴν ἐκκλησίαν",
+            "uncial_text": "CΥ ΕΙ ΠΕΤΡΟC ΚΑΙ ΕΠΙ ΤΑΥΤΗ ΤΗ ΠΕΤΡΑ ΟΙΚΟΔΟΜΗCΩ ΜΟΥ ΤΗΝ ΕΚΚΛΗCΙΑΝ",
+            "hebrew_mt": "Peshitta sy^p: ܕ݁ܰܐܢ̱ܬ݁ ܗ̄ܽܘ ܟ݁ܺܐܦ݂ܳܐ ܘܥܰܠ ܗܳܕ݂ܶܐ ܟ݁ܺܐܦ݂ܳܐ ܐܶܒ݂ܢܶܝܗ̇ ܠܥܺܕ݁ܬ݁ܝ (ant hū Kēp̄ā, w-‘al hādē kēp̄ā)",
+            "vorlage_dss": "Old Syriac (sy^c) & Peshitta (sy^p) both preserve identical Semitic noun ܟ݁ܺܐܦ݂ܳܐ (Kēp̄ā) in both clauses"
+        }
+    },
+    {
+        "id": "john1-18-peshitta-ihidaya-alaha",
+        "book_id": "john",
+        "chapter": 1,
+        "verse_start": 18,
+        "verse_end": 18,
+        "title": "‘The Only-Begotten God’ (Īḥīdāyā Alāhā): The Syriac Peshitta Sides With the Earliest Alexandrian Papyri",
+        "ref": "John 1:18 (Peshitta sy^p & Sinaitic Syriac sy^s vs. Byzantine/Vulgate)",
+        "tier": "gold",
+        "tier_name": "Tier 14: Peshitta Correspondences",
+        "summary": "John 1:18 is one of the premier Christological variants of antiquity: the earliest Alexandrian Greek witnesses (P66, P75, Sinaiticus*, Vaticanus) read μονογενὴς θεός ('only-begotten God'), whereas the Byzantine Majority text and the Latin Vulgate read ὁ μονογενὴς υἱός / unigenitus Filius ('the only-begotten Son'). Far from being a purely Alexandrian reading, 'only-begotten God' is the standard reading of the Syriac Peshitta (sy^p), the Old Syriac Sinaiticus (sy^s), and the Harklean (sy^h): ܝܺܚܺܝܕ݂ܳܝܳܐ ܐܰܠܳܗܳܐ (īḥīdāyā Alāhā, 'the only-begotten God, He who is in the bosom of His Father'). This shows independent Eastern Aramaic/Syriac attestation for the high Christological reading 'God' in John's Prologue.",
+        "english": "No man hath seen God at any time: the only begotten Son who is in the bosom of the Father, he hath declared him.",
+        "vulgate": "Deum nemo vidit umquam: unigenitus Filius, qui est in sinu Patris, ipse enarravit.",
+        "greek_hebrew": "Θεὸν οὐδεὶς ἑώρακεν πώποτε· μονογενὴς θεὸς ὁ ὢν εἰς τὸν κόλπον τοῦ πατρὸς ἐκεῖνος ἐξηγήσατο.",
+        "interlinear": [
+            {"w": "ܝܺܚܺܝܕ݂ܳܝܳܐ ܐܰܠܳܗܳܐ", "t": "īḥīdāyā Alāhā", "pos": "Adj + N", "lemma": "ܐܰܠܳܗܳܐ", "strong": "G2316", "m": "'the only-begotten God' -- Peshitta (sy^p), Sinaitic Syriac (sy^s), and Harklean (sy^h)"},
+            {"w": "μονογενὴς θεός", "t": "monogenēs theos", "pos": "Adj + N", "lemma": "θεός", "strong": "G2316", "m": "'only-begotten God' -- Alexandrian Greek (P66, P75, א*, B, C*)"},
+            {"w": "ὁ μονογενὴς υἱός", "t": "ho monogenēs huios", "pos": "Art + Adj + N", "lemma": "υἱός", "strong": "G5207", "m": "'the only-begotten Son' -- Byzantine Majority, Old Syriac Curetonianus (īḥīdāyā brā), & Vulgate (unigenitus Filius)"}
+        ],
+        "apparatus": [
+            {"witness": "Syriac Peshitta (sy^p) & Old Syriac Sinaiticus (sy^s), John 1:18", "text": "ܐܰܠܳܗܳܐ ܠܳܐ ܚܙܳܐ ܐ̱ܢܳܫ ܡܡܬ݂ܽܘܡ: ܝܺܚܺܝܕ݂ܳܝܳܐ ܐܰܠܳܗܳܐ ܗܰܘ ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ ܒ݁ܥܽܘܒ݁ܶܗ ܕ݁ܰܐܒ݂ܽܘܗ̄ܝ: ܗܽܘ ܐܶܫܬ݁ܰܥܺܝ -- 'No man has seen God at any time; the only-begotten God [īḥīdāyā Alāhā], He who is in the bosom of His Father, He has declared Him.'", "note": "Preserves Alāhā ('God') across the standard Syriac Peshitta and Sinaitic palimpsest.", "tier": "gold"},
+            {"witness": "Alexandrian Greek Papyri & Uncials (P66, P75, א*, B, C*)", "text": "μονογενὴς θεὸς ὁ ὢν εἰς τὸν κόλπον τοῦ πατρός", "note": "Earliest Greek manuscripts agree directly with Peshitta īḥīdāyā Alāhā.", "tier": "gold"},
+            {"witness": "Byzantine Majority / TR / Vulgate / Curetonian Syriac (sy^c)", "text": "ὁ μονογενὴς υἱός / unigenitus Filius / ܝܺܚܺܝܕ݂ܳܝܳܐ ܒ݁ܪܳܐ (īḥīdāyā brā)", "note": "Reads 'only-begotten Son', assimilating to John 3:16, 18.", "tier": "slate"}
+        ],
+        "patristics": [
+            {"father": "St. Ephrem the Syrian", "work": "Commentary on the Diatessaron I (c. 363 AD)", "text": "Quotes and comments on John 1:18 with the Eastern Syriac reading īḥīdāyā Alāhā ('the only-begotten God who is in the bosom of His Father') against Arian subordinationism."},
+            {"father": "St. Irenaeus of Lyons", "work": "Against Heresies IV.20.6 & IV.20.11 (c. 180 AD; ANF Vol. 1)", "text": "Attests both 'only-begotten God' and 'only-begotten Son' in his 2nd-century citations of John 1:18, showing how early both readings circulated."}
+        ],
+        "strata_3d": {
+            "top_text": "No man hath seen God at any time: the only-begotten God [īḥīdāyā Alāhā] who is in the bosom of the Father, he hath declared him.",
+            "greek_text": "θεὸν οὐδεὶς ἑώρακεν πώποτε· μονογενὴς θεὸς ὁ ὢν εἰς τὸν κόλπον τοῦ πατρὸς ἐκεῖνος ἐξηγήσατο",
+            "uncial_text": "ΘΝ ΟΥΔΕΙC ΕΩΡΑΚΕΝ ΠΩΠΟΤΕ ΜΟΝΟΓΕΝΗC ΘC Ο ΩΝ ΕΙC ΤΟΝ ΚΟΛΠΟΝ ΤΟΥ ΠΡC",
+            "hebrew_mt": "Peshitta sy^p: ܝܺܚܺܝܕ݂ܳܝܳܐ ܐܰܠܳܗܳܐ ܗܰܘ ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ ܒ݁ܥܽܘܒ݁ܶܗ ܕ݁ܰܐܒ݂ܽܘܗ̄ܝ (īḥīdāyā Alāhā -- 'only-begotten God')",
+            "vorlage_dss": "P66, P75, Vaticanus (B), Sinaiticus (א*), sy^s, and sy^p converge on 'only-begotten God'"
+        }
+    },
+    {
+        "id": "rom9-5-peshitta-copula",
+        "book_id": "rom",
+        "chapter": 9,
+        "verse_start": 5,
+        "verse_end": 5,
+        "title": "‘Who Is God Over All’ (d-ītāwh(y) Alāhā d-‘al kōl): How Peshitta Syntax Rules Out the Detached-Doxology Reading",
+        "ref": "Romans 9:5 (Peshitta sy^p vs. Modern Punctuation Disputes)",
+        "tier": "crimson",
+        "tier_name": "Tier 14: Peshitta Correspondences",
+        "summary": "Because ancient Greek uncials had little or no punctuation, modern translators divide on whether ὁ ὢν ἐπὶ πάντων θεός in Romans 9:5 modifies 'the Christ according to the flesh' ('Christ... who is God over all, blessed forever') or starts a separate sentence of praise to the Father ('...Christ according to the flesh. May the God who is over all be blessed forever'). In the Syriac Peshitta (sy^p), that detached-sentence reading is grammatically impossible: the clause opens with ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ (d-ītāwh(y), 'who is'), where the relative prefix ܕ݁ـ (d-) is a restrictive relative particle bound directly to the antecedent noun ܡܫܺܝܚܳܐ (Mšīḥā, 'Christ'), followed by a second relative clause ܕ݁ܠܶܗ ܬ݁ܶܫܒ݁ܚܳܢ ('to whom be praises'). The ancient Aramaic-speaking Church therefore read Paul's Greek participle ὁ ὢν unambiguously as a direct predication of deity to Christ.",
+        "english": "Whose are the fathers, and of whom is Christ, according to the flesh, who is over all things, God blessed for ever. Amen.",
+        "vulgate": "quorum patres, et ex quibus est Christus secundum carnem, qui est super omnia Deus benedictus in saecula. Amen.",
+        "greek_hebrew": "ὧν οἱ πατέρες, καὶ ἐξ ὧν ὁ Χριστὸς τὸ κατὰ σάρκα, ὁ ὢν ἐπὶ πάντων θεὸς εὐλογητὸς εἰς τοὺς αἰῶνας, ἀμήν.",
+        "interlinear": [
+            {"w": "ܘܡܶܢܗܽܘܢ ܢܦ݂ܰܩ ܡܫܺܝܚܳܐ ܒ݁ܰܒ݂ܣܰܪ", "t": "w-menhōn npaq Mšīḥā b-aḇsar", "pos": "Clause", "lemma": "ܡܫܺܝܚܳܐ", "strong": "G5547", "m": "'and from them came forth Christ in the flesh' -- Peshitta Romans 9:5a"},
+            {"w": "ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ ܐܰܠܳܗܳܐ ܕ݁ܥܰܠ ܟ݁ܽܠ", "t": "d-ītāwh(y) Alāhā d-‘al kōl", "pos": "Rel+Cop + N + Prep", "lemma": "ܐܰܠܳܗܳܐ", "strong": "G2316", "m": "'who is God over all' -- restrictive relative prefix d- + copula ītāwh(y) bound directly to Mšīḥā"},
+            {"w": "ὁ ὢν ἐπὶ πάντων θεός", "t": "ho ōn epi pantōn theos", "pos": "Art+Ptc + Prep + N", "lemma": "θεός", "strong": "G2316", "m": "'the One being over all, God' -- Greek articular participle rendered by Syriac d-ītāwh(y)"}
+        ],
+        "apparatus": [
+            {"witness": "Syriac Peshitta (sy^p), Romans 9:5", "text": "ܘܡܶܢܗܽܘܢ ܢܦ݂ܰܩ ܡܫܺܝܚܳܐ ܒ݁ܰܒ݂ܣܰܪ. ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ ܐܰܠܳܗܳܐ ܕ݁ܥܰܠ ܟ݁ܽܠ. ܕ݁ܠܶܗ ܬ݁ܶܫܒ݁ܚܳܢ ܘܒ݂ܽܘܪܟ݁ܳܢ ܠܥܳܠܰܡ ܥܳܠܡܺܝܢ ܐܰܡܺܝܢ -- 'and from them came forth Christ in the flesh, who is God over all, to whom be praises and blessings forever and ever, Amen.'", "note": "The relative copula d-ītāwh(y) ('who is') cannot open an independent wish-doxology; it grammatically locks 'God over all' to 'Christ'.", "tier": "crimson"},
+            {"witness": "Latin Vulgate (Clementine & Nova Vulgata), Romans 9:5", "text": "ex quibus est Christus secundum carnem, qui est super omnia Deus benedictus in saecula. Amen.", "note": "Latin relative pronoun qui est ('who is') likewise binds Deus directly to Christus.", "tier": "sapphire"},
+            {"witness": "Greek Uncials (P46, א, A, B), Romans 9:5", "text": "καὶ ἐξ ὧν ὁ Χριστὸς τὸ κατὰ σάρκα ὁ ὢν ἐπὶ πάντων θεὸς εὐλογητὸς εἰς τοὺς αἰῶνας ἀμήν", "note": "Continuous scriptio continua; both ancient versions (Syriac d-ītāwh(y) and Latin qui est) construe ὁ ὢν as modifying ὁ Χριστός.", "tier": "gold"}
+        ],
+        "patristics": [
+            {"father": "St. Athanasius of Alexandria", "work": "Discourses Against the Arians I.11 (c. 358 AD; NPNF2 Vol. 4)", "text": "Quotes Romans 9:5 ('of whom, according to the flesh, is Christ, who is over all, God blessed forever') as Paul's explicit declaration of the Son's eternal deity."},
+            {"father": "St. Cyril of Alexandria", "work": "Twelve Anathemas / Defense Against Theodoret (431 AD; NPNF2 Vol. 14)", "text": "Appeals to Romans 9:5 to prove that the very Christ who came forth according to the flesh from Israel is personally 'God over all, blessed forever.'"}
+        ],
+        "strata_3d": {
+            "top_text": "And of whom is Christ, according to the flesh, who is over all things, God blessed for ever.",
+            "greek_text": "καὶ ἐξ ὧν ὁ Χριστὸς τὸ κατὰ σάρκα, ὁ ὢν ἐπὶ πάντων θεὸς εὐλογητὸς εἰς τοὺς αἰῶνας",
+            "uncial_text": "ΚΑΙ ΕΞ ΩΝ Ο ΧC ΤΟ ΚΑΤΑ CΑΡΚΑ Ο ΩΝ ΕΠΙ ΠΑΝΤΩΝ ΘC ΕΥΛΟΓΗΤΟC",
+            "hebrew_mt": "Peshitta sy^p: ܕ݁ܺܐܝܬ݂ܰܘܗ̄ܝ ܐܰܠܳܗܳܐ ܕ݁ܥܰܠ ܟ݁ܽܠ (d-ītāwh(y) Alāhā d-‘al kōl -- 'who is God over all')",
+            "vorlage_dss": "Both ancient versional witnesses (Syriac d-ītāwh(y) and Latin qui est) bind ὁ ὢν directly to Christ"
         }
     }
 ]
@@ -1304,9 +2135,24 @@ def load_bible_datasets():
         ('net21', NET21_PATH, 'NET Bible 2.1 (66 books)'),
         ('niv_sb', NIV11_PATH, 'NIV Study Bible (66 books)'),
         ('bsb', BSB_PATH, 'Berean Standard Bible (66 books)'),
+        ('nabre', NABRE_PATH, 'New American Bible Revised Edition NABRE (73 books)'),
+        ('ylt', YLT_PATH, "Young's Literal Translation (66 books)"),
+        ('darby', DARBY_PATH, 'Darby Translation (66 books)'),
+        ('geneva1599', GENEVA_PATH, 'Geneva Bible 1599 (66 books)'),
+        ('bbe', BBE_PATH, 'Bible in Basic English (66 books)'),
+        ('tyndale', TYNDALE_PATH, 'Tyndale (partial, 10 books)'),
+        ('nkjv', NKJV_PRIVATE_PATH, 'NKJV (MacArthur Study Bible, PRIVATE -- owned copy only)'),
+        ('nasb95', NASB95_PATH, 'New American Standard Bible 1995 (66 books)'),
+        ('csb', CSB_PATH, 'Christian Standard Bible (66 books)'),
+        ('knox', KNOX_PATH, 'The Knox Bible (73 books)'),
     ]
     extra_corpora = {}
     for key, p, label in extra_paths:
+        if key == 'nkjv' and not os.path.exists(p):
+            print(f"Skipping {label}: private source not present on this machine "
+                  f"(run ingest_private_owned_sources.py if you own a copy).")
+            extra_corpora[key] = {}
+            continue
         print(f"Loading {label}...")
         with open(p, 'r', encoding='utf-8') as f:
             extra_corpora[key] = json.load(f)
@@ -1603,6 +2449,14 @@ def load_bible_datasets():
     print(f"Verse totals -> DRA EN: {total_en_verses} | Clem LA: {total_la_verses} | GR (LXX+NA28): {total_gr_verses} | HE (WLC): {total_he_verses}")
     return canonical_books
 
+def load_scribal_tendencies():
+    p = os.path.join(CACHE_DIR, 'scribal_tendencies.json')
+    if not os.path.exists(p):
+        print("WARNING: scribal_tendencies.json not found -- run build_scribal_tendencies.py first. Shipping without it.")
+        return {}
+    with open(p, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
 def verify_cross_refs(books):
     bmap = {b['id']: b for b in books}
     for xr in CROSS_REFS:
@@ -1613,6 +2467,55 @@ def verify_cross_refs(books):
             assert 1 <= ch <= b['chapter_count'], f"Cross-ref {xr['id']} invalid ch {bid} {ch}"
             assert 1 <= v <= len(b['verses_en'][ch - 1]), f"Cross-ref {xr['id']} invalid verse {bid} {ch}:{v}"
     print(f"Verified {len(CROSS_REFS)} bidirectional canonical cross-references against 73-book dataset.")
+
+def load_critical_editions():
+    p = os.path.join(CACHE_DIR, 'critical_editions_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return []
+
+def load_text_critical_apparatus():
+    p = os.path.join(CACHE_DIR, 'text_critical_apparatus.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return []
+
+def load_bible_word_study():
+    p = os.path.join(CACHE_DIR, 'bible_word_study_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def load_hexapla_synoptics():
+    p = os.path.join(CACHE_DIR, 'hexapla_synoptics_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def load_bibcrit_vorlagen():
+    p = os.path.join(CACHE_DIR, 'bibcrit_vorlagen_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def load_theological_revisions():
+    p = os.path.join(CACHE_DIR, 'theological_revisions_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+def load_biblical_chiasms():
+    p = os.path.join(CACHE_DIR, 'biblical_chiasms_catalog.json')
+    if os.path.exists(p):
+        with open(p, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
 
 def build_suite():
     books = load_bible_datasets()
@@ -1630,6 +2533,14 @@ def build_suite():
         "latin_lex": LATIN_LEX,
         "dra_links": dra_links,
         "cross_refs": CROSS_REFS,
+        "scribal_tendencies": load_scribal_tendencies(),
+        "critical_editions_catalog": load_critical_editions(),
+        "text_critical_apparatus": load_text_critical_apparatus(),
+        "bible_word_study": load_bible_word_study(),
+        "hexapla_synoptics": load_hexapla_synoptics(),
+        "bibcrit_vorlagen": load_bibcrit_vorlagen(),
+        "theological_revisions": load_theological_revisions(),
+        "biblical_chiasms": load_biblical_chiasms(),
     }
 
     print(f"Writing compact database to {JSON_OUT}...")

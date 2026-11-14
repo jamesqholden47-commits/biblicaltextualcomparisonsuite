@@ -155,7 +155,8 @@
     function loadThread(tid) {
       leftCol.textContent = "";
       rightCol.textContent = "";
-      var loading = el("div", { style: "color:var(--text-muted);padding:20px;" }, "Loading thread state...");
+      var loading = (window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading thread state...")
+        : el("div", { style: "color:var(--text-muted);padding:20px;" }, "Loading thread state...");
       leftCol.appendChild(loading);
 
       fetch("/api/desk/threads/" + tid + "/state?check=1")

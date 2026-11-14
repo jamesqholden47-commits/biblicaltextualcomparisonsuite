@@ -67,7 +67,8 @@
     root.appendChild(workspace);
 
     function loadEpisodes() {
-      leftCol.textContent = "Loading episodes...";
+      leftCol.textContent = "";
+      leftCol.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading episodes...") : document.createTextNode("Loading episodes..."));
       rightCol.textContent = "";
 
       fetch("/api/episodes").then(function (r) { return r.json(); }).then(function (data) {
@@ -118,7 +119,8 @@
     }
 
     function loadEpisodeDetail(epId) {
-      rightCol.textContent = "Loading episode gate details...";
+      rightCol.textContent = "";
+      rightCol.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading episode gate details...") : document.createTextNode("Loading episode gate details..."));
 
       fetch("/api/episodes/" + epId + "/fidelity").then(function (r) { return r.json(); }).then(function (data) {
         renderEpisodeDetail(data);

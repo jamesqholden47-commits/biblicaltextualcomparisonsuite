@@ -80,7 +80,8 @@
   }
 
   function fetchData(container) {
-    container.textContent = "Loading Vatican intellectual culture and journals repository...";
+    container.textContent = "";
+    container.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading Vatican intellectual culture and journals repository...") : document.createTextNode("Loading Vatican intellectual culture and journals repository..."));
     fetch("/api/vatican-culture/all")
       .then(function (r) { return r.json(); })
       .then(function (data) {

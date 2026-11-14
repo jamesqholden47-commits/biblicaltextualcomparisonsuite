@@ -27,6 +27,34 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPTS_DIR = os.path.join(HERE, "data", "podcast_scripts")
 EPISODES_DIR = os.path.join(HERE, "data", "podcast_episodes")
 
+_GATE_CACHE: dict = {}
+
+
+def _cached_run_gate(script: dict, script_path: str):
+    """Cache builder.run_gate(script, script_path) keyed on mtimes of script, source_path, and review file."""
+    source_path = script.get("source_path") or ""
+    base_id = script.get("id") or os.path.splitext(os.path.basename(script_path))[0].replace(".script", "")
+    rev_path = os.path.join(EPISODES_DIR, f"{base_id}.fidelity_reviewed.json")
+    try:
+        sm = os.path.getmtime(script_path)
+    except OSError:
+        sm = None
+    try:
+        srcm = os.path.getmtime(source_path) if source_path else None
+    except OSError:
+        srcm = None
+    try:
+        revm = os.path.getmtime(rev_path) if os.path.exists(rev_path) else None
+    except OSError:
+        revm = None
+    key = (sm, srcm, revm)
+    hit = _GATE_CACHE.get(script_path)
+    if hit and hit[0] == key:
+        return hit[1]
+    res = builder.run_gate(script, script_path)
+    _GATE_CACHE[script_path] = (key, res)
+    return res
+
 
 @router.get("")
 def list_episodes():
@@ -46,9 +74,9 @@ def list_episodes():
             has_audio = os.path.exists(os.path.join(EPISODES_DIR, f"{ep_id}.mp3"))
             has_manifest = os.path.exists(os.path.join(EPISODES_DIR, f"{ep_id}.json"))
 
-            # Run live gate check
+            # Run live gate check (cached by script + source + review mtime)
             try:
-                passed, kept, cleared, stale, ok = builder.run_gate(script, path)
+                passed, kept, cleared, stale, ok = _cached_run_gate(script, path)
                 status = "PASS" if passed else ("STALE" if stale else "FLAGS")
             except Exception as e:
                 status = "ERROR"
@@ -83,7 +111,7 @@ def episode_fidelity(ep_id: str):
         script = json.load(f)
 
     try:
-        passed, kept, cleared, stale, ok = builder.run_gate(script, script_path)
+        passed, kept, cleared, stale, ok = _cached_run_gate(script, script_path)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Fidelity gate error: {e}")
 

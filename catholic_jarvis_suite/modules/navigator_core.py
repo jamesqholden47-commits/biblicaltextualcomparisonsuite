@@ -535,18 +535,37 @@ def reindex_async():
     return _index_state
 
 
+_SCAN_CACHE = {"key": None, "value": None}
+
+
 def get_cached_or_scan() -> Dict[str, Any]:
-    """Retrieve indexed dataset from cache, or scan on demand."""
+    """Retrieve indexed dataset from cache, or scan on demand.
+
+    Previously re-parsed the full 10 MB navigator_cache.json from disk on EVERY call -- every hit
+    of /api/navigator/tree or /api/navigator/genealogy paid this, measured at 261ms/161ms under
+    tools/stress_suite.py, two of the suite's slowest routes. Added an in-process (mtime, size)
+    cache, same pattern as the recall_index.json fix applied elsewhere this session -- the parsed
+    dict is kept in memory and only re-read when the cache file on disk actually changes."""
     if os.path.exists(CACHE_FILE):
         try:
+            st = os.stat(CACHE_FILE)
+            cache_key = (CACHE_FILE, st.st_mtime, st.st_size)
+            if _SCAN_CACHE["key"] == cache_key:
+                return _SCAN_CACHE["value"]
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+            _SCAN_CACHE["key"] = cache_key
+            _SCAN_CACHE["value"] = data
+            return data
         except Exception:
             pass
     data = scan_corpus()
     try:
         with open(CACHE_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False)
+        st = os.stat(CACHE_FILE)
+        _SCAN_CACHE["key"] = (CACHE_FILE, st.st_mtime, st.st_size)
+        _SCAN_CACHE["value"] = data
     except Exception:
         pass
     return data

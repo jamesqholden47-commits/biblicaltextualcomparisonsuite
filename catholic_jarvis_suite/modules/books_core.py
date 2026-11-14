@@ -215,17 +215,35 @@ def load_taxonomy():
     return t
 
 
+_PLAN_CACHE = {"mtime": None, "data": None}
+_OV_CACHE = {"mtime": None, "data": None}
+
+
 def load_overrides():
+    try:
+        m = os.path.getmtime(OVERRIDES_FILE)
+    except OSError:
+        m = None
+    if m is not None and _OV_CACHE["mtime"] == m and _OV_CACHE["data"] is not None:
+        return json.loads(json.dumps(_OV_CACHE["data"]))
     o = _read_json(OVERRIDES_FILE) or {}
     for k, v in (("moves", {}), ("excluded", []), ("chapter_titles", {}), ("volume_titles", {}), ("frozen", {}),
                  ("final", {}), ("notes", {})):
         o.setdefault(k, v)
-    return o
+    _OV_CACHE["mtime"] = m
+    _OV_CACHE["data"] = o
+    return json.loads(json.dumps(o))
 
 
 def save_overrides(o):
     with _LOCK:
         _write_json(OVERRIDES_FILE, o)
+        try:
+            _OV_CACHE["mtime"] = os.path.getmtime(OVERRIDES_FILE)
+            _OV_CACHE["data"] = json.loads(json.dumps(o))
+        except OSError:
+            _OV_CACHE["mtime"] = None
+            _OV_CACHE["data"] = None
 
 
 # ----------------------------------------------------------------------------- pool
@@ -909,7 +927,17 @@ def chapter_state(rec, ov=None):
 
 
 def load_plan(build_if_missing=True):
-    p = _read_json(PLAN_FILE)
+    try:
+        pm = os.path.getmtime(PLAN_FILE)
+    except OSError:
+        pm = None
+    if pm is not None and _PLAN_CACHE["mtime"] == pm and _PLAN_CACHE["data"] is not None:
+        p = _PLAN_CACHE["data"]
+    else:
+        p = _read_json(PLAN_FILE)
+        if p:
+            _PLAN_CACHE["mtime"] = pm
+            _PLAN_CACHE["data"] = p
     if p:
         ov = load_overrides()
         for v in p["volumes"]:

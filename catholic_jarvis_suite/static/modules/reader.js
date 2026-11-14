@@ -206,7 +206,8 @@
       userChose = true;
       docSeq++;
       docMsg.textContent = "";
-      mainPane.textContent = "Loading chapter...";
+      mainPane.textContent = "";
+      mainPane.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading chapter...") : document.createTextNode("Loading chapter..."));
       sidePane.textContent = "";
 
       fetch("/api/reader/chapters/" + encodeURIComponent(stem)).then(function (r) { return r.json(); }).then(function (data) {
@@ -222,7 +223,11 @@
       pathBox.value = path;
       docMsg.style.color = "var(--text-dim)";
       docMsg.textContent = "Opening...";
-      if (!part) { mainPane.textContent = "Loading document..."; sidePane.textContent = ""; }
+      if (!part) {
+        mainPane.textContent = "";
+        mainPane.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading document...") : document.createTextNode("Loading document..."));
+        sidePane.textContent = "";
+      }
       fetch("/api/reader/doc?path=" + encodeURIComponent(path) + "&part=" + (part || 0)).then(function (r) {
         return r.json().then(function (d) { return { ok: r.ok, status: r.status, d: d }; }, function () { return { ok: r.ok, status: r.status, d: {} }; });
       }).then(function (x) {
@@ -407,7 +412,8 @@
     function loadSectionTier(stem, secNum) {
       var container = document.getElementById("reader-tier-display");
       if (!container) return;
-      container.textContent = "Loading tier...";
+      container.textContent = "";
+      container.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading tier...") : document.createTextNode("Loading tier..."));
 
       fetch("/api/reader/tiers/" + stem + "/" + secNum).then(function (r) { return r.json(); }).then(function (res) {
         container.textContent = "";
@@ -466,7 +472,8 @@
             el("button", { style: BTN_CSS, onclick: function () { document.body.removeChild(modal); } }, "Close")
           ]),
           (function () {
-            var box = el("div", { style: "overflow-y:auto;flex:1;padding-right:8px;" }, "Loading book-wide checklist...");
+            var box = (window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading book-wide checklist...")
+              : el("div", { style: "overflow-y:auto;flex:1;padding-right:8px;" }, "Loading book-wide checklist...");
             fetch("/api/reader/checking").then(function (r) { return r.json(); }).then(function (data) {
               box.textContent = "";
               box.appendChild(el("div", { style: "font-size:12px;color:var(--text-dim);margin-bottom:12px;" },

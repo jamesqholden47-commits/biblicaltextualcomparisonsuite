@@ -23,7 +23,9 @@
   function link(text, fn, title) { return el("a", { href: "#", title: title || null, on: { click: function (e) { e.preventDefault(); fn(); } } }, [text]); }
   function go(tab, detail) { window.JarvisOpen(tab, detail || {}); }
   function card(id, title, tab) {
-    var body = el("div", { class: "td-body" }, [el("div", { class: "fx-muted", text: "Loading\u2026" })]);
+    var placeholder = (window.JarvisUI && window.JarvisUI.loading)
+      ? window.JarvisUI.loading() : el("div", { class: "fx-muted", text: "Loading\u2026" });
+    var body = el("div", { class: "td-body" }, [placeholder]);
     var head = el("div", { class: "td-head" }, [el("h3", { text: title }), tab ? link("open \u203a", function () { go(tab); }) : null]);
     return { el: el("section", { class: "td-card", id: "td-" + id }, [head, body]), body: body };
   }

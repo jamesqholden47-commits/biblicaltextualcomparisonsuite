@@ -174,7 +174,7 @@
     function renderDocs(params) {
       var q = new URLSearchParams(params);
       q.set("limit", state.limit); q.set("offset", state.offset);
-      list.textContent = ""; info.textContent = "Loading…";
+      list.textContent = ""; info.textContent = ""; info.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading…"));
       return api("/api/loose/items?" + q.toString()).then(function (r) {
         info.textContent = r.total + " documents · " + (info.dataset.built || "");
         var cards = {};
@@ -205,7 +205,7 @@
     }
 
     function renderThreads() {
-      list.textContent = ""; pager.textContent = ""; info.textContent = "Loading…";
+      list.textContent = ""; pager.textContent = ""; info.textContent = ""; info.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading…"));
       var q = fText.value ? "?text=" + encodeURIComponent(fText.value) : "";
       return api("/api/loose/threads" + q).then(function (r) {
         info.textContent = r.threads.length + " of " + r.total + " threads (topics with two or more subject documents), loosest first";
@@ -239,7 +239,7 @@
     }
 
     function renderOwed() {
-      list.textContent = ""; pager.textContent = ""; info.textContent = "Loading…";
+      list.textContent = ""; pager.textContent = ""; info.textContent = ""; info.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading…"));
       var q = new URLSearchParams(); if (fText.value) q.set("text", fText.value); if (fArea.value) q.set("area", fArea.value);
       return api("/api/loose/open_items?" + q.toString()).then(function (r) {
         info.textContent = r.total + " items listed under the documents' own 'still needs checking / FETCH LIST / OPEN QUESTIONS / TODO / next steps' headings (newest documents first)";

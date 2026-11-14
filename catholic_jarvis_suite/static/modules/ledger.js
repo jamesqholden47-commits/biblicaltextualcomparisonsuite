@@ -95,7 +95,8 @@
     var bar = el("div", { style: "display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;" }, null,
       [fStatus, fSurface, fFrom, fTo, fText, fMissedLbl, fStrongLbl, bSearch, bReset, bRebuild, bExport]);
 
-    var summary = el("div", { style: "font-size:12px;color:var(--text-muted);margin-bottom:8px;" }, "Loading...");
+    var summary = (window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading()
+      : el("div", { style: "font-size:12px;color:var(--text-muted);margin-bottom:8px;" }, "Loading...");
     var list = el("div");
     var pager = el("div", { style: "display:flex;gap:8px;align-items:center;margin:12px 0;font-size:12px;color:var(--text-muted);" });
 

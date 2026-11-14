@@ -35,7 +35,7 @@
     root.classList.add("dr-root");
     var sel = el("select", { class: "fx-select", on: { change: function () { S.topic = sel.value; next(); } } }, [el("option", { value: "", text: "All topics" })]);
     var stats = el("span", { class: "fx-muted" });
-    var stage = el("div", { class: "dr-stage" }, [el("div", { class: "j-empty", text: "Loading objections from your debates…" })]);
+    var stage = el("div", { class: "dr-stage" }, [(window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading objections from your debates…") : el("div", { class: "j-empty", text: "Loading objections from your debates…" })]);
     root.appendChild(el("div", { class: "dr-top" }, [el("h2", { class: "dx-h", text: "Objection drill" }), sel, stats]));
     root.appendChild(el("div", { class: "fx-muted", style: "margin-bottom:12px", text:
       "Real objections from your debates. Answer it in your head (or out loud), then show what you actually said. Space shows the answer; 1–4 grades it." }));

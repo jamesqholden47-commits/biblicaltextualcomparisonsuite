@@ -32,6 +32,7 @@ import hashlib
 import json
 import os
 import re
+import time
 
 from modules.paths_config import get_path
 
@@ -52,7 +53,24 @@ _HARNESS = ("<command-", "<local-command", "Caveat: The messages below", "[Reque
             "<bash-", "<user-memory-input>")
 
 
-def _sources():
+_SOURCES_CACHE = {"at": 0.0, "value": None}
+_SOURCES_TTL_S = 3.0  # short time-based cache, not a correctness mechanism
+
+
+def _sources(_bypass_cache=False):
+    """Three recursive/directory globs (Claude .jsonl, Antigravity live transcripts, Antigravity
+    backup .md files) plus an os.stat() per file in source_fingerprint() -- real, measured cost on
+    a project with this many sessions (332.8ms for /api/recall/status alone under
+    tools/stress_suite.py, the single slowest non-asset route in the suite, since every caller of
+    source_fingerprint() re-globs from scratch). A conversation log is not going to appear or
+    change inside the same 3-second window a status check is likely to be polled in, so a short
+    time-based cache (not a correctness mechanism -- just a rate limiter on a真 glob+stat sweep)
+    is the safe, simple fix -- not a disk re-scan, just a rate limiter on the glob+stat sweep. Pass
+    _bypass_cache=True from anything that must see a file written in the last moment (nothing
+    currently needs to)."""
+    now = time.monotonic()
+    if not _bypass_cache and _SOURCES_CACHE["value"] is not None and (now - _SOURCES_CACHE["at"]) < _SOURCES_TTL_S:
+        return _SOURCES_CACHE["value"]
     cl = [f for f in glob.glob(os.path.join(CL_ROOT, "**", "*.jsonl"), recursive=True) if _SUB not in f]
     ag = glob.glob(os.path.join(AG_ROOT, "*", ".system_generated", "logs", "transcript_full.jsonl"))
     live_sids = {f.split(os.sep)[-4] for f in ag}
@@ -65,7 +83,21 @@ def _sources():
         if any(sid.startswith(short_sid) for sid in live_sids):
             continue  # this session is also live -- the live transcript is the fuller source
         ag_backup.append(f)
-    return sorted(cl), sorted(ag), sorted(ag_backup)
+    result = (sorted(cl), sorted(ag), sorted(ag_backup))
+    _SOURCES_CACHE["at"] = now
+    _SOURCES_CACHE["value"] = result
+    return result
+
+
+def source_fingerprint():
+    """Fingerprint (path|size|mtime, stat() only) of EVERY conversation source _sources() returns --
+    live Claude logs, live Antigravity transcripts, and Antigravity backups. This is the exact key
+    load_messages() caches on, so every other cache keyed to 'the logs changed' must use this and not
+    unpack _sources() itself: _sources() grew a third element (ag_backup) and three callers that
+    unpacked two values raised ValueError (500 on /api/debate/threads, /api/packs, /api/drill/queue;
+    loose_core swallowed it and silently re-scanned ~800 MB of logs on every call). 2026-11-12."""
+    cl, ag, ag_backup = _sources()
+    return _fingerprint(cl + ag + ag_backup)
 
 
 def _fingerprint(files):

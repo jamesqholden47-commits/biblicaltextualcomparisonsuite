@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plenary Suite</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230b0d13'/%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' fill='none' stroke='%23d4af37' stroke-width='2'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -892,7 +893,7 @@
     }
   </style>
   <!-- one design system + workspace shell (Phase 0, SUITE_OVERHAUL_PLAN_2026-10-07) -->
-  <link rel="stylesheet" href="/static/jarvis.css?v=20261007f">
+  <link rel="stylesheet" href="/static/jarvis.css?v=20261111a">
 </head>
 <body>
 
@@ -1569,27 +1570,27 @@
 
     <!-- TAB: SYNOPTIC MANUSCRIPT DIFF -->
     <div id="tab-manuscript_diff" class="tab-pane" style="padding: 0; height: 100%;">
-      <iframe src="/static/synoptic_manuscript_diff.html" id="manuscript-diff-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe src="/static/synoptic_manuscript_diff.html" id="manuscript-diff-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
     </div>
 
     <!-- TAB: PATRISTIC CONSENSUS MAP -->
     <div id="tab-patristic_map" class="tab-pane" style="padding: 0; height: 100%;">
-      <iframe src="/static/patristic_consensus_map.html" id="patristic-map-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe src="/static/patristic_consensus_map.html" id="patristic-map-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
     </div>
 
     <!-- TAB: TACTICAL DEFEATER TREE -->
     <div id="tab-defeater_tree" class="tab-pane" style="padding: 0; height: 100%;">
-      <iframe src="/static/debate_defeater_tree.html" id="defeater-tree-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe src="/static/debate_defeater_tree.html" id="defeater-tree-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
     </div>
 
     <!-- TAB: DEUTEROCANON REGISTRY -->
     <div id="tab-deuterocanon" class="tab-pane" style="padding: 0; height: 100%;">
-      <iframe src="/static/deuterocanon_registry.html" id="deuterocanon-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe src="/static/deuterocanon_registry.html" id="deuterocanon-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
     </div>
 
     <!-- TAB: CATHOLIC CONTRIBUTORS -->
     <div id="tab-contributors" class="tab-pane" style="padding: 0; height: 100%;">
-      <iframe src="/static/catholic_contributors.html" id="contributors-iframe" style="width: 100%; height: 100%; border: none;"></iframe>
+      <iframe src="/static/catholic_contributors.html" id="contributors-iframe" style="width: 100%; height: 100%; border: none;" loading="lazy"></iframe>
     </div>
 
     <!-- TAB: PLENARY LOGOS SUITE (73-book Three.js workstation, mounted live from web_app/, 2026-11-10) -->
@@ -2987,6 +2988,7 @@
   </script>
   <script src="/static/libs/three.min.js"></script>
   <script src="/static/libs/OrbitControls.js"></script>
-  <script src="/static/shell.js?v=20261110a"></script>
+  <script src="/static/libs/lucide.min.js"></script>
+  <script src="/static/shell.js?v=20261111a"></script>
 </body>
 </html>

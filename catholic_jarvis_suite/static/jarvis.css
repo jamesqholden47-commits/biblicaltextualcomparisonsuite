@@ -2,6 +2,49 @@
    Tokens first, then the shell (sidebar, sub-tabs, palette, side panel, banner), then shared components.
    Modules use these tokens; tests/test_design.py fails if a module script hard-codes a hex colour. */
 
+@font-face {
+  font-family: 'Charis SIL';
+  src: url('/plenary/fonts/CharisSILR.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Charis SIL';
+  src: url('/plenary/fonts/CharisSILI.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Charis SIL';
+  src: url('/plenary/fonts/CharisSILB.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Adobe Caslon Pro';
+  src: url('/plenary/fonts/ACaslonPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Arno Pro';
+  src: url('/plenary/fonts/ArnoPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bembo Std';
+  src: url('/plenary/fonts/BemboStd-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* the existing gold-on-navy palette, unchanged, plus the semantic names modules should use */
   --bg-base: #0b0d13;
@@ -43,7 +86,7 @@
   --role-archive: var(--text-dim);
 
   --font-ui: 'Inter', system-ui, sans-serif;
-  --font-read: 'Newsreader', Georgia, serif;
+  --font-read: '2K/DENMARK Comfort Print', 'Comfort Print', 'Catholic Comfort Print', 'Charis SIL', 'Arno Pro', 'Adobe Caslon Pro', 'Bembo Std', 'Newsreader', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-display: 'Cinzel', serif;
   --fs-xs: 11px; --fs-sm: 12px; --fs-md: 14px; --fs-lg: 16px; --fs-xl: 20px;
@@ -92,6 +135,7 @@ body.j-shell header { height: 48px; }
 }
 .j-sub:hover { color: var(--text-main); }
 .j-sub.active { color: var(--text-main); border-bottom-color: var(--accent-gold); }
+.j-sub-ico { width: 14px; height: 14px; vertical-align: -2px; margin-right: 5px; }
 .j-sub .j-count { color: var(--text-dim); font: var(--fs-xs) var(--font-mono); margin-left: 4px; }
 #j-subtabs .j-spacer { flex: 1; }
 .j-search-btn {
@@ -467,3 +511,15 @@ details.fx-recent[open] > summary::before { content: "\25be  "; }
 .dr-show { margin-top: var(--sp-5); }
 .dr-answer { border-top: 1px solid var(--border); margin-top: var(--sp-4); padding-top: var(--sp-2); }
 .dr-grades { display: flex; gap: var(--sp-2); margin-top: var(--sp-4); flex-wrap: wrap; }
+
+/* ── Shared loading state (polish pass, 2026-11-11): one spinner + a "still working"
+   fallback after a few seconds, so a slow-but-fine load no longer looks identical to
+   a hung one. See window.JarvisUI.loading() in shell.js. ────────────────────────── */
+@keyframes j-spin { to { transform: rotate(360deg); } }
+.j-loading { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); color: var(--text-muted); font: var(--fs-sm) var(--font-ui); }
+.j-spinner {
+  width: 14px; height: 14px; flex: none; border-radius: 50%;
+  border: 2px solid var(--border); border-top-color: var(--accent-gold);
+  animation: j-spin 0.8s linear infinite;
+}
+.j-loading-still { flex-basis: 100%; margin-top: 2px; color: var(--text-dim); font: var(--fs-xs) var(--font-ui); }

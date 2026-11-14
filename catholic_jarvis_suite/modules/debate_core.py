@@ -382,8 +382,7 @@ def build_thread(snaps):
 
 
 def _log_fingerprint():
-    cl, ag = log_reader._sources()
-    return log_reader._fingerprint(cl + ag)
+    return log_reader.source_fingerprint()
 
 
 _mem = {"data": None, "checked": 0.0}

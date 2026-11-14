@@ -98,13 +98,38 @@
       if (m !== month) { month = m; box.appendChild(el("div", { class: "cat-month", text: m || "undated" })); }
       var name = r.rel.split(/[\\/]/).pop();
       var folder = r.rel.slice(0, r.rel.length - name.length);
+      var citeBox = el("div", { class: "cat-cite", style: "display:none" });
+      var citeLink = el("a", { href: "#", class: "cat-cite-link", on: { click: function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (citeBox.style.display !== "none") { citeBox.style.display = "none"; return; }
+        citeBox.style.display = ""; citeBox.textContent = "loading citation…";
+        fetch("/api/catalog/cite?rel=" + encodeURIComponent(r.rel)).then(function (resp) { return resp.json(); }).then(function (c) {
+          citeBox.textContent = "";
+          citeBox.appendChild(el("div", { class: "fx-muted", text: "Author is a placeholder — not yet told your legal name for citations." }));
+          [["SBL", c.sbl], ["Chicago", c.chicago], ["BibTeX", c.bibtex]].forEach(function (pair) {
+            var row = el("div", { class: "cat-cite-row" });
+            row.appendChild(el("div", { class: "cat-cite-label", text: pair[0] }));
+            row.appendChild(el("pre", { class: "cat-cite-text", text: pair[1] }));
+            var cb = el("button", { class: "j-btn", text: "Copy" });
+            cb.addEventListener("click", function (ev) {
+              ev.preventDefault(); ev.stopPropagation();
+              navigator.clipboard && navigator.clipboard.writeText(pair[1]).then(function () {
+                cb.textContent = "copied"; setTimeout(function () { cb.textContent = "Copy"; }, 1200);
+              });
+            });
+            row.appendChild(cb);
+            citeBox.appendChild(row);
+          });
+        }).catch(function (e2) { citeBox.textContent = "Couldn't build a citation: " + e2; });
+      } } }, ["Cite"]);
       box.appendChild(el("div", { class: "cat-row" + (r.exists ? " click" : ""), title: r.path, on: r.exists ? { click: function () { open(r.path); } } : null }, [
         el("div", { class: "cat-name" }, [name, r.exists ? null : el("span", { class: "cat-gone", text: "  (no longer at this path)" })]),
         el("div", { class: "cat-meta" }, [].concat(r.writers.map(writerTag), [
           el("span", { class: "cat-tag", text: r.kind }),
           r.era ? el("span", { class: "cat-tag", text: r.era }) : null,
-          day(r.last) + " · " + words(r.words) + (folder ? " · " + folder : "")])),
-        r.request ? el("div", { class: "cat-ask", text: "You had asked: " + short(r.request, 260) }) : null
+          day(r.last) + " · " + words(r.words) + (folder ? " · " + folder : ""), " · ", citeLink])),
+        r.request ? el("div", { class: "cat-ask", text: "You had asked: " + short(r.request, 260) }) : null,
+        citeBox
       ]));
     });
     if (rows.length > shown) box.appendChild(el("div", { class: "fx-muted", text: (rows.length - shown) + " more — narrow the search to see them." }));
@@ -122,6 +147,21 @@
     bar.appendChild(el("label", { class: "fx-muted" }, [
       el("input", { type: "checkbox", checked: S.infra || null, on: { change: function (e) { S.infra = e.target.checked; S.files = null; draw(); } } }),
       " include code, logs and AI working notes"]));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/catalog/files/export?infra=" + (S.infra ? 1 : 0), text: "Export CSV" }));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/catalog/portfolio/export", title: "A Markdown summary of your independent research output, attachable to a scholarship application or CV" }, ["Research Portfolio"]));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/methodology/export", title: "A Methods-section-style statement: which primary-source corpora are in use and how claims are verified, with every number computed live from disk" }, ["Methodology Statement"]));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/mt_lxx/divergence/export", title: "Surface-level, no-model, verse-count scan of every MT vs LXX chapter in Plenary Suite's data -- rows are tagged [R] only against named scholarship, [S] (unverified) otherwise" }, ["MT/LXX Divergence Report"]));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/nt_ot_quotations/export", title: "Which text-type (MT, LXX, neither) each curated NT quotation of the OT actually follows -- verified by direct comparison of the GNT/LXX/MT text already in this suite's data, not a model's say-so" }, ["NT-OT Quotations Report"]));
+    bar.appendChild(el("a", { class: "j-btn", href: "/api/scribal_tendencies/export", title: "Deterministic per-book LXX translation-technique metrics (words-per-word ratio, kai share, verse-length correlation), plus a cross-check against the MT/LXX divergence scan for Jeremiah" }, ["Scribal Tendencies Report"]));
+    var rigorBox = el("span", { class: "fx-muted", text: "checking citation rigor…" });
+    bar.appendChild(rigorBox);
+    fetch("/api/catalog/rigor").then(function (r) { return r.json(); }).then(function (g) {
+      var total = g.totals.V + g.totals.R + g.totals.S;
+      if (!total) { rigorBox.textContent = ""; return; }
+      rigorBox.textContent = "Citation rigor across " + g.files_with_tags + " dossiers/reports: " +
+        total.toLocaleString() + " tagged claims, " + g.verified_rate + "% [V] verified, " + g.sourced_rate + "% [V]+[R] sourced.";
+      rigorBox.title = g.totals.V + " [V] verified, " + g.totals.R + " [R] reliably sourced, " + g.totals.S + " [S] unsourced/stated.";
+    }).catch(function () { rigorBox.textContent = ""; });
   }
 
   // ── unfinished requests ─────────────────────────────────────────────────────
@@ -199,7 +239,7 @@
       el("input", { type: "search", placeholder: S.view === "files" ? "Search names and what you asked…" : "Search what you asked…",
         value: S.q, on: { input: function (e) { S.q = e.target.value; clearTimeout(draw.t); draw.t = setTimeout(function () { draw(true); }, 200); } } })]);
     root.appendChild(bar);
-    listBox = el("div", null, [el("div", { class: "fx-muted", text: "Loading…" })]);
+    listBox = el("div", null, [(window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : el("div", { class: "fx-muted", text: "Loading…" })]);
     root.appendChild(listBox);
     var key = S.view;
     var url = key === "files" ? "/api/catalog/files?infra=" + (S.infra ? 1 : 0) : "/api/catalog/hanging?noise=" + (S.noise ? 1 : 0);

@@ -69,7 +69,8 @@
   }
 
   function fetchData(container) {
-    container.textContent = "Loading Pope Leo XIV master repository...";
+    container.textContent = "";
+    container.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading Pope Leo XIV master repository...") : document.createTextNode("Loading Pope Leo XIV master repository..."));
     fetch("/api/pope-leo/feed")
       .then(function (r) { return r.json(); })
       .then(function (data) {

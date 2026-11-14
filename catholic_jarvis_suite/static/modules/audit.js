@@ -31,6 +31,29 @@
   var BTN_GOLD = BTN_CSS + "color:var(--accent-gold);border-color:var(--accent-gold);";
   var CARD_CSS = "background:var(--bg-panel);border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:16px;";
 
+  function csvField(v) {
+    v = v === undefined || v === null ? "" : String(v);
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  }
+
+  // 2026-11-12: the audit matrix is ad-hoc (pasted source/target, nothing stored server-side),
+  // so unlike Recall/Catalog's export there is no list to re-fetch -- the result the user just
+  // saw IS the export, built client-side from what's already in the browser rather than a round
+  // trip that would re-run the whole diff for no reason.
+  function downloadDiffCsv(res) {
+    var lines = ["status,badge,source_sentence,target_sentence"];
+    (res.diff_blocks || []).forEach(function (b) {
+      lines.push([b.status, b.badge, b.source_text || "", b.target_text || ""].map(csvField).join(","));
+    });
+    var blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = el("a", { href: url, download: "audit_matrix_" + new Date().toISOString().replace(/[:.]/g, "-") + ".csv" });
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
   function load(root) {
     root.textContent = "";
     root.style.cssText = "padding:20px;color:var(--text-main);max-width:1400px;margin:0 auto;";
@@ -230,7 +253,10 @@
 
       // Diff Table
       var tableCard = el("div", { style: CARD_CSS }, null, [
-        el("h3", { style: "margin:0 0 12px 0;font-size:16px;color:var(--accent-gold);" }, "Sentence-Level Red / Green Comparison Grid")
+        el("div", { style: "display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;" }, null, [
+          el("h3", { style: "margin:0;font-size:16px;color:var(--accent-gold);" }, "Sentence-Level Red / Green Comparison Grid"),
+          el("button", { style: BTN_CSS, onclick: function () { downloadDiffCsv(res); } }, "Export CSV")
+        ])
       ]);
 
       var table = el("table", { style: "width:100%;border-collapse:collapse;font-size:12px;" });

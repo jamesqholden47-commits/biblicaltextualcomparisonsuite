@@ -109,6 +109,60 @@
       ]);
       contentArea.appendChild(netCard);
 
+      // Hot-Path Cache Status -- the cache-fix work from 2026-11-12 (recall/navigator/catalog/
+      // log_reader) is real data on /api/health already (hot_path_caches), but nothing in this
+      // tab ever rendered it; added 2026-11-12 along with a "jump to this tab" link per cache so
+      // a cold cache is one click from the tab that will warm it.
+      var caches = health.hot_path_caches || {};
+      var CACHE_META = {
+        recall_corpus_files: { label: "Recall corpus files", hash: "#system/recall", tabLabel: "Open Recall" },
+        log_reader_sources: { label: "Log reader sources (TTL cache)", hash: "#system/sessions", tabLabel: "Open Sessions" },
+        navigator_scan: { label: "Genealogy / Treemap scan", hash: "#library/navigator", tabLabel: "Open Genealogy & Treemap" },
+        catalog_files: { label: "Catalog files (ag_output_catalog.json)", hash: "#library/organizer", tabLabel: "Open Organizer" },
+      };
+      if (Object.keys(caches).length) {
+        var cacheCard = el("div", {
+          style: "background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 12px;"
+        }, [
+          el("h3", { style: "font-size: 15px; color: var(--accent-gold);", text: "⚡ Hot-Path Cache Status" }),
+          el("p", { style: "color: var(--text-muted); font-size: 12px; margin: 0;", text: "Each of these re-parses a multi-MB file from disk on a cold miss; COLD after a fresh server start is normal -- click through to warm it." })
+        ]);
+        var cacheGrid = el("div", { style: "display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;" });
+        Object.keys(caches).forEach(function (key) {
+          var c = caches[key];
+          var meta = CACHE_META[key] || { label: key, hash: null, tabLabel: null };
+          var isWarm = !!c.warm;
+          var sub = c.error ? ("error: " + c.error)
+            : (key === "log_reader_sources" && c.age_seconds != null) ? ("age " + c.age_seconds + "s / ttl " + c.ttl_seconds + "s")
+            : (key === "catalog_files" && c.paths_cached != null) ? (c.paths_cached + " path(s) cached")
+            : "";
+          var row = el("div", {
+            style: "padding: 10px 12px; background: var(--bg-panel); border-radius: 4px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;"
+          }, [
+            el("div", { style: "display: flex; justify-content: space-between; align-items: center;" }, [
+              el("span", { style: "font-size: 12px; color: var(--text-main);", text: meta.label }),
+              el("span", { style: "font-size: 10px; padding: 2px 6px; border-radius: 3px; font-weight: 600; color: " + (isWarm ? "var(--accent-green)" : "var(--accent-gold)") + "; background: " + (isWarm ? "rgba(16, 185, 129, 0.15)" : "rgba(234, 179, 8, 0.15)"), text: isWarm ? "WARM" : "COLD" })
+            ]),
+            sub ? el("div", { style: "font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;", text: sub }) : null,
+            (!isWarm && meta.hash) ? el("a", {
+              href: meta.hash, style: "font-size: 11px; color: var(--accent-cyan); text-decoration: none; cursor: pointer;",
+              text: "→ " + meta.tabLabel + " (warm this cache)",
+              on: { click: function (e) {
+                // A relative hash change within THIS SPA, not a new tab against health.port --
+                // health.port reflects a config/PORT_FILE value that can go stale the moment a
+                // dev server gets reassigned to a different port (as preview_start does on a
+                // conflict), which would silently point this link at the wrong server entirely.
+                e.preventDefault();
+                location.hash = meta.hash.slice(1);
+              } }
+            }) : null
+          ]);
+          cacheGrid.appendChild(row);
+        });
+        cacheCard.appendChild(cacheGrid);
+        contentArea.appendChild(cacheCard);
+      }
+
       // Loaded Modules Inventory
       if (build && build.modules) {
         var modCard = el("div", {

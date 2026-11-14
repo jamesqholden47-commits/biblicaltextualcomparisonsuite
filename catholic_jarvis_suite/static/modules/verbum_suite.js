@@ -110,10 +110,12 @@
     });
 
     if (state.loading) {
-      mainArea.appendChild(el("div", {
+      // Was its own one-off spinner referencing "animation: spin ...", but no @keyframes spin was ever
+      // defined anywhere in the suite, so it never actually spun. Uses the shared, working spinner now
+      // (window.JarvisUI.loading(), jarvis.css's j-spin) instead of a second broken copy.
+      mainArea.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading Verbum Sacred Texts...") : el("div", {
         style: "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: var(--sp-3); color: var(--accent-gold);"
       }, [
-        el("div", { class: "verbum-spinner", style: "width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent-gold); border-radius: 50%; animation: spin 1s linear infinite;" }),
         el("span", { style: "font-family: var(--font-mono); font-size: var(--fs-sm);", text: "Loading Verbum Sacred Texts..." })
       ]));
     } else {

@@ -172,7 +172,7 @@
     main.appendChild(bar); main.appendChild(out);
     function list() {
       out.textContent = "";
-      out.appendChild(el("div", { class: "fx-muted", text: "Loading\u2026" }));
+      out.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : el("div", { class: "fx-muted", text: "Loading\u2026" }));
       var mine = S.view === "mine";
       var url = "/api/organizer/files?limit=200&offset=" + S.offset + "&sort=" + S.sort + (S.showHidden ? "&hidden=1" : "") +
         (mine ? "&folder=" + q(S.folder || "") : (S.bucket ? "&bucket=" + q(S.bucket) : "") + (S.shelf ? "&shelf=" + q(S.shelf) : "")) +
@@ -201,7 +201,7 @@
 
   // ── My folders (virtual) ───────────────────────────────────────────────────
   function mine(box) {
-    box.textContent = "Loading…";
+    box.textContent = ""; box.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading…"));
     refreshFolders().then(function (d) {
       box.textContent = "";
       var names = Object.keys(FOLDERS);
@@ -277,7 +277,7 @@
         opts.map(function (o) { return el("option", { value: o[0], text: o[1], selected: B[key] === o[0] || null }); }));
     }
     function go() {
-      out.textContent = "Loading\u2026";
+      out.textContent = ""; out.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading\u2026"));
       get("/api/organizer/leads/books?limit=200&offset=" + B.offset + "&min_mentions=" + B.min + (B.shelf ? "&shelf=" + q(B.shelf) : "") + (B.kind ? "&kind=" + q(B.kind) : "") + (B.owned !== "" ? "&owned=" + B.owned : "") + (B.q ? "&q=" + q(B.q) : ""))
         .then(function (d) {
           out.textContent = "";
@@ -321,7 +321,7 @@
   // ── Career leads ────────────────────────────────────────────────────────────
   var Cr = { theme: "", kind: "", q: "", raw: false, type: "" };
   function career(box) {
-    box.textContent = "Loading\u2026";
+    box.textContent = ""; box.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading\u2026"));
     get("/api/organizer/leads/career?limit=600" + (Cr.raw ? "&raw=1" : "") + (Cr.type ? "&type=" + q(Cr.type) : "") +
         (Cr.theme ? "&theme=" + q(Cr.theme) : "") + (Cr.kind ? "&kind=" + q(Cr.kind) : "") + (Cr.q ? "&q=" + q(Cr.q) : ""))
       .then(function (d) {
@@ -368,7 +368,7 @@
 
   // ── Questions (Question Ledger) ─────────────────────────────────────────────
   function questions(box) {
-    box.textContent = "Loading\u2026";
+    box.textContent = ""; box.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading\u2026"));
     Promise.all([get("/api/ledger/stats"), get("/api/ledger/questions?missed=1&limit=300")]).then(function (res) {
       var st = res[0], d = res[1];
       box.textContent = "";
@@ -388,7 +388,7 @@
 
   // ── AI writing / Unfinished (the Catalog module) ────────────────────────────
   function catalog(box, view) {
-    box.textContent = "Loading\u2026";
+    box.textContent = ""; box.appendChild((window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading() : document.createTextNode("Loading\u2026"));
     function run() { box.textContent = ""; window.JarvisModules.catalog.load(box, { view: view }); }
     if (window.JarvisModules.catalog) return run();
     var s = document.createElement("script");

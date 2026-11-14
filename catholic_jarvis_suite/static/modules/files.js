@@ -257,7 +257,8 @@
     S.folder = path;
     var m = S.ui.main;
     m.textContent = "";
-    m.appendChild(el("div", { class: "j-empty", text: "Loading…" }));
+    m.appendChild((window.JarvisUI && window.JarvisUI.loading)
+      ? window.JarvisUI.loading() : el("div", { class: "j-empty", text: "Loading…" }));
     api("/api/files/list?path=" + q(path)).then(function (L) {
       m.textContent = "";
       m.appendChild(crumbs(L.crumbs, null, [

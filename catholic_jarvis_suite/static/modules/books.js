@@ -71,7 +71,11 @@
         nav.appendChild(el("button", { style: i === crumbs.length - 1 ? GOLD : BTN, onclick: function () { back(i); } }, c.label));
       });
     }
-    function busy(msg) { body.textContent = ""; body.appendChild(el("div", { style: "color:var(--text-muted);font-size:12px;" }, msg)); }
+    function busy(msg) {
+      body.textContent = "";
+      body.appendChild((window.JarvisUI && window.JarvisUI.loading)
+        ? window.JarvisUI.loading(msg) : el("div", { style: "color:var(--text-muted);font-size:12px;" }, msg));
+    }
     function fail(e) { body.appendChild(el("div", { style: "color:var(--accent-red);font-size:12px;margin-top:8px;" }, String(e))); }
 
     // ---------------------------------------------------------------- overview

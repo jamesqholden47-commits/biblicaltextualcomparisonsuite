@@ -99,6 +99,29 @@ def plenary_source_pdf(key: str):
     return FileResponse(path, media_type="application/pdf", filename=os.path.basename(path))
 
 
+# Whitelisted Schaff ANF / NPNF Series 1 & 2 volumes (anf01..10, npnf101..114, npnf201..214)
+# stored in <pdfs_dir>/02_Patristics_and_Church_Fathers/Schaff_ANF_NPNF/<vol>.pdf.
+# Serves the local PDF directly so the Patristic Citation Tracker in Plenary Suite can open
+# any cited Church Father's primary English translation volume in a new tab.
+_SCHAFF_VOL_RE = re.compile(r'^(?:anf(?:0[1-9]|10)|npnf[12](?:0[1-9]|1[0-4]))$')
+
+
+@app.get("/plenary/schaff_pdf/{vol}")
+def plenary_schaff_pdf(vol: str):
+    vol_clean = (vol or "").strip().lower()
+    if not _SCHAFF_VOL_RE.match(vol_clean) or not get_path:
+        raise HTTPException(status_code=404, detail=f"Unknown or unconfigured Schaff volume '{vol}'")
+    path = os.path.join(
+        get_path("pdfs_dir"),
+        "02_Patristics_and_Church_Fathers",
+        "Schaff_ANF_NPNF",
+        f"{vol_clean}.pdf",
+    )
+    if not os.path.isfile(path):
+        raise HTTPException(status_code=404, detail=f"Schaff PDF file not found on disk for '{vol_clean}'")
+    return FileResponse(path, media_type="application/pdf", filename=f"{vol_clean}.pdf")
+
+
 @app.get("/plenary/note_pdf")
 def plenary_note_pdf(src: str = Query(...), ref: str = Query(...), title: str = Query(...), html: str = Query(...), license: str = Query("")):
     """Generates a single-page PDF of one study note on the fly -- the 'create one' fallback for
@@ -369,8 +392,44 @@ async def get_health():
         "corpus_indexed": os.path.exists(index_file),
         "corpus_index_age_seconds": index_age_s,
         "anki_total_cards": len(cards),
-        "anki_due_today": due_count
+        "anki_due_today": due_count,
+        "hot_path_caches": hot_path_cache_status(),
     }
+
+
+def hot_path_cache_status():
+    """Reports whether each of this session's in-process (mtime, size)-keyed caches is warm --
+    not a correctness surface, just operator visibility into the fixes landed 2026-11-12 for
+    /api/recall/status, /api/navigator/tree + /genealogy, and /api/catalog/files, each of which
+    used to re-parse a multi-MB JSON file from disk on every single request. 'warm' here means
+    the FIRST request after process start has already happened and primed the in-memory copy."""
+    out = {}
+    try:
+        from modules.recall_index import _CORPUS_FILES_CACHE
+        out["recall_corpus_files"] = {"warm": _CORPUS_FILES_CACHE.get("key") is not None}
+    except Exception as e:  # noqa: BLE001
+        out["recall_corpus_files"] = {"warm": False, "error": str(e)}
+    try:
+        from modules.log_reader import _SOURCES_CACHE, _SOURCES_TTL_S
+        # _SOURCES_CACHE["at"] is stamped with time.monotonic() in log_reader.py (an arbitrary
+        # reference point, NOT Unix epoch) -- subtracting the wall-clock time.time() used
+        # elsewhere in this function, as an earlier version of this code did, produces a
+        # meaningless huge number. Must diff against monotonic() too.
+        age = round(time.monotonic() - _SOURCES_CACHE["at"], 1) if _SOURCES_CACHE.get("value") is not None else None
+        out["log_reader_sources"] = {"warm": _SOURCES_CACHE.get("value") is not None, "age_seconds": age, "ttl_seconds": _SOURCES_TTL_S}
+    except Exception as e:  # noqa: BLE001
+        out["log_reader_sources"] = {"warm": False, "error": str(e)}
+    try:
+        from modules.navigator_core import _SCAN_CACHE
+        out["navigator_scan"] = {"warm": _SCAN_CACHE.get("key") is not None}
+    except Exception as e:  # noqa: BLE001
+        out["navigator_scan"] = {"warm": False, "error": str(e)}
+    try:
+        from modules.catalog_routes import _LOAD_CACHE
+        out["catalog_files"] = {"warm": len(_LOAD_CACHE) > 0, "paths_cached": len(_LOAD_CACHE)}
+    except Exception as e:  # noqa: BLE001
+        out["catalog_files"] = {"warm": False, "error": str(e)}
+    return out
 
 @app.get("/api/voices")
 async def get_voices():

@@ -55,7 +55,7 @@
     var listBox = el("div", { class: "dx-list" });
     var head = el("div", { class: "dx-listhead" });
     var side = el("div", { class: "dx-side" }, [search, head, listBox]);
-    var main = el("div", { class: "dx-main" }, [el("div", { class: "j-empty", text: "Loading your debates from the logs…" })]);
+    var main = el("div", { class: "dx-main" }, [(window.JarvisUI && window.JarvisUI.loading) ? window.JarvisUI.loading("Loading your debates from the logs…") : el("div", { class: "j-empty", text: "Loading your debates from the logs…" })]);
     root.appendChild(side); root.appendChild(main);
     S.ui = { list: listBox, head: head, main: main, search: search };
     search.addEventListener("input", function () { S.filter = search.value.trim().toLowerCase(); renderList(); });

@@ -103,14 +103,34 @@ def conversation_fingerprint():
     """Fingerprint of the conversation log sources: the same function log_reader keys its own
     cache on (path|size|mtime of every source log). Cheap: stat() only, no log is read."""
     from modules import log_reader
-    cl, ag = log_reader._sources()
-    return log_reader._fingerprint(cl + ag)
+    return log_reader.source_fingerprint()
+
+
+_SHA1_CACHE: dict = {}
+# (mtime, size)-keyed cache, same pattern as episodes_routes/books_core/files_core this session:
+# /api/recall/status calls load_corpus_files() on every request (via files_fingerprint()) purely
+# to check staleness, which otherwise re-os.stat()s every one of the ~870 corpus_index.json
+# entries every single call -- 332.8ms measured under tools/stress_suite.py, the single slowest
+# non-asset route in the suite. Keying the cache on corpus_index.json's OWN (mtime, size) is a
+# deliberate, known tradeoff (same one books_core/files_core already made): a corpus file that
+# changes WITHOUT corpus_index.json itself changing won't be picked up until the next rebuild --
+# acceptable here because this is a staleness-CHECK endpoint, not the index itself, and a real
+# content change still gets caught the next time anything touches corpus_index.json.
+_CORPUS_FILES_CACHE = {"key": None, "value": None}
 
 
 def load_corpus_files(corpus_index_path=None):
     """Corpus entries to index: those listed in corpus_index.json that still exist and are not
     under an excluded directory. Returns (entries, skipped_excluded, skipped_missing)."""
     path = corpus_index_path or CORPUS_INDEX
+    try:
+        st = os.stat(path)
+        cache_key = (path, st.st_mtime, st.st_size)
+    except OSError:
+        cache_key = None
+    if cache_key is not None and _CORPUS_FILES_CACHE["key"] == cache_key:
+        cached = _CORPUS_FILES_CACHE["value"]
+        return cached[0], cached[1], cached[2]
     try:
         with open(path, encoding="utf-8") as fh:
             files = json.load(fh).get("files", [])
@@ -142,11 +162,15 @@ def load_corpus_files(corpus_index_path=None):
             continue
         seen = {}
         for e in sorted(group, key=lambda e: (len(e["path"]), e["path"])):
-            try:
-                with open(e["path"], "rb") as fh:
-                    h = hashlib.sha1(fh.read()).hexdigest()
-            except OSError:
-                continue
+            ck = (e["path"], e["size"], int(e["mtime"]))
+            h = _SHA1_CACHE.get(ck)
+            if h is None:
+                try:
+                    with open(e["path"], "rb") as fh:
+                        h = hashlib.sha1(fh.read()).hexdigest()
+                    _SHA1_CACHE[ck] = h
+                except OSError:
+                    continue
             if h in seen:
                 dup_ids.add(id(e))
             else:
@@ -154,6 +178,9 @@ def load_corpus_files(corpus_index_path=None):
     if dup_ids:
         excl += len(dup_ids)
         keep = [e for e in keep if id(e) not in dup_ids]
+    if cache_key is not None:
+        _CORPUS_FILES_CACHE["key"] = cache_key
+        _CORPUS_FILES_CACHE["value"] = (keep, excl, missing)
     return keep, excl, missing
 
 
