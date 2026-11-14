@@ -10,4 +10,8 @@ web_app/sources_cache/
 web_app/sources_cache/private/
 web_app/plenary_logos_data.json
 web_app/plenary_logos_suite.html
+web_app/plenary_logos.sqlite*
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
 .DS_Store
