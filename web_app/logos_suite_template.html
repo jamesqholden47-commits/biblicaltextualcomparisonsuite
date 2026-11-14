@@ -946,6 +946,65 @@
             margin-top: 0.06em;
             border-radius: 2px;
         }
+        .suite-illuminated-cap {
+            float: left;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.9rem;
+            height: 3.9rem;
+            margin: 0.14rem 0.72rem 0.2rem 0;
+            position: relative;
+            user-select: none;
+            border-radius: 6px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.38);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .suite-illuminated-cap:hover {
+            transform: scale(1.03);
+        }
+        .suite-illuminated-cap svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .suite-illuminated-lead {
+            font-variant: small-caps;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+        .exegesis-layer-bar {
+            position: sticky;
+            top: -0.5rem;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+        }
+        .exegesis-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            border: 1px solid var(--border-hairline);
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.14s ease;
+            white-space: nowrap;
+        }
+        .exegesis-pill:hover {
+            border-color: var(--border-strong);
+            color: var(--text-primary);
+        }
+        .exegesis-pill.is-active {
+            background: var(--accent-soft);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body data-theme="oxford-dark" data-ornament="roman-manuscript" class="oxford-dark h-screen flex flex-col font-sans antialiased overflow-hidden selection:bg-amber-500 selection:text-black">
@@ -1219,9 +1278,9 @@
             <div id="centerToolRibbon" style="min-height: 2.75rem;" class="border-b px-3 py-1.5 flex items-center justify-between flex-wrap text-xs flex-shrink-0 gap-2">
                 <div class="flex items-center gap-2 flex-wrap">
                     <div class="suite-segmented-group" role="tablist" aria-label="Reading Modes">
-                        <button onclick="setReaderView('dolls')" id="btnViewDolls" class="suite-seg-btn is-active">
+                        <button onclick="setReaderView('dolls')" id="btnViewDolls" class="suite-seg-btn is-active" title="7-Layer Scholarly Exegesis Workbench (Text, Syntax, Tongues, Apparatus, Catena, Commentary, Patristics)">
                             <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                            <span>Dolls</span>
+                            <span>Exegesis</span>
                         </button>
                         <button onclick="setReaderView('chapter')" id="btnViewChapter" class="suite-seg-btn">
                             <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
@@ -1307,8 +1366,8 @@
                         <button onclick="highlightActiveVerse('none')" class="text-[10px] ml-1" style="color: var(--text-muted);" title="Clear Highlight">×</button>
                     </div>
                     <div class="hidden sm:flex items-center gap-1 flex-shrink-0">
-                        <button onclick="expandAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Expand All Dolls">Expand</button>
-                        <button onclick="collapseAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Collapse All Dolls">Collapse</button>
+                        <button onclick="expandAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Expand All Exegesis Layers">Expand</button>
+                        <button onclick="collapseAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Collapse Exegesis Layers">Collapse</button>
                     </div>
                 </div>
             </div>
@@ -1436,21 +1495,23 @@
                 <span class="text-slate-700 flex-shrink-0">|</span>
                 <div class="flex items-center gap-1 flex-shrink-0 ml-1 whitespace-nowrap">
                     <span class="text-slate-600 hidden md:inline">Layout:</span>
-                    <button onclick="applyLayoutPreset('dolls_deep_dive')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Dolls view, all drawers expanded">Dolls Deep Dive</button>
+                    <button onclick="applyLayoutPreset('dolls_deep_dive')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Exegesis Workbench view, all 7 layers expanded">Exegesis Deep Dive</button>
                     <button onclick="applyLayoutPreset('four_col_lab')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="4-Way Parallel view">4-Col Textual Lab</button>
-                    <button onclick="applyLayoutPreset('biblicum_drill')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Dolls view with Blind Translation Drill on">Biblicum Drill</button>
+                    <button onclick="applyLayoutPreset('biblicum_drill')" class="px-2 py-1 rounded text-slate-400 hover:bg-cyan-500/20 hover:text-white" title="Exegesis Workbench with Blind Translation Drill on">Biblicum Drill</button>
                 </div>
             </div>
 
-            <!-- STICKY VERSE REFERENCE BAR — James's bug report (2026-11-10): scrolling down into
-                 Doll 4 (manuscript apparatus / textual notes) or Doll 6 (study notes) lost sight of
-                 which verse was open, because the only reference badge lived inside the scrolling
-                 content itself. This bar is a flex-shrink-0 SIBLING of #readerContent, not part of
-                 its re-rendered innerHTML, so it never scrolls away regardless of Doll drawer depth. -->
+            <!-- STICKY VERSE REFERENCE BAR & INLINE ACTION MICRO-BAR -->
             <div id="stickyVerseBar" style="display:none;" class="flex-shrink-0 bg-slate-950/95 border-b border-amber-500/30 px-4 py-1.5 flex items-center gap-2 text-xs font-mono overflow-hidden">
                 <span id="stickyVerseRef" class="text-amber-400 font-bold whitespace-nowrap flex-shrink-0"></span>
                 <span id="stickyVerseSnippet" class="text-slate-400 truncate flex-grow"></span>
-                <button type="button" onclick="toggleNabreGuideModal('book')" class="suite-btn" style="height:24px;font-size:10px;" title="Open NABRE Book Introduction &amp; Reading Guide (RG) for the active book"><i data-lucide="book-open" class="w-3 h-3"></i><span>Book Intro &amp; RG</span></button>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <button type="button" onclick="toggleReadAlongBar(); startReadAlong(true);" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Listen to active verse via Read-Along Neural Voice"><i data-lucide="volume-2" class="w-3 h-3"></i><span class="hidden sm:inline">Listen</span></button>
+                    <button type="button" onclick="openCompareAll25Modal()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Compare all 25 Bible translations for this verse"><i data-lucide="columns-3" class="w-3 h-3"></i><span class="hidden sm:inline">All 25</span></button>
+                    <button type="button" onclick="toggleCommentarySplitPane()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Open side-by-side Study Notes &amp; Commentary for this verse"><i data-lucide="panel-right-open" class="w-3 h-3"></i><span class="hidden sm:inline">Notes</span></button>
+                    <button type="button" id="btnCopyActiveVerse" onclick="copyActiveVerseCitation()" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Copy formatted verse citation to clipboard"><i data-lucide="copy" class="w-3 h-3"></i><span class="hidden md:inline" id="btnCopyActiveVerseText">Copy</span></button>
+                    <button type="button" onclick="toggleNabreGuideModal('book')" class="suite-btn" style="height:24px;font-size:10px;padding:0 7px;" title="Open Multi-Source Book Introduction &amp; Reading Guide"><i data-lucide="book-open" class="w-3 h-3"></i><span class="hidden lg:inline">Book Intro &amp; RG</span></button>
+                </div>
             </div>
 
             <!-- Reader Content + Side-by-Side Commentary & Footnote Split Pane -->
@@ -3834,9 +3895,26 @@
                             ${activeCrux ? renderLegacyToolCrossLinks(activeCrux.id) : ''}
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div id="exegesisLayerBar" class="exegesis-layer-bar bg-slate-950/90 border border-slate-800 rounded-xl px-3 py-2 flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <button type="button" data-exegesis-pill="all" onclick="setExegesisLayerFilter('all')" class="exegesis-pill ${activeExegesisLayerFilter === 'all' ? 'is-active' : ''}">All 7 Layers</button>
+                                <button type="button" data-exegesis-pill="doll1" onclick="setExegesisLayerFilter('doll1')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll1' ? 'is-active' : ''}">I. Text</button>
+                                <button type="button" data-exegesis-pill="doll2" onclick="setExegesisLayerFilter('doll2')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll2' ? 'is-active' : ''}">II. Syntax</button>
+                                <button type="button" data-exegesis-pill="doll3" onclick="setExegesisLayerFilter('doll3')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll3' ? 'is-active' : ''}">III. Tongues</button>
+                                <button type="button" data-exegesis-pill="doll4" onclick="setExegesisLayerFilter('doll4')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll4' ? 'is-active' : ''}">IV. Apparatus</button>
+                                <button type="button" data-exegesis-pill="doll5" onclick="setExegesisLayerFilter('doll5')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll5' ? 'is-active' : ''}">V. Catena</button>
+                                <button type="button" data-exegesis-pill="doll6" onclick="setExegesisLayerFilter('doll6')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll6' ? 'is-active' : ''}">VI. Commentary</button>
+                                <button type="button" data-exegesis-pill="doll7" onclick="setExegesisLayerFilter('doll7')" class="exegesis-pill ${activeExegesisLayerFilter === 'doll7' ? 'is-active' : ''}">VII. Patristics</button>
+                            </div>
+                            <div class="flex items-center gap-1 text-[10px] font-mono">
+                                <button type="button" onclick="expandAllActiveDolls()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-slate-300">Expand All</button>
+                                <button type="button" onclick="collapseAllActiveDolls()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-slate-300">Collapse</button>
+                            </div>
+                        </div>
+
+                        <div data-exegesis-layer="doll1" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll1' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll1')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-amber-400"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 1: Master English (${escapeHtmlText(enRes.isFallback ? `${enRes.requestedMeta.short} → DRA Fallback` : enRes.meta.name)}) <span class="text-[10px] text-slate-400 font-normal">• Click any word to inspect</span> <span id="doll1-note-indicator"></span></span>
+                                <span class="font-mono text-xs font-bold text-amber-400"><i data-lucide="book-open" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>I. Canonical Reading Text (${escapeHtmlText(enRes.isFallback ? `${enRes.requestedMeta.short} → DRA Fallback` : enRes.meta.name)}) <span class="text-[10px] text-slate-400 font-normal">• Click any word to inspect</span> <span id="doll1-note-indicator"></span></span>
                                 <i id="icon-doll1" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll1" onclick="revealBlindDrillDoll1()" class="px-5 py-4 border-t border-slate-800 bg-slate-950 text-slate-100 font-serif text-base leading-relaxed">
@@ -3845,9 +3923,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll2" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll2' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll2')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 2: Translation Rationale &amp; Syntax Layer</span>
+                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="compass" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>II. Translation Rationale &amp; Syntax</span>
                                 <i id="icon-doll2" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll2" class="px-5 py-4 border-t border-slate-800 bg-slate-950 text-xs text-slate-300 leading-relaxed">
@@ -3855,9 +3933,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll3" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll3' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll3')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-emerald-400"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 3: Original Tongues &amp; Clickable Interlinear Morphology</span>
+                                <span class="font-mono text-xs font-bold text-emerald-400"><i data-lucide="languages" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>III. Original Tongues &amp; Interlinear Morphology</span>
                                 <i id="icon-doll3" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll3" class="px-4 py-4 border-t border-slate-800 bg-slate-950">
@@ -3865,9 +3943,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll4" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll4' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll4')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-amber-300"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 4: Plenary Manuscript Apparatus &amp; ${(APP_DATA.translation_registry || []).length}-Witness Streams</span>
+                                <span class="font-mono text-xs font-bold text-amber-300"><i data-lucide="columns-3" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>IV. Manuscript Apparatus &amp; ${(APP_DATA.translation_registry || []).length}-Witness Streams</span>
                                 <i id="icon-doll4" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll4" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
@@ -3875,9 +3953,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll5" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll5' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll5')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-purple-400"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 5: Patristic Catena &amp; Conciliar Reception</span>
+                                <span class="font-mono text-xs font-bold text-purple-400"><i data-lucide="scroll-text" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>V. Patristic Catena &amp; Conciliar Reception</span>
                                 <i id="icon-doll5" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll5" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
@@ -3885,9 +3963,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll6" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll6' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll6')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 6: Multi-Tradition Footnotes &amp; Study Commentary <span class="text-[10px] text-slate-400 font-normal">• NET 2.1 + Ignatius Catholic Study Bible, lazy-loaded</span></span>
+                                <span class="font-mono text-xs font-bold text-sky-400"><i data-lucide="message-square-quote" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>VI. Multi-Tradition Study Commentary <span class="text-[10px] text-slate-400 font-normal">• Ignatius (Scott Hahn) + NABRE + Haydock + Critical Study Bibles</span></span>
                                 <i id="icon-doll6" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll6" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
@@ -3896,9 +3974,9 @@
                             </div>
                         </div>
 
-                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                        <div data-exegesis-layer="doll7" class="${activeExegesisLayerFilter !== 'all' && activeExegesisLayerFilter !== 'doll7' ? 'hidden ' : ''}border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
                             <button onclick="toggleDollDrawer('doll7')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
-                                <span class="font-mono text-xs font-bold text-purple-300"><i data-lucide="layers" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>DOLL 7: Verse-Level Patristics &amp; Study Media Drawer <span class="text-[10px] text-slate-400 font-normal">• Church Fathers + Maps/Manuscripts/Audio</span></span>
+                                <span class="font-mono text-xs font-bold text-purple-300"><i data-lucide="library" class="w-3.5 h-3.5 inline-block align-middle mr-1"></i>VII. Verse Patristics &amp; Study Media <span class="text-[10px] text-slate-400 font-normal">• Church Fathers + Maps/Manuscripts/Audio</span></span>
                                 <i id="icon-doll7" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
                             </button>
                             <div id="drawer-doll7" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
@@ -4035,18 +4113,21 @@
                             <div>
                                 <span class="text-xs font-mono uppercase text-slate-400">${book.division}</span>
                                 <h2 class="text-xl font-bold text-white">${book.name} — Chapter ${chapNum} <span class="${getApprovalBadgeClass(masterChVerses.length > 0 ? masterMeta.approval : 'IMPRIMATUR')}">${escapeHtmlText(masterChVerses.length > 0 ? masterMeta.short : 'DRA Fallback')}</span></h2>
-                                <p class="text-xs text-slate-300 mt-0.5">Click any verse number to inspect in Russian Dolls or 3D holographic strata.</p>
+                                <p class="text-xs text-slate-300 mt-0.5">Click any verse number to inspect in the Exegesis Workbench or 3D Spatial Strata.</p>
                             </div>
                         </div>
                         <div class="suite-manuscript-frame p-6 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3 font-serif text-base leading-relaxed text-slate-200">
                             ${romanCornersHtml()}
-                            <span class="comfort-drop-cap">${chapNum}</span>
+                            ${renderIlluminatedDropCapHtml(chDisplayVerses[0] || '', masterChVerses.length > 0 ? masterEnId : 'dra', chapNum)}
                             ${chDisplayVerses.map((v, idx) => {
                                 const vNum = idx + 1;
                                 const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
                                 const hasNote = localStorage.getItem(`notes_${book.id}_${chapNum}_${vNum}`) ? ' <i data-lucide="file-text" class="w-3 h-3 inline-block align-baseline text-amber-400"></i>' : '';
                                 const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                return `<span id="cont-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer hover:text-amber-300 transition ${idx === currentVerseIndex ? 'text-amber-400 font-semibold suite-verse-highlight' : ''} ${hlClass ? 'hl-' + hlClass : ''}"><sup class="suite-verse-num text-amber-400 font-mono text-xs select-none">${vNum}</sup> ${escapeHtmlText(v)}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${hasNote}&nbsp;</span>`;
+                                const bodyHtml = idx === 0
+                                    ? formatIlluminatedVerse1BodyHtml(v)
+                                    : escapeHtmlText(v);
+                                return `<span id="cont-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer hover:text-amber-300 transition ${idx === currentVerseIndex ? 'text-amber-400 font-semibold suite-verse-highlight' : ''} ${hlClass ? 'hl-' + hlClass : ''}"><sup class="suite-verse-num text-amber-400 font-mono text-xs select-none">${vNum}</sup> ${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${hasNote}&nbsp;</span>`;
                             }).join('')}
                             ${romanColophonHtml(`${book.abbr} ${chapNum}`)}
                         </div>
@@ -4079,18 +4160,21 @@
                             ${romanColophonHtml()}
                         </div>
                         <div class="text-slate-100 leading-[1.88] text-[1.15rem] tracking-[0.01em]" style="font-family: var(--plenary-serif-font);">
-                            <span class="comfort-drop-cap text-amber-400">${chapNum}</span>
+                            ${renderIlluminatedDropCapHtml(chDisplayVerses[0] || '', masterChVerses.length > 0 ? masterEnId : 'dra', chapNum)}
                             ${chDisplayVerses.map((v, idx) => {
                                 const vNum = idx + 1;
                                 const isCur = idx === currentVerseIndex;
                                 const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                return `<span id="dev-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-0.5' : ''}"><sup class="suite-verse-num text-[10px] font-mono text-amber-500/70 mr-1 select-none">${vNum}</sup>${escapeHtmlText(v)}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
+                                const bodyHtml = idx === 0
+                                    ? formatIlluminatedVerse1BodyHtml(v)
+                                    : escapeHtmlText(v);
+                                return `<span id="dev-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-0.5' : ''}"><sup class="suite-verse-num text-[10px] font-mono text-amber-500/70 mr-1 select-none">${vNum}</sup>${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
                             }).join('')}
                         </div>
                         ${romanColophonHtml(`FINIS · ${book.abbr} ${chapNum}`)}
                         <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500">
                             <span>2K/Denmark Comfort Print® Typography</span>
-                            <button onclick="setReaderView('dolls')" class="text-amber-400 hover:underline">Inspect Selected Verse in Scholarly Dolls →</button>
+                            <button onclick="setReaderView('dolls')" class="text-amber-400 hover:underline">Inspect Selected Verse in Exegesis Workbench →</button>
                         </div>
                     </div>
                 `;
@@ -4454,6 +4538,112 @@
             return `<div class="roman-ornament-only roman-ornament-flex roman-colophon-divider"><span class="roman-colophon-rule"></span>${pilasterSvg}${cap}<span class="roman-colophon-rule"></span></div>`;
         }
 
+        // ====== PER-TRANSLATION MEDIEVAL ILLUMINATED INITIAL ART (OPTIONAL VIA SCRIPTORIUM TOGGLE) ======
+        const ILLUMINATED_STYLE_BY_STREAM = {
+            dra:        { family: 'vatican',    label: 'Douay-Rheims Crimson & Gold Vine', bg1: '#450a0a', bg2: '#1f0608', border: '#d97706', accent: '#fbbf24', text: '#fef3c7' },
+            nabre:      { family: 'vatican',    label: 'Roman Rubric Crimson & Gold',      bg1: '#3b0714', bg2: '#180409', border: '#f59e0b', accent: '#fde68a', text: '#fffbeb' },
+            rsv2ce:     { family: 'vatican',    label: 'Ignatius Crimson & Gold Filigree', bg1: '#4c0519', bg2: '#1e040c', border: '#d97706', accent: '#fcd34d', text: '#fef3c7' },
+            knox:       { family: 'vatican',    label: 'Westminster Abbey Rubric & Gold',  bg1: '#3f0d12', bg2: '#1b0507', border: '#eab308', accent: '#fde047', text: '#fef9c3' },
+            vulg_clem:  { family: 'vatican',    label: 'Sixto-Clementine Papal Vellum',    bg1: '#3b0764', bg2: '#1a032e', border: '#f59e0b', accent: '#fde68a', text: '#fef3c7' },
+            nova_vulg:  { family: 'vatican',    label: 'Nova Vulgata Apostolic Rubric',    bg1: '#4a044e', bg2: '#1e0220', border: '#f59e0b', accent: '#fcd34d', text: '#fffbeb' },
+            brenton:    { family: 'byzantine',  label: 'Byzantine Imperial Sapphire & Gold', bg1: '#0c2d48', bg2: '#061424', border: '#38bdf8', accent: '#fbbf24', text: '#e0f2fe' },
+            lxx_gnt:    { family: 'byzantine',  label: 'Alexandrian / Byzantine Codex',    bg1: '#082f49', bg2: '#041625', border: '#22d3ee', accent: '#f59e0b', text: '#ecfeff' },
+            wlc:        { family: 'tiberias',   label: 'Tiberian Masoretic Lapis & Gold',  bg1: '#172554', bg2: '#0a1128', border: '#f59e0b', accent: '#60a5fa', text: '#fef3c7' },
+            kjva:       { family: 'woodcut',    label: '1611 Jacobean Woodcut Sable & Gold', bg1: '#1c1917', bg2: '#0c0a09', border: '#d97706', accent: '#a8a29e', text: '#fde68a' },
+            geneva1599: { family: 'woodcut',    label: '1599 Renaissance Engraved Initial', bg1: '#1e1b18', bg2: '#0c0a09', border: '#b45309', accent: '#d6d3d1', text: '#fef3c7' },
+            webc:       { family: 'emerald',    label: 'Insular Celtic Emerald & Gold',    bg1: '#064e3b', bg2: '#022c22', border: '#fbbf24', accent: '#34d399', text: '#ecfdf5' }
+        };
+
+        function getIlluminatedPalette(streamId) {
+            return ILLUMINATED_STYLE_BY_STREAM[streamId] || {
+                family: 'vatican',
+                label: 'Scriptorium Illuminated Initial',
+                bg1: '#3b0714',
+                bg2: '#180409',
+                border: '#d97706',
+                accent: '#fbbf24',
+                text: '#fef3c7'
+            };
+        }
+
+        function extractVerse1Initial(verseText) {
+            const raw = String(verseText || '').trim();
+            const m = raw.match(/^([“"‘'\[(\s]*)([A-Za-z\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff])/);
+            if (!m) return { prefix: '', letter: 'I', rest: raw };
+            const consumed = m[0].length;
+            return {
+                prefix: m[1] || '',
+                letter: m[2].toUpperCase(),
+                rest: raw.slice(consumed)
+            };
+        }
+
+        function renderIlluminatedDropCapHtml(verse1Text, streamId, chapNum) {
+            const isOrnamentOn = (document.body.getAttribute('data-ornament') || 'roman-manuscript') === 'roman-manuscript';
+            if (!isOrnamentOn || !verse1Text) {
+                return `<span class="comfort-drop-cap">${chapNum}</span>`;
+            }
+            const { letter } = extractVerse1Initial(verse1Text);
+            const pal = getIlluminatedPalette(streamId);
+            const gradId = `illum-grad-${streamId}-${chapNum}`;
+            let motifPaths = '';
+            if (pal.family === 'byzantine') {
+                motifPaths = `
+                    <circle cx="32" cy="32" r="24" fill="none" stroke="${pal.accent}" stroke-width="0.75" stroke-dasharray="2 2" opacity="0.7"/>
+                    <path d="M32 4 L35 10 L32 16 L29 10 Z M32 48 L35 54 L32 60 L29 54 Z M4 32 L10 29 L16 32 L10 35 Z M48 32 L54 29 L60 32 L54 35 Z" fill="${pal.accent}" opacity="0.55"/>
+                    <path d="M10 10 C18 10, 18 18, 10 18 M54 10 C46 10, 46 18, 54 18 M10 54 C18 54, 18 46, 10 46 M54 54 C46 54, 46 46, 54 46" fill="none" stroke="${pal.border}" stroke-width="1.1" opacity="0.85"/>
+                `;
+            } else if (pal.family === 'woodcut') {
+                motifPaths = `
+                    <rect x="7" y="7" width="50" height="50" fill="none" stroke="${pal.accent}" stroke-width="0.8" opacity="0.65"/>
+                    <path d="M7 15 L15 7 M49 7 L57 15 M7 49 L15 57 M49 57 L57 49" stroke="${pal.border}" stroke-width="1.2" opacity="0.8"/>
+                    <path d="M12 32 C12 18, 22 12, 32 12 C42 12, 52 18, 52 32 C52 46, 42 52, 32 52 C22 52, 12 46, 12 32 Z" fill="none" stroke="${pal.border}" stroke-width="0.9" opacity="0.55"/>
+                `;
+            } else {
+                // Vatican / Carolingian / Celtic vine scroll filigree
+                motifPaths = `
+                    <path d="M8 16 C8 10, 10 8, 16 8 M48 8 C54 8, 56 10, 56 16 M8 48 C8 54, 10 56, 16 56 M48 56 C54 56, 56 54, 56 48" fill="none" stroke="${pal.accent}" stroke-width="1.4" opacity="0.9"/>
+                    <path d="M14 14 Q32 6 50 14 Q58 32 50 50 Q32 58 14 50 Q6 32 14 14 Z" fill="none" stroke="${pal.border}" stroke-width="0.85" opacity="0.6"/>
+                    <circle cx="12" cy="12" r="1.8" fill="${pal.accent}" opacity="0.85"/>
+                    <circle cx="52" cy="12" r="1.8" fill="${pal.accent}" opacity="0.85"/>
+                    <circle cx="12" cy="52" r="1.8" fill="${pal.accent}" opacity="0.85"/>
+                    <circle cx="52" cy="52" r="1.8" fill="${pal.accent}" opacity="0.85"/>
+                `;
+            }
+            return `
+                <span class="suite-illuminated-cap" title="${escapeHtmlText(pal.label)} — Chapter ${chapNum}, Initial '${escapeHtmlText(letter)}' (Toggle via Scriptorium button)">
+                    <svg viewBox="0 0 64 64" role="img" aria-label="Illuminated initial ${escapeHtmlText(letter)}">
+                        <defs>
+                            <radialGradient id="${gradId}" cx="50%" cy="45%" r="65%">
+                                <stop offset="0%" stop-color="${pal.bg1}"/>
+                                <stop offset="100%" stop-color="${pal.bg2}"/>
+                            </radialGradient>
+                        </defs>
+                        <rect x="2" y="2" width="60" height="60" rx="5" fill="url(#${gradId})" stroke="${pal.border}" stroke-width="2"/>
+                        <rect x="5" y="5" width="54" height="54" rx="3" fill="none" stroke="${pal.accent}" stroke-width="0.7" opacity="0.65"/>
+                        ${motifPaths}
+                        <text x="32" y="43" text-anchor="middle" font-family="var(--plenary-serif-font), Georgia, serif" font-size="34" font-weight="700" fill="${pal.text}" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.75));">${escapeHtmlText(letter)}</text>
+                        <text x="53" y="56" text-anchor="end" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="${pal.accent}" opacity="0.9">${chapNum}</text>
+                    </svg>
+                </span>
+            `;
+        }
+
+        function formatIlluminatedVerse1BodyHtml(verseText) {
+            const isOrnamentOn = (document.body.getAttribute('data-ornament') || 'roman-manuscript') === 'roman-manuscript';
+            if (!isOrnamentOn || !verseText) {
+                return escapeHtmlText(verseText);
+            }
+            const { prefix, rest } = extractVerse1Initial(verseText);
+            const firstWordMatch = rest.match(/^([A-Za-z\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff']*)/);
+            const leadWordTail = firstWordMatch ? firstWordMatch[1] : '';
+            const afterFirstWord = rest.slice(leadWordTail.length);
+            const leadHtml = leadWordTail
+                ? `<span class="suite-illuminated-lead">${escapeHtmlText(leadWordTail.toUpperCase())}</span>`
+                : '';
+            return `${escapeHtmlText(prefix)}${leadHtml}${escapeHtmlText(afterFirstWord)}`;
+        }
+
         function setOrnament(mode) {
             const next = (mode === 'off') ? 'off' : 'roman-manuscript';
             document.body.setAttribute('data-ornament', next);
@@ -4464,6 +4654,9 @@
                 const on = next === 'roman-manuscript';
                 btn.classList.toggle('is-active', on);
                 btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            }
+            if (typeof APP_DATA !== 'undefined' && APP_DATA.books && APP_DATA.books.length > 0 && (currentReaderMode === 'chapter' || currentReaderMode === 'devotional')) {
+                renderReader();
             }
         }
 
@@ -4506,6 +4699,46 @@
             renderReader();
         }
 
+        let activeExegesisLayerFilter = 'all';
+
+        function setExegesisLayerFilter(layerId) {
+            activeExegesisLayerFilter = layerId || 'all';
+            document.querySelectorAll('#exegesisLayerBar [data-exegesis-pill]').forEach(btn => {
+                btn.classList.toggle('is-active', btn.getAttribute('data-exegesis-pill') === activeExegesisLayerFilter);
+            });
+            document.querySelectorAll('#readerContent [data-exegesis-layer]').forEach(card => {
+                const cardLayer = card.getAttribute('data-exegesis-layer');
+                const visible = activeExegesisLayerFilter === 'all' || cardLayer === activeExegesisLayerFilter;
+                card.classList.toggle('hidden', !visible);
+                if (visible && activeExegesisLayerFilter !== 'all') {
+                    const drawer = document.getElementById(`drawer-${cardLayer}`);
+                    const icon = document.getElementById(`icon-${cardLayer}`);
+                    if (drawer) drawer.classList.remove('hidden');
+                    if (icon) icon.setAttribute('data-lucide', 'chevron-up');
+                }
+            });
+            refreshIcons();
+        }
+
+        function copyActiveVerseCitation() {
+            const book = APP_DATA.books[currentBookIndex];
+            if (!book) return;
+            const chapNum = currentChapterIndex + 1;
+            const verseNum = currentVerseIndex + 1;
+            const enRes = getEnglishStreamResult(book, currentChapterIndex, currentVerseIndex, masterEnId);
+            const citation = `“${enRes.text || ''}” — ${book.name} ${chapNum}:${verseNum} (${enRes.meta.short})`;
+            const btnTxt = document.getElementById('btnCopyActiveVerseText');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(citation).then(() => {
+                    if (btnTxt) {
+                        const prev = btnTxt.textContent;
+                        btnTxt.textContent = 'Copied!';
+                        setTimeout(() => { btnTxt.textContent = prev; }, 1400);
+                    }
+                }).catch(() => {});
+            }
+        }
+
         function toggleDollDrawer(id) {
             const drawer = document.getElementById(`drawer-${id}`);
             const icon = document.getElementById(`icon-${id}`);
@@ -4520,7 +4753,14 @@
         }
 
         function expandAllActiveDolls() {
-            for (let i = 1; i <= 6; i++) {
+            activeExegesisLayerFilter = 'all';
+            document.querySelectorAll('#exegesisLayerBar [data-exegesis-pill]').forEach(btn => {
+                btn.classList.toggle('is-active', btn.getAttribute('data-exegesis-pill') === 'all');
+            });
+            document.querySelectorAll('#readerContent [data-exegesis-layer]').forEach(card => {
+                card.classList.remove('hidden');
+            });
+            for (let i = 1; i <= 7; i++) {
                 const d = document.getElementById(`drawer-doll${i}`);
                 const ic = document.getElementById(`icon-doll${i}`);
                 if (d) d.classList.remove('hidden');
@@ -4530,7 +4770,7 @@
         }
 
         function collapseAllActiveDolls() {
-            for (let i = 2; i <= 6; i++) {
+            for (let i = 2; i <= 7; i++) {
                 const d = document.getElementById(`drawer-doll${i}`);
                 const ic = document.getElementById(`icon-doll${i}`);
                 if (d) d.classList.add('hidden');
@@ -6671,8 +6911,23 @@
 
         let activeSplitAnchorFilter = null; // { verse: number, word: string } | null
 
+        const ANCHOR_STOPWORD_ARTICLES = new Set(['the', 'a', 'an', 'in', 'to', 'of', 'on', 'at', 'by', 'for', 'with', 'from', 'and']);
+
         function normalizeAnchorToken(w) {
             return String(w || '').toLowerCase().replace(/^[^a-z0-9\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]+|[^a-z0-9\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]+$/gi, '');
+        }
+
+        function extractPrimaryAnchorWord(rawAnchor) {
+            const cleaned = String(rawAnchor || '').trim().replace(/^[“"‘'\[\(]+|[”"’'\]\)]+$/g, '').trim();
+            if (!cleaned) return '';
+            const tokens = cleaned.split(/\s+/).map(normalizeAnchorToken).filter(Boolean);
+            if (!tokens.length) return '';
+            for (const tok of tokens) {
+                if (tok.length >= 2 && !ANCHOR_STOPWORD_ARTICLES.has(tok)) {
+                    return tok;
+                }
+            }
+            return tokens[0];
         }
 
         function escapeRegExp(s) {
@@ -6699,7 +6954,7 @@
             let verseLevelCount = 0;
             visible.forEach(({ note }) => {
                 const rawAnchor = String(note.anchor_word || '').trim();
-                const norm = normalizeAnchorToken(rawAnchor.split(/\s+/)[0]);
+                const norm = extractPrimaryAnchorWord(rawAnchor);
                 if (norm && norm.length >= 2) {
                     if (!byWord.has(norm)) byWord.set(norm, { display: rawAnchor, count: 0 });
                     byWord.get(norm).count += 1;
@@ -6848,7 +7103,7 @@
                         if (!isNoteVisibleByPrefs(s.note)) return false;
                         if (activeSplitAnchorFilter) {
                             if (vNum !== activeSplitAnchorFilter.verse) return false;
-                            const norm = normalizeAnchorToken(String(s.note.anchor_word || '').split(/\s+/)[0]);
+                            const norm = extractPrimaryAnchorWord(s.note.anchor_word || '');
                             return norm === activeSplitAnchorFilter.word;
                         }
                         return true;
@@ -6868,7 +7123,7 @@
                     sigla.forEach(({ note: n, letter, dupOf }) => {
                         const badge = SOURCE_BADGE[n.src] || { label: n.src || 'Note', cls: 'text-slate-300 border-slate-700 bg-slate-800' };
                         const isActive = vIdx === currentVerseIndex;
-                        const normAnchor = normalizeAnchorToken(String(n.anchor_word || '').split(/\s+/)[0]);
+                        const normAnchor = extractPrimaryAnchorWord(n.anchor_word || '');
                         const hoverAttr = normAnchor ? `data-anchor-word="${escapeHtmlText(normAnchor)}" onmouseenter="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', true)" onmouseleave="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', false)"` : '';
                         cards.push(`
                             <div id="split-note-${vNum}-${escapeHtmlText(letter)}" class="split-note-card cursor-pointer ${isActive ? 'split-note-active' : ''}" data-note-verse="${vIdx}" ${hoverAttr} onclick="focusVerseFromSplitNote(${vIdx})">
@@ -7037,11 +7292,43 @@
             const directRef = parseBibleReference(rawQ);
             window.__directRefMatch = directRef;
 
-            const renderSearchResults = (hits, totalCount) => {
-                countLabel.textContent = `${directRef ? 'Direct Reference Match + ' : ''}${totalCount} phrase matches across 73 books${hits.length > maxShow ? ` (showing first ${maxShow})` : ''}`;
+            const renderSearchResults = (hits, totalCount, activeBookIdxFilter = null) => {
+                const filteredHits = activeBookIdxFilter === null
+                    ? hits
+                    : hits.filter(h => h.bIdx === activeBookIdxFilter);
+                countLabel.textContent = `${directRef ? 'Direct Reference Match + ' : ''}${totalCount} phrase matches across 73 books${activeBookIdxFilter !== null ? ` (filtered: ${filteredHits.length} in ${(APP_DATA.books[activeBookIdxFilter] && APP_DATA.books[activeBookIdxFilter].name) || 'book'})` : (filteredHits.length > maxShow ? ` (showing first ${maxShow})` : '')}`;
                 list.innerHTML = '';
 
-                if (directRef) {
+                if (hits.length > 0) {
+                    const byBook = new Map();
+                    hits.forEach(h => {
+                        byBook.set(h.bIdx, (byBook.get(h.bIdx) || 0) + 1);
+                    });
+                    if (byBook.size > 1) {
+                        const distBar = document.createElement('div');
+                        distBar.className = 'flex items-center gap-1.5 flex-wrap pb-2 mb-1 border-b border-slate-800 text-[10px] font-mono';
+                        const allChip = document.createElement('button');
+                        allChip.type = 'button';
+                        allChip.className = `px-2 py-0.5 rounded border transition ${activeBookIdxFilter === null ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 font-bold' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}`;
+                        allChip.textContent = `All Books (${hits.length})`;
+                        allChip.onclick = () => renderSearchResults(hits, totalCount, null);
+                        distBar.appendChild(allChip);
+
+                        Array.from(byBook.entries()).slice(0, 18).forEach(([bIdx, cnt]) => {
+                            const bObj = APP_DATA.books[bIdx];
+                            if (!bObj) return;
+                            const chip = document.createElement('button');
+                            chip.type = 'button';
+                            chip.className = `px-2 py-0.5 rounded border transition ${activeBookIdxFilter === bIdx ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 font-bold' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}`;
+                            chip.textContent = `${bObj.abbr} (${cnt})`;
+                            chip.onclick = () => renderSearchResults(hits, totalCount, bIdx);
+                            distBar.appendChild(chip);
+                        });
+                        list.appendChild(distBar);
+                    }
+                }
+
+                if (directRef && activeBookIdxFilter === null) {
                     const card = document.createElement('div');
                     card.className = 'p-3 rounded-lg border border-amber-500/40 bg-amber-500/15 hover:bg-amber-500/30 cursor-pointer transition space-y-1';
                     card.innerHTML = `
@@ -7055,7 +7342,7 @@
                     list.appendChild(card);
                 }
 
-                hits.slice(0, maxShow).forEach(r => {
+                filteredHits.slice(0, maxShow).forEach(r => {
                     const item = document.createElement('div');
                     item.className = 'p-3 rounded-lg border border-slate-800 bg-slate-950/80 hover:border-amber-500/60 cursor-pointer transition space-y-1';
                     const safeQ = rawQ.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -7074,11 +7361,11 @@
                     list.appendChild(item);
                 });
 
-                if (hits.length > maxShow) {
+                if (filteredHits.length > maxShow) {
                     const moreBtn = document.createElement('button');
                     moreBtn.className = 'w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-mono text-xs';
-                    moreBtn.textContent = `Show All ${hits.length} Results`;
-                    moreBtn.onclick = () => runFullBibleSearch(rawQ, hits.length);
+                    moreBtn.textContent = `Show All ${filteredHits.length} Results`;
+                    moreBtn.onclick = () => runFullBibleSearch(rawQ, filteredHits.length);
                     list.appendChild(moreBtn);
                 }
             };
@@ -7092,21 +7379,26 @@
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     const data = await res.json();
                     if (reqId !== searchReqSeq) return;
-                    const rawHits = Array.isArray(data) ? data : (data.hits || data.results || []);
+                    const rawHits = Array.isArray(data) ? data
+                        : Array.isArray(data.hits) ? data.hits
+                        : Array.isArray(data.results) ? data.results
+                        : (data.results && Array.isArray(data.results.verses)) ? data.results.verses
+                        : [];
                     const mappedHits = rawHits.map(h => {
                         const bIdx = typeof h.bIdx === 'number' ? h.bIdx : APP_DATA.books.findIndex(b => b.id === (h.book_id || h.bookId));
                         const bookObj = bIdx >= 0 ? APP_DATA.books[bIdx] : null;
                         const cIdx = typeof h.cIdx === 'number' ? h.cIdx : Math.max(0, (h.chapter || 1) - 1);
                         const vIdx = typeof h.vIdx === 'number' ? h.vIdx : Math.max(0, (h.verse || 1) - 1);
-                        const wKey = (h.witnessKey || h.witness || witness || 'en').toUpperCase();
+                        const wKey = (h.witnessKey || h.witness || h.stream_id || witness || 'en').toUpperCase();
+                        const rawTxt = String(h.text || h.snippet || h.en || '').replace(/<\/?b>/gi, '');
                         return {
                             bIdx: Math.max(0, bIdx),
                             cIdx,
                             vIdx,
                             ref: h.ref || (bookObj ? `${bookObj.name} ${cIdx + 1}:${vIdx + 1}` : `${h.book_id || ''} ${cIdx + 1}:${vIdx + 1}`),
-                            witness: h.witnessLabel || h.witness || wKey,
+                            witness: h.witnessLabel || h.witness || h.stream_id || wKey,
                             witnessKey: wKey,
-                            text: h.text || h.snippet || h.en || '',
+                            text: rawTxt,
                             en: h.en || ''
                         };
                     });
