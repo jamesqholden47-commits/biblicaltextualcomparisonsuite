@@ -114,7 +114,13 @@ def plenary_source_pdf(key: str):
     path = PLENARY_SOURCE_PDFS.get(key)
     if not path or not os.path.isfile(path):
         raise HTTPException(status_code=404, detail=f"No source PDF registered/found for '{key}'")
-    return FileResponse(path, media_type="application/pdf", filename=os.path.basename(path))
+    safe_name = os.path.basename(path).replace('"', "'")
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        content_disposition_type="inline",
+        headers={"Content-Disposition": f'inline; filename="{safe_name}"'},
+    )
 
 
 # Whitelisted Schaff ANF / NPNF Series 1 & 2 volumes (anf01..10, npnf101..114, npnf201..214)
@@ -137,7 +143,12 @@ def plenary_schaff_pdf(vol: str):
     )
     if not os.path.isfile(path):
         raise HTTPException(status_code=404, detail=f"Schaff PDF file not found on disk for '{vol_clean}'")
-    return FileResponse(path, media_type="application/pdf", filename=f"{vol_clean}.pdf")
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        content_disposition_type="inline",
+        headers={"Content-Disposition": f'inline; filename="{vol_clean}.pdf"'},
+    )
 
 
 @app.get("/plenary/note_pdf")
