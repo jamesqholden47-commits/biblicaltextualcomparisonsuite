@@ -546,8 +546,10 @@
             <div style="min-height: 2.5rem;" class="bg-slate-900/70 border-b border-slate-800 px-3 py-1 flex items-center justify-between flex-wrap text-xs text-slate-300 flex-shrink-0 gap-2">
                 <div class="flex items-center space-x-1 flex-shrink-0">
                     <button onclick="setReaderView('dolls')" id="btnViewDolls" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap">Dolls</button>
-                    <button onclick="setReaderView('parallel')" id="btnViewParallel" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap">Parallel (4-Way)</button>
+                    <button onclick="setReaderView('parallel')" id="btnViewParallel" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap" title="Compare 2 to 10+ translations side-by-side">Parallel (N-Way)</button>
                     <button onclick="setReaderView('chapter')" id="btnViewChapter" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap">Chapter</button>
+                    <button onclick="setReaderView('devotional')" id="btnViewDevotional" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap" title="Streamlined 2K/Denmark Comfort Print® Devotional Reading Mode — zero apparatus clutter">📖 Devotional</button>
+                    <button onclick="setReaderView('apostolic')" id="btnViewApostolic" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap" title="Apostolic Scriptures: Proto-Masoretic (WLC) + Septuagint (LXX) + GNT + Vulgate">📜 Apostolic</button>
                     <button onclick="setReaderView('study_scroll')" id="btnViewStudyScroll" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap" title="Whole chapter, every verse's study notes shown inline at once — no stepping verse-by-verse through Dolls to read notes">📝 Study Scroll</button>
 
                     <div class="flex items-center space-x-1 ml-1 pl-2 border-l border-slate-700 font-mono flex-shrink-0">
@@ -2445,6 +2447,19 @@
             renderReader();
         }
 
+        function addParallelCol() {
+            const candidates = ['nabre', 'rsv2ce', 'knox', 'nasb95', 'csb', 'net21', 'niv', 'bsb', 'ylt', 'darby', 'geneva1599', 'brenton', 'nova_vulg', 'dra'];
+            const next = candidates.find(c => !parallelCols.includes(c)) || 'dra';
+            parallelCols.push(next);
+            renderReader();
+        }
+
+        function removeParallelCol(colIdx) {
+            if (parallelCols.length <= 2) return;
+            parallelCols.splice(colIdx, 1);
+            renderReader();
+        }
+
         function toggleDoll4All12() {
             showDoll4All12 = !showDoll4All12;
             renderReader();
@@ -2760,7 +2775,10 @@
                             <div class="border-b border-slate-800 pb-2 space-y-1">
                                 <div class="flex items-center justify-between gap-1">
                                     <span class="text-[10px] font-mono font-bold" style="color:${meta.color}">STREAM ${colIdx + 1}</span>
-                                    <span class="${bdgCls}">${escapeHtmlText(meta.tier_badge)}</span>
+                                    <div class="flex items-center gap-1">
+                                        <span class="${bdgCls}">${escapeHtmlText(meta.tier_badge)}</span>
+                                        ${parallelCols.length > 2 ? `<button onclick="removeParallelCol(${colIdx})" class="text-[10px] font-mono text-slate-500 hover:text-rose-400 px-1" title="Remove stream">✕</button>` : ''}
+                                    </div>
                                 </div>
                                 <div class="flex items-center justify-between gap-1">
                                     <select onchange="setParallelCol(${colIdx}, this.value)" class="suite-select w-full">${opts}</select>
@@ -2774,21 +2792,25 @@
                     `;
                 }).join('');
 
+                const parGridClass = parallelCols.length > 4
+                    ? 'flex gap-3 overflow-x-auto pb-2 [&>div]:min-w-[300px] [&>div]:flex-1'
+                    : `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${Math.min(parallelCols.length, 4)} gap-3`;
                 container.innerHTML = `
-                    <div class="max-w-7xl mx-auto space-y-4">
+                    <div class="max-w-full mx-auto space-y-4">
                         ${chapMetaBar}
-                        <div class="flex items-center justify-end -mb-1">
-                            <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="When on, scrolling any one translation column scrolls the other three to the matching position">
+                        <div class="flex items-center justify-between -mb-1">
+                            <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Translation Stream (${parallelCols.length} active)</button>
+                            <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="When on, scrolling any one translation column scrolls the other columns to the matching position">
                                 <input type="checkbox" id="parallelSyncScrollToggle" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-amber-500">
                                 Sync scroll across columns
                             </label>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="${parGridClass}">
                             ${colHtml}
                         </div>
                     </div>
                 `;
-                for (let ci = 0; ci < 4; ci++) {
+                for (let ci = 0; ci < parallelCols.length; ci++) {
                     const activeEl = document.getElementById(`par-col-${ci}-${currentVerseIndex}`);
                     if (activeEl && typeof activeEl.scrollIntoView === 'function') activeEl.scrollIntoView({ block: 'nearest' });
                 }
@@ -2823,6 +2845,86 @@
                 `;
                 const curSpan = document.getElementById(`cont-v-${currentVerseIndex}`);
                 if (curSpan && typeof curSpan.scrollIntoView === 'function') curSpan.scrollIntoView({ block: 'nearest' });
+            } else if (currentReaderMode === 'devotional') {
+                // 2K/DENMARK COMFORT PRINT® STREAMLINED DEVOTIONAL MODE
+                const masterMeta = getStreamMeta(masterEnId);
+                const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
+                const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
+                const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
+                const activeMeta = masterChVerses.length > 0 ? masterMeta : getStreamMeta('dra');
+                container.innerHTML = `
+                    <div class="max-w-[66ch] mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
+                        <div class="text-center border-b border-slate-800/80 pb-5 mb-6">
+                            <div class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400/80">${escapeHtmlText(book.division)} · ${escapeHtmlText(activeMeta.short)}</div>
+                            <h1 class="text-3xl font-bold text-amber-50 mt-1" style="font-family: var(--plenary-serif-font);">${escapeHtmlText(book.name)} ${chapNum}</h1>
+                        </div>
+                        <div class="text-slate-100 leading-[1.88] text-[1.15rem] tracking-[0.01em]" style="font-family: var(--plenary-serif-font);">
+                            <span class="float-left text-5xl font-bold text-amber-400 mr-3 leading-[0.85] pt-1 select-none">${chapNum}</span>
+                            ${chDisplayVerses.map((v, idx) => {
+                                const isCur = idx === currentVerseIndex;
+                                return `<span id="dev-v-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 bg-amber-500/10 rounded px-0.5' : ''}"><sup class="text-[10px] font-mono text-amber-500/70 mr-1 select-none">${idx + 1}</sup>${escapeHtmlText(v)} </span>`;
+                            }).join('')}
+                        </div>
+                        <div class="mt-8 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500">
+                            <span>2K/Denmark Comfort Print® Typography</span>
+                            <button onclick="setReaderView('dolls')" class="text-amber-400 hover:underline">Inspect Selected Verse in Scholarly Dolls →</button>
+                        </div>
+                    </div>
+                `;
+                const curDev = document.getElementById(`dev-v-${currentVerseIndex}`);
+                if (curDev && typeof curDev.scrollIntoView === 'function') curDev.scrollIntoView({ block: 'nearest' });
+            } else if (currentReaderMode === 'apostolic') {
+                // APOSTOLIC SCRIPTURES MODE: Proto-Masoretic (WLC) + Septuagint (LXX) / GNT + Vulgate + English + Inline BibCrit/Crux Badges
+                const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
+                const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
+                const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
+                const vorlEntries = (APP_DATA.bibcrit_vorlagen || {}).entries || [];
+                const tcEntries = APP_DATA.text_critical_apparatus || [];
+
+                const cardsHtml = chDisplayVerses.map((enTxt, idx) => {
+                    const vNum = idx + 1;
+                    const grTxt = chVersesGr[idx] || '';
+                    const heTxt = chVersesHe[idx] || '';
+                    const laTxt = chVersesLa[idx] || '';
+                    const isCur = idx === currentVerseIndex;
+
+                    // Scripture-wide inline badges for BibCrit Vorlagen & Text-Critical Cruxes
+                    const vorlMatch = vorlEntries.find(e => e.book.toLowerCase() === book.name.toLowerCase() && e.chapter === chapNum && e.verse === vNum);
+                    const tcMatch = tcEntries.find(tc => tc.locus && tc.locus.toLowerCase().includes(`${book.name.toLowerCase()} ${chapNum}:${vNum}`));
+                    const badgesHtml = [
+                        vorlMatch ? `<button onclick="event.stopPropagation(); toggleBibCritModal(); renderBibCritView('${vorlMatch.id}');" class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-700/60 text-[10px] font-mono hover:bg-cyan-900">🔍 BibCrit Vorlage</button>` : '',
+                        tcMatch ? `<button onclick="event.stopPropagation(); toggleTextCriticalModal('${tcMatch.id}');" class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-700/60 text-[10px] font-mono hover:bg-rose-900">📜 Apparatus ${tcMatch.metzger_rating || ''}</button>` : ''
+                    ].filter(Boolean).join(' ');
+
+                    return `
+                        <div id="apo-v-${idx}" onclick="selectVerse(${idx})" class="p-4 rounded-xl border ${isCur ? 'border-cyan-500/60 bg-slate-900/90 shadow-lg' : 'border-slate-800 bg-slate-950/60 hover:border-slate-700'} cursor-pointer transition space-y-2.5">
+                            <div class="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-1.5">
+                                <span class="font-mono text-xs font-bold text-cyan-400">${book.abbr} ${chapNum}:${vNum}</span>
+                                <div class="flex items-center gap-1.5">${badgesHtml}</div>
+                            </div>
+                            <div class="grid grid-cols-1 ${heTxt ? 'lg:grid-cols-2' : ''} gap-3">
+                                ${grTxt ? `<div class="p-2.5 rounded-lg bg-slate-900/80 border border-emerald-900/40"><div class="text-[10px] font-mono text-emerald-400 mb-1">${book.division === 'New Testament' ? 'GNT (NA28/StatRes)' : 'SEPTUAGINT (LXX Rahlfs)'}</div><div class="font-serif text-sm text-emerald-100 leading-relaxed">${escapeHtmlText(grTxt)}</div></div>` : ''}
+                                ${heTxt ? `<div class="p-2.5 rounded-lg bg-slate-900/80 border border-amber-900/40 text-right" dir="rtl"><div class="text-[10px] font-mono text-amber-400 mb-1 text-left" dir="ltr">PROTO-MASORETIC (WLC)</div><div class="font-serif text-base text-amber-100 leading-relaxed">${escapeHtmlText(heTxt)}</div></div>` : ''}
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                                <div class="text-slate-200 leading-relaxed" style="font-family: var(--plenary-serif-font);">${escapeHtmlText(enTxt)}</div>
+                                ${laTxt ? `<div class="text-purple-200/80 italic font-serif leading-relaxed"><span class="text-[10px] font-mono not-italic text-purple-400 mr-1">VULG:</span>${escapeHtmlText(laTxt)}</div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = `
+                    <div class="max-w-5xl mx-auto space-y-3">
+                        ${chapMetaBar}
+                        <div class="p-3 rounded-xl border border-cyan-500/30 bg-cyan-950/20 flex items-center justify-between text-xs">
+                            <div><strong class="text-cyan-300 font-mono">APOSTOLIC SCRIPTURES MODE:</strong> <span class="text-slate-300">Proto-Masoretic (WLC) · Septuagint (LXX) / GNT · Vulgate · Inline BibCrit &amp; Apparatus Badges</span></div>
+                        </div>
+                        ${cardsHtml}
+                    </div>
+                `;
+                const curApo = document.getElementById(`apo-v-${currentVerseIndex}`);
+                if (curApo && typeof curApo.scrollIntoView === 'function') curApo.scrollIntoView({ block: 'nearest' });
             } else {
                 // "Beyond basics" feature request (James's /goal, 2026-11-10): a large number of
                 // verses AND all of their study notes visible simultaneously, instead of stepping
@@ -3007,6 +3109,10 @@
             document.getElementById('btnViewDolls').className = mode === 'dolls' ? 'px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
             document.getElementById('btnViewParallel').className = mode === 'parallel' ? 'px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
             document.getElementById('btnViewChapter').className = mode === 'chapter' ? 'px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
+            const btnDev = document.getElementById('btnViewDevotional');
+            if (btnDev) btnDev.className = mode === 'devotional' ? 'px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
+            const btnApo = document.getElementById('btnViewApostolic');
+            if (btnApo) btnApo.className = mode === 'apostolic' ? 'px-2 py-1 rounded bg-cyan-500/20 text-cyan-300 font-medium border border-cyan-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
             document.getElementById('btnViewStudyScroll').className = mode === 'study_scroll' ? 'px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap' : 'px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap';
             renderReader();
         }
