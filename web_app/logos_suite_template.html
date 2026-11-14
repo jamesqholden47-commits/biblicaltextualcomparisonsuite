@@ -1217,7 +1217,7 @@
             max-width: 100% !important;
         }
         body.layout-4k-ultrawide #inspectorPane {
-            width: 28rem !important;
+            width: 22.5rem !important;
         }
         .canvas-4k-grid {
             display: grid;
@@ -1739,9 +1739,186 @@
             color: var(--accent-primary);
             font-weight: 600;
         }
+
+        /* ====== COMPACT CHROME + 4K CATENA & 4K MOSAIC WORKBENCHES ====== */
+        body.chrome-compact-4k header {
+            height: 2.4rem !important;
+            min-height: 2.4rem !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        body.chrome-compact-4k #centerToolRibbon {
+            min-height: 2.05rem !important;
+            padding: 2px 10px !important;
+            gap: 4px !important;
+        }
+        body.chrome-compact-4k #workspaceTabBar {
+            min-height: 1.65rem !important;
+            padding-top: 1px !important;
+            padding-bottom: 1px !important;
+        }
+        body.chrome-compact-4k #stickyVerseBar {
+            padding: 2px 12px !important;
+            gap: 2px !important;
+        }
+        body.chrome-compact-4k #stickyVerseBar:not(.sticky-dock-expanded) #stickyVerseSnippet {
+            font-size: 0.80rem !important;
+            line-height: 1.28 !important;
+            padding: 1px 6px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        body.chrome-compact-4k #readerContent {
+            padding: 0.55rem 0.75rem !important;
+        }
+        .catena-4k-grid {
+            display: grid;
+            grid-template-columns: minmax(340px, 1.48fr) minmax(290px, 1.05fr) minmax(270px, 0.95fr);
+            gap: 0.75rem;
+            height: calc(100vh - 148px);
+            min-height: 480px;
+            align-items: stretch;
+        }
+        @media (max-width: 1200px) {
+            .catena-4k-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+        .catena-4k-pane, .mosaic-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .catena-4k-pane-header, .mosaic-panel-header {
+            padding: 0.45rem 0.7rem;
+            border-bottom: 1px solid var(--border-hairline);
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+        .catena-4k-pane-body, .mosaic-panel-body {
+            flex: 1 1 0%;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 0.65rem 0.75rem;
+        }
+        .mosaic-4k-shell {
+            display: grid;
+            grid-template-columns: minmax(480px, 2.35fr) minmax(285px, 0.9fr);
+            gap: 0.65rem;
+            height: calc(100vh - 148px);
+            min-height: 500px;
+            align-items: stretch;
+        }
+        @media (max-width: 1200px) {
+            .mosaic-4k-shell {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+        .mosaic-translations-stage {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            gap: 0.4rem;
+        }
+        .mosaic-translations-columns {
+            flex: 1 1 0%;
+            min-height: 0;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            align-items: stretch;
+        }
+        .mosaic-stream-col {
+            flex: 1 1 185px;
+            min-width: 185px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 0.65rem;
+            overflow: hidden;
+        }
+        .mosaic-stream-body {
+            flex: 1 1 0%;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 0.55rem 0.65rem;
+            font-family: var(--plenary-serif-font);
+            font-size: calc(var(--plenary-font-size, 1.125rem) * var(--plenary-font-scale, 1) * 0.86);
+            line-height: calc(var(--plenary-line-height, 1.72) * 0.92);
+        }
+        .mosaic-right-stack {
+            display: grid;
+            grid-template-rows: minmax(210px, 0.95fr) minmax(240px, 1.1fr);
+            gap: 0.65rem;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .tradition-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            font-size: 10px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            border: 1px solid var(--border-hairline);
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.12s ease;
+        }
+        .tradition-pill:hover {
+            border-color: var(--border-strong);
+            color: var(--text-primary);
+        }
+        .tradition-pill.is-active {
+            background: var(--accent-soft);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+        .tradition-info-i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 13px;
+            height: 13px;
+            border-radius: 9999px;
+            font-size: 9px;
+            font-style: italic;
+            font-weight: 700;
+            border: 1px solid currentColor;
+            opacity: 0.82;
+        }
+        .tradition-info-i:hover {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+        .tradition-overview-box {
+            border: 1px solid var(--border-strong);
+            background: var(--bg-elevated);
+            border-radius: 0.6rem;
+            padding: 0.55rem 0.7rem;
+            font-size: 11px;
+            line-height: 1.5;
+        }
     </style>
 </head>
-<body data-theme="oxford-dark" data-ornament="roman-manuscript" class="oxford-dark h-screen flex flex-col font-sans antialiased overflow-hidden selection:bg-amber-500 selection:text-black">
+<body data-theme="amoled-gold" data-ornament="roman-manuscript" class="amoled-gold theme-amoled-gold dark h-screen flex flex-col font-sans antialiased overflow-hidden selection:bg-amber-500 selection:text-black">
 
     <!-- TOP WORKSPACE COMMAND BAR -->
     <header class="h-14 border-b flex items-center justify-between px-3 gap-2 z-40 flex-shrink-0">
@@ -2093,6 +2270,14 @@
                             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                             <span>Study Scroll</span>
                         </button>
+                        <button onclick="setReaderView('catena_4k')" id="btnViewCatena4k" class="suite-seg-btn" title="4K TV Theologian Catena: Wide Left Patristic/Scholastic/Modern Nexus (with Tradition (i) &amp; Wikipedia), Center Scriptures, Right-Mid Study Notes, Far-Right Original Greek/Hebrew/Latin">
+                            <i data-lucide="layout-panel-left" class="w-3.5 h-3.5 text-amber-400"></i>
+                            <span>4K Catena</span>
+                        </button>
+                        <button onclick="setReaderView('mosaic_4k')" id="btnViewMosaic4k" class="suite-seg-btn" title="4K TV Mosaic: Maximized Tall Multi-Translation Panes + Right Split Stack (Study Notes + Patristic/Conciliar Nexus)">
+                            <i data-lucide="columns-3" class="w-3.5 h-3.5 text-cyan-400"></i>
+                            <span>4K Mosaic</span>
+                        </button>
                         <button id="toggle3D" onclick="toggle3DOverlay()" class="suite-seg-btn" title="Toggle 3D Holographic Spatial Strata">
                             <i data-lucide="box" class="w-3.5 h-3.5"></i>
                             <span id="toggle3DText">3D</span>
@@ -2131,6 +2316,10 @@
                         <i data-lucide="panel-right-open" class="w-3.5 h-3.5"></i>
                         <span>Split Notes</span>
                     </button>
+                    <button type="button" id="btnCompactChrome" onclick="toggleCompactChrome()" class="suite-btn" title="Condense top header, tab bar, and sticky verse banner to maximize vertical reading &amp; translation height (4K TV / Multi-Column)">
+                        <i data-lucide="minimize" class="w-3.5 h-3.5"></i>
+                        <span>Compact Top</span>
+                    </button>
                     <button type="button" id="btnVisibilityPresets" onclick="toggleVisibilityPopover()" class="suite-btn" title="Visibility Filtering &amp; Workspace Presets">
                         <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
                         <span>Filters</span>
@@ -2140,8 +2329,8 @@
                         <span>Typography</span>
                     </button>
                     <select id="comfortFontSelector" onchange="setComfortFont(this.value)" class="suite-select hidden lg:inline-block" style="height:28px;" title="Classic Bible Press &amp; ComfortPrint Typography">
-                        <option value="comfortprint_clone">ComfortPrint Classic (Original Default — Charis SIL)</option>
-                        <option value="comfortprint">2K/DENMARK ComfortPrint® (Adobe Caslon)</option>
+                        <option value="comfortprint">2K/DENMARK ComfortPrint® (Crisp Danish)</option>
+                        <option value="comfortprint_clone">ComfortPrint Classic (Charis SIL)</option>
                         <option value="eb_garamond">EB Garamond (Renaissance Press)</option>
                         <option value="adobe_caslon">Adobe Caslon Pro (1734 Press)</option>
                         <option value="caslon_arno">Arno Pro (Humanist Book)</option>
@@ -2186,8 +2375,8 @@
                     <div>
                         <div class="flex justify-between mb-1"><span>Font Family (Instant Live Switch)</span></div>
                         <select id="typoFontFamilySelect" onchange="updateTypographyPref('fontFamily', this.value)" class="suite-select w-full py-1">
-                            <option value="comfortprint_clone">ComfortPrint Classic (Original Default — Charis SIL)</option>
-                            <option value="comfortprint">2K/DENMARK ComfortPrint® (Adobe Caslon)</option>
+                            <option value="comfortprint">2K/DENMARK ComfortPrint® (Crisp Danish)</option>
+                            <option value="comfortprint_clone">ComfortPrint Classic (Charis SIL)</option>
                             <option value="eb_garamond">EB Garamond (Renaissance Press)</option>
                             <option value="adobe_caslon">Adobe Caslon Pro (1734 Press)</option>
                             <option value="caslon_arno">Arno Pro (Humanist Book)</option>
@@ -2214,16 +2403,16 @@
                         </select>
                     </div>
                     <div>
-                        <div class="flex justify-between mb-1"><span>Base Size</span><span id="typoSizeVal">17px</span></div>
-                        <input id="typoSizeSlider" type="range" min="13" max="26" step="1" value="17" oninput="updateTypographyPref('fontSizePx', Number(this.value))" class="w-full cursor-pointer">
+                        <div class="flex justify-between mb-1"><span>Base Size</span><span id="typoSizeVal">20px</span></div>
+                        <input id="typoSizeSlider" type="range" min="13" max="26" step="1" value="20" oninput="updateTypographyPref('fontSizePx', Number(this.value))" class="w-full cursor-pointer">
                     </div>
                     <div>
                         <div class="flex justify-between mb-1"><span>Line-Height</span><span id="typoLineHeightVal">1.72</span></div>
                         <input id="typoLineHeightSlider" type="range" min="1.45" max="2.10" step="0.03" value="1.72" oninput="updateTypographyPref('lineHeight', Number(this.value))" class="w-full cursor-pointer">
                     </div>
                     <div>
-                        <div class="flex justify-between mb-1"><span>Column Measure</span><span id="typoMeasureVal">64ch</span></div>
-                        <input id="typoMeasureSlider" type="range" min="48" max="78" step="2" value="64" oninput="updateTypographyPref('measureCh', Number(this.value))" class="w-full cursor-pointer">
+                        <div class="flex justify-between mb-1"><span>Column Measure</span><span id="typoMeasureVal">70ch</span></div>
+                        <input id="typoMeasureSlider" type="range" min="48" max="78" step="2" value="70" oninput="updateTypographyPref('measureCh', Number(this.value))" class="w-full cursor-pointer">
                     </div>
                     <div>
                         <div class="flex justify-between mb-1"><span>Paragraph Spacing</span><span id="typoParaSpacingVal">0.85em</span></div>
@@ -2324,10 +2513,14 @@
                         <button onclick="applyLayoutPreset('standard_1col')" data-layout-preset="standard_1col" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="Standard 1-Column Focused Reader">1-Col</button>
                         <button onclick="applyLayoutPreset('split_reader_notes')" data-layout-preset="split_reader_notes" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="2-Column Split: Reader + Live Study Notes">2-Col</button>
                         <button onclick="applyLayoutPreset('trinity_3col')" data-layout-preset="trinity_3col" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="3-Column Trinity: Devotional Page + Study Notes + Morphology Inspector">3-Col</button>
+                        <button onclick="applyLayoutPreset('catena_4k_workbench')" data-layout-preset="catena_4k_workbench" class="px-2 py-0.5 rounded text-[10px] text-amber-300 hover:bg-slate-800" title="4K Theologian Catena: Wide Left Patristic/Scholastic/Modern Nexus + Scriptures + Study Notes + Far-Right Original Tongues">4K Catena</button>
+                        <button onclick="applyLayoutPreset('mosaic_4k_tv')" data-layout-preset="mosaic_4k_tv" class="px-2 py-0.5 rounded text-[10px] text-emerald-300 hover:bg-slate-800" title="4K TV Mosaic: Maximized Multi-Translation Panes + Right Study Notes &amp; Patristic/Conciliar Nexus">4K Mosaic</button>
                         <button onclick="applyLayoutPreset('canvas_4k_grid')" data-layout-preset="canvas_4k_grid" class="px-2 py-0.5 rounded text-[10px] text-cyan-300 hover:bg-slate-800" title="4K Multi-Card Canvas Grid">4K Grid</button>
                     </div>
                     <select id="layoutPresetSelect" onchange="if(this.value){applyLayoutPreset(this.value);}" class="suite-select" style="height:22px;font-size:10px;padding:0 6px;" title="More Workspace Layouts">
                         <option value="">More Layouts...</option>
+                        <option value="catena_4k_workbench">4K Theologian Catena (Far-Right Greek)</option>
+                        <option value="mosaic_4k_tv">4K Mosaic (Tall Translations + Nexus)</option>
                         <option value="four_col_lab">4-Col Parallel Lab</option>
                         <option value="quad_4k_workbench">4K Quad Workbench</option>
                         <option value="dolls_deep_dive">Deep Dive (All 7 Layers)</option>
@@ -2403,7 +2596,10 @@
                 <span id="inspectorSiglum" class="text-[10px] font-mono text-cyan-400 bg-cyan-950 px-1.5 py-0.5 rounded border border-cyan-800">LIVE</span>
             </div>
 
-            <div class="flex-grow overflow-y-auto p-4 space-y-4 text-xs">
+            <div class="flex-grow overflow-y-auto p-3.5 space-y-3 text-xs">
+                <!-- Far-Right Original Tongues Interactive Tokens Strip (Greek / Hebrew / Latin) -->
+                <div id="inspectorOriginalTonguesSlot" class="space-y-2"></div>
+
                 <!-- Live Morphological Parsing Card -->
                 <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/60 space-y-2">
                     <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
@@ -4876,11 +5072,17 @@
         }
 
         function setParallelCol(colIdx, streamId) {
+            if (currentReaderMode === 'mosaic_4k' && parallelCols.length < 4) {
+                parallelCols = [...new Set([...parallelCols, 'dra', 'lxx_gnt', 'vulg_clem', 'nabre', 'rsv2ce'])].slice(0, 4);
+            }
             parallelCols[colIdx] = streamId;
             renderReader();
         }
 
         function addParallelCol() {
+            if (currentReaderMode === 'mosaic_4k' && parallelCols.length < 4) {
+                parallelCols = [...new Set([...parallelCols, 'dra', 'lxx_gnt', 'vulg_clem', 'nabre', 'rsv2ce'])].slice(0, 4);
+            }
             const candidates = ['nabre', 'rsv2ce', 'knox', 'nasb95', 'csb', 'net21', 'niv', 'bsb', 'ylt', 'darby', 'geneva1599', 'brenton', 'nova_vulg', 'dra'];
             const next = candidates.find(c => !parallelCols.includes(c)) || 'dra';
             parallelCols.push(next);
@@ -4888,6 +5090,9 @@
         }
 
         function removeParallelCol(colIdx) {
+            if (currentReaderMode === 'mosaic_4k' && parallelCols.length < 4) {
+                parallelCols = [...new Set([...parallelCols, 'dra', 'lxx_gnt', 'vulg_clem', 'nabre', 'rsv2ce'])].slice(0, 4);
+            }
             if (parallelCols.length <= 2) return;
             parallelCols.splice(colIdx, 1);
             renderReader();
@@ -4919,8 +5124,10 @@
         function toggleStickyDockExpand() {
             stickyDockExpanded = !stickyDockExpanded;
             localStorage.setItem('plenary_sticky_dock_expanded', stickyDockExpanded ? '1' : '0');
+            const bar = document.getElementById('stickyVerseBar');
             const snip = document.getElementById('stickyVerseSnippet');
             const lbl = document.getElementById('btnStickyHeroToggleText');
+            if (bar) bar.classList.toggle('sticky-dock-expanded', stickyDockExpanded);
             if (snip) snip.classList.toggle('is-collapsed', !stickyDockExpanded);
             if (lbl) lbl.textContent = stickyDockExpanded ? 'Compact' : 'Expand';
         }
@@ -4976,6 +5183,418 @@
             }
             syncHlDotsAndBadge(hlColor || '');
             bar.style.display = 'flex';
+        }
+
+        // ====== PATRISTIC, SCHOLASTIC & MODERN THEOLOGIAN NEXUS REGISTRY ======
+        const THEOLOGICAL_TRADITIONS_REGISTRY = {
+            all: {
+                id: 'all',
+                label: 'All Traditions',
+                short: 'All',
+                badgeCls: 'text-amber-300 border-amber-500/40 bg-amber-500/10',
+                overview: 'Displays Catholic Magisterial, Apostolic Church Fathers, Medieval Scholastic Doctors, Eastern Orthodox, Anglican, Lutheran, Reformed, Wesleyan, Evangelical, and Historical-Critical witnesses side by side for transparent comparative research.',
+                methodNote: 'Compares Catholic Regula Fidei (Scripture + Apostolic Tradition + Magisterium) directly against Reformation and modern critical schools.',
+                wiki: 'https://en.wikipedia.org/wiki/Biblical_hermeneutics',
+                wikiLabel: 'Biblical Hermeneutics (Wikipedia)'
+            },
+            catholic: {
+                id: 'catholic',
+                label: 'Catholic & Thomistic',
+                short: 'Catholic',
+                badgeCls: 'text-amber-300 border-amber-500/40 bg-amber-500/10',
+                overview: 'Historic Catholic exegesis reading all 73 canonical books within the Living Tradition of the Church (Hippo 393, Carthage 397, Trent 1546, Dei Verbum 1965) and the Fourfold Sense (literal, allegorical, moral, anagogical). Synthesizes St. Thomas Aquinas (Catena Aurea), Cornelius a Lapide, Haydock, Scott Hahn (Ignatius), and Joseph Ratzinger.',
+                methodNote: 'Rule of Faith + Analogy of Faith + Literal Foundation carrying typological Christological fulfillment.',
+                wiki: 'https://en.wikipedia.org/wiki/Catholic_theology',
+                wikiLabel: 'Catholic Theology (Wikipedia)'
+            },
+            orthodox: {
+                id: 'orthodox',
+                label: 'Eastern Orthodox',
+                short: 'Orthodox',
+                badgeCls: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/10',
+                overview: 'Eastern Byzantine Christian tradition rooted in the Greek Septuagint (LXX) Old Testament and the Seven Ecumenical Councils. Interprets Scripture liturgically and mystagogically within the mind (phronema) of the Greek Church Fathers — St. John Chrysostom, St. Athanasius, St. Basil, St. Gregory of Nyssa, and St. Cyril of Alexandria.',
+                methodNote: 'Strongest convergence with Catholic Sacramental and Patristic Realism; diverges chiefly on Papal universal jurisdiction and the Filioque.',
+                wiki: 'https://en.wikipedia.org/wiki/Eastern_Orthodox_theology',
+                wikiLabel: 'Eastern Orthodox Theology (Wikipedia)'
+            },
+            anglican: {
+                id: 'anglican',
+                label: 'Anglican (Via Media)',
+                short: 'Anglican',
+                badgeCls: 'text-sky-300 border-sky-500/40 bg-sky-500/10',
+                overview: 'The English Church tradition balancing Scripture, early Ecumenical Conciliar Tradition (first 5 centuries), and Reason (Richard Hooker\'s Three-Legged Stool). Produces high-church Patristic commentators like Lancelot Andrewes and modern historical-covenantal scholars such as N.T. Wright.',
+                methodNote: 'Values Fathers and liturgy heavily while holding Article VI (66 proto-canonical books for dogma, Deuterocanonicals read as ecclesiastical instruction).',
+                wiki: 'https://en.wikipedia.org/wiki/Anglican_theology',
+                wikiLabel: 'Anglican Theology (Wikipedia)'
+            },
+            lutheran: {
+                id: 'lutheran',
+                label: 'Confessional Lutheran',
+                short: 'Lutheran',
+                badgeCls: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/10',
+                overview: '16th-century Magisterial Reformation tradition codified in the Book of Concord (1580). Reads Scripture through the strict Law-and-Gospel dialectic and Christocentric justification by faith (Martin Luther, Martin Chemnitz, and 19th-c. Hebraists C.F. Keil & F. Delitzsch).',
+                methodNote: 'Retains sacramental Real Presence and liturgical continuity while rejecting works-merit, Purgatory, and Papal Supremacy.',
+                wiki: 'https://en.wikipedia.org/wiki/Lutheran_theology',
+                wikiLabel: 'Lutheran Theology (Wikipedia)'
+            },
+            reformed: {
+                id: 'reformed',
+                label: 'Reformed / Calvinist',
+                short: 'Reformed',
+                badgeCls: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/10',
+                overview: 'Continental and Presbyterian covenantal tradition shaped by John Calvin, Theodore Beza, the Westminster Confession (1646), Matthew Henry, John Gill, and modern exponents like John MacArthur. Emphasizes absolute divine sovereignty, unconditional election, and strict Sola Scriptura.',
+                methodNote: 'Sharpest theological contrast with Catholic sacramental causality, Apostolic Succession, and cooperative grace.',
+                wiki: 'https://en.wikipedia.org/wiki/Reformed_theology',
+                wikiLabel: 'Reformed Theology (Wikipedia)'
+            },
+            wesleyan: {
+                id: 'wesleyan',
+                label: 'Wesleyan / Arminian',
+                short: 'Wesleyan',
+                badgeCls: 'text-teal-300 border-teal-500/40 bg-teal-500/10',
+                overview: 'Methodist and Holiness tradition grounded in John Wesley and Jacobus Arminius, represented canonically in scripture commentary by Adam Clarke (1810–1826). Affirms universal atonement, prevenient grace, genuine human moral cooperation (converging partially with Catholic semi-Augustinianism), and entire sanctification.',
+                methodNote: 'Rejects Calvinist double predestination while holding Protestant Sola Scriptura and 66-book canon.',
+                wiki: 'https://en.wikipedia.org/wiki/Wesleyan_theology',
+                wikiLabel: 'Wesleyan Theology (Wikipedia)'
+            },
+            evangelical: {
+                id: 'evangelical',
+                label: 'Baptist / Evangelical',
+                short: 'Evangelical',
+                badgeCls: 'text-rose-300 border-rose-500/40 bg-rose-500/10',
+                overview: 'Broad trans-denominational Protestant scholarship centered on grammatical-historical exegesis and personal conversion (NIV Study Bible, Baker CSB, Tyndale Open Notes, Jamieson-Fausset-Brown, Charles Spurgeon). Focuses closely on historical context and immediate literary flow.',
+                methodNote: 'Generally omits Deuterocanonical typology and interprets sacraments symbolically rather than instrumentally.',
+                wiki: 'https://en.wikipedia.org/wiki/Evangelical_theology',
+                wikiLabel: 'Evangelical Theology (Wikipedia)'
+            },
+            critical: {
+                id: 'critical',
+                label: 'Historical-Critical / Philology',
+                short: 'Critical',
+                badgeCls: 'text-purple-300 border-purple-500/40 bg-purple-500/10',
+                overview: 'Academic philological and Second Temple Jewish context method (SBL Study Bible, New Oxford Annotated Bible NRSVue, NET 2.1 Text-Critical Notes). Evaluates Dead Sea Scrolls (Qumran), Ancient Near Eastern parallels, text-critical variants, and redaction history.',
+                methodNote: 'Matches Catholic Method B (Pontifical Biblical Commission 1993) as essential groundwork before Method C theological synthesis.',
+                wiki: 'https://en.wikipedia.org/wiki/Historical_criticism',
+                wikiLabel: 'Historical Criticism (Wikipedia)'
+            }
+        };
+
+        const SOURCE_TO_TRADITION = {
+            ignatius: { tradition: 'catholic', era: 'modern', author: 'Scott Hahn & Curtis Mitch (Ignatius Catholic Study Bible)', wiki: 'https://en.wikipedia.org/wiki/Scott_Hahn' },
+            nabre: { tradition: 'catholic', era: 'modern', author: 'USCCB / NABRE Catholic Study Bible (3rd Ed.)', wiki: 'https://en.wikipedia.org/wiki/New_American_Bible_Revised_Edition' },
+            nabre_rg: { tradition: 'catholic', era: 'modern', author: 'NABRE Catholic Reading Guides', wiki: 'https://en.wikipedia.org/wiki/Catholic_biblical_exegesis' },
+            haydock: { tradition: 'catholic', era: 'reformation', author: 'Fr. George Leo Haydock (1811 Catholic Bible Commentary)', wiki: 'https://en.wikipedia.org/wiki/George_Leo_Haydock' },
+            'john-calvin': { tradition: 'reformed', era: 'reformation', author: 'John Calvin (1509–1564, Geneva Reformer)', wiki: 'https://en.wikipedia.org/wiki/John_Calvin' },
+            'matthew-henry': { tradition: 'reformed', era: 'reformation', author: 'Matthew Henry (1662–1714, Nonconformist Reformed)', wiki: 'https://en.wikipedia.org/wiki/Matthew_Henry' },
+            'john-gill': { tradition: 'reformed', era: 'reformation', author: 'John Gill (1697–1771, Particular Baptist / Hyper-Calvinist)', wiki: 'https://en.wikipedia.org/wiki/John_Gill_(theologian)' },
+            macarthur: { tradition: 'reformed', era: 'modern', author: 'John MacArthur (Reformed Dispensational Study Notes)', wiki: 'https://en.wikipedia.org/wiki/John_MacArthur_(American_pastor)' },
+            'adam-clarke': { tradition: 'wesleyan', era: 'reformation', author: 'Adam Clarke (1760–1832, Wesleyan Methodist Scholar)', wiki: 'https://en.wikipedia.org/wiki/Adam_Clarke' },
+            'keil-delitzsch': { tradition: 'lutheran', era: 'modern', author: 'C.F. Keil & F. Delitzsch (Confessional Lutheran Hebraists)', wiki: 'https://en.wikipedia.org/wiki/Franz_Delitzsch' },
+            niv_sb: { tradition: 'evangelical', era: 'modern', author: 'NIV Study Bible Editorial Committee', wiki: 'https://en.wikipedia.org/wiki/New_International_Version' },
+            baker_csb: { tradition: 'evangelical', era: 'modern', author: 'Christian Standard Bible Study Notes (Southern Baptist / Evangelical)', wiki: 'https://en.wikipedia.org/wiki/Christian_Standard_Bible' },
+            tyndale: { tradition: 'evangelical', era: 'modern', author: 'Tyndale Open Study Notes (Evangelical)', wiki: 'https://en.wikipedia.org/wiki/Tyndale_House_Publishers' },
+            'jamieson-fausset-brown': { tradition: 'anglican', era: 'reformation', author: 'Jamieson, Fausset & Brown (1871 Presbyterian / Irish Anglican)', wiki: 'https://en.wikipedia.org/wiki/Jamieson-Fausset-Brown_Bible_Commentary' },
+            sbl: { tradition: 'critical', era: 'modern', author: 'Society of Biblical Literature (SBL Study Bible)', wiki: 'https://en.wikipedia.org/wiki/Society_of_Biblical_Literature' },
+            noab: { tradition: 'critical', era: 'modern', author: 'New Oxford Annotated Bible (NRSVue / Historical-Critical)', wiki: 'https://en.wikipedia.org/wiki/New_Oxford_Annotated_Bible' },
+            net21: { tradition: 'critical', era: 'modern', author: 'NET Bible 2.1 Text-Critical Translators', wiki: 'https://en.wikipedia.org/wiki/New_English_Translation' },
+            bsb: { tradition: 'evangelical', era: 'modern', author: 'Berean Standard Bible Textual Notes', wiki: 'https://en.wikipedia.org/wiki/Berean_Standard_Bible' }
+        };
+
+        // Curated Patristic, Scholastic & Modern Theologian Exegesis across canon & key doctrinal loci
+        const SCHOLASTIC_MODERN_CATENA = [
+            { id: 'aquinas_matt16', author: 'St. Thomas Aquinas', title: 'Catena Aurea & Super Evangelium S. Matthaei (1263)', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Thomas_Aquinas', books: ['matt', 'mark', 'luke', 'john'], refs: [['matt', 16, 18], ['matt', 16, 19], ['matt', 16, 17], ['john', 21, 15], ['john', 21, 17], ['john', 6, 53], ['john', 1, 1]], quote: 'Aquinas demonstrates across St. Chrysostom, St. Leo, and St. Augustine that Christ changed Simon\'s name to Kephas/Petros precisely so the solidity of the Rock Himself would be communicated structurally to Peter and his successors in the visible governance and binding-and-loosing keys of the Church.' },
+            { id: 'aquinas_summa_euch', author: 'St. Thomas Aquinas', title: 'Summa Theologiae III, qq. 73–76 & Commentary on 1 Corinthians', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Summa_Theologiae', books: ['exod', 'ps', 'john', 'matt', '1cor', 'heb'], refs: [['john', 6, 51], ['john', 6, 53], ['john', 6, 54], ['john', 6, 55], ['1cor', 11, 24], ['1cor', 11, 27], ['matt', 26, 26], ['exod', 12, 8]], quote: 'Aquinas distinguishes the sacramentum tantum (bread/wine species) from the res et sacramentum (true Body and Blood of Christ by transubstantiation) and the res tantum (ecclesial unity). Christ\'s literal command in John 6:53-55 and 1 Cor 11:27 admits no merely figurative reduction.' },
+            { id: 'aquinas_rom_just', author: 'St. Thomas Aquinas', title: 'Super Epistolam ad Romanos Lectura (cc. 3–5) & ST I-II qq. 109–114', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Thomas_Aquinas', books: ['gen', 'ps', 'isa', 'rom', 'gal', 'jas', 'eph'], refs: [['rom', 3, 24], ['rom', 3, 28], ['rom', 4, 3], ['rom', 5, 1], ['gal', 5, 6], ['jas', 2, 24], ['eph', 2, 8], ['gen', 15, 6]], quote: 'St. Thomas clarifies that initial justification is unmerited (gratis data) and comes strictly from God\'s infused grace, which heals the soul and creates interior justice—not an external legal fiction—so that faith works through charity (Gal 5:6) and merits eternal increase (Jas 2:24).' },
+            { id: 'lapide_catholic', author: 'Cornelius a Lapide, S.J.', title: 'Commentaria in Scripturam Sacram (1614–1642)', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Cornelius_a_Lapide', books: ['gen', 'exod', 'isa', 'dan', 'matt', 'john', 'acts', 'rom', '2cor', 'rev'], refs: [['gen', 3, 15], ['isa', 7, 14], ['dan', 2, 44], ['matt', 16, 18], ['acts', 15, 16], ['acts', 15, 17], ['rev', 12, 1], ['2thess', 2, 15]], quote: 'Harvesting more than a thousand Patristic and medieval witnesses, a Lapide traces both the literal historical sense and the typological fulfillment uniting Old Covenant prophecy (David\'s Fallen Tabernacle, the Protoevangelium, Virgin Mother) to Christ and His Church.' },
+            { id: 'bonaventure_typology', author: 'St. Bonaventure', title: 'Breviloquium & Collationes in Hexaemeron (1273)', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Bonaventure', books: ['gen', 'exod', 'song', 'wis', 'sir', 'john', 'heb', 'rev'], refs: [['gen', 1, 1], ['gen', 1, 2], ['john', 1, 1], ['wis', 7, 26], ['heb', 1, 3]], quote: 'Bonaventure teaches that Holy Scripture carries inexhaustible depth because its primary author is the Eternal Word: every created reality, covenant sacrifice, and Wisdom figure echoes Christ, the Exemplar uniting Genesis 1 with John 1.' },
+            { id: 'ratzinger_benedict', author: 'Joseph Ratzinger (Pope Benedict XVI)', title: 'Jesus of Nazareth & Verbum Domini (2007–2011)', era: 'modern', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Pope_Benedict_XVI', books: ['gen', 'exod', 'ps', 'isa', 'matt', 'mark', 'luke', 'john', 'acts', 'heb', 'rev'], refs: [['matt', 16, 18], ['john', 1, 1], ['john', 6, 53], ['john', 17, 17], ['acts', 15, 16], ['acts', 15, 17], ['luke', 1, 28]], quote: 'Ratzinger insists that historical-critical philology reaches fullness only inside canonical exegesis: Scripture lives inside a single ongoing People of God across centuries, where liturgical memory preserves rather than invents Jesus\'s sacramental and Petrine intent.' },
+            { id: 'hahn_covenant', author: 'Dr. Scott Hahn', title: 'A Father Who Keeps His Promises / Ignatius Catholic Study Bible Research', era: 'modern', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Scott_Hahn', books: ['gen', 'exod', 'lev', '2sam', '1kgs', 'ps', 'isa', 'jer', 'ezek', 'matt', 'luke', 'john', 'acts', 'rom', 'gal', 'heb', 'rev'], refs: [['gen', 1, 1], ['gen', 15, 6], ['exod', 12, 8], ['2sam', 7, 14], ['isa', 22, 22], ['matt', 16, 18], ['matt', 16, 19], ['acts', 15, 16], ['luke', 22, 20], ['heb', 9, 15], ['rev', 12, 1]], quote: 'Hahn demonstrates how the Bible unfolds as a progressive series of sworn kinship covenants (Adam, Noah, Abraham, Moses, David, and Christ\'s New Covenant), revealing Catholic typology: Isaiah 22:22 Davidic Royal Steward keys illuminate Matthew 16:19; the Ark illuminates Mary (Luke 1 / Rev 12).' },
+            { id: 'lubac_spiritual', author: 'Henri Cardinal de Lubac, S.J.', title: 'Medieval Exegesis: The Four Senses of Scripture (1959)', era: 'modern', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Henri_de_Lubac', books: ['gen', 'exod', 'ps', 'song', 'matt', 'john', 'gal', '1cor', 'heb'], refs: [['1cor', 10, 1], ['1cor', 10, 11], ['gal', 4, 24], ['heb', 10, 1]], quote: 'De Lubac recovers the ancient Church\'s unified fourfold reading (historia, allegoria, tropologia, anagogia), proving spiritual typology is neither arbitrary fantasy nor anti-historical, because God writes salvation history itself as prophecy in events.' },
+            { id: 'chrysostom_ortho_lxx', author: 'St. John Chrysostom (Byzantine Doctor)', title: 'Homilies on Genesis, Psalms, Matthew, John, Acts & Pauline Epistles (c. 390 AD)', era: 'patristic', tradition: 'orthodox', wiki: 'https://en.wikipedia.org/wiki/John_Chrysostom', books: ['gen', 'ps', 'matt', 'john', 'acts', 'rom', '1cor', '2cor', 'gal', 'eph', '2thess', 'heb'], refs: [['acts', 15, 16], ['acts', 15, 17], ['2thess', 2, 15], ['matt', 16, 18], ['john', 6, 53], ['1cor', 11, 24]], schaffVol: 'npnf111', quote: 'Chrysostom exalts St. Paul\'s unwritten Apostolic paradosis ("hold to the traditions... whether by word or by epistle," 2 Thess 2:15), notes how James settles Jerusalem\'s Gentile crisis by quoting the Greek Septuagint of Amos 9:11–12, and preaches unqualified Eucharistic realism.' },
+            { id: 'athanasius_lxx_deut', author: 'St. Athanasius / Cappadocian Fathers', title: 'Festal Letters, Against the Arians & Catechetical Orations', era: 'patristic', tradition: 'orthodox', wiki: 'https://en.wikipedia.org/wiki/Athanasius_of_Alexandria', books: ['gen', 'ps', 'prov', 'wis', 'bar', 'tobit', 'judith', '1macc', '2macc', 'john', 'heb'], refs: [['john', 1, 1], ['prov', 8, 22], ['wis', 7, 26], ['bar', 3, 37], ['tobit', 12, 8], ['2macc', 12, 46]], schaffVol: 'npnf204', quote: 'Eastern Nicene Fathers cite Septuagint Wisdom, Sirach, Baruch, and 2 Maccabees in doctrinal treatises while debating Trinitarian consubstantiality (homoousios) from John 1:1 and Proverbs 8:22 LXX.' },
+            { id: 'luther_confessional', author: 'Dr. Martin Luther', title: 'Lectures on Galatians (1535) & Large Catechism (1529)', era: 'reformation', tradition: 'lutheran', wiki: 'https://en.wikipedia.org/wiki/Martin_Luther', books: ['gen', 'ps', 'hab', 'matt', 'john', 'rom', 'gal', 'eph', 'jas', 'heb', '1pet'], refs: [['rom', 3, 28], ['gal', 2, 16], ['hab', 2, 4], ['jas', 2, 24], ['matt', 26, 26], ['john', 6, 53], ['1pet', 3, 21]], quote: 'Luther grounds justification on forensic imputation ("alone" added in 1522 German Rom 3:28), treats James cautiously relative to Paul, yet fiercely defends the literal bodily Real Presence in the Eucharist ("This IS my body") against Zwinglian symbolism.' },
+            { id: 'calvin_institutes', author: 'John Calvin', title: 'Institutes of the Christian Religion (1559) & Geneva Commentaries', era: 'reformation', tradition: 'reformed', wiki: 'https://en.wikipedia.org/wiki/John_Calvin', books: ['gen', 'exod', 'ps', 'isa', 'matt', 'john', 'acts', 'rom', 'gal', 'eph', '1tim', 'heb', 'jas'], refs: [['gen', 1, 1], ['gen', 3, 15], ['matt', 16, 18], ['john', 6, 44], ['rom', 8, 29], ['rom', 9, 15], ['eph', 1, 4], ['eph', 2, 8], ['1tim', 2, 4]], quote: 'Calvin reads Matt 16:18 "rock" purely as Peter\'s confession rather than Peter\'s office, interprets Rom 8–9 through double-decree unconditional election, and treats Apostolic Tradition as subordinate to Sola Scriptura.' },
+            { id: 'hooker_wright_anglican', author: 'Richard Hooker / N.T. Wright', title: 'Laws of Ecclesiastical Polity (1594) / New Perspective & Resurrection Studies', era: 'modern', tradition: 'anglican', wiki: 'https://en.wikipedia.org/wiki/N._T._Wright', books: ['ps', 'isa', 'matt', 'luke', 'acts', 'rom', 'gal', 'phil', '1cor', 'col'], refs: [['rom', 3, 24], ['rom', 3, 28], ['rom', 4, 3], ['gal', 2, 16], ['1cor', 15, 3], ['phil', 2, 6]], quote: 'Anglican via media and N.T. Wright emphasize covenant membership and cosmic resurrection: "dikaiosyne" and "works of law" concern Israel\'s boundary markers being opened to Gentiles—remarkably narrowing gaps with Patristic & Catholic covenant reading over Reformation individualism.' },
+            { id: 'wesley_clarke_notes', author: 'John Wesley & Adam Clarke', title: 'Explanatory Notes Upon the Old & New Testaments (1755–1826)', era: 'reformation', tradition: 'wesleyan', wiki: 'https://en.wikipedia.org/wiki/John_Wesley', books: ['gen', 'exod', 'ps', 'john', 'acts', 'rom', '1cor', 'jas', '1john', 'rev'], refs: [['john', 3, 16], ['rom', 5, 18], ['rom', 8, 29], ['1tim', 2, 4], ['jas', 2, 24], ['2pet', 3, 9]], quote: 'Wesley and Clarke stress that Christ died for every human being genuinely (1 Tim 2:4; 2 Pet 3:9) and that justification produces real inward holiness—agreeing with Catholic theology against Calvinist limited atonement while differing on sacramental priesthood.' },
+            { id: 'bellarmine_controversies', author: 'St. Robert Bellarmine, S.J.', title: 'Disputationes de Controversiis (1586–1593)', era: 'scholastic', tradition: 'catholic', wiki: 'https://en.wikipedia.org/wiki/Robert_Bellarmine', books: ['tobit', 'judith', '1macc', '2macc', 'wis', 'sir', 'bar', 'matt', 'luke', 'john', 'acts', '1cor', '2thess', '1tim', 'jas'], refs: [['2macc', 12, 43], ['2macc', 12, 46], ['matt', 16, 18], ['matt', 16, 19], ['luke', 22, 32], ['1cor', 3, 15], ['2thess', 2, 15], ['1tim', 3, 15], ['jas', 2, 24]], quote: 'Doctor of the Church Bellarmine compiles exhaustive Patristic, Conciliar, and Septuagint proofs defending the 73-book canon, prayers for the dead (2 Macc 12 / 1 Cor 3:15), Apostolic Oral Tradition (2 Thess 2:15), and Petrine infallibility (Luke 22:32).' }
+        ];
+
+        let activeNexusTradition = localStorage.getItem('plenary_nexus_tradition') || 'all';
+        let activeNexusEra = localStorage.getItem('plenary_nexus_era') || 'all';
+        let activeTraditionInfoOpen = localStorage.getItem('plenary_nexus_info_open') === '1';
+
+        function setNexusTraditionFilter(tradId) {
+            activeNexusTradition = THEOLOGICAL_TRADITIONS_REGISTRY[tradId] ? tradId : 'all';
+            localStorage.setItem('plenary_nexus_tradition', activeNexusTradition);
+            if (activeNexusTradition !== 'all') activeTraditionInfoOpen = true;
+            if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                hydrateCatenaNexusIntoTarget(
+                    document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNexusHost' : 'mosaicNexusHost'),
+                    APP_DATA.books[currentBookIndex],
+                    currentChapterIndex + 1,
+                    currentVerseIndex + 1,
+                    currentReaderMode === 'mosaic_4k'
+                );
+            }
+        }
+
+        function setNexusEraFilter(eraId) {
+            activeNexusEra = eraId || 'all';
+            localStorage.setItem('plenary_nexus_era', activeNexusEra);
+            if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                hydrateCatenaNexusIntoTarget(
+                    document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNexusHost' : 'mosaicNexusHost'),
+                    APP_DATA.books[currentBookIndex],
+                    currentChapterIndex + 1,
+                    currentVerseIndex + 1,
+                    currentReaderMode === 'mosaic_4k'
+                );
+            }
+        }
+
+        function toggleTraditionInfoCard(tradId) {
+            if (tradId && tradId !== activeNexusTradition) {
+                activeNexusTradition = tradId;
+                activeTraditionInfoOpen = true;
+            } else {
+                activeTraditionInfoOpen = !activeTraditionInfoOpen;
+            }
+            localStorage.setItem('plenary_nexus_info_open', activeTraditionInfoOpen ? '1' : '0');
+            if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                hydrateCatenaNexusIntoTarget(
+                    document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNexusHost' : 'mosaicNexusHost'),
+                    APP_DATA.books[currentBookIndex],
+                    currentChapterIndex + 1,
+                    currentVerseIndex + 1,
+                    currentReaderMode === 'mosaic_4k'
+                );
+            }
+        }
+
+        function classifyFatherTradition(fatherName) {
+            const s = String(fatherName || '').toLowerCase();
+            if (/chrysostom|athanasius|basil|gregory of nyssa|gregory of nazianzus|cyril of alexandria|cyril of jerusalem|ephrem|aphrahat|origen|clement of alexandria|john of damascus/.test(s)) {
+                return 'orthodox';
+            }
+            return 'catholic';
+        }
+
+        function buildAuthorWikiUrl(name) {
+            const cleaned = String(name || '').replace(/^St\.\s+/i, 'Saint_').replace(/^Mar\s+/i, '').replace(/\s+\([^)]*\)/g, '').trim().replace(/\s+/g, '_');
+            return `https://en.wikipedia.org/wiki/${encodeURIComponent(cleaned)}`;
+        }
+
+        function buildCatenaNexusEntries(book, chapNum, verseNum, patristicList, shardNotes) {
+            const entries = [];
+            const seen = new Set();
+
+            // 1. Live Verse Church Fathers (API + Active Crux)
+            const rawPats = [];
+            if (Array.isArray(patristicList)) rawPats.push(...patristicList);
+            if (activeCrux && Array.isArray(activeCrux.patristics)) rawPats.push(...activeCrux.patristics);
+            rawPats.forEach(p => {
+                const author = p.father || p.author || 'Church Father';
+                if (author.startsWith('(Reception note')) return;
+                const key = `${author}::${(p.text || p.quote || '').slice(0, 48)}`;
+                if (seen.has(key)) return;
+                seen.add(key);
+                const schaff = resolveSchaffVolForFather(author, p.work);
+                const trad = classifyFatherTradition(author);
+                entries.push({
+                    era: 'patristic',
+                    eraLabel: 'Apostolic / Father',
+                    tradition: trad,
+                    author: author,
+                    work: p.work || 'Patristic Catena',
+                    quote: p.text || p.quote || '',
+                    schaff: schaff,
+                    wiki: buildAuthorWikiUrl(author),
+                    priority: 10
+                });
+            });
+
+            // 2. Magisterial Councils & Papal Encyclicals
+            if (typeof MAGISTERIAL_ENCHIRIDION !== 'undefined') {
+                const exactMag = MAGISTERIAL_ENCHIRIDION.filter(m => m.refs.some(r => r[0] === book.id && r[1] === chapNum && r[2] === verseNum));
+                const bookMag = exactMag.length > 0 ? exactMag : MAGISTERIAL_ENCHIRIDION.filter(m => m.books.includes(book.id)).slice(0, 3);
+                bookMag.forEach(m => {
+                    entries.push({
+                        era: 'magisterial',
+                        eraLabel: m.kind === 'Council' ? `Council (${m.year})` : `Encyclical (${m.year})`,
+                        tradition: 'catholic',
+                        author: m.title,
+                        work: m.citation || 'Magisterial Enchiridion',
+                        quote: m.summary || '',
+                        magDocId: m.id,
+                        wiki: m.kind === 'Council'
+                            ? 'https://en.wikipedia.org/wiki/Ecumenical_council'
+                            : 'https://en.wikipedia.org/wiki/Papal_encyclical',
+                        priority: exactMag.includes(m) ? 9 : 6
+                    });
+                });
+            }
+
+            // 3. Curated Scholastic Doctors, Reformers & Modern Theologians
+            const isDeut = !!book.deuterocanon;
+            SCHOLASTIC_MODERN_CATENA.forEach(item => {
+                const exactRef = item.refs && item.refs.some(r => r[0] === book.id && r[1] === chapNum && r[2] === verseNum);
+                const chapRef = !exactRef && item.refs && item.refs.some(r => r[0] === book.id && r[1] === chapNum);
+                const bookMatch = item.books && item.books.includes(book.id);
+                if (!exactRef && !chapRef && !bookMatch) return;
+                const schaff = item.schaffVol ? SCHAFF_PATRISTIC_VOLUMES.find(v => v.vol === item.schaffVol) : null;
+                entries.push({
+                    era: item.era,
+                    eraLabel: item.era === 'scholastic' ? 'Scholastic Doctor' : item.era === 'reformation' ? 'Reformation / Post-Ref' : item.era === 'patristic' ? 'Church Father' : 'Modern Theologian',
+                    tradition: item.tradition,
+                    author: item.author,
+                    work: item.title,
+                    quote: item.quote,
+                    schaff: schaff || null,
+                    wiki: item.wiki,
+                    priority: exactRef ? 11 : (chapRef ? 8 : 5)
+                });
+            });
+
+            // 4. All 18 Study Bible Commentaries mapped to Denomination & Era
+            if (Array.isArray(shardNotes)) {
+                shardNotes.forEach(n => {
+                    const mapInfo = SOURCE_TO_TRADITION[n.src] || { tradition: 'critical', era: 'modern', author: (SOURCE_BADGE[n.src] ? SOURCE_BADGE[n.src].label : n.src), wiki: 'https://en.wikipedia.org/wiki/Study_Bible' };
+                    entries.push({
+                        era: mapInfo.era,
+                        eraLabel: mapInfo.era === 'reformation' ? 'Classic Commentary' : 'Study Bible Note',
+                        tradition: mapInfo.tradition,
+                        author: mapInfo.author,
+                        work: n.title || (n.anchor_word ? `Note on "${n.anchor_word}"` : `Verse ${verseNum} Commentary`),
+                        html: n.html || '',
+                        wiki: mapInfo.wiki,
+                        sourceKey: n.src,
+                        priority: mapInfo.tradition === 'catholic' ? 7 : 6
+                    });
+                });
+            }
+
+            // Guarantee Baseline Patristic Witness even if verse lacks specific crux/API quote
+            if (!entries.some(e => e.era === 'patristic')) {
+                entries.push({
+                    era: 'patristic',
+                    eraLabel: 'Conciliar & Patristic Reception',
+                    tradition: 'catholic',
+                    author: isDeut ? 'St. Augustine, Pope St. Damasus & Councils of Hippo (393) / Carthage (397)' : 'St. Jerome (Latin Vulgate) & Early Church Canon Consensus',
+                    work: isDeut ? 'De Doctrina Christiana II.8 & Carthage Canon XXIV' : 'Prologus Galeatus & Patristic Reception',
+                    quote: isDeut
+                        ? `${book.name} was read liturgically in the Churches of Rome, Alexandria, and North Africa and formally canonized at Hippo (393), Carthage (397), Florence (1442), and Trent (1546).`
+                        : `${book.name} ${chapNum}:${verseNum} stands within the unbroken Apostolic witness received East and West from Irenaeus, Origen, Chrysostom, and Augustine.`,
+                    wiki: 'https://en.wikipedia.org/wiki/Biblical_canon',
+                    priority: 3
+                });
+            }
+
+            return entries.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+        }
+
+        function hydrateCatenaNexusIntoTarget(targetEl, book, chapNum, verseNum, isCompactMosaic) {
+            if (!targetEl || !book) return;
+            targetEl.innerHTML = '<div class="text-xs italic opacity-65 p-2">Loading Patristic, Scholastic &amp; Ecumenical Nexus...</div>';
+
+            Promise.all([
+                loadVersePatristicsAndMedia(book.id, chapNum, verseNum).catch(() => ({ patristics: [], media: [] })),
+                new Promise(resolve => {
+                    loadBookNotesShard(book.id, (shardData) => {
+                        const vNotes = (shardData && shardData.chapters && shardData.chapters[String(chapNum)] && shardData.chapters[String(chapNum)][String(verseNum)]) || [];
+                        resolve(vNotes);
+                    });
+                })
+            ]).then(([pm, vNotes]) => {
+                if (!APP_DATA.books[currentBookIndex] || APP_DATA.books[currentBookIndex].id !== book.id || currentChapterIndex + 1 !== chapNum || currentVerseIndex + 1 !== verseNum) return;
+                const allEntries = buildCatenaNexusEntries(book, chapNum, verseNum, (pm && pm.patristics) || [], vNotes || []);
+
+                const tradOrder = ['all', 'catholic', 'orthodox', 'anglican', 'lutheran', 'reformed', 'wesleyan', 'evangelical', 'critical'];
+                const eraOrder = [
+                    { id: 'all', label: 'All Eras' },
+                    { id: 'patristic', label: 'Fathers' },
+                    { id: 'scholastic', label: 'Scholastics' },
+                    { id: 'magisterial', label: 'Councils' },
+                    { id: 'reformation', label: 'Reformation' },
+                    { id: 'modern', label: 'Modern' }
+                ];
+
+                const filtered = allEntries.filter(e => {
+                    if (activeNexusTradition !== 'all' && e.tradition !== activeNexusTradition) return false;
+                    if (activeNexusEra !== 'all' && e.era !== activeNexusEra) return false;
+                    return true;
+                });
+
+                const tradChipsHtml = tradOrder.map(tid => {
+                    const tr = THEOLOGICAL_TRADITIONS_REGISTRY[tid];
+                    const cnt = tid === 'all' ? allEntries.length : allEntries.filter(e => e.tradition === tid).length;
+                    const active = activeNexusTradition === tid;
+                    return `<span class="tradition-pill ${active ? 'is-active' : ''}" onclick="setNexusTraditionFilter('${tid}')" title="${escapeHtmlText(tr.overview)}">
+                        <span>${escapeHtmlText(isCompactMosaic ? tr.short : tr.label)} (${cnt})</span>
+                        <span class="tradition-info-i" onclick="event.stopPropagation(); toggleTraditionInfoCard('${tid}');" title="About ${escapeHtmlText(tr.label)} &amp; Wikipedia link">i</span>
+                    </span>`;
+                }).join('');
+
+                const eraChipsHtml = eraOrder.map(er => {
+                    const active = activeNexusEra === er.id;
+                    return `<button type="button" onclick="setNexusEraFilter('${er.id}')" class="exegesis-pill ${active ? 'is-active' : ''}" style="font-size:9.5px;padding:1px 7px;">${escapeHtmlText(er.label)}</button>`;
+                }).join('');
+
+                const activeTradObj = THEOLOGICAL_TRADITIONS_REGISTRY[activeNexusTradition] || THEOLOGICAL_TRADITIONS_REGISTRY.all;
+                const overviewBoxHtml = activeTradObj ? `
+                    <div class="tradition-overview-box space-y-1">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5 font-mono text-[10px] font-bold">
+                                <span class="px-1.5 py-0.5 rounded border ${activeTradObj.badgeCls}">${escapeHtmlText(activeTradObj.label)}</span>
+                                <span class="opacity-70">Theological Profile</span>
+                            </div>
+                            <div class="flex items-center gap-2 font-mono text-[10px]">
+                                <a href="${activeTradObj.wiki}" target="_blank" rel="noopener noreferrer" class="text-cyan-300 hover:underline">${escapeHtmlText(activeTradObj.wikiLabel)} &rarr;</a>
+                                <button type="button" onclick="toggleTraditionInfoCard()" class="opacity-70 hover:opacity-100">${activeTraditionInfoOpen ? 'Hide Guide' : 'Show Guide'}</button>
+                            </div>
+                        </div>
+                        ${activeTraditionInfoOpen ? `
+                            <div class="text-[11px] opacity-90 leading-relaxed">${escapeHtmlText(activeTradObj.overview)}</div>
+                            <div class="text-[10px] font-mono opacity-75">Hermeneutic: ${escapeHtmlText(activeTradObj.methodNote)}</div>
+                        ` : ''}
+                    </div>
+                ` : '';
+
+                const cardsHtml = filtered.length ? filtered.map(e => {
+                    const trMeta = THEOLOGICAL_TRADITIONS_REGISTRY[e.tradition] || THEOLOGICAL_TRADITIONS_REGISTRY.catholic;
+                    const srcBadge = e.sourceKey && SOURCE_BADGE[e.sourceKey] ? SOURCE_BADGE[e.sourceKey] : null;
+                    return `
+                        <div class="p-2.5 rounded-lg border border-slate-800 bg-slate-900/55 space-y-1.5">
+                            <div class="flex flex-wrap items-center justify-between gap-1.5">
+                                <div class="flex flex-wrap items-center gap-1">
+                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${trMeta.badgeCls}">${escapeHtmlText(trMeta.short)}</span>
+                                    <span class="text-[9px] font-mono opacity-70 uppercase">${escapeHtmlText(e.eraLabel)}</span>
+                                    ${srcBadge ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${srcBadge.cls}">${escapeHtmlText(srcBadge.label)}</span>` : ''}
+                                </div>
+                                <div class="flex items-center gap-2 font-mono text-[9.5px]">
+                                    ${e.schaff ? `<button type="button" onclick="openSchaffPdf('${escapeJsArg(e.schaff.vol)}')" class="text-cyan-300 hover:underline">Schaff PDF</button>` : ''}
+                                    ${e.magDocId ? `<button type="button" onclick="openMagisterialInAppPdf('${escapeJsArg(e.magDocId)}')" class="text-amber-300 hover:underline">Council PDF</button>` : ''}
+                                    ${e.wiki ? `<a href="${e.wiki}" target="_blank" rel="noopener noreferrer" class="text-cyan-300 hover:underline">Wikipedia &rarr;</a>` : ''}
+                                </div>
+                            </div>
+                            <div class="font-bold text-xs text-slate-100">${escapeHtmlText(e.author)} <span class="font-normal text-[10px] opacity-70">— ${escapeHtmlText(e.work)}</span></div>
+                            <div class="text-xs leading-relaxed opacity-90 font-serif">${e.html ? linkifyScriptureRefsHtml(e.html, book.id, chapNum) : escapeHtmlText(e.quote)}</div>
+                        </div>
+                    `;
+                }).join('') : `<div class="p-3 rounded-lg border border-slate-800 text-xs italic opacity-75">No commentary entries match ${escapeHtmlText(activeTradObj.label)} + "${escapeHtmlText(activeNexusEra)}". Click "All Traditions" or "All Eras" above to broaden results.</div>`;
+
+                targetEl.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex flex-wrap gap-1">${tradChipsHtml}</div>
+                        <div class="flex flex-wrap items-center justify-between gap-1 border-b border-slate-800 pb-1.5">
+                            <div class="flex flex-wrap gap-1">${eraChipsHtml}</div>
+                            <span class="text-[10px] font-mono opacity-70">${filtered.length} witnesses</span>
+                        </div>
+                        ${overviewBoxHtml}
+                        <div class="space-y-2">${cardsHtml}</div>
+                    </div>
+                `;
+                refreshIcons();
+            });
         }
 
         // ====== RENDER READER MODES ======
@@ -5686,6 +6305,217 @@
                     </div>`).join('');
                     pb.innerHTML = (magHtml || '') + patCards + (typeof renderCuratedMapsQuickStrip === 'function' ? renderCuratedMapsQuickStrip() : '');
                 });
+            } else if (currentReaderMode === 'catena_4k') {
+                // MODE A — 4K TV THEOLOGIAN CATENA WORKBENCH
+                // Col 1 (Wide Left): Patristic, Scholastic & Modern Theologian Nexus (Denom/Era filters + Tradition (i) Guide + Wikipedia links)
+                // Col 2 (Center-Left): Scriptures Column (ComfortPrint prose + Illuminated Drop-Cap + Inline 1a,1b Footnotes, ZERO duplicate Greek)
+                // Col 3 (Center-Right): Study Notes & Combined Cross-References
+                // Col 4 (Far Right #inspectorPane): Original Greek/Hebrew/Latin Clickable Tokens + Morphology + Strong's
+                const masterMeta = getStreamMeta(masterEnId);
+                const reg = APP_DATA.translation_registry || [];
+                const enOpts = reg.filter(t => t.lang === 'en').map(t => `<option value="${t.id}" ${t.id === masterEnId ? 'selected' : ''}>${escapeHtmlText(t.short)} [${escapeHtmlText(t.tier_badge)}]</option>`).join('');
+                const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
+                const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
+                const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
+                const activeMeta = masterChVerses.length > 0 ? masterMeta : getStreamMeta('dra');
+                const cachedShard = NOTES_SHARD_CACHE.get(book.id);
+                const cachedChapNotes = (cachedShard && cachedShard.chapters && cachedShard.chapters[String(chapNum)]) || null;
+
+                container.innerHTML = `
+                    <div class="catena-4k-grid">
+                        <!-- COL 1 (MAIN WIDE LEFT): PATRISTIC, SCHOLASTIC & MODERN THEOLOGIAN NEXUS -->
+                        <div class="catena-4k-pane">
+                            <div class="catena-4k-pane-header">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono text-[10px] font-bold">PATRISTIC &amp; THEOLOGIAN CATENA</span>
+                                    <span class="text-[11px] font-mono text-slate-300 truncate">${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-[10px] font-mono flex-shrink-0">
+                                    <button type="button" onclick="toggleTraditionInfoCard()" class="text-cyan-300 hover:underline">Tradition Guide (i)</button>
+                                    <button type="button" onclick="toggleMasterStudyHubModal('councils')" class="text-amber-300 hover:underline">Councils &rarr;</button>
+                                </div>
+                            </div>
+                            <div id="catenaNexusHost" class="catena-4k-pane-body space-y-2.5 text-xs">
+                                <div class="italic opacity-65">Loading Patristic, Scholastic &amp; Modern Theologians...</div>
+                            </div>
+                        </div>
+
+                        <!-- COL 2 (CENTER-LEFT): SCRIPTURES PROSE (ZERO DUPLICATE GREEK) -->
+                        <div class="catena-4k-pane comfort-print-page">
+                            <div class="catena-4k-pane-header">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <span class="font-mono text-[10px] font-bold text-amber-300 uppercase">SCRIPTURES</span>
+                                    <span class="text-[10px] font-mono text-slate-400 truncate">${escapeHtmlText(book.name)} ${chapNum}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 flex-shrink-0">
+                                    <select onchange="setMasterEnglish(this.value)" class="suite-select" style="height:22px;font-size:10px;" title="Switch Scriptures Translation">${enOpts}</select>
+                                    <span class="${getApprovalBadgeClass(activeMeta.approval)}">${escapeHtmlText(activeMeta.short)}</span>
+                                </div>
+                            </div>
+                            <div id="catenaScripturesScroll" class="catena-4k-pane-body relative" style="font-family: var(--plenary-serif-font); font-size: calc(var(--plenary-font-size, 1.25rem) * var(--plenary-font-scale, 1)); line-height: var(--plenary-line-height, 1.72);">
+                                <div class="text-center pb-2 mb-3 border-b border-slate-800/80">
+                                    <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-amber-400/80">${escapeHtmlText(book.division)}</span>
+                                    <h2 class="text-xl font-bold text-white mt-0.5">${escapeHtmlText(book.name)} ${chapNum}</h2>
+                                </div>
+                                <div class="leading-relaxed">
+                                    ${chDisplayVerses.map((v, idx) => {
+                                        const vNum = idx + 1;
+                                        const isCur = idx === currentVerseIndex;
+                                        const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
+                                        const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
+                                        const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
+                                        const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
+                                        const supHtml = idx === 0 && dropCap ? dropCap : `<sup class="suite-verse-num font-mono text-[11px] font-bold text-amber-400 mr-0.5 select-none">${vNum}</sup>`;
+                                        return `<span id="catena-v-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition rounded px-0.5 ${isCur ? 'text-amber-200 suite-verse-highlight font-semibold' : 'hover:text-amber-200'} ${hlClass ? 'hl-' + hlClass : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COL 3 (CENTER-RIGHT): STUDY NOTES & COMBINED CROSS-REFERENCES -->
+                        <div class="catena-4k-pane">
+                            <div class="catena-4k-pane-header">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <span class="font-mono text-[10px] font-bold text-cyan-300 uppercase">STUDY NOTES</span>
+                                    <span class="px-1.5 py-0.5 rounded border border-slate-700 font-mono text-[10px] text-amber-300">${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}</span>
+                                </div>
+                                <div class="flex items-center gap-1 font-mono text-[10px]">
+                                    <button type="button" onclick="toggleSplitPaneScope()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">${splitPaneScope === 'verse' ? 'Verse' : 'Chapter'}</button>
+                                    <button type="button" onclick="toggleVisibilityPopover()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">Filter</button>
+                                </div>
+                            </div>
+                            <div id="catenaNotesList" class="catena-4k-pane-body space-y-2 text-xs">
+                                <div class="italic opacity-65">Loading study notes...</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                const curCatEl = document.getElementById(`catena-v-${currentVerseIndex}`);
+                const catScroll = document.getElementById('catenaScripturesScroll');
+                if (curCatEl && catScroll) catScroll.scrollTop = Math.max(0, curCatEl.offsetTop - catScroll.offsetTop - 90);
+                hydrateInlineChapterFootnotes(book.id, chapNum);
+                renderNotesFeedIntoElement(document.getElementById('catenaNotesList'), book, chapNum, verseNum, splitPaneScope);
+                hydrateCatenaNexusIntoTarget(document.getElementById('catenaNexusHost'), book, chapNum, verseNum, false);
+            } else if (currentReaderMode === 'mosaic_4k') {
+                // MODE B — 4K TV QUAD/MULTI-TRANSLATION MOSAIC + BOTTOM-RIGHT PATRISTIC/CONCILIAR NEXUS
+                // Reclaims top banner space via Chrome Compact mode so translation boxes fill viewport height
+                const reg = APP_DATA.translation_registry || [];
+                const rawMosaicStreams = parallelCols.length >= 4 ? parallelCols : [...new Set([...parallelCols, 'dra', 'lxx_gnt', 'vulg_clem', 'nabre', 'rsv2ce'])].slice(0, Math.max(4, parallelCols.length));
+                const mosaicStreams = rawMosaicStreams.map(sid => (book.testament === 'NT' && sid === 'wlc') ? 'nabre' : sid);
+                const baseStreamId = mosaicStreams[0];
+                const baseCh = baseStreamId === 'dra' ? ((book.verses_en && book.verses_en[currentChapterIndex]) || [])
+                    : baseStreamId === 'vulg_clem' ? ((book.verses_la && book.verses_la[currentChapterIndex]) || [])
+                    : baseStreamId === 'lxx_gnt' ? ((book.verses_gr && book.verses_gr[currentChapterIndex]) || [])
+                    : baseStreamId === 'wlc' ? ((book.verses_he && book.verses_he[currentChapterIndex]) || [])
+                    : ((book.tr && book.tr[baseStreamId] && book.tr[baseStreamId][currentChapterIndex]) || []);
+
+                const colsMarkup = mosaicStreams.map((sid, colIdx) => {
+                    const meta = getStreamMeta(sid);
+                    const bdgCls = getApprovalBadgeClass(meta.approval);
+                    const opts = reg.map(t => `<option value="${t.id}" ${t.id === sid ? 'selected' : ''}>${escapeHtmlText(t.short)} [${escapeHtmlText(t.tier_badge)}]</option>`).join('');
+                    const draCh = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
+                    const rawStreamCh = sid === 'dra' ? draCh
+                        : sid === 'vulg_clem' ? ((book.verses_la && book.verses_la[currentChapterIndex]) || [])
+                        : sid === 'lxx_gnt' ? ((book.verses_gr && book.verses_gr[currentChapterIndex]) || [])
+                        : sid === 'wlc' ? ((book.verses_he && book.verses_he[currentChapterIndex]) || [])
+                        : ((book.tr && book.tr[sid] && book.tr[sid][currentChapterIndex]) || []);
+                    const hasData = rawStreamCh.some(x => x && String(x).trim().length > 0 && !String(x).trim().startsWith('[—'));
+                    const rowCount = Math.max(draCh.length, rawStreamCh.length);
+                    const streamLang = meta.lang === 'gr' ? 'Greek' : meta.lang === 'he' ? 'Hebrew' : meta.lang === 'la' ? 'Latin' : 'English';
+                    let rowsHtml = '';
+                    if (!hasData) {
+                        rowsHtml = `<div class="p-3 rounded-lg bg-slate-950/60 text-xs italic text-amber-200/80">${escapeHtmlText(meta.name)} unavailable for ${escapeHtmlText(book.name)} ${chapNum}.</div>`;
+                    } else {
+                        for (let idx = 0; idx < rowCount; idx++) {
+                            const txt = rawStreamCh[idx] || '';
+                            const activeBorder = (idx === currentVerseIndex) ? 'bg-slate-800 suite-pill-active' : 'hover:bg-slate-800/45';
+                            const displayTxt = txt || `[Merged / omitted v.${idx + 1}]`;
+                            const renderedBody = txt
+                                ? buildParallelVerseWords(displayTxt, streamLang, (parallelDiffEnabled && colIdx > 0 ? baseCh[idx] : ''), idx, colIdx)
+                                : escapeHtmlText(displayTxt);
+                            rowsHtml += `<p id="mosaic-col-${colIdx}-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer p-1.5 rounded transition ${activeBorder}" ${meta.lang === 'he' ? 'dir="rtl"' : ''}><sup class="font-mono text-[10px] mr-1" style="color:${meta.color}" dir="ltr">${idx + 1}</sup> ${renderedBody}</p>`;
+                        }
+                    }
+                    return `
+                        <div class="mosaic-stream-col">
+                            <div class="px-2 py-1.5 border-b border-slate-800 bg-slate-950/80 space-y-1 flex-shrink-0">
+                                <div class="flex items-center justify-between gap-1">
+                                    <span class="text-[9.5px] font-mono font-bold truncate" style="color:${meta.color}">STREAM ${colIdx + 1} · ${streamLang.toUpperCase()}</span>
+                                    <div class="flex items-center gap-1 flex-shrink-0">
+                                        <span class="${bdgCls}">${escapeHtmlText(meta.tier_badge)}</span>
+                                        ${mosaicStreams.length > 2 ? `<button type="button" onclick="removeParallelCol(${colIdx})" class="text-[10px] font-mono text-slate-500 hover:text-rose-400 px-0.5">&times;</button>` : ''}
+                                    </div>
+                                </div>
+                                <select onchange="setParallelCol(${colIdx}, this.value)" class="suite-select w-full" style="height:22px;font-size:10px;">${opts}</select>
+                            </div>
+                            <div id="par-scroll-${colIdx}" class="mosaic-stream-body space-y-1.5 ${meta.lang === 'he' ? 'text-right' : ''}">
+                                ${rowsHtml}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = `
+                    <div class="mosaic-4k-shell">
+                        <!-- MAXIMIZED LEFT STAGE: TALL MULTI-TRANSLATION COLUMNS + ULTRA-SLIM CONTROL STRIP -->
+                        <div class="mosaic-translations-stage">
+                            <div class="flex flex-wrap items-center justify-between gap-2 px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-950/90 text-[10px] font-mono flex-shrink-0">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold">4K MOSAIC (${mosaicStreams.length} STREAMS)</span>
+                                    <button type="button" onclick="addParallelCol()" class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25">+ Add Stream</button>
+                                    <span id="parMorphPreviewText" class="text-slate-300 truncate max-w-[36ch]">Hover word for lemma/Strong's · Click to inspect right</span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2.5">
+                                    <label class="flex items-center gap-1 text-amber-300 cursor-pointer"><input type="checkbox" ${parallelInterlinearOn ? 'checked' : ''} onchange="setParallelInterlinear(this.checked)" class="accent-amber-400"><span>Glosses</span></label>
+                                    <label class="flex items-center gap-1 text-slate-300 cursor-pointer"><input type="checkbox" ${parallelDiffEnabled ? 'checked' : ''} onchange="setParallelDiff(this.checked)" class="accent-emerald-400"><span>Word Diff</span></label>
+                                    <label class="flex items-center gap-1 text-slate-300 cursor-pointer"><input type="checkbox" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-cyan-400"><span>Sync Scroll</span></label>
+                                </div>
+                            </div>
+                            <div class="mosaic-translations-columns">
+                                ${colsMarkup}
+                            </div>
+                        </div>
+
+                        <!-- RIGHT STACK: TOP STUDY NOTES / XREFS + BOTTOM PATRISTIC / THEOLOGIAN / CONCILIAR NEXUS -->
+                        <div class="mosaic-right-stack">
+                            <div class="mosaic-panel">
+                                <div class="mosaic-panel-header">
+                                    <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                                        <span class="font-bold text-amber-300 uppercase">STUDY NOTES</span>
+                                        <span class="px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1 font-mono text-[10px]">
+                                        <button type="button" onclick="toggleSplitPaneScope()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">${splitPaneScope === 'verse' ? 'Verse' : 'Chapter'}</button>
+                                        <button type="button" onclick="toggleVisibilityPopover()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">Filter</button>
+                                    </div>
+                                </div>
+                                <div id="mosaicNotesList" class="mosaic-panel-body space-y-2 text-xs">
+                                    <div class="italic opacity-65">Loading study notes...</div>
+                                </div>
+                            </div>
+
+                            <div class="mosaic-panel">
+                                <div class="mosaic-panel-header">
+                                    <div class="flex items-center gap-1.5 font-mono text-[10px]">
+                                        <span class="font-bold text-purple-300 uppercase">PATRISTIC, THEOLOGIAN &amp; CONCILIAR NEXUS</span>
+                                    </div>
+                                    <button type="button" onclick="toggleTraditionInfoCard()" class="font-mono text-[10px] text-cyan-300 hover:underline">Tradition (i)</button>
+                                </div>
+                                <div id="mosaicNexusHost" class="mosaic-panel-body space-y-2 text-xs">
+                                    <div class="italic opacity-65">Loading Church Fathers, Scholastics &amp; Councils...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                for (let ci = 0; ci < mosaicStreams.length; ci++) {
+                    const activeEl = document.getElementById(`mosaic-col-${ci}-${currentVerseIndex}`);
+                    const paneEl = document.getElementById(`par-scroll-${ci}`);
+                    if (activeEl && paneEl) paneEl.scrollTop = Math.max(0, activeEl.offsetTop - paneEl.offsetTop - 80);
+                }
+                wireParallelScrollSync();
+                renderNotesFeedIntoElement(document.getElementById('mosaicNotesList'), book, chapNum, verseNum, splitPaneScope);
+                hydrateCatenaNexusIntoTarget(document.getElementById('mosaicNexusHost'), book, chapNum, verseNum, true);
             } else {
                 // "Beyond basics" feature request (James's /goal, 2026-11-10): a large number of
                 // verses AND all of their study notes visible simultaneously, instead of stepping
@@ -5976,7 +6806,7 @@
         function setParallelInterlinear(on) {
             parallelInterlinearOn = !!on;
             localStorage.setItem('plenary_parallel_interlinear', parallelInterlinearOn ? '1' : '0');
-            if (currentReaderMode === 'parallel') renderReader();
+            if (currentReaderMode === 'parallel' || currentReaderMode === 'mosaic_4k') renderReader();
         }
 
         function clickParallelWord(lang, surface, vIdx) {
@@ -5990,12 +6820,18 @@
                 const enRes = getEnglishStreamResult(book, currentChapterIndex, currentVerseIndex, masterEnId);
                 const hl = localStorage.getItem(`hl_${book.id}_${chapNum}_${verseNum}`) || '';
                 updateStickyVerseBar(book, chapNum, verseNum, enRes.text || '', enRes.meta, hl);
-                document.querySelectorAll('[id^="par-col-"][class*="suite-pill-active"]').forEach(el => {
+                document.querySelectorAll('[id^="par-col-"][class*="suite-pill-active"], [id^="mosaic-col-"][class*="suite-pill-active"]').forEach(el => {
                     el.classList.remove('bg-slate-800', 'suite-pill-active');
                 });
-                for (let ci = 0; ci < parallelCols.length; ci++) {
-                    const pEl = document.getElementById(`par-col-${ci}-${vIdx}`);
+                const maxCols = Math.max(parallelCols.length, 6);
+                for (let ci = 0; ci < maxCols; ci++) {
+                    const pEl = document.getElementById(`par-col-${ci}-${vIdx}`) || document.getElementById(`mosaic-col-${ci}-${vIdx}`);
                     if (pEl) pEl.classList.add('bg-slate-800', 'suite-pill-active');
+                }
+                if (currentReaderMode === 'mosaic_4k') {
+                    renderNotesFeedIntoElement(document.getElementById('mosaicNotesList'), book, chapNum, verseNum, splitPaneScope);
+                    hydrateCatenaNexusIntoTarget(document.getElementById('mosaicNexusHost'), book, chapNum, verseNum, true);
+                    if (typeof renderInspectorOriginalTongues === 'function') renderInspectorOriginalTongues(book, chapNum, verseNum);
                 }
             }
             previewParallelWord(lang, surface, (vIdx || currentVerseIndex) + 1);
@@ -6044,7 +6880,7 @@
         function setParallelDiff(on) {
             parallelDiffEnabled = !!on;
             localStorage.setItem('plenary_parallel_diff', parallelDiffEnabled ? '1' : '0');
-            if (currentReaderMode === 'parallel') renderReader();
+            if (currentReaderMode === 'parallel' || currentReaderMode === 'mosaic_4k') renderReader();
         }
 
         function renderParallelWordDiff(baseText, targetText) {
@@ -6159,17 +6995,19 @@
         }
 
         function wireParallelScrollSync() {
-            const panes = [
-                document.getElementById('par-scroll-anchor'),
-                ...parallelCols.map((_, i) => document.getElementById(`par-scroll-${i}`))
-            ].filter(Boolean);
-            panes.forEach(pane => {
+            const panes = [document.getElementById('par-scroll-anchor')];
+            for (let i = 0; i < Math.max(parallelCols.length, 6); i++) {
+                const el = document.getElementById(`par-scroll-${i}`);
+                if (el) panes.push(el);
+            }
+            const activePanes = panes.filter(Boolean);
+            activePanes.forEach(pane => {
                 pane.addEventListener('scroll', () => {
                     if (!parallelSyncScroll || parallelSyncScrollGuard) return;
                     const range = pane.scrollHeight - pane.clientHeight;
                     const frac = range > 0 ? pane.scrollTop / range : 0;
                     parallelSyncScrollGuard = true;
-                    panes.forEach(other => {
+                    activePanes.forEach(other => {
                         if (other === pane) return;
                         const otherRange = other.scrollHeight - other.clientHeight;
                         if (otherRange > 0) other.scrollTop = frac * otherRange;
@@ -6486,7 +7324,24 @@
             }
         }
 
+        let compactChromeOn = localStorage.getItem('plenary_compact_chrome') === '1';
+
+        function toggleCompactChrome(forceState) {
+            compactChromeOn = (typeof forceState === 'boolean') ? forceState : !compactChromeOn;
+            localStorage.setItem('plenary_compact_chrome', compactChromeOn ? '1' : '0');
+            syncChromeCompactState();
+        }
+
+        function syncChromeCompactState() {
+            const isAuto4K = (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k');
+            const active = compactChromeOn || isAuto4K;
+            document.body.classList.toggle('chrome-compact-4k', active);
+            const btn = document.getElementById('btnCompactChrome');
+            if (btn) btn.classList.toggle('is-active', active);
+        }
+
         function setReaderView(mode) {
+            const prevMode = currentReaderMode;
             currentReaderMode = mode;
             const map = {
                 dolls: 'btnViewDolls',
@@ -6494,12 +7349,29 @@
                 chapter: 'btnViewChapter',
                 devotional: 'btnViewDevotional',
                 apostolic: 'btnViewApostolic',
-                study_scroll: 'btnViewStudyScroll'
+                study_scroll: 'btnViewStudyScroll',
+                catena_4k: 'btnViewCatena4k',
+                mosaic_4k: 'btnViewMosaic4k'
             };
             Object.entries(map).forEach(([k, id]) => {
                 const el = document.getElementById(id);
                 if (el) el.classList.toggle('is-active', k === mode);
             });
+            const is4KBench = (mode === 'catena_4k' || mode === 'mosaic_4k');
+            const was4KBench = (prevMode === 'catena_4k' || prevMode === 'mosaic_4k');
+            document.body.classList.toggle('layout-4k-ultrawide', is4KBench);
+            const canonEl = document.getElementById('canonSidebar');
+            if (is4KBench) {
+                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleCommentarySplitPane(false, true);
+                if (canonEl && !canonEl.classList.contains('hidden')) {
+                    canonEl.setAttribute('data-auto-collapsed-4k', '1');
+                    canonEl.classList.add('hidden');
+                }
+            } else if (was4KBench && canonEl && canonEl.getAttribute('data-auto-collapsed-4k') === '1') {
+                canonEl.removeAttribute('data-auto-collapsed-4k');
+                canonEl.classList.remove('hidden');
+            }
+            syncChromeCompactState();
             renderReader();
         }
 
@@ -6791,11 +7663,41 @@
         }
 
         // ====== RIGHT INSPECTOR ======
+        function renderInspectorOriginalTongues(book, chapNum, verseNum) {
+            const slot = document.getElementById('inspectorOriginalTonguesSlot');
+            if (!slot) return;
+            const activeGr = (book.verses_gr && book.verses_gr[currentChapterIndex] && book.verses_gr[currentChapterIndex][currentVerseIndex]) || '';
+            const activeHe = (book.verses_he && book.verses_he[currentChapterIndex] && book.verses_he[currentChapterIndex][currentVerseIndex]) || '';
+            const activeLa = (book.verses_la && book.verses_la[currentChapterIndex] && book.verses_la[currentChapterIndex][currentVerseIndex]) || '';
+            const hasGr = activeGr && !activeGr.startsWith('[—') && !activeGr.startsWith('[Deuterocanonical');
+            const hasHe = activeHe && !activeHe.startsWith('[—') && !activeHe.startsWith('[Deuterocanonical');
+            const hasLa = activeLa && !activeLa.startsWith('[—');
+            if (!hasGr && !hasHe && !hasLa) {
+                slot.innerHTML = '';
+                return;
+            }
+            const collapsed = localStorage.getItem('plenary_insp_tongues_collapsed') === '1';
+            slot.innerHTML = `
+                <div class="p-3 rounded-xl border border-emerald-500/35 bg-slate-900/70 space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-[10px] font-mono font-bold text-emerald-300 uppercase tracking-wider">ORIGINAL TONGUES (${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum})</span>
+                        <button type="button" onclick="localStorage.setItem('plenary_insp_tongues_collapsed', '${collapsed ? '0' : '1'}'); renderInspectorOriginalTongues(APP_DATA.books[currentBookIndex], currentChapterIndex+1, currentVerseIndex+1);" class="text-[10px] font-mono text-slate-400 hover:text-white">${collapsed ? 'Expand' : 'Hide'}</button>
+                    </div>
+                    ${collapsed ? '' : `
+                        ${hasGr ? `<div><div class="text-[9px] font-mono text-emerald-400/90 uppercase mb-1">${book.testament === 'OT' ? 'Greek Septuagint (LXX)' : 'Greek New Testament (GNT)'}</div>${buildInteractiveWordStrip(activeGr, 'Greek', book.testament)}</div>` : ''}
+                        ${hasHe ? `<div><div class="text-[9px] font-mono text-amber-400/90 uppercase mb-1">Hebrew Proto-Masoretic (WLC)</div>${buildInteractiveWordStrip(activeHe, 'Hebrew', book.testament)}</div>` : ''}
+                        ${hasLa ? `<div><div class="text-[9px] font-mono text-purple-400/90 uppercase mb-1">Latin Clementine Vulgate</div>${buildInteractiveWordStrip(activeLa, 'Latin', book.testament)}</div>` : ''}
+                    `}
+                </div>
+            `;
+        }
+
         function updateInspector() {
             const book = APP_DATA.books[currentBookIndex];
             const chapNum = currentChapterIndex + 1;
             const verseNum = currentVerseIndex + 1;
             const activeGr = (book.verses_gr && book.verses_gr[currentChapterIndex] && book.verses_gr[currentChapterIndex][currentVerseIndex]) || '';
+            renderInspectorOriginalTongues(book, chapNum, verseNum);
 
             if (activeCrux && activeCrux.interlinear && activeCrux.interlinear.length > 0) {
                 inspectActiveCruxWord(0);
@@ -7354,24 +8256,25 @@
 
         // ====== COMFORT PRINT & PROFESSIONAL BIBLE TYPOGRAPHY ENGINE ======
         const DEFAULT_TYPOGRAPHY_PREFS = {
-            fontFamily: 'comfortprint_clone',
-            fontSizePx: 17,
+            fontFamily: 'comfortprint',
+            fontSizePx: 20,
             lineHeight: 1.72,
-            measureCh: 64,
+            measureCh: 70,
             paraSpacingEm: 0.85,
         };
-        if (!localStorage.getItem('plenary_font_v3_default')) {
+        if (!localStorage.getItem('plenary_font_v4_20px')) {
             try {
-                const prevFont = localStorage.getItem('plenary_comfort_font');
-                if (!prevFont || prevFont === 'comfortprint' || prevFont === 'opendyslexic' || prevFont === 'crimson_pro' || prevFont === 'literata' || prevFont === 'lora' || prevFont === 'source_serif') {
-                    localStorage.setItem('plenary_comfort_font', 'comfortprint_clone');
-                    const rawT = localStorage.getItem('plenary_typography_v1');
-                    if (rawT) {
-                        const objT = JSON.parse(rawT);
-                        objT.fontFamily = 'comfortprint_clone';
-                        localStorage.setItem('plenary_typography_v1', JSON.stringify(objT));
-                    }
-                }
+                localStorage.setItem('plenary_comfort_font', 'comfortprint');
+                localStorage.setItem('plenary_comfort_scale', '1');
+                const rawT = localStorage.getItem('plenary_typography_v1');
+                const objT = rawT ? JSON.parse(rawT) : {};
+                objT.fontFamily = 'comfortprint';
+                objT.fontSizePx = 20;
+                objT.lineHeight = 1.72;
+                objT.measureCh = 70;
+                objT.paraSpacingEm = 0.85;
+                localStorage.setItem('plenary_typography_v1', JSON.stringify(objT));
+                localStorage.setItem('plenary_font_v4_20px', '1');
                 localStorage.setItem('plenary_font_v3_default', '1');
             } catch (e) {}
         }
@@ -7435,8 +8338,8 @@
 
         function applyComfortTypography() {
             const root = document.documentElement;
-            let ff = typographyPrefs.fontFamily || currentComfortFont || 'comfortprint_clone';
-            if (!FONT_FAMILY_STACKS[ff]) ff = 'comfortprint_clone';
+            let ff = typographyPrefs.fontFamily || currentComfortFont || 'comfortprint';
+            if (!FONT_FAMILY_STACKS[ff]) ff = 'comfortprint';
             const stack = FONT_FAMILY_STACKS[ff];
             const ls = FONT_LETTER_SPACING[ff] || '0em';
             document.body.setAttribute('data-comfort-font', ff);
@@ -7448,9 +8351,9 @@
             root.style.setProperty('--plenary-letter-spacing', ls);
             document.body.style.setProperty('--plenary-letter-spacing', ls);
             root.style.setProperty('--plenary-font-scale', String(currentComfortScale));
-            root.style.setProperty('--plenary-font-size', `${(typographyPrefs.fontSizePx || 17) / 16}rem`);
+            root.style.setProperty('--plenary-font-size', `${(typographyPrefs.fontSizePx || 20) / 16}rem`);
             root.style.setProperty('--plenary-line-height', String(typographyPrefs.lineHeight || 1.72));
-            root.style.setProperty('--plenary-measure', `${typographyPrefs.measureCh || 64}ch`);
+            root.style.setProperty('--plenary-measure', `${typographyPrefs.measureCh || 70}ch`);
             root.style.setProperty('--plenary-para-spacing', `${typographyPrefs.paraSpacingEm || 0.85}em`);
 
             const sel = document.getElementById('comfortFontSelector');
@@ -8351,7 +9254,7 @@
 
         function normalizeThemeName(theme) {
             const mapped = PLENARY_THEME_ALIASES[theme] || theme;
-            return PLENARY_THEMES.includes(mapped) ? mapped : 'oxford-dark';
+            return PLENARY_THEMES.includes(mapped) ? mapped : 'amoled-gold';
         }
 
         function setTheme(theme) {
@@ -8389,7 +9292,16 @@
         }
 
         function initTheme() {
-            const saved = localStorage.getItem('plenary_theme') || 'oxford-dark';
+            if (!localStorage.getItem('plenary_theme_v4_amoled')) {
+                try {
+                    const prev = localStorage.getItem('plenary_theme');
+                    if (!prev || prev === 'oxford-dark') {
+                        localStorage.setItem('plenary_theme', 'amoled-gold');
+                    }
+                    localStorage.setItem('plenary_theme_v4_amoled', '1');
+                } catch (e) {}
+            }
+            const saved = localStorage.getItem('plenary_theme') || 'amoled-gold';
             setTheme(saved);
         }
 
@@ -8583,25 +9495,29 @@
         function applyLayoutPreset(preset) {
             document.body.classList.remove('layout-4k-ultrawide');
             if (preset === 'standard_1col') {
-                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleSplitCommentaryPane(false);
+                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleCommentarySplitPane(false);
                 setReaderView('devotional');
             } else if (preset === 'split_reader_notes') {
                 setReaderView('devotional');
-                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleSplitCommentaryPane(true);
+                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleCommentarySplitPane(true);
             } else if (preset === 'trinity_3col') {
                 document.body.classList.add('layout-4k-ultrawide');
                 setReaderView('dolls');
-                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleSplitCommentaryPane(true);
+                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleCommentarySplitPane(true);
+            } else if (preset === 'catena_4k_workbench') {
+                setReaderView('catena_4k');
+            } else if (preset === 'mosaic_4k_tv') {
+                setReaderView('mosaic_4k');
             } else if (preset === 'four_col_lab') {
-                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleSplitCommentaryPane(false);
+                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleCommentarySplitPane(false);
                 setReaderView('parallel');
             } else if (preset === 'quad_4k_workbench') {
                 document.body.classList.add('layout-4k-ultrawide');
                 setReaderView('parallel');
-                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleSplitCommentaryPane(true);
+                if (typeof splitPaneOn !== 'undefined' && !splitPaneOn) toggleCommentarySplitPane(true);
             } else if (preset === 'canvas_4k_grid') {
                 document.body.classList.add('layout-4k-ultrawide');
-                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleSplitCommentaryPane(false);
+                if (typeof splitPaneOn !== 'undefined' && splitPaneOn) toggleCommentarySplitPane(false);
                 setReaderView('canvas_4k');
             } else if (preset === 'dolls_deep_dive') {
                 setReaderView('dolls');
@@ -8883,6 +9799,9 @@
             const scopeBtn = document.getElementById('splitPaneScopeBtn');
             if (scopeBtn) scopeBtn.textContent = splitPaneScope === 'verse' ? 'Verse' : 'Chapter';
             renderSplitCommentaryPane();
+            if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                renderReader();
+            }
         }
 
         function resetSplitRatio() {
@@ -9284,12 +10203,18 @@
             const chapNum = currentChapterIndex + 1;
             const verseNum = currentVerseIndex + 1;
             if (anchorRef) anchorRef.textContent = `${book.abbr} ${chapNum}:${verseNum}`;
+            renderNotesFeedIntoElement(list, book, chapNum, verseNum, splitPaneScope);
+        }
+
+        function renderNotesFeedIntoElement(list, book, chapNum, verseNum, scopeMode) {
+            if (!list || !book) return;
+            const useScope = scopeMode || splitPaneScope || 'verse';
             list.innerHTML = '<div class="italic opacity-60">Loading study notes...</div>';
 
             loadBookNotesShard(book.id, (shardData) => {
                 if (APP_DATA.books[currentBookIndex].id !== book.id || currentChapterIndex + 1 !== chapNum) return;
                 const chapNotes = (shardData && shardData.chapters && shardData.chapters[String(chapNum)]) || {};
-                const verseKeys = splitPaneScope === 'verse'
+                const verseKeys = useScope === 'verse'
                     ? [String(verseNum)]
                     : Object.keys(chapNotes).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
 
@@ -9368,6 +10293,10 @@
                 list.innerHTML = cards.length
                     ? cards.join('')
                     : '<div class="italic opacity-60">No visible notes for the current scope and filter settings.</div>';
+                const activeNoteEl = list.querySelector(`.split-note-card[data-note-verse="${currentVerseIndex}"]`);
+                if (activeNoteEl && list.scrollHeight > list.clientHeight) {
+                    list.scrollTop = Math.max(0, activeNoteEl.offsetTop - list.offsetTop - 8);
+                }
                 refreshIcons();
             });
         }
