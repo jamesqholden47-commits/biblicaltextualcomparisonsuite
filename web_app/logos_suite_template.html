@@ -586,6 +586,50 @@
             background: var(--accent-soft);
             text-decoration: underline;
         }
+        .fn-word-anchor {
+            border-bottom: 1.5px dotted var(--accent-primary);
+            border-radius: 2px;
+            padding: 0 1px;
+            cursor: pointer;
+            transition: background-color 0.14s ease, border-color 0.14s ease;
+        }
+        .fn-word-anchor:hover,
+        .fn-word-anchor.fn-word-active {
+            background: var(--accent-soft);
+            border-bottom-style: solid;
+        }
+        .fn-word-count {
+            font-family: var(--plenary-font-mono);
+            font-size: 0.62em;
+            font-weight: 600;
+            color: var(--accent-primary);
+            opacity: 0.78;
+            margin-left: 1px;
+            vertical-align: super;
+            user-select: none;
+        }
+        .fn-verse-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin-left: 4px;
+            padding: 0 5px;
+            border-radius: 999px;
+            border: 1px solid var(--border-hairline, rgba(148,163,184,0.35));
+            background: transparent;
+            color: var(--accent-primary);
+            font-family: var(--plenary-font-mono);
+            font-size: 0.68em;
+            font-weight: 600;
+            line-height: 1.45;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.14s ease;
+        }
+        .fn-verse-pill:hover {
+            background: var(--accent-soft);
+        }
         .suite-verse-highlight {
             background: var(--accent-soft) !important;
             outline: 1px solid var(--accent-primary);
@@ -594,7 +638,10 @@
 
         /* Inline Marker Visibility Gates */
         #readerSplitContainer[data-hide-verse-nums="1"] .suite-verse-num { display: none !important; }
-        #readerSplitContainer[data-hide-fn-sups="1"] .suite-fn-sup { display: none !important; }
+        #readerSplitContainer[data-hide-fn-sups="1"] .suite-fn-sup,
+        #readerSplitContainer[data-hide-fn-sups="1"] .fn-word-count,
+        #readerSplitContainer[data-hide-fn-sups="1"] .fn-verse-pill { display: none !important; }
+        #readerSplitContainer[data-hide-fn-sups="1"] .fn-word-anchor { border-bottom-color: transparent !important; }
         #readerSplitContainer[data-hide-bibcrit="1"] .suite-badge-bibcrit { display: none !important; }
         #readerSplitContainer[data-hide-apparatus="1"] .suite-badge-apparatus { display: none !important; }
         #readerSplitContainer[data-hide-xrefs="1"] .suite-xref-block { display: none !important; }
@@ -5991,17 +6038,113 @@
             window.addEventListener('mouseup', onUp);
         }
 
+        let activeSplitAnchorFilter = null; // { verse: number, word: string } | null
+
+        function normalizeAnchorToken(w) {
+            return String(w || '').toLowerCase().replace(/^[^a-z0-9\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]+|[^a-z0-9\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]+$/gi, '');
+        }
+
+        function escapeRegExp(s) {
+            return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
         function buildInlineFnSupsHtml(chapNotes, vNum) {
             if (!chapNotes) return '';
             const notes = chapNotes[String(vNum)] || [];
             if (!notes.length) return '';
-            const sigla = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
-            if (!sigla.length) return '';
-            return sigla.map(({ letter, note }) => {
-                const srcLabel = SOURCE_BADGE[note.src] ? SOURCE_BADGE[note.src].label : (note.src || 'Note');
-                const tip = `${srcLabel}${note.anchor_word ? ` — "${note.anchor_word}"` : ''}: click to open note (${letter})`;
-                return `<sup class="suite-fn-sup" data-fn-verse="${vNum}" data-fn-letter="${escapeHtmlText(letter)}" onclick="event.stopPropagation(); jumpToSplitNote(${vNum}, '${escapeJsArg(letter)}')" title="${escapeHtmlText(tip)}">${escapeHtmlText(letter)}</sup>`;
-            }).join('');
+            const visible = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
+            if (!visible.length) return '';
+            return `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${visible.length} study notes on v.${vNum} — click to open side-by-side">✦ ${visible.length}</button>`;
+        }
+
+        function anchorWordsInVerseElement(slotEl, chapNotes, vNum) {
+            const notes = chapNotes[String(vNum)] || [];
+            const visible = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
+            if (!visible.length) {
+                slotEl.innerHTML = '';
+                return;
+            }
+            const byWord = new Map();
+            let verseLevelCount = 0;
+            visible.forEach(({ note }) => {
+                const rawAnchor = String(note.anchor_word || '').trim();
+                const norm = normalizeAnchorToken(rawAnchor.split(/\s+/)[0]);
+                if (norm && norm.length >= 2) {
+                    if (!byWord.has(norm)) byWord.set(norm, { display: rawAnchor, count: 0 });
+                    byWord.get(norm).count += 1;
+                } else {
+                    verseLevelCount += 1;
+                }
+            });
+
+            const parentVerseEl = slotEl.parentElement;
+            let matchedWords = 0;
+            if (parentVerseEl && byWord.size > 0) {
+                // Collect text nodes belonging directly to the verse prose (exclude <sup> and .suite-fn-slot)
+                const walker = document.createTreeWalker(parentVerseEl, NodeFilter.SHOW_TEXT, {
+                    acceptNode(node) {
+                        const p = node.parentElement;
+                        if (!p) return NodeFilter.FILTER_REJECT;
+                        if (p.closest('.suite-verse-num, .suite-fn-slot, .fn-word-anchor, sup, button')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return node.nodeValue && node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                    }
+                });
+                const textNodes = [];
+                let n;
+                while ((n = walker.nextNode())) textNodes.push(n);
+
+                const remaining = new Map(byWord);
+                for (const tn of textNodes) {
+                    if (!remaining.size) break;
+                    const wordsRegex = new RegExp(`\\b(${Array.from(remaining.keys()).map(escapeRegExp).join('|')})\\b`, 'gi');
+                    const text = tn.nodeValue;
+                    if (!wordsRegex.test(text)) continue;
+                    wordsRegex.lastIndex = 0;
+                    const frag = document.createDocumentFragment();
+                    let lastIdx = 0;
+                    let m;
+                    while ((m = wordsRegex.exec(text)) !== null) {
+                        const norm = normalizeAnchorToken(m[1]);
+                        const meta = remaining.get(norm);
+                        if (!meta) continue;
+                        if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+                        const span = document.createElement('span');
+                        span.className = 'fn-word-anchor';
+                        span.setAttribute('data-fn-verse', String(vNum));
+                        span.setAttribute('data-anchor-word', norm);
+                        span.setAttribute('title', `${meta.count} note${meta.count > 1 ? 's' : ''} anchored to “${m[1]}” — click to filter side pane`);
+                        span.onclick = (ev) => { ev.stopPropagation(); filterSplitByAnchorWord(vNum, norm); };
+                        span.onmouseenter = () => highlightSplitWordNotes(vNum, norm, true);
+                        span.onmouseleave = () => highlightSplitWordNotes(vNum, norm, false);
+                        span.appendChild(document.createTextNode(m[1]));
+                        const sup = document.createElement('sup');
+                        sup.className = 'fn-word-count';
+                        sup.textContent = String(meta.count);
+                        span.appendChild(sup);
+                        frag.appendChild(span);
+                        lastIdx = m.index + m[0].length;
+                        remaining.delete(norm);
+                        matchedWords += meta.count;
+                    }
+                    if (lastIdx > 0) {
+                        if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+                        tn.parentNode.replaceChild(frag, tn);
+                    }
+                }
+                for (const rem of remaining.values()) {
+                    verseLevelCount += rem.count;
+                }
+            } else {
+                verseLevelCount = visible.length;
+            }
+
+            if (verseLevelCount > 0) {
+                slotEl.innerHTML = `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${verseLevelCount} verse-level / cross-translation note${verseLevelCount > 1 ? 's' : ''} on v.${vNum}">✦ ${verseLevelCount}</button>`;
+            } else {
+                slotEl.innerHTML = '';
+            }
         }
 
         function hydrateInlineChapterFootnotes(bookId, chapNum) {
@@ -6010,9 +6153,32 @@
                 const chapNotes = (shardData && shardData.chapters && shardData.chapters[String(chapNum)]) || {};
                 document.querySelectorAll('#readerContent .suite-fn-slot[data-fn-verse]').forEach(slot => {
                     const vNum = parseInt(slot.getAttribute('data-fn-verse'), 10);
-                    if (!isNaN(vNum)) slot.innerHTML = buildInlineFnSupsHtml(chapNotes, vNum);
+                    if (!isNaN(vNum)) anchorWordsInVerseElement(slot, chapNotes, vNum);
                 });
             });
+        }
+
+        function highlightSplitWordNotes(vNum, normWord, active) {
+            document.querySelectorAll(`#readerContent .fn-word-anchor[data-fn-verse="${vNum}"][data-anchor-word="${normWord}"]`).forEach(el => {
+                el.classList.toggle('fn-word-active', !!active);
+            });
+            document.querySelectorAll(`#splitCommentaryList .split-note-card[data-note-verse="${vNum - 1}"][data-anchor-word="${normWord}"]`).forEach(card => {
+                card.style.outline = active ? '2px solid var(--accent-primary)' : '';
+            });
+        }
+
+        function filterSplitByAnchorWord(vNum, normWord) {
+            activeSplitAnchorFilter = { verse: vNum, word: normWord };
+            if (!splitPaneOn) toggleCommentarySplitPane(true);
+            if (currentVerseIndex !== vNum - 1) selectVerse(vNum - 1);
+            else renderSplitCommentaryPane();
+        }
+
+        function clearSplitAnchorFilter(vNum) {
+            activeSplitAnchorFilter = null;
+            if (!splitPaneOn) toggleCommentarySplitPane(true);
+            if (vNum && currentVerseIndex !== vNum - 1) selectVerse(vNum - 1);
+            else renderSplitCommentaryPane();
         }
 
         function renderSplitCommentaryPane() {
@@ -6033,15 +6199,31 @@
                     : Object.keys(chapNotes).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
 
                 const cards = [];
+                if (activeSplitAnchorFilter) {
+                    cards.push(`
+                        <div class="sticky top-0 z-10 flex items-center justify-between gap-2 px-2.5 py-1.5 mb-2 rounded-md border border-amber-500/40 bg-slate-900/95 text-[11px] font-mono">
+                            <span>Anchored to <strong>“${escapeHtmlText(activeSplitAnchorFilter.word)}”</strong> (v.${activeSplitAnchorFilter.verse})</span>
+                            <button type="button" onclick="clearSplitAnchorFilter()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-[10px]">Show all</button>
+                        </div>
+                    `);
+                }
                 verseKeys.forEach(vKey => {
                     const vNum = parseInt(vKey, 10);
                     const vIdx = vNum - 1;
                     const refKey = `${book.id}_${chapNum}_${vNum}`;
                     const personalNote = localStorage.getItem(`notes_${refKey}`);
                     const notes = chapNotes[vKey] || [];
-                    const sigla = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
+                    const sigla = computeNoteSigla(notes).filter(s => {
+                        if (!isNoteVisibleByPrefs(s.note)) return false;
+                        if (activeSplitAnchorFilter) {
+                            if (vNum !== activeSplitAnchorFilter.verse) return false;
+                            const norm = normalizeAnchorToken(String(s.note.anchor_word || '').split(/\s+/)[0]);
+                            return norm === activeSplitAnchorFilter.word;
+                        }
+                        return true;
+                    });
 
-                    if (personalNote) {
+                    if (personalNote && !activeSplitAnchorFilter) {
                         cards.push(`
                             <div class="split-note-card ${vIdx === currentVerseIndex ? 'split-note-active' : ''}" data-note-verse="${vIdx}" onclick="focusVerseFromSplitNote(${vIdx})">
                                 <div class="flex items-center justify-between gap-2 mb-1 font-mono text-[10px]">
@@ -6055,11 +6237,14 @@
                     sigla.forEach(({ note: n, letter, dupOf }) => {
                         const badge = SOURCE_BADGE[n.src] || { label: n.src || 'Note', cls: 'text-slate-300 border-slate-700 bg-slate-800' };
                         const isActive = vIdx === currentVerseIndex;
+                        const normAnchor = normalizeAnchorToken(String(n.anchor_word || '').split(/\s+/)[0]);
+                        const hoverAttr = normAnchor ? `data-anchor-word="${escapeHtmlText(normAnchor)}" onmouseenter="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', true)" onmouseleave="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', false)"` : '';
                         cards.push(`
-                            <div id="split-note-${vNum}-${escapeHtmlText(letter)}" class="split-note-card cursor-pointer ${isActive ? 'split-note-active' : ''}" data-note-verse="${vIdx}" onclick="focusVerseFromSplitNote(${vIdx})">
+                            <div id="split-note-${vNum}-${escapeHtmlText(letter)}" class="split-note-card cursor-pointer ${isActive ? 'split-note-active' : ''}" data-note-verse="${vIdx}" ${hoverAttr} onclick="focusVerseFromSplitNote(${vIdx})">
                                 <div class="flex items-center gap-1.5 flex-wrap mb-1">
                                     <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border border-slate-700">${vNum}${escapeHtmlText(letter)}</span>
                                     <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>
+                                    ${n.anchor_word ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-serif italic border border-slate-700/70 opacity-85">“${escapeHtmlText(n.anchor_word)}”</span>` : ''}
                                     ${n.kind ? `<span class="text-[9px] font-mono opacity-65 uppercase">${escapeHtmlText(n.kind)}</span>` : ''}
                                     ${dupOf ? `<span class="text-[9px] font-mono opacity-75">[=${escapeHtmlText(dupOf)}]</span>` : ''}
                                 </div>
