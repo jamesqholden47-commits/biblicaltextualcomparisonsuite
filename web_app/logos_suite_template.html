@@ -1869,6 +1869,7 @@
                 if (booksArr.length > 0) {
                     APP_DATA.books = booksArr.map(b => ({
                         ...b,
+                        chap_notes: (b.chap_notes && typeof b.chap_notes === 'object') ? b.chap_notes : {},
                         verses_en: Array.isArray(b.verses_en) ? b.verses_en : [],
                         verses_gr: Array.isArray(b.verses_gr) ? b.verses_gr : [],
                         verses_he: Array.isArray(b.verses_he) ? b.verses_he : [],
@@ -4281,7 +4282,7 @@
             } else {
                 tierBadge.textContent = book.deuterocanon ? "Axis A: Catholic Deuterocanon Witness" : "Tier 3: Canonical Witness Aligned";
                 tierBadge.className = `p-2 rounded-lg text-xs font-semibold ${book.deuterocanon ? 'badge-crimson' : 'badge-sapphire'}`;
-                document.getElementById('inspectorTierDesc').textContent = book.chap_notes[String(chapNum)] || "Manuscript witnesses align cleanly here; click any English word, original-tongue token, or 3D hologram word for instant parsing and 73-book concordance.";
+                document.getElementById('inspectorTierDesc').textContent = (book.chap_notes && book.chap_notes[String(chapNum)]) || "Manuscript witnesses align cleanly here; click any English word, original-tongue token, or 3D hologram word for instant parsing and 73-book concordance.";
             }
 
             // Cross-refs in Inspector

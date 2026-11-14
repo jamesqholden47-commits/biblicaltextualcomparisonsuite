@@ -217,11 +217,25 @@ body.j-shell header { height: 48px; }
   body.j-shell .brand-title { font-size: 13px; white-space: nowrap; }
   body.j-shell .tab-pane { padding: var(--sp-4) var(--sp-3); }
   body.j-shell .tab-pane:has(> iframe),
-  body.j-shell #tab-plenary_suite { padding: 0; overflow: hidden; height: 100%; width: 100%; }
-  body.j-shell #tab-plenary_suite.active { display: block; }
-  body.j-shell #plenary-suite-iframe { display: block; width: 100%; height: 100%; border: 0; }
   #j-subtabs { padding: 0 var(--sp-3); }
   #j-subtabs .j-ws-title, .j-search-btn .j-kbd { display: none; }
+}
+
+/* Edge-to-edge Plenary Suite & iframe tabs across all viewport widths */
+.tab-pane:has(> iframe),
+body.j-shell #tab-plenary_suite {
+  padding: 0 !important;
+  overflow: hidden !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+body.j-shell #tab-plenary_suite.active { display: block !important; }
+.tab-pane > iframe,
+body.j-shell #plenary-suite-iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
 }
 
 /* ── Files (Phase 1): three columns, Obsidian-style Markdown ─────────────────────── */
