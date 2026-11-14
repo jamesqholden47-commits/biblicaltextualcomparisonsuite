@@ -296,14 +296,36 @@ def plenary_search(
         conn.close()
 
 
+def _schaff_pdf_vol(series: str | None, volume: int | None) -> str | None:
+    if not series or series.upper() != "SCHAFF" or volume is None:
+        return None
+    if 1 <= volume <= 99:
+        return f"anf{volume:02d}"
+    if 101 <= volume <= 199:
+        return f"npnf1{volume - 100:02d}"
+    if 201 <= volume <= 299:
+        return f"npnf2{volume - 200:02d}"
+    return None
+
+
+def _parse_page_num(page_or_col: str | None) -> int | None:
+    if not page_or_col:
+        return None
+    import re
+    m = re.search(r"p\.\s*(\d+)", page_or_col, re.IGNORECASE)
+    return int(m.group(1)) if m else None
+
+
 @router.get("/patristics")
 def plenary_patristics(
     response: Response,
     q: Optional[str] = Query(default=None),
     series: Optional[str] = Query(default=None, description="PL, PG, or SCHAFF"),
     book_id: Optional[str] = Query(default=None),
+    book: Optional[str] = Query(default=None),
     chapter: Optional[int] = Query(default=None),
-    limit: int = Query(default=30, ge=1, le=200),
+    verse: Optional[int] = Query(default=None),
+    limit: int = Query(default=120, ge=1, le=500),
 ):
     conn = _connect()
     try:
@@ -311,6 +333,7 @@ def plenary_patristics(
         has_fts = conn.execute(
             "SELECT 1 FROM sqlite_master WHERE name='patristic_fts'"
         ).fetchone()
+        eff_book = (book_id or book or "").strip() or None
 
         if q and q.strip() and has_fts:
             fts_q = _sanitize_fts_query(q)
@@ -319,7 +342,7 @@ def plenary_patristics(
             sql = (
                 "SELECT p.id, p.series, p.volume, p.author, p.work_title, "
                 "p.book_id, p.chapter, p.verse, p.page_or_col, "
-                "snippet(patristic_fts, 5, '[', ']', '...', 22) AS snippet "
+                "snippet(patristic_fts, 5, '[', ']', '...', 28) AS snippet "
                 "FROM patristic_fts "
                 "JOIN patristic_index p ON p.id = patristic_fts.patristic_id "
                 "WHERE patristic_fts MATCH ?"
@@ -328,30 +351,51 @@ def plenary_patristics(
             if series:
                 sql += " AND p.series = ?"
                 params.append(series.strip().upper())
+            if eff_book:
+                sql += " AND p.book_id = ?"
+                params.append(eff_book)
+            if chapter is not None:
+                sql += " AND p.chapter = ?"
+                params.append(chapter)
             sql += " ORDER BY bm25(patristic_fts) LIMIT ?"
             params.append(limit)
-            rows = conn.execute(sql, params).fetchall()
-            items = [dict(r) for r in rows]
+            items = []
+            for r in conn.execute(sql, params).fetchall():
+                d = dict(r)
+                d["pdf_vol"] = _schaff_pdf_vol(d.get("series"), d.get("volume"))
+                d["page_num"] = _parse_page_num(d.get("page_or_col"))
+                items.append(d)
             return {"items": items, "count": len(items)}
 
         sql = (
             "SELECT id, series, volume, author, work_title, book_id, chapter, verse, "
-            "page_or_col, substr(excerpt, 1, 280) AS snippet "
+            "page_or_col, substr(excerpt, 1, 600) AS snippet "
             "FROM patristic_index WHERE 1=1"
         )
         params = []
         if series:
             sql += " AND series = ?"
             params.append(series.strip().upper())
-        if book_id:
+        if eff_book:
             sql += " AND book_id = ?"
-            params.append(book_id.strip())
+            params.append(eff_book)
         if chapter is not None:
             sql += " AND chapter = ?"
             params.append(chapter)
-        sql += " ORDER BY series, volume, id LIMIT ?"
+        if verse is not None:
+            sql += " AND (verse = ? OR verse IS NULL)"
+            params.append(verse)
+            sql += " ORDER BY CASE WHEN verse = ? THEN 0 ELSE 1 END, series, volume, id LIMIT ?"
+            params.append(verse)
+        else:
+            sql += " ORDER BY series, volume, id LIMIT ?"
         params.append(limit)
-        items = [dict(r) for r in conn.execute(sql, params).fetchall()]
+        items = []
+        for r in conn.execute(sql, params).fetchall():
+            d = dict(r)
+            d["pdf_vol"] = _schaff_pdf_vol(d.get("series"), d.get("volume"))
+            d["page_num"] = _parse_page_num(d.get("page_or_col"))
+            items.append(d)
         return {"items": items, "count": len(items)}
     finally:
         conn.close()

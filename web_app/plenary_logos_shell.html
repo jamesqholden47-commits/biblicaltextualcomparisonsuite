@@ -417,6 +417,12 @@
             margin-left: auto;
             margin-right: auto;
         }
+        .comfort-print-page:has(.dual-scripture-grid),
+        #readerContent > .max-w-6xl,
+        #readerContent > .max-w-5xl {
+            max-width: min(96%, 74rem) !important;
+            width: 100%;
+        }
         #readerContent p + p,
         #drawer-doll1 p + p,
         #drawer-doll2 p + p,
@@ -608,6 +614,31 @@
         body[data-theme="amoled-obsidian"] .border-slate-700 {
             border-color: var(--border-hairline) !important;
         }
+        /* Quiet underlying Study Note boxes on AMOLED so category badges lead visually */
+        body[data-theme="amoled-gold"] .split-note-card,
+        body[data-theme="amoled-obsidian"] .split-note-card,
+        body[data-theme="amoled-gold"] .nexus-witness-card,
+        body[data-theme="amoled-obsidian"] .nexus-witness-card {
+            background-color: #08080a !important;
+            border-color: rgba(148, 163, 184, 0.22) !important;
+        }
+        body[data-note-color-mode="bordered"] .split-note-card,
+        body[data-note-color-mode="bordered"] .nexus-witness-card {
+            border-left-width: 3px !important;
+            border-left-color: var(--card-accent, var(--border-strong)) !important;
+        }
+        body[data-note-color-mode="flip"] .split-note-card,
+        body[data-note-color-mode="flip"] .nexus-witness-card {
+            background-color: var(--card-tint-bg, rgba(212, 168, 83, 0.09)) !important;
+            border-color: var(--card-accent, var(--border-strong)) !important;
+            border-left-width: 3px !important;
+        }
+        body[data-note-color-mode="flip"] .split-note-card .note-src-badge,
+        body[data-note-color-mode="flip"] .nexus-witness-card .note-src-badge {
+            background-color: transparent !important;
+            color: var(--text-muted) !important;
+            border-color: rgba(148, 163, 184, 0.25) !important;
+        }
 
         select, .suite-select, select option {
             background-color: var(--bg-elevated) !important;
@@ -618,10 +649,29 @@
         /* Universal Semantic Color Coding & Accessibility Overrides */
         :root {
             --plenary-font-weight: 400;
-            --tier-catholic: #d4af37;
-            --tier-protestant: #38bdf8;
-            --tier-patristic: #a78bfa;
-            --tier-critical: #34d399;
+            --tier-catholic: #d4a853;
+            --tier-protestant: #72a5d6;
+            --tier-patristic: #a892d6;
+            --tier-critical: #6fa88d;
+            --diff-word-bg: rgba(212, 168, 83, 0.14);
+            --diff-word-fg: #ebd08b;
+            --diff-word-bd: rgba(212, 168, 83, 0.45);
+        }
+        body[data-theme-mode="light"] {
+            --diff-word-bg: rgba(180, 122, 32, 0.13);
+            --diff-word-fg: #7c4d0e;
+            --diff-word-bd: rgba(180, 122, 32, 0.45);
+        }
+        .par-word-diff {
+            background-color: var(--diff-word-bg);
+            color: var(--diff-word-fg);
+            border-bottom: 1.5px solid var(--diff-word-bd);
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+        .fx-b {
+            font-weight: 700;
+            color: var(--text-primary);
         }
         body { font-weight: var(--plenary-font-weight, 400); }
         #readerContent, #splitCommentaryList, .split-note-card { font-weight: var(--plenary-font-weight, 400); }
@@ -833,17 +883,23 @@
         .morph-token:hover { border-color: var(--accent-secondary); background: var(--bg-hover); transform: none; }
         .morph-token.token-active { border-color: var(--accent-primary); background: var(--accent-soft); box-shadow: none; }
 
-        /* Highlight styles (Universal Semantic Color Coding — high-contrast across all 6 themes) */
-        .hl-yellow { background-color: rgba(234, 179, 8, 0.24) !important; border-bottom: 2px solid #eab308; box-shadow: inset 3px 0 0 #eab308; }
-        .hl-green  { background-color: rgba(34, 197, 94, 0.20) !important; border-bottom: 2px solid #22c55e; box-shadow: inset 3px 0 0 #22c55e; }
-        .hl-blue   { background-color: rgba(56, 189, 248, 0.21) !important; border-bottom: 2px solid #38bdf8; box-shadow: inset 3px 0 0 #38bdf8; }
-        .hl-purple { background-color: rgba(168, 85, 247, 0.22) !important; border-bottom: 2px solid #a855f7; box-shadow: inset 3px 0 0 #a855f7; }
-        .hl-rose   { background-color: rgba(244, 63, 94, 0.21) !important; border-bottom: 2px solid #f43f5e; box-shadow: inset 3px 0 0 #f43f5e; }
-        body[data-theme-mode="light"] .hl-yellow { background-color: rgba(234, 179, 8, 0.26) !important; border-bottom-color: #b45309; box-shadow: inset 3px 0 0 #b45309; }
-        body[data-theme-mode="light"] .hl-green  { background-color: rgba(34, 197, 94, 0.20) !important; border-bottom-color: #15803d; box-shadow: inset 3px 0 0 #15803d; }
-        body[data-theme-mode="light"] .hl-blue   { background-color: rgba(14, 165, 233, 0.20) !important; border-bottom-color: #0369a1; box-shadow: inset 3px 0 0 #0369a1; }
-        body[data-theme-mode="light"] .hl-purple { background-color: rgba(147, 51, 234, 0.18) !important; border-bottom-color: #7e22ce; box-shadow: inset 3px 0 0 #7e22ce; }
-        body[data-theme-mode="light"] .hl-rose   { background-color: rgba(225, 29, 72, 0.17) !important; border-bottom-color: #be123c; box-shadow: inset 3px 0 0 #be123c; }
+        /* Highlight styles (Modern Editorial Palette + Phrase Selection Highlighting) */
+        .hl-yellow { background-color: rgba(212, 168, 83, 0.18) !important; border-bottom: 1.5px solid #d4a853; box-shadow: inset 3px 0 0 #d4a853; }
+        .hl-green  { background-color: rgba(111, 168, 141, 0.18) !important; border-bottom: 1.5px solid #6fa88d; box-shadow: inset 3px 0 0 #6fa88d; }
+        .hl-blue   { background-color: rgba(114, 165, 214, 0.18) !important; border-bottom: 1.5px solid #72a5d6; box-shadow: inset 3px 0 0 #72a5d6; }
+        .hl-purple { background-color: rgba(168, 146, 214, 0.19) !important; border-bottom: 1.5px solid #a892d6; box-shadow: inset 3px 0 0 #a892d6; }
+        .hl-rose   { background-color: rgba(201, 123, 132, 0.19) !important; border-bottom: 1.5px solid #c97b84; box-shadow: inset 3px 0 0 #c97b84; }
+        body[data-theme-mode="light"] .hl-yellow { background-color: rgba(212, 168, 83, 0.24) !important; border-bottom-color: #9a6b16; box-shadow: inset 3px 0 0 #9a6b16; }
+        body[data-theme-mode="light"] .hl-green  { background-color: rgba(94, 148, 122, 0.20) !important; border-bottom-color: #2f6e55; box-shadow: inset 3px 0 0 #2f6e55; }
+        body[data-theme-mode="light"] .hl-blue   { background-color: rgba(91, 141, 189, 0.20) !important; border-bottom-color: #2c5b8a; box-shadow: inset 3px 0 0 #2c5b8a; }
+        body[data-theme-mode="light"] .hl-purple { background-color: rgba(139, 92, 246, 0.18) !important; border-bottom-color: #6d28d9; box-shadow: inset 3px 0 0 #6d28d9; }
+        body[data-theme-mode="light"] .hl-rose   { background-color: rgba(190, 92, 108, 0.19) !important; border-bottom-color: #9f3548; box-shadow: inset 3px 0 0 #9f3548; }
+        .phrase-hl { border-radius: 3px; padding: 0 2px; cursor: pointer; }
+        .phrase-hl-yellow { background-color: rgba(212, 168, 83, 0.28); border-bottom: 2px solid #d4a853; }
+        .phrase-hl-green  { background-color: rgba(111, 168, 141, 0.28); border-bottom: 2px solid #6fa88d; }
+        .phrase-hl-blue   { background-color: rgba(114, 165, 214, 0.28); border-bottom: 2px solid #72a5d6; }
+        .phrase-hl-purple { background-color: rgba(168, 146, 214, 0.28); border-bottom: 2px solid #a892d6; }
+        .phrase-hl-rose   { background-color: rgba(201, 123, 132, 0.28); border-bottom: 2px solid #c97b84; }
 
         .hl-dot {
             width: 14px;
@@ -858,11 +914,11 @@
         body[data-theme-mode="light"] .hl-dot { border-color: rgba(0, 0, 0, 0.28); }
         .hl-dot:hover { transform: scale(1.18); }
         .hl-dot.is-active { transform: scale(1.22); box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 3.5px var(--text-primary); }
-        .hl-dot-yellow { background-color: #eab308; border-color: #fde047; }
-        .hl-dot-green  { background-color: #10b981; border-color: #6ee7b7; }
-        .hl-dot-blue   { background-color: #06b6d4; border-color: #67e8f9; }
-        .hl-dot-purple { background-color: #a855f7; border-color: #d8b4fe; }
-        .hl-dot-rose   { background-color: #f43f5e; border-color: #fda4af; }
+        .hl-dot-yellow { background-color: #d4a853; border-color: #ebd08b; }
+        .hl-dot-green  { background-color: #6fa88d; border-color: #9ed0b9; }
+        .hl-dot-blue   { background-color: #72a5d6; border-color: #a6cae9; }
+        .hl-dot-purple { background-color: #a892d6; border-color: #cbbeea; }
+        .hl-dot-rose   { background-color: #c97b84; border-color: #e4a8b0; }
         .hl-dot-clear  {
             background: var(--bg-elevated);
             color: var(--text-muted);
@@ -959,7 +1015,7 @@
         .layer-header-btn:hover { background: var(--bg-hover); }
         .layer-accent-amber  { border-left: 3px solid #eab308; }
         .layer-accent-sky    { border-left: 3px solid #38bdf8; }
-        .layer-accent-emerald{ border-left: 3px solid #10b981; }
+        .layer-accent-emerald{ border-left: 3px solid #6fa88d; }
         .layer-accent-cyan   { border-left: 3px solid #06b6d4; }
         .layer-accent-purple { border-left: 3px solid #a855f7; }
         .layer-accent-rose   { border-left: 3px solid #f43f5e; }
@@ -1003,12 +1059,12 @@
 
         /* Semantic POS Color Coding (Greek, Hebrew, Latin, Aligned English) */
         .pos-badge { display: inline-flex; align-items: center; padding: 1px 6px; border-radius: 4px; font-family: var(--plenary-font-mono); font-size: 10px; font-weight: 700; border: 1px solid transparent; }
-        .pos-verb { color: #34d399; background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.36); }
-        .pos-noun { color: #38bdf8; background: rgba(56, 189, 248, 0.14); border-color: rgba(56, 189, 248, 0.36); }
-        .pos-adj  { color: #fbbf24; background: rgba(251, 191, 36, 0.14); border-color: rgba(251, 191, 36, 0.36); }
-        .pos-part { color: #f472b6; background: rgba(244, 114, 182, 0.14); border-color: rgba(244, 114, 182, 0.36); }
-        .pos-prep { color: #a78bfa; background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.36); }
-        .pos-pron { color: #fb7185; background: rgba(244, 63, 94, 0.14); border-color: rgba(244, 63, 94, 0.36); }
+        .pos-verb { color: #84bfa4; background: rgba(111, 168, 141, 0.14); border-color: rgba(111, 168, 141, 0.34); }
+        .pos-noun { color: #7db0db; background: rgba(114, 165, 214, 0.14); border-color: rgba(114, 165, 214, 0.34); }
+        .pos-adj  { color: #e2be76; background: rgba(212, 168, 83, 0.14); border-color: rgba(212, 168, 83, 0.34); }
+        .pos-part { color: #d895b4; background: rgba(216, 149, 180, 0.14); border-color: rgba(216, 149, 180, 0.34); }
+        .pos-prep { color: #b5a3df; background: rgba(168, 146, 214, 0.14); border-color: rgba(168, 146, 214, 0.34); }
+        .pos-pron { color: #d68d95; background: rgba(201, 123, 132, 0.14); border-color: rgba(201, 123, 132, 0.34); }
         body[data-theme-mode="light"] .pos-verb { color: #166534; background: rgba(22, 163, 74, 0.12); border-color: rgba(22, 163, 74, 0.32); }
         body[data-theme-mode="light"] .pos-noun { color: #0369a1; background: rgba(14, 165, 233, 0.12); border-color: rgba(14, 165, 233, 0.32); }
         body[data-theme-mode="light"] .pos-adj  { color: #92400e; background: rgba(217, 119, 6, 0.12); border-color: rgba(217, 119, 6, 0.32); }
@@ -1771,15 +1827,27 @@
             text-overflow: ellipsis;
         }
         body.chrome-compact-4k #readerContent {
-            padding: 0.55rem 0.75rem !important;
+            padding: 0.35rem 0.45rem !important;
         }
         .catena-4k-grid {
             display: grid;
-            grid-template-columns: minmax(340px, 1.48fr) minmax(290px, 1.05fr) minmax(270px, 0.95fr);
-            gap: 0.75rem;
-            height: calc(100vh - 148px);
+            grid-template-columns: minmax(340px, 1.42fr) minmax(320px, 1.2fr) minmax(270px, 0.92fr);
+            gap: 0.35rem;
+            height: calc(100vh - 142px);
             min-height: 480px;
             align-items: stretch;
+        }
+        .catena-4k-grid.catena-notes-hidden {
+            grid-template-columns: minmax(360px, 1.35fr) minmax(380px, 1.65fr);
+        }
+        .dual-scripture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .dual-scripture-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 1200px) {
             .catena-4k-grid {
@@ -1789,34 +1857,34 @@
         }
         .catena-4k-pane, .mosaic-panel {
             background: var(--bg-surface);
-            border: 1px solid var(--border-strong);
-            border-radius: 0.75rem;
+            border: 1px solid var(--border-hairline);
+            border-radius: 0.65rem;
             display: flex;
             flex-direction: column;
             min-height: 0;
             overflow: hidden;
         }
         .catena-4k-pane-header, .mosaic-panel-header {
-            padding: 0.45rem 0.7rem;
+            padding: 0.35rem 0.6rem;
             border-bottom: 1px solid var(--border-hairline);
             background: var(--bg-elevated);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.4rem;
+            gap: 0.35rem;
             flex-shrink: 0;
         }
         .catena-4k-pane-body, .mosaic-panel-body {
             flex: 1 1 0%;
             min-height: 0;
             overflow-y: auto;
-            padding: 0.65rem 0.75rem;
+            padding: 0.5rem 0.65rem;
         }
         .mosaic-4k-shell {
             display: grid;
-            grid-template-columns: minmax(480px, 2.35fr) minmax(285px, 0.9fr);
-            gap: 0.65rem;
-            height: calc(100vh - 148px);
+            grid-template-columns: minmax(480px, 2.38fr) minmax(285px, 0.92fr);
+            gap: 0.35rem;
+            height: calc(100vh - 142px);
             min-height: 500px;
             align-items: stretch;
         }
@@ -2140,11 +2208,20 @@
     <!-- 3D TONY STARK HOLOGRAPHIC OVERLAY VIEWPORT -->
     <div id="threeDViewport" style="background-color: #04060a;" class="hidden relative h-96 bg-black border-b border-cyan-500/30 flex-shrink-0 select-none overflow-hidden">
         <!-- Top Left HUD -->
-        <div class="absolute top-3 left-3 z-10 flex items-center gap-2 text-xs pointer-events-none">
-            <span class="px-2 py-0.5 rounded font-mono bg-cyan-950/90 text-cyan-300 border border-cyan-500/40 flex items-center">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 mr-2"></span>
+        <div class="absolute top-3 left-3 z-10 flex items-center gap-2 text-xs">
+            <span class="px-2 py-0.5 rounded font-mono bg-slate-950/90 text-amber-300 border border-amber-500/40 flex items-center pointer-events-none">
+                <span class="w-2 h-2 rounded-full bg-amber-400 mr-2"></span>
                 3D SPATIAL STRATA
             </span>
+            <button type="button" onclick="toggle3DGuideCard()" class="px-2 py-0.5 rounded font-mono bg-slate-950/90 text-cyan-300 border border-slate-700 hover:border-cyan-400" title="How to read 3D Spatial Strata">How 3D Works (i)</button>
+        </div>
+        <div id="threeDGuideBox" class="hidden absolute top-11 left-3 z-20 max-w-sm p-3 rounded-lg bg-slate-950/95 border border-amber-500/40 text-xs text-slate-200 shadow-2xl space-y-1.5">
+            <div class="flex items-center justify-between font-mono text-[10px] font-bold text-amber-300">
+                <span>HOW TO READ 3D SPATIAL STRATA</span>
+                <button type="button" onclick="toggle3DGuideCard(false)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:text-white">&times;</button>
+            </div>
+            <p class="leading-relaxed">Each glass plane stacks a primary witness for the active verse: <strong>English</strong> (front), <strong>LXX Greek / GNT</strong>, <strong>Latin Vulgate</strong>, <strong>Hebrew Masoretic (WLC)</strong>, and the <strong>Vorlage Critical Note</strong>.</p>
+            <p class="text-[11px] text-slate-400">Click any floating word to look up its Strong's root &amp; morphology. Use <strong>VR Arc</strong> or drag planes in Z-depth to spot where the Apostles' Greek LXX diverges from the later Masoretic text.</p>
         </div>
 
         <!-- Bottom Right Interactive Hover Telemetry -->
@@ -2183,7 +2260,8 @@
             </div>
             <div class="p-2 border-b border-slate-800 flex flex-wrap gap-1.5 text-[10px] font-mono bg-slate-900/70">
                 <button onclick="apply3DPreset('core')" class="px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 border border-slate-700 hover:text-white">Core 5</button>
-                <button onclick="apply3DPreset('catholic')" class="px-1.5 py-0.5 rounded bg-slate-800 text-emerald-300 border border-slate-700 hover:text-white">Catholic Approved (5)</button>
+                <button onclick="apply3DPreset('lxx_mt')" class="px-1.5 py-0.5 rounded bg-slate-800 text-amber-200 border border-amber-500/40 hover:text-white">LXX vs Proto-MT</button>
+                <button onclick="apply3DPreset('catholic')" class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700 hover:text-white">Catholic Approved (5)</button>
                 <button onclick="apply3DPreset('nt_tc')" class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700 hover:text-white">NT Text-Critical (5)</button>
                 <button onclick="apply3DPreset('bench')" class="px-1.5 py-0.5 rounded bg-slate-800 text-purple-300 border border-slate-700 hover:text-white">English Benchmarks (6)</button>
                 <button onclick="apply3DPreset('all')" class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">All 12 + Note</button>
@@ -2355,7 +2433,9 @@
                         <button type="button" data-hl-color="purple" onclick="highlightActiveVerse('purple')" class="hl-dot hl-dot-purple" title="Purple: Patristic &amp; Conciliar Witness"></button>
                         <button type="button" data-hl-color="rose" onclick="highlightActiveVerse('rose')" class="hl-dot hl-dot-rose" title="Rose: Apologetic Defeater / Crux"></button>
                         <button type="button" data-hl-color="none" onclick="highlightActiveVerse('none')" class="hl-dot hl-dot-clear" title="Clear Highlight">x</button>
+                        <button type="button" onclick="toggleColorTagGuideModal()" class="ml-1 px-1.5 py-0.5 rounded text-[10px] font-mono border border-slate-700 text-amber-300 hover:border-amber-400" title="Explain Semantic Colors, Note Coloring &amp; Verse Tags">? Guide</button>
                     </div>
+                    <button type="button" id="btnToggleDualMode" onclick="toggleDualScriptureMode()" class="suite-btn" style="padding:0 8px;" title="Apostles' Dual Reading: Compare LXX / Greek side-by-side with Proto-MT / English">Dual LXX·MT</button>
                     <div class="hidden sm:flex items-center gap-1 flex-shrink-0">
                         <button onclick="expandAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Expand All Exegesis Layers">Expand</button>
                         <button onclick="collapseAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Collapse Exegesis Layers">Collapse</button>
@@ -2418,6 +2498,24 @@
                     <div>
                         <div class="flex justify-between mb-1"><span>Paragraph Spacing</span><span id="typoParaSpacingVal">0.85em</span></div>
                         <input id="typoParaSpacingSlider" type="range" min="0.25" max="1.50" step="0.05" value="0.85" oninput="updateTypographyPref('paraSpacingEm', Number(this.value))" class="w-full cursor-pointer">
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Fixation Bolding (Speed Reading)</span>
+                            <span class="text-[9px] text-slate-400">Eye-Tracking Helper</span>
+                        </div>
+                        <select id="typoFixationModeSelect" onchange="updateFixationPrefs('mode', this.value)" class="suite-select w-full py-1">
+                            <option value="off">Off (Normal Type)</option>
+                            <option value="bionic">Initial Fixation (First ~45% Bold)</option>
+                            <option value="random">Randomized Saccade Anchors</option>
+                        </select>
+                        <div>
+                            <div class="flex justify-between mb-1"><span>Fixation Density</span><span id="typoFixationDensityVal">45%</span></div>
+                            <input id="typoFixationDensitySlider" type="range" min="25" max="65" step="5" value="45" oninput="updateFixationPrefs('density', Number(this.value))" class="w-full cursor-pointer">
+                        </div>
+                        <p class="text-[10px] leading-snug text-slate-400" style="font-family: var(--plenary-font-ui);">
+                            <strong>Science note:</strong> Eye-tracking studies (e.g., Brysbaert 2024) find little WPM boost for average readers, though initial or randomized bold anchors help many readers reduce line-skipping and visual fatigue.
+                        </p>
                     </div>
                     <div class="pt-2 border-t border-slate-800 space-y-2">
                         <div class="text-[10px] font-bold uppercase tracking-wider text-amber-400">Accessibility</div>
@@ -2486,6 +2584,14 @@
                                 <option value="off">Hidden</option>
                             </select>
                         </div>
+                        <div class="mt-2 flex items-center justify-between gap-2 text-[11px]">
+                            <span class="opacity-80">Note Card Colors:</span>
+                            <select id="visNoteColorModeSelect" onchange="setNoteColorMode(this.value)" class="suite-select text-[10px] py-0.5 px-1.5">
+                                <option value="quiet">Quiet Boxes + Colored Badges</option>
+                                <option value="bordered">Colored Left Accent Borders</option>
+                                <option value="flip">Flip: Tinted Boxes + Quiet Badges</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="border-t border-slate-800 pt-2.5">
                         <div class="flex items-center justify-between mb-1.5">
@@ -2546,6 +2652,7 @@
                         <button type="button" data-hl-color="purple" onclick="highlightActiveVerse('purple')" class="hl-dot hl-dot-purple" title="Purple: Patristic / Conciliar"></button>
                         <button type="button" data-hl-color="rose" onclick="highlightActiveVerse('rose')" class="hl-dot hl-dot-rose" title="Rose: Apologetic Defeater"></button>
                         <button type="button" data-hl-color="none" onclick="highlightActiveVerse('none')" class="hl-dot hl-dot-clear" title="Clear semantic tag">x</button>
+                        <button type="button" onclick="toggleColorTagGuideModal()" class="px-1.5 py-0.5 rounded border border-slate-700 text-[9.5px] text-amber-300 hover:border-amber-400" title="Explain Highlight Colors, Tags &amp; Visual Coding">?</button>
                         <span class="suite-toolbar-divider"></span>
                         <button type="button" onclick="stepVerse(-1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Previous Verse">&lsaquo; v</button>
                         <button type="button" onclick="stepVerse(1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Next Verse">v &rsaquo;</button>
@@ -2659,16 +2766,92 @@
                     <div id="inspectorPatristicList" class="space-y-2"></div>
                 </div>
 
-                <!-- Personal Study Notes Card -->
-                <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/60 space-y-2">
+                <!-- Personal Study Notebook & Verse Tags Card -->
+                <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/60 space-y-2.5">
                     <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 font-bold uppercase tracking-wider">
-                        <span>PERSONAL STUDY NOTES</span>
-                        <span class="text-[10px] text-emerald-400 font-normal">Auto-saved</span>
+                        <span>STUDY NOTEBOOK &amp; TAGS</span>
+                        <div class="flex items-center gap-1.5 font-normal">
+                            <span id="personalNotesCountLabel" class="text-[10px] text-amber-300"></span>
+                            <span class="text-[10px] text-slate-400">Auto-saved</span>
+                        </div>
                     </div>
-                    <textarea id="verseNotesInput" oninput="saveActiveVerseNotes(this.value)" placeholder="Write personal exegesis or apologetics notes for this verse..." class="w-full h-24 bg-black/50 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+                    <!-- Custom Verse Tags -->
+                    <div class="space-y-1">
+                        <div id="activeVerseTagsList" class="flex flex-wrap gap-1"></div>
+                        <div class="flex items-center gap-1">
+                            <input id="newVerseTagInput" type="text" placeholder="Add tag (e.g. #Eucharist)..." onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomVerseTag();}" class="flex-grow bg-black/50 border border-slate-800 rounded px-2 py-1 text-[11px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                            <button type="button" onclick="addCustomVerseTag()" class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] font-mono text-amber-300 hover:border-amber-400">+ Tag</button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 text-[9.5px] font-mono">
+                            <button type="button" onclick="toggleQuickVerseTag('Papacy')" class="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-amber-300">#Papacy</button>
+                            <button type="button" onclick="toggleQuickVerseTag('Eucharist')" class="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-amber-300">#Eucharist</button>
+                            <button type="button" onclick="toggleQuickVerseTag('LXX-Diff')" class="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-amber-300">#LXX-Diff</button>
+                            <button type="button" onclick="toggleQuickVerseTag('Typology')" class="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-amber-300">#Typology</button>
+                            <button type="button" onclick="toggleQuickVerseTag('Memorize')" class="px-1.5 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-amber-300">#Memorize</button>
+                        </div>
+                    </div>
+                    <!-- Notebook Toolbar + Editor/Preview -->
+                    <div class="flex items-center justify-between gap-1 text-[10px] font-mono pt-1 border-t border-slate-800/80">
+                        <div class="flex items-center gap-1">
+                            <button type="button" onclick="insertActiveQuoteIntoNotes()" class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-cyan-300 hover:border-cyan-400" title="Insert current verse quote">+ Quote</button>
+                            <button type="button" onclick="appendNoteTemplate('claim')" class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:border-amber-400" title="Add Claim / Witness bullet">+ Claim</button>
+                        </div>
+                        <button type="button" id="btnToggleNotePreview" onclick="togglePersonalNotePreview()" class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 hover:border-amber-400">Preview</button>
+                    </div>
+                    <textarea id="verseNotesInput" oninput="saveActiveVerseNotes(this.value)" placeholder="Write personal exegesis, syllogisms, or apologetics notes (**bold** and - bullets supported)..." class="w-full h-28 bg-black/50 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-500 resize-y"></textarea>
+                    <div id="verseNotesPreview" class="hidden w-full min-h-[7rem] max-h-56 overflow-y-auto bg-black/50 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 leading-relaxed space-y-1"></div>
                 </div>
             </div>
         </aside>
+    </div>
+
+    <!-- DRAG-SELECT PHRASE HIGHLIGHT FLOATING TOOLBAR -->
+    <div id="phraseHighlightToolbar" class="hidden fixed z-[99] flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-950/95 border border-amber-500/40 shadow-2xl text-xs font-mono">
+        <span class="text-[10px] text-amber-300 font-bold mr-0.5">Highlight:</span>
+        <button type="button" onmousedown="event.preventDefault(); applyDragPhraseHighlight('yellow')" class="hl-dot hl-dot-yellow" title="Gold: Dogma &amp; Magisterium"></button>
+        <button type="button" onmousedown="event.preventDefault(); applyDragPhraseHighlight('green')" class="hl-dot hl-dot-green" title="Sage: Typology &amp; Fulfillment"></button>
+        <button type="button" onmousedown="event.preventDefault(); applyDragPhraseHighlight('blue')" class="hl-dot hl-dot-blue" title="Cerulean: Text-Critical / LXX / MSS"></button>
+        <button type="button" onmousedown="event.preventDefault(); applyDragPhraseHighlight('purple')" class="hl-dot hl-dot-purple" title="Violet: Patristic &amp; Conciliar"></button>
+        <button type="button" onmousedown="event.preventDefault(); applyDragPhraseHighlight('rose')" class="hl-dot hl-dot-rose" title="Rose: Apologetics &amp; Crux"></button>
+        <span class="text-slate-700">|</span>
+        <button type="button" onmousedown="event.preventDefault(); copyDraggedPhraseToNote()" class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700 hover:border-cyan-400 text-[10px]">+ Note</button>
+        <button type="button" onmousedown="event.preventDefault(); hidePhraseHighlightToolbar()" class="px-1 py-0.5 rounded text-slate-400 hover:text-white text-[10px]">&times;</button>
+    </div>
+
+    <!-- COLOR CODING, NOTE STYLING & VERSE TAG GUIDE MODAL -->
+    <div id="colorTagGuideModal" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onclick="if(event.target===this) toggleColorTagGuideModal(false)">
+        <div class="bg-slate-900 border border-amber-500/40 rounded-2xl w-full max-w-2xl max-h-[86vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+                <div>
+                    <h3 class="text-sm font-mono font-bold text-amber-300">COLOR CODING, STUDY NOTES &amp; TAGS GUIDE</h3>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Plain-English legend for highlights, word-diff cues, note box colors, and custom tags</p>
+                </div>
+                <button type="button" onclick="toggleColorTagGuideModal(false)" class="px-2 py-1 rounded bg-slate-800 text-xs font-mono text-slate-300 hover:text-white">ESC</button>
+            </div>
+            <div class="p-4 overflow-y-auto space-y-4 text-xs text-slate-200 leading-relaxed">
+                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/80 space-y-2">
+                    <div class="font-mono text-[11px] font-bold text-amber-300 uppercase">1. Drag-Select Phrase &amp; Verse Highlights (HL:)</div>
+                    <p class="text-slate-300">Drag your cursor across <strong>any words or phrase</strong> inside Scripture prose to highlight just that phrase, OR click an <strong>HL dot</strong> on the sticky bar to mark the whole active verse.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1 text-[11px]">
+                        <div class="flex items-center gap-2"><span class="hl-dot hl-dot-yellow"></span><span><strong>Gold:</strong> Dogma, Sacraments &amp; Magisterium</span></div>
+                        <div class="flex items-center gap-2"><span class="hl-dot hl-dot-green"></span><span><strong>Sage:</strong> Typology &amp; OT-to-NT Fulfillment</span></div>
+                        <div class="flex items-center gap-2"><span class="hl-dot hl-dot-blue"></span><span><strong>Cerulean:</strong> LXX / Proto-MT / Dead Sea Scrolls</span></div>
+                        <div class="flex items-center gap-2"><span class="hl-dot hl-dot-purple"></span><span><strong>Violet:</strong> Church Fathers &amp; Ecumenical Councils</span></div>
+                        <div class="flex items-center gap-2"><span class="hl-dot hl-dot-rose"></span><span><strong>Rose:</strong> Apologetic Defeater &amp; Crux Verse</span></div>
+                    </div>
+                </div>
+                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/80 space-y-1.5">
+                    <div class="font-mono text-[11px] font-bold text-cyan-300 uppercase">2. Parallel Word-Diff &amp; Study Note Card Colors</div>
+                    <p><strong>Gold underline in Parallel / 4K Mosaic:</strong> Highlights words where that translation differs from Column 1 (e.g., Septuagint LXX vs. Masoretic Hebrew) without harsh neon glare.</p>
+                    <p><strong>Study Note Boxes:</strong> By default, outer boxes stay quiet charcoal so your eyes aren't overwhelmed, while source badges (<em>Ignatius CSB, NET 2.1, Haydock, SBL</em>) carry color. Want colored card boxes or the flip option? Switch anytime under <strong>Filters &rarr; Note Card Colors</strong> (or click the style button in the Study Notes header).</p>
+                </div>
+                <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/80 space-y-1.5">
+                    <div class="font-mono text-[11px] font-bold text-purple-300 uppercase">3. Verse Tags &amp; Dual LXX·MT Reading</div>
+                    <p><strong>Tags:</strong> In the right-hand <strong>Study Notebook &amp; Tags</strong> card, click quick pills (<code>#Papacy</code>, <code>#Eucharist</code>, <code>#LXX-Diff</code>) or type your own topic tag to index verses across the 73-book canon (saved locally in your Library).</p>
+                    <p><strong>Dual LXX·MT:</strong> Toggle <strong>Dual LXX·MT</strong> in the top toolbar to read Brenton/LXX Greek and Master English/Proto-MT side-by-side just as the Apostles used Greek &amp; Hebrew/Aramaic witnesses together.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MULTI-SCRIPT FULL BIBLE SEARCH MODAL (Ctrl+K) -->
@@ -3586,10 +3769,11 @@
             if (PATRISTICS_MEDIA_CACHE.has(key)) {
                 return PATRISTICS_MEDIA_CACHE.get(key);
             }
-            const qs = `book=${encodeURIComponent(bookId)}&chapter=${encodeURIComponent(chapNum)}&verse=${encodeURIComponent(verseNum)}`;
+            const qsPat = `book_id=${encodeURIComponent(bookId)}&chapter=${encodeURIComponent(chapNum)}&verse=${encodeURIComponent(verseNum)}&limit=150`;
+            const qsMed = `book_id=${encodeURIComponent(bookId)}&chapter=${encodeURIComponent(chapNum)}`;
             const [patRes, medRes] = await Promise.all([
-                fetch(`/api/plenary/patristics?${qs}`).then(r => r.ok ? r.json() : null).catch(() => null),
-                fetch(`/api/plenary/media?${qs}`).then(r => r.ok ? r.json() : null).catch(() => null)
+                fetch(`/api/plenary/patristics?${qsPat}`).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`/api/plenary/media?${qsMed}`).then(r => r.ok ? r.json() : null).catch(() => null)
             ]);
             const patItems = Array.isArray(patRes) ? patRes : (patRes && (patRes.items || patRes.citations || patRes.patristics)) || [];
             const medItems = Array.isArray(medRes) ? medRes : (medRes && (medRes.items || medRes.media)) || [];
@@ -3604,7 +3788,7 @@
                 return {
                     id: 'vorlage', short: 'Vorlage Note', name: 'Vorlage / Witness Note',
                     lang: 'note', scope: 'Contextual', approval: 'NOTE',
-                    tier_badge: 'APPARATUS', color: '#34d399'
+                    tier_badge: 'APPARATUS', color: '#6fa88d'
                 };
             }
             return (APP_DATA.translation_registry || []).find(t => t.id === streamId) || {
@@ -4140,7 +4324,11 @@
             applyComfortTypography();
             loadVisibilityPrefs();
             applyInlineMarkerFlags();
+            applyNoteColorMode();
+            if (typeof syncFixationControls === 'function') syncFixationControls();
             if (typeof syncFootnoteStyleControls === 'function') syncFootnoteStyleControls();
+            const dualBtnInit = document.getElementById('btnToggleDualMode');
+            if (dualBtnInit) dualBtnInit.classList.toggle('is-active', !!dualScriptureMode);
             initSplitPaneFromStorage();
             if (IS_PLENARY_SHELL_MODE) {
                 await loadPlenaryBooksFromApi();
@@ -4185,6 +4373,8 @@
                     const pdfm = document.getElementById('inAppPdfModal'); if (pdfm) pdfm.classList.add('hidden');
                     const lbm = document.getElementById('mediaLightboxModal'); if (lbm) lbm.classList.add('hidden');
                     const msh = document.getElementById('masterStudyHubModal'); if (msh) msh.classList.add('hidden');
+                    const ctg = document.getElementById('colorTagGuideModal'); if (ctg) ctg.classList.add('hidden');
+                    if (typeof hidePhraseHighlightToolbar === 'function') hidePhraseHighlightToolbar();
                     toggleSummon3DPopover(false);
                     toggleTypographyPopover(false);
                     toggleVisibilityPopover(false);
@@ -5186,6 +5376,124 @@
             bar.style.display = 'flex';
         }
 
+        // ====== DUAL READING (LXX · PROTO-MT), NOTE COLOR MODES, FIXATION & PHRASE HIGHLIGHTING STATE ======
+        let dualScriptureMode = localStorage.getItem('plenary_dual_mode') === '1';
+        let dualRightStreamId = localStorage.getItem('plenary_dual_right_stream') || 'brenton';
+        let catenaNotesVisible = localStorage.getItem('plenary_catena_notes_vis') !== '0';
+        let noteColorMode = localStorage.getItem('plenary_note_color_mode') || 'quiet';
+        if (!['quiet', 'bordered', 'flip'].includes(noteColorMode)) noteColorMode = 'quiet';
+
+        function applyNoteColorMode() {
+            document.body.setAttribute('data-note-color-mode', noteColorMode);
+            const sel = document.getElementById('visNoteColorModeSelect');
+            if (sel) sel.value = noteColorMode;
+            const btn = document.getElementById('catenaNoteColorBtn');
+            if (btn) {
+                btn.textContent = noteColorMode === 'flip' ? 'Colors: Flip' : (noteColorMode === 'bordered' ? 'Colors: Borders' : 'Colors: Quiet');
+            }
+        }
+
+        function setNoteColorMode(mode) {
+            noteColorMode = ['quiet', 'bordered', 'flip'].includes(mode) ? mode : 'quiet';
+            localStorage.setItem('plenary_note_color_mode', noteColorMode);
+            applyNoteColorMode();
+        }
+
+        function cycleNoteColorMode() {
+            const order = ['quiet', 'bordered', 'flip'];
+            setNoteColorMode(order[(order.indexOf(noteColorMode) + 1) % order.length]);
+        }
+
+        function toggleDualScriptureMode(force) {
+            dualScriptureMode = typeof force === 'boolean' ? force : !dualScriptureMode;
+            localStorage.setItem('plenary_dual_mode', dualScriptureMode ? '1' : '0');
+            const btn = document.getElementById('btnToggleDualMode');
+            if (btn) btn.classList.toggle('is-active', dualScriptureMode);
+            renderReader();
+        }
+
+        function setDualRightStream(sid) {
+            if (!sid) return;
+            dualRightStreamId = sid;
+            localStorage.setItem('plenary_dual_right_stream', sid);
+            if (!dualScriptureMode) dualScriptureMode = true;
+            localStorage.setItem('plenary_dual_mode', '1');
+            renderReader();
+        }
+
+        function getStreamVersesList(book, chapIdx, sid) {
+            if (!book) return [];
+            if (sid === 'dra') return (book.verses_en && book.verses_en[chapIdx]) || [];
+            if (sid === 'vulg_clem') return (book.verses_la && book.verses_la[chapIdx]) || [];
+            if (sid === 'lxx_gnt') return (book.verses_gr && book.verses_gr[chapIdx]) || [];
+            if (sid === 'wlc') return (book.verses_he && book.verses_he[chapIdx]) || [];
+            return (book.tr && book.tr[sid] && book.tr[sid][chapIdx]) || [];
+        }
+
+        function buildSingleProseVersesHtml(verses, streamId, book, chapNum, cachedChapNotes, idPrefix) {
+            return verses.map((v, idx) => {
+                const vNum = idx + 1;
+                const isCur = idx === currentVerseIndex;
+                const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
+                const hasNote = localStorage.getItem(`notes_${book.id}_${chapNum}_${vNum}`) ? ' <i data-lucide="file-text" class="w-3 h-3 inline-block align-baseline text-amber-400"></i>' : '';
+                const fnSups = (streamId === masterEnId || idPrefix === 'cont' || idPrefix === 'dev' || idPrefix === 'catena')
+                    ? buildInlineFnSupsHtml(cachedChapNotes, vNum)
+                    : '';
+                const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, streamId, chapNum) : '';
+                const rawBody = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
+                const bodyWithPhrases = applySavedPhraseHighlightsToHtml(rawBody, book.id, chapNum, vNum, streamId);
+                const supHtml = idx === 0 && dropCap
+                    ? dropCap
+                    : `<sup class="suite-verse-num font-mono text-[10.5px] font-bold text-amber-400 mr-0.5 select-none">${vNum}</sup>`;
+                return `<span id="${idPrefix}-v-${idx}" data-verse-idx="${idx}" data-verse-num="${vNum}" data-stream-id="${escapeHtmlText(streamId)}" onclick="selectVerse(${idx})" class="cursor-pointer transition rounded px-0.5 ${isCur ? 'text-amber-200 suite-verse-highlight font-semibold' : 'hover:text-amber-200'} ${hlClass ? 'hl-' + hlClass : ''}">${supHtml}${bodyWithPhrases}${fnSups ? `<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>` : ''}${hasNote} </span>`;
+            }).join('');
+        }
+
+        function buildDualScriptureColumnsHtml(book, chapIdx, chapNum, masterEnId, cachedChapNotes, idPrefix) {
+            const reg = APP_DATA.translation_registry || [];
+            const draVerses = (book.verses_en && book.verses_en[chapIdx]) || [];
+            const leftRaw = getStreamVersesList(book, chapIdx, masterEnId);
+            const leftVerses = leftRaw.length > 0 ? leftRaw : draVerses;
+            const leftId = leftRaw.length > 0 ? masterEnId : 'dra';
+            const leftMeta = getStreamMeta(leftId);
+
+            // Auto-smart right witness: on NT if user left 'brenton' (OT-only LXX), pair with 'lxx_gnt' (Greek NT) or 'rsv2ce'
+            let rightId = dualRightStreamId || 'brenton';
+            let rightRaw = getStreamVersesList(book, chapIdx, rightId);
+            if (rightRaw.length === 0 && book.testament === 'NT' && rightId === 'brenton') {
+                rightId = 'lxx_gnt';
+                rightRaw = getStreamVersesList(book, chapIdx, rightId);
+            }
+            const rightVerses = rightRaw.length > 0 ? rightRaw : getStreamVersesList(book, chapIdx, 'lxx_gnt');
+            const effRightId = rightRaw.length > 0 ? rightId : 'lxx_gnt';
+            const rightMeta = getStreamMeta(effRightId);
+            const allStreamOpts = reg.map(t => `<option value="${t.id}" ${t.id === rightId ? 'selected' : ''}>${escapeHtmlText(t.short)} (${escapeHtmlText(t.lang.toUpperCase())})</option>`).join('');
+            const isRtlRight = rightMeta.lang === 'he';
+
+            return `
+                <div class="dual-scripture-grid">
+                    <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/60 space-y-2">
+                        <div class="flex items-center justify-between gap-1.5 border-b border-slate-800/80 pb-1.5 text-[10px] font-mono">
+                            <span class="font-bold text-amber-300">WITNESS A · ${escapeHtmlText(leftMeta.short)}</span>
+                            <span class="${getApprovalBadgeClass(leftMeta.approval)}">${escapeHtmlText(leftMeta.tier_badge)}</span>
+                        </div>
+                        <div class="leading-relaxed">
+                            ${buildSingleProseVersesHtml(leftVerses, leftId, book, chapNum, cachedChapNotes, `${idPrefix}L`)}
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-800 bg-slate-950/60 space-y-2" ${isRtlRight ? 'dir="rtl"' : ''}>
+                        <div class="flex items-center justify-between gap-1.5 border-b border-slate-800/80 pb-1.5 text-[10px] font-mono" dir="ltr">
+                            <span class="font-bold text-cyan-300">WITNESS B · APOSTOLIC / LXX</span>
+                            <select onchange="setDualRightStream(this.value)" class="suite-select" style="height:21px;font-size:10px;" title="Choose Second Bible Witness">${allStreamOpts}</select>
+                        </div>
+                        <div class="leading-relaxed">
+                            ${buildSingleProseVersesHtml(rightVerses, effRightId, book, chapNum, null, `${idPrefix}R`)}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         // ====== PATRISTIC, SCHOLASTIC & MODERN THEOLOGIAN NEXUS REGISTRY ======
         const THEOLOGICAL_TRADITIONS_REGISTRY = {
             all: {
@@ -5389,28 +5697,36 @@
             const entries = [];
             const seen = new Set();
 
-            // 1. Live Verse Church Fathers (API + Active Crux)
+            // 1. Live Verse Church Fathers (API Schaff ANF/NPNF + Active Crux)
             const rawPats = [];
             if (Array.isArray(patristicList)) rawPats.push(...patristicList);
             if (activeCrux && Array.isArray(activeCrux.patristics)) rawPats.push(...activeCrux.patristics);
             rawPats.forEach(p => {
                 const author = p.father || p.author || 'Church Father';
                 if (author.startsWith('(Reception note')) return;
-                const key = `${author}::${(p.text || p.quote || '').slice(0, 48)}`;
+                const quoteText = p.snippet || p.text || p.quote || '';
+                const workTitle = p.work_title || p.work || 'Patristic Catena';
+                const key = `${author}::${workTitle.slice(0, 32)}::${quoteText.slice(0, 40)}`;
                 if (seen.has(key)) return;
                 seen.add(key);
-                const schaff = resolveSchaffVolForFather(author, p.work);
+                const schaffFallback = !p.pdf_vol ? resolveSchaffVolForFather(author, workTitle) : null;
+                const pdfVol = p.pdf_vol || (schaffFallback ? schaffFallback.vol : null);
+                const pdfPage = p.page_num || 1;
+                const pageTag = p.page_or_col ? ` (${p.page_or_col})` : '';
                 const trad = classifyFatherTradition(author);
+                const isExactVerse = p.verse != null && Number(p.verse) === Number(verseNum);
                 entries.push({
                     era: 'patristic',
-                    eraLabel: 'Apostolic / Father',
+                    eraLabel: isExactVerse ? `Father Witness · ${p.series || 'SCHAFF'}${pageTag}` : `Father · ${p.series || 'Patristic'}`,
                     tradition: trad,
                     author: author,
-                    work: p.work || 'Patristic Catena',
-                    quote: p.text || p.quote || '',
-                    schaff: schaff,
+                    work: workTitle,
+                    quote: quoteText,
+                    pdfVol: pdfVol,
+                    pdfPage: pdfPage,
+                    pageLabel: p.page_or_col || '',
                     wiki: buildAuthorWikiUrl(author),
-                    priority: 10
+                    priority: (p.father ? 12 : (isExactVerse ? 11 : 7))
                 });
             });
 
@@ -5563,16 +5879,18 @@
                 const cardsHtml = filtered.length ? filtered.map(e => {
                     const trMeta = THEOLOGICAL_TRADITIONS_REGISTRY[e.tradition] || THEOLOGICAL_TRADITIONS_REGISTRY.catholic;
                     const srcBadge = e.sourceKey && SOURCE_BADGE[e.sourceKey] ? SOURCE_BADGE[e.sourceKey] : null;
+                    const cardAccent = trMeta.accentHex || (srcBadge && srcBadge.accentHex) || '#d4a853';
+                    const cardTint = trMeta.tintBg || 'rgba(212, 168, 83, 0.08)';
                     return `
-                        <div class="p-2.5 rounded-lg border border-slate-800 bg-slate-900/55 space-y-1.5">
+                        <div class="nexus-witness-card p-2.5 rounded-lg border border-slate-800 bg-slate-900/55 space-y-1.5" style="--card-accent:${cardAccent};--card-tint-bg:${cardTint};">
                             <div class="flex flex-wrap items-center justify-between gap-1.5">
                                 <div class="flex flex-wrap items-center gap-1">
-                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${trMeta.badgeCls}">${escapeHtmlText(trMeta.short)}</span>
+                                    <span class="note-src-badge px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${trMeta.badgeCls}">${escapeHtmlText(trMeta.short)}</span>
                                     <span class="text-[9px] font-mono opacity-70 uppercase">${escapeHtmlText(e.eraLabel)}</span>
-                                    ${srcBadge ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-mono border ${srcBadge.cls}">${escapeHtmlText(srcBadge.label)}</span>` : ''}
+                                    ${srcBadge ? `<span class="note-src-badge px-1.5 py-0.5 rounded text-[9px] font-mono border ${srcBadge.cls}">${escapeHtmlText(srcBadge.label)}</span>` : ''}
                                 </div>
                                 <div class="flex items-center gap-2 font-mono text-[9.5px]">
-                                    ${e.schaff ? `<button type="button" onclick="openSchaffPdf('${escapeJsArg(e.schaff.vol)}')" class="text-cyan-300 hover:underline">Schaff PDF</button>` : ''}
+                                    ${e.pdfVol ? `<button type="button" onclick="openSchaffPdf('${escapeJsArg(e.pdfVol)}', ${e.pdfPage || 1})" class="text-cyan-300 hover:underline">${escapeHtmlText(e.pdfVol.toUpperCase())}${e.pdfPage > 1 ? ` p.${e.pdfPage}` : ''}</button>` : ''}
                                     ${e.magDocId ? `<button type="button" onclick="openMagisterialInAppPdf('${escapeJsArg(e.magDocId)}')" class="text-amber-300 hover:underline">Council PDF</button>` : ''}
                                     ${e.wiki ? `<a href="${e.wiki}" target="_blank" rel="noopener noreferrer" class="text-cyan-300 hover:underline">Wikipedia &rarr;</a>` : ''}
                                 </div>
@@ -6058,81 +6376,106 @@
                 }
                 wireParallelScrollSync();
             } else if (currentReaderMode === 'chapter') {
+                // STRUCTURED PERICOPE & DUAL-WITNESS STUDY CHAPTER (distinct from calm Devotional reading)
                 const masterMeta = getStreamMeta(masterEnId);
                 const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
                 const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
+                const effMasterId = masterChVerses.length > 0 ? masterEnId : 'dra';
                 const chFallbackNote = (masterEnId !== 'dra' && masterChVerses.length === 0)
                     ? `<div class="suite-badge-fallback"><strong>Chapter Fallback Active (${escapeHtmlText(masterMeta.short)} Uncovered):</strong> ${escapeHtmlText(book.name)} ${chapNum} is outside ${escapeHtmlText(masterMeta.name)} — displaying Church-approved DRA [IMPRIMATUR] text below.</div>`
                     : '';
                 const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
                 const cachedShard = NOTES_SHARD_CACHE.get(book.id);
                 const cachedChapNotes = (cachedShard && cachedShard.chapters && cachedShard.chapters[String(chapNum)]) || null;
+                const cruxVerses = (APP_DATA.preloaded_cruxes || []).filter(c => c.book === book.id && c.chapter === chapNum);
+                const notedCount = chDisplayVerses.filter((_, i) => localStorage.getItem(`notes_${book.id}_${chapNum}_${i + 1}`)).length;
+                const hlCount = chDisplayVerses.filter((_, i) => localStorage.getItem(`hl_${book.id}_${chapNum}_${i + 1}`)).length;
+                const maxPerPageCls = dualScriptureMode ? 'max-w-6xl' : 'max-w-4xl';
                 container.innerHTML = `
-                    <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="${maxPerPageCls} mx-auto space-y-3">
                         ${chapMetaBar}
                         ${chFallbackNote}
-                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-2">
                             <div>
-                                <span class="text-xs font-mono uppercase text-slate-400">${book.division}</span>
-                                <h2 class="text-xl font-bold text-white">${book.name} — Chapter ${chapNum} <span class="${getApprovalBadgeClass(masterChVerses.length > 0 ? masterMeta.approval : 'IMPRIMATUR')}">${escapeHtmlText(masterChVerses.length > 0 ? masterMeta.short : 'DRA Fallback')}</span></h2>
-                                <p class="text-xs text-slate-300 mt-0.5">Click any verse number to inspect in the Exegesis Workbench or 3D Spatial Strata.</p>
+                                <div class="flex items-center gap-2 text-[10px] font-mono uppercase text-slate-400">
+                                    <span>STRUCTURED STUDY CHAPTER</span>
+                                    <span>·</span>
+                                    <span>${escapeHtmlText(book.division)}</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-white mt-0.5">${book.name} ${chapNum} <span class="${getApprovalBadgeClass(masterChVerses.length > 0 ? masterMeta.approval : 'IMPRIMATUR')}">${escapeHtmlText(masterChVerses.length > 0 ? masterMeta.short : 'DRA Fallback')}</span></h2>
+                                <p class="text-[11px] text-slate-300 mt-0.5">Verse-by-verse analytical breakdown · Drag-select any phrase to highlight · ${hlCount} highlighted · ${notedCount} personal notes</p>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                                <button type="button" onclick="toggleDualScriptureMode()" class="px-2 py-1 rounded border ${dualScriptureMode ? 'border-amber-400 bg-amber-500/20 text-amber-300' : 'border-slate-700 bg-slate-950 text-slate-300 hover:border-amber-400'}">${dualScriptureMode ? 'Dual LXX·MT: ON' : 'Compare Dual LXX·MT'}</button>
+                                <button type="button" onclick="setDualRightStream('brenton')" class="px-2 py-1 rounded border border-slate-700 bg-slate-950 text-cyan-300 hover:border-cyan-400">Brenton LXX</button>
+                                <button type="button" onclick="setDualRightStream('lxx_gnt')" class="px-2 py-1 rounded border border-slate-700 bg-slate-950 text-cyan-300 hover:border-cyan-400">Greek LXX/GNT</button>
+                                <button type="button" onclick="setDualRightStream('wlc')" class="px-2 py-1 rounded border border-slate-700 bg-slate-950 text-amber-300 hover:border-amber-400">Hebrew MT</button>
                             </div>
                         </div>
-                        <div class="suite-manuscript-frame p-6 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3 font-serif text-base leading-relaxed text-slate-200">
+                        ${cruxVerses.length > 0 ? `
+                        <div class="px-3 py-2 rounded-lg border border-amber-500/30 bg-slate-950/80 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                            <span class="text-amber-300 font-bold">Chapter Cruxes:</span>
+                            ${cruxVerses.map(cx => `<button type="button" onclick="selectVerse(${cx.verse - 1})" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-200 hover:border-amber-400">v.${cx.verse}: ${escapeHtmlText((cx.title || '').slice(0, 42))}</button>`).join('')}
+                        </div>` : ''}
+                        <div class="suite-manuscript-frame p-4 sm:p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-2.5 leading-relaxed text-slate-200" style="font-family: var(--plenary-serif-font); font-size: calc(var(--plenary-font-size, 1.25rem) * var(--plenary-font-scale, 1));">
                             ${romanCornersHtml()}
-                            ${chDisplayVerses.map((v, idx) => {
-                                const vNum = idx + 1;
-                                const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
-                                const hasNote = localStorage.getItem(`notes_${book.id}_${chapNum}_${vNum}`) ? ' <i data-lucide="file-text" class="w-3 h-3 inline-block align-baseline text-amber-400"></i>' : '';
-                                const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
-                                const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
-                                const supHtml = idx === 0 && dropCap
-                                    ? dropCap
-                                    : `<sup class="suite-verse-num text-amber-400 font-mono text-xs select-none">${vNum}</sup> `;
-                                return `<span id="cont-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer hover:text-amber-300 transition ${idx === currentVerseIndex ? 'text-amber-400 font-semibold suite-verse-highlight' : ''} ${hlClass ? 'hl-' + hlClass : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${hasNote}&nbsp;</span>`;
-                            }).join('')}
+                            ${dualScriptureMode
+                                ? buildDualScriptureColumnsHtml(book, currentChapterIndex, chapNum, masterEnId, cachedChapNotes, 'cont')
+                                : chDisplayVerses.map((v, idx) => {
+                                    const vNum = idx + 1;
+                                    const isCur = idx === currentVerseIndex;
+                                    const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
+                                    const tags = getVerseTagsList(book.id, chapNum, vNum);
+                                    const tagPills = tags.length ? tags.map(t => `<span class="ml-1 px-1 py-0.5 rounded text-[9px] font-mono border border-amber-500/40 bg-amber-500/10 text-amber-300">#${escapeHtmlText(t)}</span>`).join('') : '';
+                                    const noteArr = (cachedChapNotes && cachedChapNotes[String(vNum)]) || [];
+                                    const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
+                                    const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, effMasterId, chapNum) : '';
+                                    const rawBody = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
+                                    const bodyHtml = applySavedPhraseHighlightsToHtml(rawBody, book.id, chapNum, vNum, effMasterId);
+                                    const supHtml = idx === 0 && dropCap ? dropCap : `<span class="font-mono text-xs font-bold text-amber-400 mr-1.5 select-none">${vNum}</span>`;
+                                    return `<div id="cont-v-${idx}" data-verse-idx="${idx}" data-verse-num="${vNum}" data-stream-id="${escapeHtmlText(effMasterId)}" onclick="selectVerse(${idx})" class="p-2 rounded-lg cursor-pointer transition border ${isCur ? 'border-amber-500/50 bg-amber-500/10' : 'border-transparent hover:bg-slate-800/40'} ${hlClass ? 'hl-' + hlClass : ''}">
+                                        ${supHtml}<span>${bodyHtml}</span><span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${tagPills}${noteArr.length > 0 ? `<span class="ml-1.5 text-[9.5px] font-mono text-slate-400">[${noteArr.length}n]</span>` : ''}
+                                    </div>`;
+                                }).join('')
+                            }
                             ${romanColophonHtml(`${book.abbr} ${chapNum}`)}
                         </div>
                     </div>
                 `;
-                const curSpan = document.getElementById(`cont-v-${currentVerseIndex}`);
+                const curSpan = document.getElementById(`cont-v-${currentVerseIndex}`) || document.getElementById(`contL-v-${currentVerseIndex}`);
                 if (curSpan && typeof curSpan.scrollIntoView === 'function') curSpan.scrollIntoView({ block: 'nearest' });
             } else if (currentReaderMode === 'devotional') {
-                // COMFORT PRINT® STREAMLINED DEVOTIONAL MODE
+                // COMFORT PRINT® STREAMLINED DEVOTIONAL MODE (pure sanctuary reading + optional Dual LXX·MT)
                 const masterMeta = getStreamMeta(masterEnId);
                 const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
                 const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
                 const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
+                const effMasterId = masterChVerses.length > 0 ? masterEnId : 'dra';
                 const activeMeta = masterChVerses.length > 0 ? masterMeta : getStreamMeta('dra');
                 const cachedShard = NOTES_SHARD_CACHE.get(book.id);
                 const cachedChapNotes = (cachedShard && cachedShard.chapters && cachedShard.chapters[String(chapNum)]) || null;
                 container.innerHTML = `
-                    <div class="comfort-print-page max-w-[66ch] mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
+                    <div class="comfort-print-page ${dualScriptureMode ? 'max-w-5xl' : 'max-w-[66ch]'} mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
                         ${romanCornersHtml()}
                         <div class="text-center border-b border-slate-800/80 pb-5 mb-6 relative">
-                            <div class="flex items-center justify-center gap-2">
+                            <div class="flex items-center justify-center gap-2 flex-wrap">
                                 <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400/80">${escapeHtmlText(book.division)} · ${escapeHtmlText(activeMeta.short)}</span>
                                 <button type="button" id="btnDevotionalFocusToggle" onclick="toggleDevotionalFocusMode()" class="suite-btn ml-2 ${devotionalFocusMode ? 'is-active' : ''}" style="height:22px;font-size:10px;padding:0 7px;">
                                     <i data-lucide="${devotionalFocusMode ? 'minimize-2' : 'maximize-2'}" class="w-3 h-3"></i>
                                     <span>${devotionalFocusMode ? 'Exit Focus' : 'Focus'}</span>
+                                </button>
+                                <button type="button" onclick="toggleDualScriptureMode()" class="suite-btn ${dualScriptureMode ? 'is-active' : ''}" style="height:22px;font-size:10px;padding:0 7px;">
+                                    <span>${dualScriptureMode ? 'Single Column' : 'Dual LXX·MT'}</span>
                                 </button>
                             </div>
                             <h1 class="text-3xl font-bold text-amber-50 mt-1" style="font-family: var(--plenary-serif-font);">${escapeHtmlText(book.name)} ${chapNum}</h1>
                             ${romanColophonHtml()}
                         </div>
                         <div class="text-slate-100 leading-[1.88] text-[1.15rem] tracking-[0.01em]" style="font-family: var(--plenary-serif-font);">
-                            ${chDisplayVerses.map((v, idx) => {
-                                const vNum = idx + 1;
-                                const isCur = idx === currentVerseIndex;
-                                const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
-                                const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
-                                const supHtml = idx === 0 && dropCap
-                                    ? dropCap
-                                    : `<sup class="suite-verse-num text-[10px] font-mono text-amber-500/70 mr-1 select-none">${vNum}</sup>`;
-                                return `<span id="dev-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-0.5' : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
-                            }).join('')}
+                            ${dualScriptureMode
+                                ? buildDualScriptureColumnsHtml(book, currentChapterIndex, chapNum, masterEnId, cachedChapNotes, 'dev')
+                                : buildSingleProseVersesHtml(chDisplayVerses, effMasterId, book, chapNum, cachedChapNotes, 'dev')
+                            }
                         </div>
                         ${romanColophonHtml(`FINIS · ${book.abbr} ${chapNum}`)}
                         <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500">
@@ -6141,7 +6484,7 @@
                         </div>
                     </div>
                 `;
-                const curDev = document.getElementById(`dev-v-${currentVerseIndex}`);
+                const curDev = document.getElementById(`dev-v-${currentVerseIndex}`) || document.getElementById(`devL-v-${currentVerseIndex}`);
                 if (curDev && typeof curDev.scrollIntoView === 'function') curDev.scrollIntoView({ block: 'nearest' });
             } else if (currentReaderMode === 'apostolic') {
                 // APOSTOLIC SCRIPTURES MODE: Proto-Masoretic (WLC) + Septuagint (LXX) / GNT + Vulgate + English + Inline BibCrit/Crux Badges
@@ -6309,8 +6652,8 @@
             } else if (currentReaderMode === 'catena_4k') {
                 // MODE A — 4K TV THEOLOGIAN CATENA WORKBENCH
                 // Col 1 (Wide Left): Patristic, Scholastic & Modern Theologian Nexus (Denom/Era filters + Tradition (i) Guide + Wikipedia links)
-                // Col 2 (Center-Left): Scriptures Column (ComfortPrint prose + Illuminated Drop-Cap + Inline 1a,1b Footnotes, ZERO duplicate Greek)
-                // Col 3 (Center-Right): Study Notes & Combined Cross-References
+                // Col 2 (Center-Left): Scriptures Column (Single or Apostles Dual LXX·MT, ComfortPrint prose, Illuminated Drop-Cap, zero duplicate Study Notes!)
+                // Col 3 (Center-Right): Single Built-In Study Notes & Combined Cross-References (Quiet cards / Flip Color toggle)
                 // Col 4 (Far Right #inspectorPane): Original Greek/Hebrew/Latin Clickable Tokens + Morphology + Strong's
                 const masterMeta = getStreamMeta(masterEnId);
                 const reg = APP_DATA.translation_registry || [];
@@ -6318,12 +6661,13 @@
                 const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
                 const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
                 const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
+                const effMasterId = masterChVerses.length > 0 ? masterEnId : 'dra';
                 const activeMeta = masterChVerses.length > 0 ? masterMeta : getStreamMeta('dra');
                 const cachedShard = NOTES_SHARD_CACHE.get(book.id);
                 const cachedChapNotes = (cachedShard && cachedShard.chapters && cachedShard.chapters[String(chapNum)]) || null;
 
                 container.innerHTML = `
-                    <div class="catena-4k-grid">
+                    <div class="catena-4k-grid ${catenaNotesVisible ? '' : 'catena-notes-hidden'}">
                         <!-- COL 1 (MAIN WIDE LEFT): PATRISTIC, SCHOLASTIC & MODERN THEOLOGIAN NEXUS -->
                         <div class="catena-4k-pane">
                             <div class="catena-4k-pane-header">
@@ -6332,16 +6676,16 @@
                                     <span class="text-[11px] font-mono text-slate-300 truncate">${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-[10px] font-mono flex-shrink-0">
-                                    <button type="button" onclick="toggleTraditionInfoCard()" class="text-cyan-300 hover:underline">Tradition Guide (i)</button>
+                                    <button type="button" onclick="toggleTraditionInfoCard()" class="text-cyan-300 hover:underline">Tradition (i)</button>
                                     <button type="button" onclick="toggleMasterStudyHubModal('councils')" class="text-amber-300 hover:underline">Councils &rarr;</button>
                                 </div>
                             </div>
-                            <div id="catenaNexusHost" class="catena-4k-pane-body space-y-2.5 text-xs">
+                            <div id="catenaNexusHost" class="catena-4k-pane-body space-y-2 text-xs">
                                 <div class="italic opacity-65">Loading Patristic, Scholastic &amp; Modern Theologians...</div>
                             </div>
                         </div>
 
-                        <!-- COL 2 (CENTER-LEFT): SCRIPTURES PROSE (ZERO DUPLICATE GREEK) -->
+                        <!-- COL 2 (CENTER-LEFT): SCRIPTURES PROSE (SINGLE OR DUAL LXX·MT WITNESSES) -->
                         <div class="catena-4k-pane comfort-print-page">
                             <div class="catena-4k-pane-header">
                                 <div class="flex items-center gap-1.5 min-w-0">
@@ -6349,53 +6693,54 @@
                                     <span class="text-[10px] font-mono text-slate-400 truncate">${escapeHtmlText(book.name)} ${chapNum}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 flex-shrink-0">
+                                    <button type="button" onclick="toggleDualScriptureMode()" class="px-1.5 py-0.5 rounded border font-mono text-[10px] ${dualScriptureMode ? 'border-amber-400 bg-amber-500/20 text-amber-300' : 'border-slate-700 text-slate-300 hover:border-amber-400'}" title="Compare two translations side-by-side (e.g. Brenton LXX vs Master/MT)">${dualScriptureMode ? 'Dual: ON' : 'Dual LXX·MT'}</button>
                                     <select onchange="setMasterEnglish(this.value)" class="suite-select" style="height:22px;font-size:10px;" title="Switch Scriptures Translation">${enOpts}</select>
                                     <span class="${getApprovalBadgeClass(activeMeta.approval)}">${escapeHtmlText(activeMeta.short)}</span>
                                 </div>
                             </div>
                             <div id="catenaScripturesScroll" class="catena-4k-pane-body relative" style="font-family: var(--plenary-serif-font); font-size: calc(var(--plenary-font-size, 1.25rem) * var(--plenary-font-scale, 1)); line-height: var(--plenary-line-height, 1.72);">
-                                <div class="text-center pb-2 mb-3 border-b border-slate-800/80">
+                                <div class="text-center pb-2 mb-2.5 border-b border-slate-800/80">
                                     <span class="text-[10px] font-mono uppercase tracking-[0.18em] text-amber-400/80">${escapeHtmlText(book.division)}</span>
                                     <h2 class="text-xl font-bold text-white mt-0.5">${escapeHtmlText(book.name)} ${chapNum}</h2>
                                 </div>
                                 <div class="leading-relaxed">
-                                    ${chDisplayVerses.map((v, idx) => {
-                                        const vNum = idx + 1;
-                                        const isCur = idx === currentVerseIndex;
-                                        const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
-                                        const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                        const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
-                                        const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
-                                        const supHtml = idx === 0 && dropCap ? dropCap : `<sup class="suite-verse-num font-mono text-[11px] font-bold text-amber-400 mr-0.5 select-none">${vNum}</sup>`;
-                                        return `<span id="catena-v-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition rounded px-0.5 ${isCur ? 'text-amber-200 suite-verse-highlight font-semibold' : 'hover:text-amber-200'} ${hlClass ? 'hl-' + hlClass : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
-                                    }).join('')}
+                                    ${dualScriptureMode
+                                        ? buildDualScriptureColumnsHtml(book, currentChapterIndex, chapNum, masterEnId, cachedChapNotes, 'catena')
+                                        : buildSingleProseVersesHtml(chDisplayVerses, effMasterId, book, chapNum, cachedChapNotes, 'catena')
+                                    }
                                 </div>
                             </div>
                         </div>
 
-                        <!-- COL 3 (CENTER-RIGHT): STUDY NOTES & COMBINED CROSS-REFERENCES -->
-                        <div class="catena-4k-pane">
+                        <!-- COL 3 (CENTER-RIGHT): SINGLE STUDY NOTES & COMBINED CROSS-REFERENCES -->
+                        ${catenaNotesVisible ? `
+                        <div class="catena-4k-pane" id="catenaStudyNotesPane">
                             <div class="catena-4k-pane-header">
                                 <div class="flex items-center gap-1.5 min-w-0">
                                     <span class="font-mono text-[10px] font-bold text-cyan-300 uppercase">STUDY NOTES</span>
                                     <span class="px-1.5 py-0.5 rounded border border-slate-700 font-mono text-[10px] text-amber-300">${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum}</span>
                                 </div>
                                 <div class="flex items-center gap-1 font-mono text-[10px]">
+                                    <button type="button" id="catenaNoteColorBtn" onclick="cycleNoteColorMode()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400" title="Switch note card coloring: Quiet Boxes / Borders / Flip">Colors</button>
                                     <button type="button" onclick="toggleSplitPaneScope()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">${splitPaneScope === 'verse' ? 'Verse' : 'Chapter'}</button>
                                     <button type="button" onclick="toggleVisibilityPopover()" class="px-1.5 py-0.5 rounded border border-slate-700 hover:border-amber-400">Filter</button>
+                                    <button type="button" onclick="toggleCatenaNotesCol(false)" class="px-1 py-0.5 rounded border border-slate-700 hover:border-amber-400" title="Hide Study Notes column">&times;</button>
                                 </div>
                             </div>
                             <div id="catenaNotesList" class="catena-4k-pane-body space-y-2 text-xs">
                                 <div class="italic opacity-65">Loading study notes...</div>
                             </div>
-                        </div>
+                        </div>` : ''}
                     </div>
                 `;
-                const curCatEl = document.getElementById(`catena-v-${currentVerseIndex}`);
+                applyNoteColorMode();
+                const curCatEl = document.getElementById(`catena-v-${currentVerseIndex}`) || document.getElementById(`catenaL-v-${currentVerseIndex}`);
                 const catScroll = document.getElementById('catenaScripturesScroll');
                 if (curCatEl && catScroll) catScroll.scrollTop = Math.max(0, curCatEl.offsetTop - catScroll.offsetTop - 90);
                 hydrateInlineChapterFootnotes(book.id, chapNum);
-                renderNotesFeedIntoElement(document.getElementById('catenaNotesList'), book, chapNum, verseNum, splitPaneScope);
+                if (catenaNotesVisible && document.getElementById('catenaNotesList')) {
+                    renderNotesFeedIntoElement(document.getElementById('catenaNotesList'), book, chapNum, verseNum, splitPaneScope);
+                }
                 hydrateCatenaNexusIntoTarget(document.getElementById('catenaNexusHost'), book, chapNum, verseNum, false);
             } else if (currentReaderMode === 'mosaic_4k') {
                 // MODE B — 4K TV QUAD/MULTI-TRANSLATION MOSAIC + BOTTOM-RIGHT PATRISTIC/CONCILIAR NEXUS
@@ -6566,10 +6911,16 @@
             if (currentReaderMode === 'chapter' || currentReaderMode === 'devotional' || currentReaderMode === 'study_scroll') {
                 hydrateInlineChapterFootnotes(book.id, chapNum);
             }
-            if (splitPaneOn) {
+            const splitWrap = document.getElementById('readerSplitContainer');
+            const is4KIntegratedNotes = currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k';
+            if (is4KIntegratedNotes) {
+                if (splitWrap) splitWrap.classList.remove('split-active');
+            } else if (splitPaneOn) {
+                if (splitWrap) splitWrap.classList.add('split-active');
                 renderSplitCommentaryPane();
                 attachSplitScrollAnchor();
             }
+            if (typeof applyFixationReadingToReader === 'function') applyFixationReadingToReader();
             refreshIcons();
         }
 
@@ -6735,7 +7086,7 @@
                         <span class="pos-badge ${posCls}">${escapeHtmlText(info.posCode || info.pos || info.lang)}</span>
                     </div>
                 </div>
-                <div class="text-[11px] font-mono text-emerald-300 mb-0.5">${escapeHtmlText(info.lemma)} ${info.translit ? `<span class="text-slate-400 font-sans italic">(${escapeHtmlText(info.translit)})</span>` : ''}</div>
+                <div class="text-[11px] font-mono text-amber-200/90 mb-0.5">${escapeHtmlText(info.lemma)} ${info.translit ? `<span class="text-slate-400 font-sans italic">(${escapeHtmlText(info.translit)})</span>` : ''}</div>
                 ${info.pos && info.pos !== info.posCode ? `<div class="text-[10px] font-mono text-purple-300 mb-1">${escapeHtmlText(info.pos)}</div>` : ''}
                 <div class="text-[11px] leading-snug opacity-90">${escapeHtmlText(glossShort)}</div>
             `;
@@ -6762,7 +7113,7 @@
             const posCls = classifyPosBadgeClass(info.pos || info.posCode);
             const glossShort = (info.gloss || '').length > 135 ? info.gloss.slice(0, 132) + '...' : (info.gloss || '');
             box.innerHTML = `<strong class="text-amber-300 font-serif text-sm">${escapeHtmlText(info.word)}</strong> `
-                + `<span class="text-emerald-300 font-mono text-[11px] ml-1">${escapeHtmlText(info.lemma)}</span> `
+                + `<span class="text-amber-200/90 font-mono text-[11px] ml-1">${escapeHtmlText(info.lemma)}</span> `
                 + (info.translit ? `<span class="text-slate-400 italic text-xs">(${escapeHtmlText(info.translit)})</span> ` : '')
                 + `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 font-mono text-[10px] mx-1">${escapeHtmlText(info.strong || info.lang)}</span>`
                 + (info.pos ? `<span class="pos-badge ${posCls} mr-1">${escapeHtmlText(info.pos)}</span>` : '')
@@ -6857,7 +7208,7 @@
                 if (!cleanSurf) return escapeHtmlText(tok);
                 const nw = normWord(tok);
                 const diffCls = (baseSet && nw && !baseSet.has(nw))
-                    ? ' bg-emerald-500/20 text-emerald-300 border-b border-emerald-500/50'
+                    ? ' par-word-diff'
                     : '';
                 let subGloss = '';
                 if (parallelInterlinearOn) {
@@ -6892,7 +7243,7 @@
                 if (/^\s+$/.test(tok)) return tok;
                 const nw = normWord(tok);
                 if (!nw || baseSet.has(nw)) return escapeHtmlText(tok);
-                return `<span class="bg-emerald-500/20 text-emerald-300 rounded px-0.5 border-b border-emerald-500/50">${escapeHtmlText(tok)}</span>`;
+                return `<span class="par-word-diff">${escapeHtmlText(tok)}</span>`;
             }).join('');
         }
 
@@ -7464,12 +7815,12 @@
             net21: { label: 'NET 2.1', cls: 'text-cyan-300 border-cyan-500/40 bg-cyan-500/10' },
             ignatius: { label: 'Ignatius (Scott Hahn)', cls: 'text-amber-300 border-amber-500/40 bg-amber-500/10' },
             sbl: { label: 'SBL Study Bible', cls: 'text-purple-300 border-purple-500/30 bg-purple-500/15' },
-            noab: { label: 'NOAB (NRSVue)', cls: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/20' },
+            noab: { label: 'NOAB (NRSVue)', cls: 'text-teal-300 border-teal-500/35 bg-teal-500/10' },
             niv_sb: { label: 'NIV Study Bible', cls: 'text-rose-300 border-rose-500/30 bg-rose-500/15' },
             nabre: { label: 'NABRE (Catholic Study Bible)', cls: 'text-indigo-300 border-indigo-500/40 bg-indigo-500/10' },
             nabre_rg: { label: 'NABRE Reading Guide & Intro', cls: 'text-sky-300 border-sky-500/40 bg-sky-500/15' },
             bsb: { label: 'BSB Translator Notes', cls: 'text-teal-300 border-teal-500/40 bg-teal-500/10' },
-            'matthew-henry': { label: 'Matthew Henry', cls: 'text-lime-300 border-lime-500/40 bg-lime-500/10' },
+            'matthew-henry': { label: 'Matthew Henry', cls: 'text-amber-200 border-amber-500/35 bg-amber-500/10' },
             'jamieson-fausset-brown': { label: 'Jamieson-Fausset-Brown', cls: 'text-orange-300 border-orange-500/40 bg-orange-500/10' },
             'john-gill': { label: 'John Gill', cls: 'text-fuchsia-300 border-fuchsia-500/40 bg-fuchsia-500/10' },
             'adam-clarke': { label: 'Adam Clarke', cls: 'text-yellow-300 border-yellow-500/40 bg-yellow-500/10' },
@@ -7478,7 +7829,7 @@
             tyndale: { label: 'Tyndale Open Study Notes', cls: 'text-violet-300 border-violet-500/40 bg-violet-500/10' },
             haydock: { label: 'Haydock 1859', cls: 'text-amber-300 border-amber-500/40 bg-amber-500/10' },
             macarthur: { label: 'MacArthur Study Bible', cls: 'text-blue-300 border-blue-500/40 bg-blue-500/10' },
-            baker_csb: { label: 'Baker CSB Study Bible', cls: 'text-emerald-300 border-emerald-500/40 bg-emerald-500/10' },
+            baker_csb: { label: 'Baker CSB Study Bible', cls: 'text-teal-300 border-teal-500/35 bg-teal-500/10' },
         };
         let doll6ActiveSource = 'all';
         let doll6CurrentNotes = [];
@@ -7763,7 +8114,37 @@
                     el.innerHTML = `<div class="font-bold text-purple-300">${escapeHtmlText(p.father)}${p.work ? ` <span class="text-[10px] text-slate-400 font-normal">(${escapeHtmlText(p.work)})</span>` : ''}</div><div class="text-[11px] text-slate-400 italic">${escapeHtmlText(p.text)}</div>${actions}`;
                     patList.appendChild(el);
                 });
-            } else {
+            }
+            if (typeof loadVersePatristicsAndMedia === 'function') {
+                const reqKey = `${book.id}:${chapNum}:${verseNum}`;
+                loadVersePatristicsAndMedia(book.id, chapNum, verseNum).then(pm => {
+                    if (`${APP_DATA.books[currentBookIndex].id}:${currentChapterIndex + 1}:${currentVerseIndex + 1}` !== reqKey) return;
+                    const hits = (pm && pm.patristics) || [];
+                    if (hits.length > 0) {
+                        const hdr = document.createElement('div');
+                        hdr.className = 'text-[10px] font-mono text-amber-300 uppercase tracking-wider pt-1 flex items-center justify-between';
+                        hdr.innerHTML = `<span>Schaff ANF/NPNF Indexed Citations (${hits.length})</span><button type="button" onclick="togglePatristicModal()" class="text-cyan-300 hover:underline">Index →</button>`;
+                        patList.appendChild(hdr);
+                        hits.slice(0, 8).forEach(p => {
+                            const el = document.createElement('div');
+                            el.className = 'p-2 rounded bg-slate-900/80 border border-slate-800 space-y-1';
+                            const fatherLabel = p.author || p.father_name || 'Church Father';
+                            const volLabel = p.pdf_vol ? `${String(p.pdf_vol).toUpperCase()} p.${p.page_num || 1}` : (p.work_title || '');
+                            el.innerHTML = `
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="font-bold text-purple-300 text-[11px]">${escapeHtmlText(fatherLabel)}</span>
+                                    ${p.pdf_vol ? `<button type="button" onclick="openSchaffPdf('${escapeJsArg(p.pdf_vol)}', ${Number(p.page_num || 1)})" class="text-[10px] font-mono text-cyan-300 hover:underline">${escapeHtmlText(volLabel)} →</button>` : ''}
+                                </div>
+                                ${p.work_title ? `<div class="text-[10px] text-slate-400 font-mono truncate">${escapeHtmlText(p.work_title)}</div>` : ''}
+                                <div class="text-[11px] text-slate-300 leading-snug">${escapeHtmlText((p.snippet || '').slice(0, 220))}${(p.snippet || '').length > 220 ? '...' : ''}</div>
+                            `;
+                            patList.appendChild(el);
+                        });
+                    } else if (!patList.children.length) {
+                        patList.innerHTML = `<div class="p-2 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-400 italic">Received across St. Jerome's Latin Vulgate tradition and codified at Hippo (393), Carthage (397), and Trent (1546). <button onclick="togglePatristicModal()" class="text-purple-300 font-mono text-[10px] hover:underline ml-1">Browse Patristic Index &rarr;</button></div>`;
+                    }
+                }).catch(() => {});
+            } else if (!patList.children.length) {
                 patList.innerHTML = `<div class="p-2 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-400 italic">Received across St. Jerome's Latin Vulgate tradition and codified at Hippo (393), Carthage (397), and Trent (1546). <button onclick="togglePatristicModal()" class="text-purple-300 font-mono text-[10px] hover:underline ml-1">Browse Patristic Index &rarr;</button></div>`;
             }
         }
@@ -8560,6 +8941,140 @@
             window.addEventListener('DOMContentLoaded', () => { try { applyA11yPrefs(); } catch {} });
         }
 
+        // ====== FIXATION SPEED-READING BOLDING ENGINE (SCIENTIFIC SACCADE ANCHORS) ======
+        const DEFAULT_FIXATION_PREFS = { mode: 'off', density: 45 };
+        let fixationPrefs = (() => {
+            try {
+                const parsed = JSON.parse(localStorage.getItem('plenary_fixation_prefs') || '{}');
+                return {
+                    mode: ['off', 'bionic', 'random'].includes(parsed.mode) ? parsed.mode : 'off',
+                    density: Math.max(15, Math.min(80, Number(parsed.density) || 45))
+                };
+            } catch {
+                return { ...DEFAULT_FIXATION_PREFS };
+            }
+        })();
+
+        function syncFixationControls() {
+            const sel = document.getElementById('fixationModeSelect');
+            const row = document.getElementById('fixationDensityRow');
+            const slider = document.getElementById('fixationDensitySlider');
+            const val = document.getElementById('fixationDensityVal');
+            if (sel) sel.value = fixationPrefs.mode;
+            if (slider) slider.value = String(fixationPrefs.density);
+            if (val) val.textContent = `${fixationPrefs.density}%`;
+            if (row) row.classList.toggle('hidden', fixationPrefs.mode === 'off');
+        }
+
+        function updateFixationPrefs(key, value) {
+            if (key === 'mode') {
+                fixationPrefs.mode = ['off', 'bionic', 'random'].includes(value) ? value : 'off';
+            } else if (key === 'density') {
+                fixationPrefs.density = Math.max(15, Math.min(80, Number(value) || 45));
+            }
+            try { localStorage.setItem('plenary_fixation_prefs', JSON.stringify(fixationPrefs)); } catch {}
+            syncFixationControls();
+            if (typeof APP_DATA !== 'undefined' && APP_DATA.books && APP_DATA.books.length > 0) {
+                renderReader();
+            }
+        }
+
+        function hashFixationWord(word, idx) {
+            let h = 2166136261 ^ idx;
+            for (let i = 0; i < word.length; i++) {
+                h ^= word.charCodeAt(i);
+                h = Math.imul(h, 16777619);
+            }
+            return h >>> 0;
+        }
+
+        function formatFixationWordFragment(word, wordIndex) {
+            const densityRatio = fixationPrefs.density / 100;
+            if (word.length < 3) {
+                if (fixationPrefs.mode === 'bionic' && word.length >= 2) {
+                    const f = document.createDocumentFragment();
+                    const b = document.createElement('span');
+                    b.className = 'fx-b';
+                    b.textContent = word[0];
+                    f.appendChild(b);
+                    f.appendChild(document.createTextNode(word.slice(1)));
+                    return f;
+                }
+                return null;
+            }
+            const h = hashFixationWord(word, wordIndex);
+            if (fixationPrefs.mode === 'random') {
+                if ((h % 100) >= fixationPrefs.density) return null;
+                const spanLen = word.length >= 7 ? 3 : 2;
+                const maxStart = Math.max(0, word.length - spanLen);
+                const start = (h >>> 7) % (maxStart + 1);
+                const end = Math.min(word.length, start + spanLen);
+                const frag = document.createDocumentFragment();
+                if (start > 0) frag.appendChild(document.createTextNode(word.slice(0, start)));
+                const b = document.createElement('span');
+                b.className = 'fx-b';
+                b.textContent = word.slice(start, end);
+                frag.appendChild(b);
+                if (end < word.length) frag.appendChild(document.createTextNode(word.slice(end)));
+                return frag;
+            }
+            // Initial-letter fixation ('bionic')
+            const splitAt = Math.max(1, Math.min(word.length - 1, Math.round(word.length * Math.max(0.28, Math.min(0.65, densityRatio)))));
+            const frag = document.createDocumentFragment();
+            const b = document.createElement('span');
+            b.className = 'fx-b';
+            b.textContent = word.slice(0, splitAt);
+            frag.appendChild(b);
+            frag.appendChild(document.createTextNode(word.slice(splitAt)));
+            return frag;
+        }
+
+        function applyFixationReadingToReader() {
+            syncFixationControls();
+            if (fixationPrefs.mode === 'off') return;
+            const root = document.getElementById('readerContent');
+            if (!root) return;
+            const skipSelector = 'sup, button, input, textarea, select, script, style, .suite-fn-slot, .par-interlinear-gloss, .suite-illuminated-cap, .fx-b, .fn-anchor, .verse-num-badge';
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue || !/[A-Za-zÀ-ÿ]{2,}/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+                    const p = node.parentElement;
+                    if (!p) return NodeFilter.FILTER_REJECT;
+                    if (p.closest(skipSelector)) return NodeFilter.FILTER_REJECT;
+                    if (!p.closest('[data-verse-idx], .suite-reader-prose, .catena-scripture-col, .mosaic-4k-shell, .dual-scripture-col')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+            const nodes = [];
+            let cur;
+            while ((cur = walker.nextNode())) nodes.push(cur);
+            let wordCounter = 0;
+            nodes.forEach(textNode => {
+                const raw = textNode.nodeValue;
+                const re = /([A-Za-z\u00C0-\u024F]{2,})/g;
+                let lastIdx = 0;
+                let m;
+                let changed = false;
+                const frag = document.createDocumentFragment();
+                while ((m = re.exec(raw)) !== null) {
+                    if (m.index > lastIdx) frag.appendChild(document.createTextNode(raw.slice(lastIdx, m.index)));
+                    const rep = formatFixationWordFragment(m[1], wordCounter++);
+                    if (rep) {
+                        frag.appendChild(rep);
+                        changed = true;
+                    } else {
+                        frag.appendChild(document.createTextNode(m[1]));
+                    }
+                    lastIdx = m.index + m[1].length;
+                }
+                if (!changed) return;
+                if (lastIdx < raw.length) frag.appendChild(document.createTextNode(raw.slice(lastIdx)));
+                if (textNode.parentNode) textNode.parentNode.replaceChild(frag, textNode);
+            });
+        }
+
         function openCompareAll25Modal() {
             if (!APP_DATA || !APP_DATA.books) return;
             const book = APP_DATA.books[currentBookIndex];
@@ -9238,11 +9753,282 @@
             if (val.trim()) localStorage.setItem(key, val);
             else localStorage.removeItem(key);
             updateLibraryBadge();
+            updatePersonalNotesCountLabel();
+            const prev = document.getElementById('verseNotesPreview');
+            if (prev && !prev.classList.contains('hidden')) {
+                prev.innerHTML = renderPersonalNotePreviewHtml(val);
+            }
         }
 
         function loadActiveVerseNotes() {
             const val = localStorage.getItem(`notes_${getActiveRefKey()}`) || '';
-            document.getElementById('verseNotesInput').value = val;
+            const inp = document.getElementById('verseNotesInput');
+            if (inp) inp.value = val;
+            updatePersonalNotesCountLabel();
+            renderActiveVerseTags();
+            const prev = document.getElementById('verseNotesPreview');
+            if (prev && !prev.classList.contains('hidden')) {
+                prev.innerHTML = renderPersonalNotePreviewHtml(val);
+            }
+        }
+
+        function updatePersonalNotesCountLabel() {
+            const lbl = document.getElementById('personalNotesCountLabel');
+            if (!lbl || !APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            if (!book) return;
+            const prefix = `notes_${book.id}_${currentChapterIndex + 1}_`;
+            let cnt = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.startsWith(prefix) && (localStorage.getItem(k) || '').trim()) cnt++;
+            }
+            lbl.textContent = cnt > 0 ? `${cnt} noted in ch.` : 'AUTO-SAVED';
+        }
+
+        // ====== STUDY NOTEBOOK TAGS & MARKDOWN PREVIEW ======
+        let verseTagsStore = (() => {
+            try { return JSON.parse(localStorage.getItem('plenary_verse_tags_v1') || '{}') || {}; } catch { return {}; }
+        })();
+
+        function saveVerseTagsStore() {
+            try { localStorage.setItem('plenary_verse_tags_v1', JSON.stringify(verseTagsStore)); } catch {}
+        }
+
+        function getVerseTagsList(bookId, chapNum, vNum) {
+            const key = `${bookId}_${chapNum}_${vNum}`;
+            const arr = verseTagsStore[key];
+            return Array.isArray(arr) ? arr : [];
+        }
+
+        function renderActiveVerseTags() {
+            const host = document.getElementById('activeVerseTagsList');
+            if (!APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            if (!book) return;
+            const chapNum = currentChapterIndex + 1;
+            const vNum = currentVerseIndex + 1;
+            const tags = getVerseTagsList(book.id, chapNum, vNum);
+            if (host) {
+                host.innerHTML = tags.map(t => `
+                    <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-200 border border-amber-500/35 text-[10px] font-mono">
+                        #${escapeHtmlText(t)}
+                        <button type="button" onclick="toggleQuickVerseTag('${escapeJsArg(t)}')" class="opacity-70 hover:opacity-100" title="Remove tag">&times;</button>
+                    </span>
+                `).join('');
+            }
+            document.querySelectorAll('.tag-quick-pill').forEach(btn => {
+                const raw = (btn.textContent || '').replace(/^#/, '').trim();
+                const has = tags.includes(raw);
+                btn.classList.toggle('border-amber-400', has);
+                btn.classList.toggle('bg-amber-500/20', has);
+                btn.classList.toggle('text-amber-200', has);
+            });
+        }
+
+        function toggleQuickVerseTag(rawTag) {
+            const tag = String(rawTag || '').replace(/^#+/, '').trim();
+            if (!tag || !APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            const key = `${book.id}_${currentChapterIndex + 1}_${currentVerseIndex + 1}`;
+            const cur = getVerseTagsList(book.id, currentChapterIndex + 1, currentVerseIndex + 1).slice();
+            const idx = cur.indexOf(tag);
+            if (idx >= 0) cur.splice(idx, 1);
+            else cur.push(tag);
+            if (cur.length) verseTagsStore[key] = cur;
+            else delete verseTagsStore[key];
+            saveVerseTagsStore();
+            renderActiveVerseTags();
+            if (currentReaderMode === 'chapter') renderReader();
+        }
+
+        function addCustomVerseTag() {
+            const inp = document.getElementById('newVerseTagInput');
+            if (!inp) return;
+            const clean = inp.value.replace(/^#+/, '').trim();
+            if (!clean) return;
+            const book = APP_DATA.books[currentBookIndex];
+            const key = `${book.id}_${currentChapterIndex + 1}_${currentVerseIndex + 1}`;
+            const cur = getVerseTagsList(book.id, currentChapterIndex + 1, currentVerseIndex + 1).slice();
+            if (!cur.includes(clean)) {
+                cur.push(clean);
+                verseTagsStore[key] = cur;
+                saveVerseTagsStore();
+            }
+            inp.value = '';
+            renderActiveVerseTags();
+            if (currentReaderMode === 'chapter') renderReader();
+        }
+
+        function insertActiveQuoteIntoNotes() {
+            if (!APP_DATA || !APP_DATA.books) return;
+            const book = APP_DATA.books[currentBookIndex];
+            const txt = (book.verses_en[currentChapterIndex] && book.verses_en[currentChapterIndex][currentVerseIndex]) || '';
+            const inp = document.getElementById('verseNotesInput');
+            if (!inp || !txt) return;
+            const snippet = `> "${txt.trim()}" (${book.abbr} ${currentChapterIndex + 1}:${currentVerseIndex + 1})\n\n`;
+            inp.value = inp.value ? `${inp.value.replace(/\s+$/, '')}\n\n${snippet}` : snippet;
+            saveActiveVerseNotes(inp.value);
+            inp.focus();
+        }
+
+        function appendNoteTemplate(prefix) {
+            const inp = document.getElementById('verseNotesInput');
+            if (!inp) return;
+            inp.value = inp.value ? `${inp.value.replace(/\s+$/, '')}\n${prefix}` : prefix;
+            saveActiveVerseNotes(inp.value);
+            inp.focus();
+        }
+
+        function renderPersonalNotePreviewHtml(raw) {
+            const esc = escapeHtmlText(raw || '');
+            if (!esc.trim()) return '<span class="italic text-slate-500">Nothing written yet for this verse.</span>';
+            const withBold = esc.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-amber-200">$1</strong>');
+            const lines = withBold.split(/\r?\n/).map(line => {
+                if (line.startsWith('&gt; ')) {
+                    return `<blockquote class="border-l-2 border-amber-500/60 pl-2 italic text-slate-300 my-1">${line.slice(5)}</blockquote>`;
+                }
+                return `<div>${line || '&nbsp;'}</div>`;
+            }).join('');
+            return typeof linkifyScriptureRefsHtml === 'function' ? linkifyScriptureRefsHtml(lines) : lines;
+        }
+
+        function togglePersonalNotePreview() {
+            const prev = document.getElementById('verseNotesPreview');
+            const inp = document.getElementById('verseNotesInput');
+            if (!prev || !inp) return;
+            const show = prev.classList.contains('hidden');
+            prev.classList.toggle('hidden', !show);
+            if (show) prev.innerHTML = renderPersonalNotePreviewHtml(inp.value);
+        }
+
+        // ====== DRAG-SELECT PHRASE HIGHLIGHTING + COLOR & TAG GUIDE ======
+        let phraseHighlightsStore = (() => {
+            try { return JSON.parse(localStorage.getItem('plenary_phrase_highlights_v1') || '{}') || {}; } catch { return {}; }
+        })();
+        let pendingPhraseSelection = null;
+
+        function savePhraseHighlightsStore() {
+            try { localStorage.setItem('plenary_phrase_highlights_v1', JSON.stringify(phraseHighlightsStore)); } catch {}
+        }
+
+        function applySavedPhraseHighlightsToHtml(escapedHtml, bookId, chapNum, vNum, streamId) {
+            const key = `${bookId}_${chapNum}_${vNum}_${streamId || masterEnId}`;
+            const list = phraseHighlightsStore[key];
+            if (!Array.isArray(list) || !list.length || !escapedHtml) return escapedHtml;
+            let parts = String(escapedHtml).split(/(<[^>]+>)/g);
+            list.forEach(item => {
+                const targetEsc = escapeHtmlText(item.text || '');
+                if (!targetEsc || targetEsc.length < 2) return;
+                const colorCls = ['gold', 'sage', 'cerulean', 'rose', 'violet'].includes(item.color) ? item.color : 'gold';
+                let replaced = false;
+                parts = parts.map((seg, idx) => {
+                    if (replaced || idx % 2 === 1) return seg;
+                    const pos = seg.indexOf(targetEsc);
+                    if (pos === -1) return seg;
+                    replaced = true;
+                    const delBtn = `<button type="button" class="ml-0.5 text-[9px] opacity-55 hover:opacity-100" onclick="event.stopPropagation(); removePhraseHighlight('${escapeJsArg(key)}', '${escapeJsArg(item.id)}')" title="Remove highlight">&times;</button>`;
+                    return seg.slice(0, pos) + `<mark class="phrase-hl phrase-hl-${colorCls}">${targetEsc}${delBtn}</mark>` + seg.slice(pos + targetEsc.length);
+                });
+            });
+            return parts.join('');
+        }
+
+        function removePhraseHighlight(key, id) {
+            if (!phraseHighlightsStore[key]) return;
+            phraseHighlightsStore[key] = phraseHighlightsStore[key].filter(h => h.id !== id);
+            if (!phraseHighlightsStore[key].length) delete phraseHighlightsStore[key];
+            savePhraseHighlightsStore();
+            renderReader();
+        }
+
+        function hidePhraseHighlightToolbar() {
+            const bar = document.getElementById('phraseHighlightToolbar');
+            if (bar) bar.classList.add('hidden');
+            pendingPhraseSelection = null;
+        }
+
+        function applyDragPhraseHighlight(color) {
+            if (!pendingPhraseSelection || !pendingPhraseSelection.text) return;
+            const { bookId, chapNum, vNum, streamId, text } = pendingPhraseSelection;
+            const key = `${bookId}_${chapNum}_${vNum}_${streamId || masterEnId}`;
+            const arr = Array.isArray(phraseHighlightsStore[key]) ? phraseHighlightsStore[key].slice() : [];
+            arr.push({ id: `ph_${Date.now().toString(36)}`, text, color: color || 'gold' });
+            phraseHighlightsStore[key] = arr;
+            savePhraseHighlightsStore();
+            try { window.getSelection().removeAllRanges(); } catch {}
+            hidePhraseHighlightToolbar();
+            renderReader();
+        }
+
+        function copyDraggedPhraseToNote() {
+            if (!pendingPhraseSelection || !pendingPhraseSelection.text) return;
+            const { text, chapNum, vNum } = pendingPhraseSelection;
+            const book = APP_DATA.books[currentBookIndex];
+            const inp = document.getElementById('verseNotesInput');
+            if (inp) {
+                const quote = `> "${text}" (${book ? book.abbr : ''} ${chapNum}:${vNum})\n\n`;
+                inp.value = inp.value ? `${inp.value.replace(/\s+$/, '')}\n\n${quote}` : quote;
+                saveActiveVerseNotes(inp.value);
+            }
+            try { window.getSelection().removeAllRanges(); } catch {}
+            hidePhraseHighlightToolbar();
+        }
+
+        if (typeof document !== 'undefined') {
+            document.addEventListener('mouseup', () => {
+                setTimeout(() => {
+                    const reader = document.getElementById('readerContent');
+                    const bar = document.getElementById('phraseHighlightToolbar');
+                    if (!reader || !bar) return;
+                    const sel = window.getSelection();
+                    if (!sel || sel.isCollapsed || !sel.rangeCount) return;
+                    const raw = String(sel.toString() || '').replace(/\s+/g, ' ').trim();
+                    if (raw.length < 2 || raw.length > 220) return;
+                    const range = sel.getRangeAt(0);
+                    const startEl = range.startContainer.nodeType === 1 ? range.startContainer : range.startContainer.parentElement;
+                    if (!startEl || !reader.contains(startEl)) return;
+                    const verseEl = startEl.closest('[data-verse-num]');
+                    if (!verseEl) return;
+                    const book = APP_DATA.books[currentBookIndex];
+                    if (!book) return;
+                    pendingPhraseSelection = {
+                        bookId: book.id,
+                        chapNum: currentChapterIndex + 1,
+                        vNum: parseInt(verseEl.getAttribute('data-verse-num') || '1', 10),
+                        streamId: verseEl.getAttribute('data-stream-id') || masterEnId,
+                        text: raw
+                    };
+                    const rect = range.getBoundingClientRect();
+                    bar.style.left = `${Math.max(12, Math.min(window.innerWidth - 280, rect.left + rect.width / 2 - 120))}px`;
+                    bar.style.top = `${Math.max(12, rect.top - 46)}px`;
+                    bar.classList.remove('hidden');
+                }, 10);
+            });
+            document.addEventListener('mousedown', (ev) => {
+                const bar = document.getElementById('phraseHighlightToolbar');
+                if (bar && !bar.classList.contains('hidden') && !bar.contains(ev.target)) {
+                    hidePhraseHighlightToolbar();
+                }
+            });
+        }
+
+        function toggleColorTagGuideModal(forceState) {
+            const m = document.getElementById('colorTagGuideModal');
+            if (!m) return;
+            const show = typeof forceState === 'boolean' ? forceState : m.classList.contains('hidden');
+            m.classList.toggle('hidden', !show);
+        }
+
+        function toggleCatenaNotesCol(forceState) {
+            catenaNotesVisible = typeof forceState === 'boolean' ? forceState : !catenaNotesVisible;
+            localStorage.setItem('plenary_catena_notes_vis', catenaNotesVisible ? '1' : '0');
+            const grid = document.getElementById('catenaMainGrid');
+            const pane = document.getElementById('catenaStudyNotesPane');
+            const btn = document.getElementById('btnToggleCatenaNotes');
+            if (grid) grid.classList.toggle('catena-notes-hidden', !catenaNotesVisible);
+            if (pane) pane.classList.toggle('hidden', !catenaNotesVisible);
+            if (btn) btn.classList.toggle('suite-pill-active', catenaNotesVisible);
         }
 
         // ====== THEME SWITCHER (4 Editorial Themes: oxford-dark, vellum-light, warm-sepia, parchment) ======
@@ -9777,6 +10563,17 @@
         }
 
         function toggleCommentarySplitPane(forceState, skipRender) {
+            if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                if (currentReaderMode === 'catena_4k') {
+                    toggleCatenaNotesCol(forceState);
+                } else {
+                    const pane = document.getElementById('mosaicStudyNotesPane');
+                    if (pane) pane.classList.toggle('hidden', typeof forceState === 'boolean' ? !forceState : !pane.classList.contains('hidden'));
+                }
+                const wrap4k = document.getElementById('readerSplitContainer');
+                if (wrap4k) wrap4k.classList.remove('split-active');
+                return;
+            }
             splitPaneOn = typeof forceState === 'boolean' ? forceState : !splitPaneOn;
             localStorage.setItem('plenary_split_pane_on', splitPaneOn ? '1' : '0');
             const wrap = document.getElementById('readerSplitContainer');
@@ -10183,16 +10980,36 @@
 
         function filterSplitByAnchorWord(vNum, normWord) {
             activeSplitAnchorFilter = { verse: vNum, word: normWord };
-            if (!splitPaneOn) toggleCommentarySplitPane(true);
+            if (currentReaderMode === 'catena_4k') {
+                if (!catenaNotesVisible) toggleCatenaNotesCol(true);
+            } else if (currentReaderMode !== 'mosaic_4k' && !splitPaneOn) {
+                toggleCommentarySplitPane(true, true);
+            }
             if (currentVerseIndex !== vNum - 1) selectVerse(vNum - 1);
-            else renderSplitCommentaryPane();
+            else if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                const targetList = document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNotesList' : 'mosaicNotesList');
+                const book = APP_DATA.books[currentBookIndex];
+                if (targetList && book) renderNotesFeedIntoElement(targetList, book, currentChapterIndex + 1, vNum, splitPaneScope || 'chapter');
+            } else {
+                renderSplitCommentaryPane();
+            }
         }
 
         function clearSplitAnchorFilter(vNum) {
             activeSplitAnchorFilter = null;
-            if (!splitPaneOn) toggleCommentarySplitPane(true);
+            if (currentReaderMode === 'catena_4k') {
+                if (!catenaNotesVisible) toggleCatenaNotesCol(true);
+            } else if (currentReaderMode !== 'mosaic_4k' && !splitPaneOn) {
+                toggleCommentarySplitPane(true, true);
+            }
             if (vNum && currentVerseIndex !== vNum - 1) selectVerse(vNum - 1);
-            else renderSplitCommentaryPane();
+            else if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                const targetList = document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNotesList' : 'mosaicNotesList');
+                const book = APP_DATA.books[currentBookIndex];
+                if (targetList && book) renderNotesFeedIntoElement(targetList, book, currentChapterIndex + 1, vNum || (currentVerseIndex + 1), splitPaneScope || 'chapter');
+            } else {
+                renderSplitCommentaryPane();
+            }
         }
 
         function renderSplitCommentaryPane() {
@@ -10255,16 +11072,33 @@
                         `);
                     }
 
+                    const NOTE_CARD_ACCENTS = {
+                        ignatius: ['#d4af37', 'rgba(212,175,55,0.08)'],
+                        haydock: ['#d4af37', 'rgba(212,175,55,0.08)'],
+                        nabre: ['#818cf8', 'rgba(129,140,248,0.08)'],
+                        nabre_rg: ['#72a5d6', 'rgba(114,165,214,0.08)'],
+                        net21: ['#72a5d6', 'rgba(114,165,214,0.08)'],
+                        sbl: ['#a892d6', 'rgba(168,146,214,0.08)'],
+                        noab: ['#6fa88d', 'rgba(111,168,141,0.08)'],
+                        niv_sb: ['#c97b84', 'rgba(201,123,132,0.08)'],
+                        bsb: ['#6fa88d', 'rgba(111,168,141,0.08)'],
+                        tyndale: ['#a892d6', 'rgba(168,146,214,0.08)'],
+                        'john-calvin': ['#72a5d6', 'rgba(114,165,214,0.08)'],
+                        'john-gill': ['#a892d6', 'rgba(168,146,214,0.08)'],
+                        macarthur: ['#72a5d6', 'rgba(114,165,214,0.08)'],
+                        baker_csb: ['#6fa88d', 'rgba(111,168,141,0.08)']
+                    };
                     sigla.forEach(({ note: n, letter, dupOf }) => {
                         const badge = SOURCE_BADGE[n.src] || { label: n.src || 'Note', cls: 'text-slate-300 border-slate-700 bg-slate-800' };
+                        const [cardAccent, cardTint] = NOTE_CARD_ACCENTS[n.src] || ['#c5a059', 'rgba(197,160,89,0.07)'];
                         const isActive = vIdx === currentVerseIndex;
                         const normAnchor = extractPrimaryAnchorWord(n.anchor_word || '');
                         const hoverAttr = normAnchor ? `data-anchor-word="${escapeHtmlText(normAnchor)}" onmouseenter="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', true)" onmouseleave="highlightSplitWordNotes(${vNum}, '${escapeJsArg(normAnchor)}', false)"` : '';
                         cards.push(`
-                            <div id="split-note-${vNum}-${escapeHtmlText(letter)}" class="split-note-card cursor-pointer ${isActive ? 'split-note-active' : ''}" data-note-verse="${vIdx}" ${hoverAttr} onclick="focusVerseFromSplitNote(${vIdx})">
+                            <div id="split-note-${vNum}-${escapeHtmlText(letter)}" class="split-note-card cursor-pointer ${isActive ? 'split-note-active' : ''}" style="--card-accent:${cardAccent}; --card-tint-bg:${cardTint};" data-note-verse="${vIdx}" ${hoverAttr} onclick="focusVerseFromSplitNote(${vIdx})">
                                 <div class="flex items-center gap-1.5 flex-wrap mb-1">
                                     <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border border-slate-700">${vNum}${escapeHtmlText(letter)}</span>
-                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>
+                                    <span class="note-src-badge px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>
                                     ${n.anchor_word ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-serif italic border border-slate-700/70 opacity-85">"${escapeHtmlText(n.anchor_word)}"</span>` : ''}
                                     ${n.kind ? `<span class="text-[9px] font-mono opacity-65 uppercase">${escapeHtmlText(n.kind)}</span>` : ''}
                                     ${dupOf ? `<span class="text-[9px] font-mono opacity-75">[=${escapeHtmlText(dupOf)}]</span>` : ''}
@@ -10316,9 +11150,20 @@
 
         function jumpToSplitNote(vNum, letter) {
             activeSplitAnchorFilter = null;
-            if (!splitPaneOn) toggleCommentarySplitPane(true);
+            if (currentReaderMode === 'catena_4k') {
+                if (!catenaNotesVisible) toggleCatenaNotesCol(true);
+            } else if (currentReaderMode === 'mosaic_4k') {
+                const pane = document.getElementById('mosaicStudyNotesPane');
+                if (pane) pane.classList.remove('hidden');
+            } else if (!splitPaneOn) {
+                toggleCommentarySplitPane(true);
+            }
             if (currentVerseIndex !== vNum - 1) {
                 selectVerse(vNum - 1);
+            } else if (currentReaderMode === 'catena_4k' || currentReaderMode === 'mosaic_4k') {
+                const targetList = document.getElementById(currentReaderMode === 'catena_4k' ? 'catenaNotesList' : 'mosaicNotesList');
+                const book = APP_DATA.books[currentBookIndex];
+                if (targetList && book) renderNotesFeedIntoElement(targetList, book, currentChapterIndex + 1, vNum, splitPaneScope || 'chapter');
             } else {
                 renderSplitCommentaryPane();
             }
@@ -10781,10 +11626,19 @@
             }
         }
 
+        function toggle3DGuideCard(forceState) {
+            const box = document.getElementById('threeDGuideBox');
+            if (!box) return;
+            const show = typeof forceState === 'boolean' ? forceState : box.classList.contains('hidden');
+            box.classList.toggle('hidden', !show);
+        }
+
         function apply3DPreset(preset) {
             const catalogIds = getAll3DStrataCatalog().map(m => m.id);
             if (preset === 'core') {
                 active3DLayers = [masterEnId, 'lxx_gnt', 'vulg_clem', 'wlc', 'vorlage'].filter((v, i, a) => a.indexOf(v) === i);
+            } else if (preset === 'lxx_mt') {
+                active3DLayers = [masterEnId, 'brenton', 'lxx_gnt', 'wlc', 'vulg_clem', 'vorlage'].filter((v, i, a) => a.indexOf(v) === i);
             } else if (preset === 'catholic') {
                 active3DLayers = ['dra', 'rsv2ce', 'nova_vulg', 'vulg_clem', 'vorlage'];
             } else if (preset === 'nt_tc') {
@@ -12247,7 +13101,7 @@
             const donutSvg = generateSvgDonutChart(wheelData, profile.lemma);
 
             let wheelListHtml = wheelData.map((slice, idx) => {
-                const colors = ['#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#e11d48', '#64748b'];
+                const colors = ['#6fa88d', '#38bdf8', '#72a5d6', '#a892d6', '#c97b84', '#d4af37', '#b45309', '#64748b'];
                 const color = colors[idx % colors.length];
                 return `
                     <div class="flex items-center justify-between text-xs font-mono py-1 border-b border-slate-900">
@@ -12379,7 +13233,7 @@
             const strokeWidth = 26;
             const center = size / 2;
             const circumference = 2 * Math.PI * radius;
-            const colors = ['#10b981', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#e11d48', '#64748b'];
+            const colors = ['#6fa88d', '#38bdf8', '#72a5d6', '#a892d6', '#c97b84', '#d4af37', '#b45309', '#64748b'];
 
             let accumulatedAngle = 0;
             let svgPaths = '';
