@@ -1845,6 +1845,40 @@
                 if (src.verses.some(v => v && typeof v === 'object' && v.gr)) book.verses_gr[cIdx] = src.verses.map(v => (v && v.gr) || '');
                 if (src.verses.some(v => v && typeof v === 'object' && v.he)) book.verses_he[cIdx] = src.verses.map(v => (v && v.he) || '');
                 if (src.verses.some(v => v && typeof v === 'object' && v.la)) book.verses_la[cIdx] = src.verses.map(v => (v && v.la) || '');
+            } else if (src.verses && typeof src.verses === 'object') {
+                const verseNums = Object.keys(src.verses)
+                    .map(k => parseInt(k, 10))
+                    .filter(n => !Number.isNaN(n) && n >= 1)
+                    .sort((a, b) => a - b);
+                const maxV = verseNums.length ? verseNums[verseNums.length - 1] : 0;
+                const enArr = new Array(maxV).fill('');
+                const grArr = new Array(maxV).fill('');
+                const heArr = new Array(maxV).fill('');
+                const laArr = new Array(maxV).fill('');
+                const trMap = {};
+                for (const vNum of verseNums) {
+                    const row = src.verses[String(vNum)] || {};
+                    const idx = vNum - 1;
+                    if (row.dra || row.en) enArr[idx] = row.dra || row.en || '';
+                    if (row.gr) grArr[idx] = row.gr;
+                    if (row.he) heArr[idx] = row.he;
+                    if (row.vul || row.la) laArr[idx] = row.vul || row.la || '';
+                    for (const [sid, txt] of Object.entries(row)) {
+                        if (sid === 'dra' || sid === 'vul' || sid === 'gr' || sid === 'he' || sid === 'en' || sid === 'la') continue;
+                        if (!trMap[sid]) trMap[sid] = new Array(maxV).fill('');
+                        trMap[sid][idx] = txt || '';
+                    }
+                }
+                if (maxV > 0) {
+                    book.verses_en[cIdx] = enArr;
+                    if (grArr.some(Boolean)) book.verses_gr[cIdx] = grArr;
+                    if (heArr.some(Boolean)) book.verses_he[cIdx] = heArr;
+                    if (laArr.some(Boolean)) book.verses_la[cIdx] = laArr;
+                    for (const [sid, arr] of Object.entries(trMap)) {
+                        if (!Array.isArray(book.tr[sid])) book.tr[sid] = [];
+                        book.tr[sid][cIdx] = arr;
+                    }
+                }
             }
             if (Array.isArray(src.verses_gr)) book.verses_gr[cIdx] = src.verses_gr;
             if (Array.isArray(src.verses_he)) book.verses_he[cIdx] = src.verses_he;
