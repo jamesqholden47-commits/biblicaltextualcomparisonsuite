@@ -71,6 +71,20 @@
             font-display: swap;
         }
         @font-face {
+            font-family: 'Arno Pro';
+            src: url('fonts/ArnoPro-Italic.otf') format('opentype'), url('fonts/ACaslonPro-Italic.otf') format('opentype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Arno Pro';
+            src: url('fonts/ACaslonPro-Bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
             font-family: 'Bembo Std';
             src: url('fonts/BemboStd-Regular.otf') format('opentype');
             font-weight: 400;
@@ -82,6 +96,97 @@
             src: url('fonts/BemboStd-Italic.otf') format('opentype');
             font-weight: 400;
             font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'EB Garamond';
+            src: url('fonts/font_rsrc290.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'FreeSerif';
+            src: url('fonts/FreeSerif.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'FreeSerif';
+            src: url('fonts/FreeSerifItalic.otf') format('opentype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'FreeSerif';
+            src: url('fonts/FreeSerifBold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'FreeSerif';
+            src: url('fonts/FreeSerifBoldItalic.otf') format('opentype');
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Palatino Linotype';
+            src: url('fonts/pala.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Times New Roman';
+            src: url('fonts/times.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Times New Roman';
+            src: url('fonts/timesi.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Times New Roman';
+            src: url('fonts/timesbd.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Zondervan Greek';
+            src: url('fonts/ZondervanGreek.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Zondervan Greek';
+            src: url('fonts/ZondervanGreek-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Zondervan Greek';
+            src: url('fonts/ZondervanGreek-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Zondervan Hebrew';
+            src: url('fonts/ZondervanHebrew.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
             font-display: swap;
         }
         @font-face {
@@ -98,23 +203,19 @@
             font-style: normal;
             font-display: swap;
         }
-        /* Dedicated @font-face for 2K/DENMARK ComfortPrint® (crisp Danish Bible-press optical calibration) */
+        /* Dedicated @font-face for 2K/DENMARK ComfortPrint® (clean Adobe Caslon + Charis calibration, zero Comic/UI fallback) */
         @font-face {
             font-family: '2K/DENMARK Comfort Print';
-            src: url('fonts/ArnoPro-Regular.otf') format('opentype'), url('fonts/ACaslonPro-Regular.otf') format('opentype');
+            src: url('fonts/ACaslonPro-Regular.otf') format('opentype'), url('fonts/CharisSILR.ttf') format('truetype');
             font-weight: 400;
             font-style: normal;
-            size-adjust: 105%;
-            ascent-override: 92%;
-            descent-override: 24%;
             font-display: swap;
         }
         @font-face {
             font-family: '2K/DENMARK Comfort Print';
-            src: url('fonts/ACaslonPro-Italic.otf') format('opentype'), url('fonts/BemboStd-Italic.otf') format('opentype');
+            src: url('fonts/ACaslonPro-Italic.otf') format('opentype'), url('fonts/CharisSILI.ttf') format('truetype');
             font-weight: 400;
             font-style: italic;
-            size-adjust: 105%;
             font-display: swap;
         }
         @font-face {
@@ -122,10 +223,9 @@
             src: url('fonts/ACaslonPro-Bold.otf') format('opentype'), url('fonts/CharisSILB.ttf') format('truetype');
             font-weight: 700;
             font-style: normal;
-            size-adjust: 105%;
             font-display: swap;
         }
-        /* Cloned Beloved ComfortPrint Classic (exact Charis SIL metrics) */
+        /* Cloned Beloved ComfortPrint Classic (exact Charis SIL Bible Press metrics — crisp original default) */
         @font-face {
             font-family: 'ComfortPrint Classic Clone';
             src: url('fonts/CharisSILR.ttf') format('truetype');
@@ -147,86 +247,92 @@
             font-style: normal;
             font-display: swap;
         }
+        @font-face {
+            font-family: 'ComfortPrint Classic Clone';
+            src: url('fonts/CharisSILBI.ttf') format('truetype');
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
 
         :root {
-            --plenary-font-en: '2K/DENMARK Comfort Print', 'Arno Pro', 'Adobe Caslon Pro', 'Charis SIL', Georgia, serif;
-            --plenary-font-la: 'Adobe Caslon Pro', 'Bembo Std', 'Arno Pro', 'Charis SIL', Georgia, serif;
-            --plenary-font-gr: 'Galatia SIL', 'Gentium Plus', 'SBL Greek', 'Cardo', 'Palatino Linotype', serif;
+            --plenary-font-en: 'ComfortPrint Classic Clone', 'Charis SIL', 'Adobe Caslon Pro', Georgia, serif;
+            --plenary-font-la: 'Adobe Caslon Pro', 'EB Garamond', 'Charis SIL', Georgia, serif;
+            --plenary-font-gr: 'Zondervan Greek', 'Galatia SIL', 'FreeSerif', 'Palatino Linotype', serif;
             --plenary-font-el: var(--plenary-font-gr);
-            --plenary-font-he: 'Ezra SIL', 'SBL Hebrew', 'Taamey Frank CLM', 'Frank Ruhl Libre', 'Times New Roman', serif;
-            --plenary-font-ui: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            --plenary-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --plenary-font-he: 'Ezra SIL', 'Zondervan Hebrew', 'FreeSerif', 'Times New Roman', serif;
+            --plenary-font-ui: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', sans-serif;
+            --plenary-font-mono: 'Cascadia Mono', 'Consolas', ui-monospace, SFMono-Regular, Menlo, monospace;
             --plenary-serif-font: var(--plenary-font-en);
             --plenary-font-scale: 1;
             --plenary-font-size: 1.0625rem;
             --plenary-line-height: 1.72;
             --plenary-measure: 64ch;
             --plenary-para-spacing: 0.85em;
-            --plenary-letter-spacing: 0.005em;
-        }
-        body[data-comfort-font="comfortprint"] {
-            --plenary-serif-font: '2K/DENMARK Comfort Print', 'Arno Pro', 'Adobe Caslon Pro', Georgia, serif;
-            --plenary-letter-spacing: 0.012em;
+            --plenary-letter-spacing: 0.003em;
         }
         body[data-comfort-font="comfortprint_clone"] {
             --plenary-serif-font: 'ComfortPrint Classic Clone', 'Charis SIL', Georgia, serif;
             --plenary-letter-spacing: 0.002em;
         }
+        body[data-comfort-font="comfortprint"] {
+            --plenary-serif-font: '2K/DENMARK Comfort Print', 'Adobe Caslon Pro', 'Charis SIL', Georgia, serif;
+            --plenary-letter-spacing: 0.006em;
+        }
         body[data-comfort-font="charis"] {
             --plenary-serif-font: 'Charis SIL', Georgia, serif;
-            --plenary-letter-spacing: 0.004em;
+            --plenary-letter-spacing: 0.003em;
         }
         body[data-comfort-font="caslon_arno"] {
             --plenary-serif-font: 'Arno Pro', 'Adobe Caslon Pro', Georgia, serif;
-            --plenary-letter-spacing: 0.015em;
+            --plenary-letter-spacing: 0.008em;
         }
         body[data-comfort-font="adobe_caslon"] {
             --plenary-serif-font: 'Adobe Caslon Pro', 'Palatino Linotype', Georgia, serif;
-            --plenary-letter-spacing: 0.018em;
+            --plenary-letter-spacing: 0.010em;
         }
         body[data-comfort-font="bembo"] {
-            --plenary-serif-font: 'Bembo Std', 'Palatino Linotype', Georgia, serif;
-            --plenary-letter-spacing: 0.014em;
+            --plenary-serif-font: 'Bembo Std', 'EB Garamond', Georgia, serif;
+            --plenary-letter-spacing: 0.008em;
+        }
+        body[data-comfort-font="eb_garamond"] {
+            --plenary-serif-font: 'EB Garamond', 'Adobe Caslon Pro', Georgia, serif;
+            --plenary-letter-spacing: 0.009em;
         }
         body[data-comfort-font="palatino"] {
             --plenary-serif-font: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            --plenary-letter-spacing: 0.01em;
+            --plenary-letter-spacing: 0.006em;
         }
         body[data-comfort-font="georgia_editorial"] {
             --plenary-serif-font: Georgia, 'Times New Roman', serif;
-            --plenary-letter-spacing: 0.006em;
+            --plenary-letter-spacing: 0.004em;
         }
         body[data-comfort-font="cambria_press"] {
-            --plenary-serif-font: Cambria, 'Hoefler Text', Georgia, serif;
-            --plenary-letter-spacing: 0.008em;
-        }
-        body[data-comfort-font="crimson_pro"] {
-            --plenary-serif-font: 'Crimson Pro', 'Bembo Std', Garamond, Georgia, serif;
-            --plenary-letter-spacing: 0.01em;
-        }
-        body[data-comfort-font="eb_garamond"] {
-            --plenary-serif-font: 'EB Garamond', Garamond, 'Adobe Caslon Pro', Georgia, serif;
-            --plenary-letter-spacing: 0.016em;
-        }
-        body[data-comfort-font="literata"] {
-            --plenary-serif-font: 'Literata', 'Book Antiqua', Palatino, Georgia, serif;
-            --plenary-letter-spacing: 0.008em;
-        }
-        body[data-comfort-font="lora"] {
-            --plenary-serif-font: 'Lora', Cambria, Georgia, serif;
-            --plenary-letter-spacing: 0.012em;
-        }
-        body[data-comfort-font="source_serif"] {
-            --plenary-serif-font: 'Source Serif 4', 'Charis SIL', Cambria, serif;
+            --plenary-serif-font: Cambria, 'FreeSerif', Georgia, serif;
             --plenary-letter-spacing: 0.005em;
+        }
+        body[data-comfort-font="freeserif"] {
+            --plenary-serif-font: 'FreeSerif', 'Charis SIL', 'Times New Roman', serif;
+            --plenary-letter-spacing: 0.004em;
+        }
+        body[data-comfort-font="times_press"] {
+            --plenary-serif-font: 'Times New Roman', FreeSerif, Georgia, serif;
+            --plenary-letter-spacing: 0.003em;
+        }
+        body[data-comfort-font="crimson_pro"],
+        body[data-comfort-font="literata"],
+        body[data-comfort-font="lora"],
+        body[data-comfort-font="source_serif"] {
+            --plenary-serif-font: 'Adobe Caslon Pro', 'EB Garamond', 'Charis SIL', Georgia, serif;
+            --plenary-letter-spacing: 0.006em;
         }
         body[data-comfort-font="inter_sans"] {
             --plenary-serif-font: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
-            --plenary-letter-spacing: 0.005em;
+            --plenary-letter-spacing: 0em;
         }
         body[data-comfort-font="opendyslexic"] {
-            --plenary-serif-font: 'OpenDyslexic', 'Trebuchet MS', Verdana, sans-serif;
-            --plenary-letter-spacing: 0.045em;
+            --plenary-serif-font: Verdana, 'Segoe UI', Tahoma, sans-serif;
+            --plenary-letter-spacing: 0.032em;
         }
 
         html, body {
@@ -566,22 +672,33 @@
         body[data-theme-mode="light"] .bg-slate-950,
         body[data-theme-mode="light"] .bg-slate-950\/95,
         body[data-theme-mode="light"] .bg-slate-950\/90,
+        body[data-theme-mode="light"] .bg-slate-950\/85,
         body[data-theme-mode="light"] .bg-slate-950\/80,
         body[data-theme-mode="light"] .bg-slate-950\/70,
         body[data-theme-mode="light"] .bg-slate-950\/60,
+        body[data-theme-mode="light"] .bg-\[\#0d111a\],
         body[data-theme-mode="light"] .bg-\[\#090d16\],
         body[data-theme-mode="light"] .bg-\[\#080b12\] {
             background-color: var(--bg-surface) !important;
             color: var(--text-primary) !important;
         }
+        body[data-theme="amoled-obsidian"] .bg-\[\#0d111a\],
+        body[data-theme="amoled-obsidian"] .bg-\[\#090d16\],
+        body[data-theme="amoled-gold"] .bg-\[\#0d111a\],
+        body[data-theme="amoled-gold"] .bg-\[\#090d16\] {
+            background-color: var(--bg-surface) !important;
+        }
         body[data-theme-mode="light"] .bg-slate-900,
+        body[data-theme-mode="light"] .bg-slate-900\/95,
         body[data-theme-mode="light"] .bg-slate-900\/90,
         body[data-theme-mode="light"] .bg-slate-900\/80,
         body[data-theme-mode="light"] .bg-slate-900\/70,
         body[data-theme-mode="light"] .bg-slate-900\/60,
         body[data-theme-mode="light"] .bg-slate-900\/50,
+        body[data-theme-mode="light"] .bg-slate-900\/40,
         body[data-theme-mode="light"] .bg-slate-800,
-        body[data-theme-mode="light"] .bg-slate-800\/80 {
+        body[data-theme-mode="light"] .bg-slate-800\/80,
+        body[data-theme-mode="light"] .bg-slate-800\/50 {
             background-color: var(--bg-elevated) !important;
             color: var(--text-primary) !important;
         }
@@ -882,6 +999,130 @@
             background: var(--accent-soft);
             border-color: var(--accent-secondary);
         }
+
+        /* Semantic POS Color Coding (Greek, Hebrew, Latin, Aligned English) */
+        .pos-badge { display: inline-flex; align-items: center; padding: 1px 6px; border-radius: 4px; font-family: var(--plenary-font-mono); font-size: 10px; font-weight: 700; border: 1px solid transparent; }
+        .pos-verb { color: #34d399; background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.36); }
+        .pos-noun { color: #38bdf8; background: rgba(56, 189, 248, 0.14); border-color: rgba(56, 189, 248, 0.36); }
+        .pos-adj  { color: #fbbf24; background: rgba(251, 191, 36, 0.14); border-color: rgba(251, 191, 36, 0.36); }
+        .pos-part { color: #f472b6; background: rgba(244, 114, 182, 0.14); border-color: rgba(244, 114, 182, 0.36); }
+        .pos-prep { color: #a78bfa; background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.36); }
+        .pos-pron { color: #fb7185; background: rgba(244, 63, 94, 0.14); border-color: rgba(244, 63, 94, 0.36); }
+        body[data-theme-mode="light"] .pos-verb { color: #166534; background: rgba(22, 163, 74, 0.12); border-color: rgba(22, 163, 74, 0.32); }
+        body[data-theme-mode="light"] .pos-noun { color: #0369a1; background: rgba(14, 165, 233, 0.12); border-color: rgba(14, 165, 233, 0.32); }
+        body[data-theme-mode="light"] .pos-adj  { color: #92400e; background: rgba(217, 119, 6, 0.12); border-color: rgba(217, 119, 6, 0.32); }
+        body[data-theme-mode="light"] .pos-part { color: #9d174d; background: rgba(219, 39, 119, 0.10); border-color: rgba(219, 39, 119, 0.28); }
+        body[data-theme-mode="light"] .pos-prep { color: #5b21b6; background: rgba(124, 58, 237, 0.11); border-color: rgba(124, 58, 237, 0.30); }
+        body[data-theme-mode="light"] .pos-pron { color: #9f1239; background: rgba(225, 29, 72, 0.11); border-color: rgba(225, 29, 72, 0.30); }
+
+        /* Floating Parallel Morphology & Footnote Preview Tooltips */
+        #parFloatingTooltip, #fnHoverCard {
+            position: fixed;
+            z-index: 95;
+            max-width: 24rem;
+            background: var(--bg-chrome);
+            color: var(--text-primary);
+            border: 1px solid var(--border-strong);
+            border-radius: 0.65rem;
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+            padding: 0.55rem 0.75rem;
+            pointer-events: none;
+            font-size: 12px;
+        }
+        .par-interlinear-gloss {
+            display: block;
+            font-family: var(--plenary-font-mono);
+            font-size: 9.5px;
+            line-height: 1.2;
+            color: var(--text-muted);
+        }
+
+        /* Synchronized Footnote Sigla, Verse Pill & Combined Cross-Refs */
+        .fn-sigil-sup, .fn-word-count {
+            font-family: var(--plenary-font-mono);
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            background: var(--accent-soft);
+            border: 1px solid var(--border-strong);
+            border-radius: 4px;
+            padding: 0 3px;
+            margin-left: 1px;
+            cursor: pointer;
+            vertical-align: super;
+            line-height: 1.1;
+        }
+        .fn-verse-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-family: var(--plenary-font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            border-radius: 9999px;
+            padding: 0 6px;
+            margin: 0 2px;
+            cursor: pointer;
+            vertical-align: baseline;
+            transition: background-color 0.12s ease, border-color 0.12s ease;
+        }
+        .fn-verse-pill:hover { background: var(--accent-soft); border-color: var(--accent-primary); color: var(--accent-primary); }
+        .fn-word-anchor { border-bottom: 1px dotted var(--accent-primary); border-radius: 2px; cursor: pointer; transition: background-color 0.12s ease; }
+        .fn-word-anchor:hover, .fn-word-anchor.fn-word-active { background: var(--accent-soft); }
+        .split-note-flash { outline: 2px solid var(--accent-primary) !important; background: var(--accent-soft) !important; }
+        .suite-v1-sup { font-family: var(--plenary-font-mono); font-size: 10px; font-weight: 700; color: var(--accent-primary); margin-right: 3px; vertical-align: super; }
+        .suite-illuminated-lead { font-variant-caps: all-small-caps; letter-spacing: 0.04em; font-weight: 600; }
+
+        /* Combined Cross-Reference Chips & Subtle Source Attribution (i) Tooltip */
+        .xref-combined-chip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            color: var(--text-primary);
+            font-family: var(--plenary-font-mono);
+            font-size: 10.5px;
+            cursor: pointer;
+            transition: border-color 0.12s ease, background-color 0.12s ease;
+        }
+        .xref-combined-chip:hover { border-color: var(--accent-primary); background: var(--accent-soft); }
+        .xref-info-dot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 13px;
+            height: 13px;
+            border-radius: 9999px;
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 9.5px;
+            font-weight: 700;
+            border: 1px solid var(--border-strong);
+            color: var(--text-muted);
+            background: var(--bg-surface);
+            position: relative;
+        }
+        .xref-info-dot:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+        .inline-xref-btn {
+            display: inline;
+            font-family: var(--plenary-font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            text-decoration: underline dotted;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0 1px;
+        }
+        .inline-xref-btn:hover { color: var(--accent-primary); }
 
         /* Theme Swatch Popover */
         .theme-swatch-popover {
@@ -1898,35 +2139,32 @@
                         <i data-lucide="type" class="w-3.5 h-3.5"></i>
                         <span>Typography</span>
                     </button>
-                    <select id="comfortFontSelector" onchange="setComfortFont(this.value)" class="suite-select hidden lg:inline-block" style="height:28px;" title="2K/DENMARK Comfort Print® &amp; Professional Bible Press Typography">
-                        <option value="comfortprint">2K/DENMARK ComfortPrint® (Crisp Danish)</option>
-                        <option value="comfortprint_clone">ComfortPrint Classic (Current Clone — Charis)</option>
-                        <option value="charis">Charis SIL (Bible Press)</option>
-                        <option value="caslon_arno">Arno Pro (Renaissance Book)</option>
+                    <select id="comfortFontSelector" onchange="setComfortFont(this.value)" class="suite-select hidden lg:inline-block" style="height:28px;" title="Classic Bible Press &amp; ComfortPrint Typography">
+                        <option value="comfortprint_clone">ComfortPrint Classic (Original Default — Charis SIL)</option>
+                        <option value="comfortprint">2K/DENMARK ComfortPrint® (Adobe Caslon)</option>
+                        <option value="eb_garamond">EB Garamond (Renaissance Press)</option>
                         <option value="adobe_caslon">Adobe Caslon Pro (1734 Press)</option>
+                        <option value="caslon_arno">Arno Pro (Humanist Book)</option>
                         <option value="bembo">Bembo Std (Aldine Classical)</option>
+                        <option value="freeserif">FreeSerif (Polyglot Critical)</option>
                         <option value="palatino">Palatino Linotype (Hermann Zapf)</option>
+                        <option value="times_press">Times New Roman (Monograph)</option>
                         <option value="georgia_editorial">Georgia Editorial (High-X Serif)</option>
-                        <option value="cambria_press">Cambria Math/Press Serif</option>
-                        <option value="crimson_pro">Crimson Pro (Editorial)</option>
-                        <option value="eb_garamond">EB Garamond (Renaissance)</option>
-                        <option value="literata">Literata (Book Reader)</option>
-                        <option value="lora">Lora (Warm Serif)</option>
-                        <option value="source_serif">Source Serif 4 (Scholarly)</option>
+                        <option value="cambria_press">Cambria Press Serif</option>
                         <option value="inter_sans">Clean Sans-Serif (UI/Modern)</option>
-                        <option value="opendyslexic">OpenDyslexic / Wide Sans</option>
+                        <option value="opendyslexic">Wide Accessible Sans</option>
                     </select>
                     <button type="button" onclick="adjustComfortFontScale(-0.08)" class="suite-btn" style="padding:0 7px;" title="Decrease Scripture Font Size">A-</button>
                     <button type="button" onclick="adjustComfortFontScale(0.08)" class="suite-btn" style="padding:0 7px;" title="Increase Scripture Font Size">A+</button>
 
-                    <div class="flex items-center space-x-1 px-2 rounded-md border" style="height:28px; background: var(--bg-canvas); border-color: var(--border-hairline);" title="Semantic Color-Coded Highlights">
+                    <div class="flex items-center gap-1 px-2 rounded-md border" style="height:28px; background: var(--bg-canvas); border-color: var(--border-hairline);" title="Universal Semantic Color Highlights">
                         <span class="text-[10px] font-mono mr-0.5" style="color: var(--text-muted);">HL:</span>
-                        <button onclick="highlightActiveVerse('yellow')" class="w-3 h-3 rounded-full bg-amber-400 hover:scale-110 transition" title="Gold: Dogma / Magisterium"></button>
-                        <button onclick="highlightActiveVerse('green')" class="w-3 h-3 rounded-full bg-emerald-400 hover:scale-110 transition" title="Emerald: Typology &amp; Messianic Fulfillment"></button>
-                        <button onclick="highlightActiveVerse('blue')" class="w-3 h-3 rounded-full bg-cyan-400 hover:scale-110 transition" title="Cyan: Text-Critical / LXX / Dead Sea Scrolls"></button>
-                        <button onclick="highlightActiveVerse('purple')" class="w-3 h-3 rounded-full bg-purple-400 hover:scale-110 transition" title="Purple: Patristic &amp; Conciliar Witness"></button>
-                        <button onclick="highlightActiveVerse('rose')" class="w-3 h-3 rounded-full bg-rose-400 hover:scale-110 transition" title="Rose: Apologetic Defeater / Crux"></button>
-                        <button onclick="highlightActiveVerse('none')" class="text-[10px] ml-1" style="color: var(--text-muted);" title="Clear Highlight">×</button>
+                        <button type="button" data-hl-color="yellow" onclick="highlightActiveVerse('yellow')" class="hl-dot hl-dot-yellow" title="Gold: Dogma / Magisterium"></button>
+                        <button type="button" data-hl-color="green" onclick="highlightActiveVerse('green')" class="hl-dot hl-dot-green" title="Emerald: Typology &amp; Messianic Fulfillment"></button>
+                        <button type="button" data-hl-color="blue" onclick="highlightActiveVerse('blue')" class="hl-dot hl-dot-blue" title="Cyan: Text-Critical / LXX / Dead Sea Scrolls"></button>
+                        <button type="button" data-hl-color="purple" onclick="highlightActiveVerse('purple')" class="hl-dot hl-dot-purple" title="Purple: Patristic &amp; Conciliar Witness"></button>
+                        <button type="button" data-hl-color="rose" onclick="highlightActiveVerse('rose')" class="hl-dot hl-dot-rose" title="Rose: Apologetic Defeater / Crux"></button>
+                        <button type="button" data-hl-color="none" onclick="highlightActiveVerse('none')" class="hl-dot hl-dot-clear" title="Clear Highlight">x</button>
                     </div>
                     <div class="hidden sm:flex items-center gap-1 flex-shrink-0">
                         <button onclick="expandAllActiveDolls()" class="suite-btn" style="padding:0 7px;" title="Expand All Exegesis Layers">Expand</button>
@@ -1948,22 +2186,19 @@
                     <div>
                         <div class="flex justify-between mb-1"><span>Font Family (Instant Live Switch)</span></div>
                         <select id="typoFontFamilySelect" onchange="updateTypographyPref('fontFamily', this.value)" class="suite-select w-full py-1">
-                            <option value="comfortprint">2K/DENMARK ComfortPrint® (Crisp Danish)</option>
-                            <option value="comfortprint_clone">ComfortPrint Classic (Current Clone — Charis)</option>
-                            <option value="charis">Charis SIL (Bible Press)</option>
-                            <option value="caslon_arno">Arno Pro (Renaissance Book)</option>
+                            <option value="comfortprint_clone">ComfortPrint Classic (Original Default — Charis SIL)</option>
+                            <option value="comfortprint">2K/DENMARK ComfortPrint® (Adobe Caslon)</option>
+                            <option value="eb_garamond">EB Garamond (Renaissance Press)</option>
                             <option value="adobe_caslon">Adobe Caslon Pro (1734 Press)</option>
+                            <option value="caslon_arno">Arno Pro (Humanist Book)</option>
                             <option value="bembo">Bembo Std (Aldine Classical)</option>
+                            <option value="freeserif">FreeSerif (Polyglot Critical)</option>
                             <option value="palatino">Palatino Linotype (Hermann Zapf)</option>
+                            <option value="times_press">Times New Roman (Monograph)</option>
                             <option value="georgia_editorial">Georgia Editorial (High-X Serif)</option>
-                            <option value="cambria_press">Cambria Math/Press Serif</option>
-                            <option value="crimson_pro">Crimson Pro (Editorial)</option>
-                            <option value="eb_garamond">EB Garamond (Renaissance)</option>
-                            <option value="literata">Literata (Book Reader)</option>
-                            <option value="lora">Lora (Warm Serif)</option>
-                            <option value="source_serif">Source Serif 4 (Scholarly)</option>
+                            <option value="cambria_press">Cambria Press Serif</option>
                             <option value="inter_sans">Clean Sans-Serif (UI/Modern)</option>
-                            <option value="opendyslexic">OpenDyslexic / Wide Sans</option>
+                            <option value="opendyslexic">Wide Accessible Sans</option>
                         </select>
                     </div>
                     <div>
@@ -2051,6 +2286,16 @@
                             <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" data-vis-marker="crossRefs" onchange="toggleInlineMarker('crossRefs', this.checked)"> <span>Cross-References</span></label>
                             <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" data-vis-marker="morphologyHover" onchange="toggleInlineMarker('morphologyHover', this.checked)"> <span>Morphology Hover</span></label>
                         </div>
+                        <div class="mt-2 flex items-center justify-between gap-2 text-[11px]">
+                            <span class="opacity-80">Footnote Style:</span>
+                            <select id="visFootnoteStyleSelect" onchange="setFootnoteMarkerStyle(this.value)" class="suite-select text-[10px] py-0.5 px-1.5">
+                                <option value="sigla">Sigla Badges (1a, 1b)</option>
+                                <option value="sequential">Sequential [1] [2]</option>
+                                <option value="counts">Grouped Word Counts + Pile</option>
+                                <option value="pill">Verse Total Pill Only</option>
+                                <option value="off">Hidden</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="border-t border-slate-800 pt-2.5">
                         <div class="flex items-center justify-between mb-1.5">
@@ -2072,13 +2317,15 @@
             <div id="workspaceTabBar" style="min-height: 2rem; overflow-x: auto;" class="bg-slate-950/80 border-b border-slate-800 px-3 flex items-center justify-between gap-2 flex-shrink-0 text-[11px] font-mono">
                 <div class="flex items-center gap-1 min-w-0">
                     <div id="workspaceTabsList" class="flex items-center gap-1"></div>
-                    <button onclick="addWorkspaceTab()" class="px-2 py-0.5 rounded text-slate-400 hover:text-amber-300 hover:bg-slate-800 flex-shrink-0 whitespace-nowrap" title="Open the current reference as a new tab">+ New Tab</button>
+                    <button onclick="addWorkspaceTab()" class="px-2 py-0.5 rounded text-slate-400 hover:text-amber-300 hover:bg-slate-800 flex-shrink-0 whitespace-nowrap" title="Open the current reference as a new tab">+ Tab</button>
                 </div>
                 <div class="flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap">
-                    <button onclick="applyLayoutPreset('standard_1col')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="Standard 1-Column Focused Reader">1-Col</button>
-                    <button onclick="applyLayoutPreset('split_reader_notes')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="2-Column Split: Reader + Live Study Notes">2-Col</button>
-                    <button onclick="applyLayoutPreset('trinity_3col')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;" title="3-Column Trinity: Devotional Page + Study Notes + Morphology Inspector">3-Col</button>
-                    <button onclick="applyLayoutPreset('canvas_4k_grid')" class="suite-btn" style="height:22px;font-size:10px;padding:0 7px;color:var(--accent-secondary);" title="4K Multi-Card Canvas Grid">4K Canvas</button>
+                    <div class="suite-segmented-group" title="Quick column layout presets">
+                        <button onclick="applyLayoutPreset('standard_1col')" data-layout-preset="standard_1col" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="Standard 1-Column Focused Reader">1-Col</button>
+                        <button onclick="applyLayoutPreset('split_reader_notes')" data-layout-preset="split_reader_notes" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="2-Column Split: Reader + Live Study Notes">2-Col</button>
+                        <button onclick="applyLayoutPreset('trinity_3col')" data-layout-preset="trinity_3col" class="px-2 py-0.5 rounded text-[10px] hover:bg-slate-800" title="3-Column Trinity: Devotional Page + Study Notes + Morphology Inspector">3-Col</button>
+                        <button onclick="applyLayoutPreset('canvas_4k_grid')" data-layout-preset="canvas_4k_grid" class="px-2 py-0.5 rounded text-[10px] text-cyan-300 hover:bg-slate-800" title="4K Multi-Card Canvas Grid">4K Grid</button>
+                    </div>
                     <select id="layoutPresetSelect" onchange="if(this.value){applyLayoutPreset(this.value);}" class="suite-select" style="height:22px;font-size:10px;padding:0 6px;" title="More Workspace Layouts">
                         <option value="">More Layouts...</option>
                         <option value="four_col_lab">4-Col Parallel Lab</option>
@@ -2090,7 +2337,7 @@
             </div>
 
             <!-- UNIVERSAL DOCKED ACTIVE-VERSE SHOWCASE (Non-cropped across ALL tabs: Exegesis, Parallel, Chapter, Devotional, Apostolic, 4K Canvas) -->
-            <div id="stickyVerseBar" style="display:none;" class="flex-shrink-0 px-4 py-2 flex flex-col gap-1.5 text-xs">
+            <div id="stickyVerseBar" style="display:none;" class="flex-shrink-0 px-4 py-1.5 flex flex-col gap-1 text-xs">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                     <div class="flex flex-wrap items-center gap-2 min-w-0">
                         <span id="stickyVerseRef" class="font-mono font-bold text-amber-400 whitespace-nowrap"></span>
@@ -2108,10 +2355,10 @@
                         <span class="suite-toolbar-divider"></span>
                         <button type="button" onclick="stepVerse(-1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Previous Verse">&lsaquo; v</button>
                         <button type="button" onclick="stepVerse(1)" class="suite-btn" style="height:23px;font-size:10px;padding:0 6px;" title="Next Verse">v &rsaquo;</button>
-                        <button type="button" id="btnStickyHeroToggle" onclick="toggleStickyDockExpand()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Expand or compact pinned verse text"><i data-lucide="pin" class="w-3 h-3"></i><span id="btnStickyHeroToggleText">Expand</span></button>
+                        <button type="button" id="btnStickyHeroToggle" onclick="toggleStickyDockExpand()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Expand or compact pinned verse text"><i data-lucide="pin" class="w-3 h-3"></i><span id="btnStickyHeroToggleText">Compact</span></button>
                         <button type="button" onclick="toggleReadAlongBar(); startReadAlong(true);" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Listen to active verse via Read-Along Neural Voice"><i data-lucide="volume-2" class="w-3 h-3"></i><span class="hidden sm:inline">Listen</span></button>
                         <button type="button" onclick="openCompareAll25Modal()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Compare all 25 Bible translations for this verse"><i data-lucide="columns-3" class="w-3 h-3"></i><span class="hidden sm:inline">All 25</span></button>
-                        <button type="button" onclick="toggleCommentarySplitPane()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open side-by-side Study Notes &amp; Commentary for this verse"><i data-lucide="panel-right-open" class="w-3 h-3"></i><span class="hidden sm:inline">Notes</span></button>
+                        <button type="button" onclick="toggleCommentarySplitPane()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open side-by-side Study Notes &amp; Commentary for this verse"><i data-lucide="panel-right-open" class="w-3 h-3"></i><span class="hidden sm:inline">Notes</span><span id="stickyNotesCountBadge" class="ml-0.5 text-[9px] text-amber-300"></span></button>
                         <button type="button" id="btnCopyActiveVerse" onclick="copyActiveVerseCitation()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Copy formatted verse citation to clipboard"><i data-lucide="copy" class="w-3 h-3"></i><span class="hidden md:inline" id="btnCopyActiveVerseText">Copy</span></button>
                         <button type="button" onclick="toggleMasterStudyHubModal()" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open Master Study Bible Apparatus &amp; Reference Hub"><i data-lucide="compass" class="w-3 h-3"></i><span class="hidden lg:inline">Study Hub</span></button>
                         <button type="button" onclick="toggleNabreGuideModal('book')" class="suite-btn" style="height:23px;font-size:10px;padding:0 7px;" title="Open Book Introduction &amp; Reading Guide"><i data-lucide="book-open" class="w-3 h-3"></i><span class="hidden lg:inline">Book Intro</span></button>
@@ -2132,7 +2379,8 @@
                             <span class="font-bold tracking-wide truncate">STUDY NOTES</span>
                             <span id="splitAnchorRef" class="px-1.5 py-0.5 rounded border border-slate-700 text-[10px] truncate"></span>
                         </div>
-                        <div class="flex items-center gap-1.5 flex-shrink-0">
+                        <div class="flex items-center gap-1 flex-shrink-0">
+                            <button type="button" id="splitFnStyleBtn" onclick="cycleFootnoteMarkerStyle()" class="px-1.5 py-0.5 rounded border border-slate-700 text-[10px] hover:border-amber-400" title="Switch inline footnote marker style (Sigla 1a / Sequential [1] / Word Counts / Pill / Off)">Sigla 1a</button>
                             <button type="button" id="splitPaneScopeBtn" onclick="toggleSplitPaneScope()" class="px-1.5 py-0.5 rounded border border-slate-700 text-[10px] hover:border-amber-400" title="Toggle Verse vs Chapter Scope">Verse</button>
                             <button type="button" onclick="toggleVisibilityPopover()" class="px-1.5 py-0.5 rounded border border-slate-700 text-[10px] hover:border-amber-400" title="Filter Commentary Sources">Filter</button>
                             <button type="button" onclick="toggleCommentarySplitPane(false)" class="px-1.5 py-0.5 rounded border border-slate-700 text-[10px] hover:border-amber-400" title="Close Split Pane">&times;</button>
@@ -2778,6 +3026,9 @@
         let parallelSyncScroll = localStorage.getItem('plenary_parallel_sync_scroll') !== '0'; // default ON
         let parallelSyncScrollGuard = false;
         let parallelDiffEnabled = localStorage.getItem('plenary_parallel_diff') === '1';
+        let parallelInterlinearOn = localStorage.getItem('plenary_parallel_interlinear') === '1';
+        let parallelExegesisOpen = localStorage.getItem('plenary_parallel_exegesis') === '1';
+        let footnoteMarkerStyle = localStorage.getItem('plenary_fn_marker_style') || 'sigla';
         let devotionalFocusMode = false;
         let activePatristicsMediaTab = 'patristics';
         let chapterLoadSeq = 0;
@@ -3692,6 +3943,7 @@
             applyComfortTypography();
             loadVisibilityPrefs();
             applyInlineMarkerFlags();
+            if (typeof syncFootnoteStyleControls === 'function') syncFootnoteStyleControls();
             initSplitPaneFromStorage();
             if (IS_PLENARY_SHELL_MODE) {
                 await loadPlenaryBooksFromApi();
@@ -4071,7 +4323,124 @@
             renderReader();
         }
 
-        // ====== CROSS-REFERENCE LOOKUP HELPER ======
+        // ====== COMBINED CROSS-REFERENCE & INLINE SCRIPTURE CITATION ENGINE ======
+        const BOOK_REF_ALIASES = {
+            gen:'gen', ge:'gen', gn:'gen', genesis:'gen',
+            exod:'exod', ex:'exod', exodus:'exod',
+            lev:'lev', lv:'lev', le:'lev', leviticus:'lev',
+            num:'num', nm:'num', nu:'num', numbers:'num',
+            deut:'deut', dt:'deut', de:'deut', deuteronomy:'deut',
+            josh:'josh', jos:'josh', joshua:'josh',
+            judg:'judg', jdg:'judg', jg:'judg', judges:'judg',
+            ruth:'ruth', ru:'ruth', rt:'ruth',
+            '1sam':'1sam', '1sa':'1sam', '1sm':'1sam', '1kgs':'1kgs', '1ki':'1kgs',
+            '2sam':'2sam', '2sa':'2sam', '2sm':'2sam', '2kgs':'2kgs', '2ki':'2kgs',
+            '1chr':'1chr', '1ch':'1chr', '2chr':'2chr', '2ch':'2chr',
+            ezra:'ezra', ezr:'ezra', neh:'neh', ne:'neh',
+            tob:'tob', tb:'tob', tobit:'tob', jdt:'jdt', jth:'jdt', judith:'jdt',
+            esth:'esth', est:'esth', esther:'esth',
+            '1macc':'1macc', '1mc':'1macc', '1mac':'1macc',
+            '2macc':'2macc', '2mc':'2macc', '2mac':'2macc',
+            job:'job', jb:'job', ps:'ps', psa:'ps', pss:'ps', psalm:'ps', psalms:'ps',
+            prov:'prov', pr:'prov', prv:'prov', proverbs:'prov',
+            eccl:'eccl', ec:'eccl', qoh:'eccl', ecclesiastes:'eccl',
+            song:'song', sg:'song', ss:'song', cant:'song',
+            wis:'wis', ws:'wis', wisdom:'wis',
+            sir:'sir', ecclus:'sir', sirach:'sir',
+            isa:'isa', is:'isa', isaiah:'isa',
+            jer:'jer', jr:'jer', je:'jer', jeremiah:'jer',
+            lam:'lam', la:'lam', lamentations:'lam',
+            bar:'bar', ba:'bar', baruch:'bar',
+            ezek:'ezek', ez:'ezek', eze:'ezek', ezekiel:'ezek',
+            dan:'dan', dn:'dan', da:'dan', daniel:'dan',
+            hos:'hos', ho:'hos', hosea:'hos',
+            joel:'joel', jl:'joel', amos:'amos', am:'amos',
+            obad:'obad', ob:'obad', jonah:'jonah', jon:'jonah', jonas:'jonah',
+            mic:'mic', mi:'mic', micah:'mic', nah:'nah', na:'nah', nahum:'nah',
+            hab:'hab', hb:'hab', zeph:'zeph', zep:'zeph', hag:'hag', hg:'hag',
+            zech:'zech', zec:'zech', mal:'mal', ml:'mal',
+            matt:'matt', mt:'matt', mat:'matt', matthew:'matt',
+            mark:'mark', mk:'mark', mr:'mark',
+            luke:'luke', lk:'luke', lu:'luke',
+            john:'john', jn:'john', joh:'john',
+            acts:'acts', ac:'acts',
+            rom:'rom', rm:'rom', ro:'rom', romans:'rom',
+            '1cor':'1cor', '1co':'1cor', '2cor':'2cor', '2co':'2cor',
+            gal:'gal', ga:'gal', eph:'eph', phil:'phil', php:'phil',
+            col:'col', '1thess':'1thess', '1th':'1thess', '2thess':'2thess', '2th':'2thess',
+            '1tim':'1tim', '1ti':'1tim', '2tim':'2tim', '2ti':'2tim',
+            titus:'titus', tit:'titus', ti:'titus', phlm:'phlm', phm:'phlm',
+            heb:'heb', jas:'jas', jm:'jas', james:'jas',
+            '1pet':'1pet', '1pe':'1pet', '1pt':'1pet', '2pet':'2pet', '2pe':'2pet', '2pt':'2pet',
+            '1john':'1john', '1jn':'1john', '2john':'2john', '2jn':'2john', '3john':'3john', '3jn':'3john',
+            jude:'jude', rev:'rev', apoc:'rev', rv:'rev', revelation:'rev'
+        };
+
+        const CURATED_CROSS_REFS_SUPPLEMENT = [
+            { a: ['matt', 16, 1], b: ['matt', 3, 7], title: 'Pharisees & Sadducees opposed together', src: 'Study Cross-Ref', note: 'Parallel hostility of the two rival sects returning to test Jesus (cf. Matt 12:38; Mark 8:11; Luke 11:16).' },
+            { a: ['matt', 16, 1], b: ['mark', 8, 11], title: 'Demand for a sign from heaven', src: 'Synoptic Parallel', note: 'Markan parallel of the Pharisees testing Jesus for a heavenly sign.' },
+            { a: ['matt', 16, 1], b: ['luke', 11, 16], title: 'Testing Jesus for a sign from heaven', src: 'Synoptic Parallel', note: 'Lukan parallel combining sign-seeking with the Sign of Jonah.' },
+            { a: ['matt', 16, 4], b: ['matt', 12, 39], title: 'Sign of Jonah / Three days & Resurrection', src: 'Synoptic Parallel', note: 'Jesus repeats the typology of Jonah 2:1 as the sign of his Resurrection.' },
+            { a: ['matt', 16, 4], b: ['jonah', 2, 1], title: 'Jonah in the belly of the great fish', src: 'OT Typology', note: 'Three days and nights prefiguring the Paschal Mystery.' },
+            { a: ['matt', 16, 16], b: ['john', 6, 69], title: 'Petrine confession: Holy One of God', src: 'Apostolic Witness', note: 'Parallel confession of Jesus as the Christ, Son of the living God.' },
+            { a: ['matt', 16, 18], b: ['isa', 22, 22], title: 'Steward Key of Davidic Kingdom', src: 'Catholic Typology', note: 'Eliakim given the key of the house of David — background to Matt 16:19 binding & loosing.' },
+            { a: ['matt', 16, 18], b: ['john', 1, 42], title: 'Naming of Simon as Cephas / Rock', src: 'NT Fulfillment', note: 'Jesus foretells Simon being renamed Kepha ("Rock").' },
+            { a: ['matt', 16, 19], b: ['rev', 3, 7], title: 'Key of David that shuts and opens', src: 'Canonical Cross-Ref', note: 'Christ holds the Davidic key and delegates royal stewardship to Peter.' },
+            { a: ['gen', 1, 1], b: ['john', 1, 1], title: 'In the Beginning: Creation & Eternal Logos', src: 'Patristic Cross-Ref', note: 'St. John echoes Gen 1:1 (En arche / Bereshith) to reveal Christ as Eternal Creator.' },
+            { a: ['gen', 3, 15], b: ['rev', 12, 1], title: 'Protoevangelium: Woman, Seed, and Serpent', src: 'Catholic Typology', note: 'Genesis 3:15 enmity fulfilled in the Woman clothed with the sun (Rev 12).' },
+            { a: ['john', 6, 51], b: ['exod', 16, 4], title: 'True Bread from Heaven vs. Manna', src: 'Eucharistic Typology', note: 'Manna in the wilderness prefigures the Eucharistic Flesh of Christ.' },
+            { a: ['acts', 15, 16], b: ['amos', 9, 11], title: 'Council of Jerusalem cites LXX Amos 9:11', src: 'LXX Quotation', note: 'St. James quotes the Septuagint reading ("that the remnant of men may seek the Lord").' }
+        ];
+
+        function normalizeBookRefToken(rawName) {
+            const key = String(rawName || '').toLowerCase().replace(/[\s.\-]+/g, '').trim();
+            if (BOOK_REF_ALIASES[key]) return BOOK_REF_ALIASES[key];
+            if (APP_DATA && Array.isArray(APP_DATA.books)) {
+                const found = APP_DATA.books.find(b => b.id.toLowerCase() === key || b.abbr.toLowerCase().replace(/\s+/g, '') === key || b.name.toLowerCase().replace(/\s+/g, '') === key);
+                if (found) return found.id;
+            }
+            return '';
+        }
+
+        function extractScriptureRefsFromText(rawText, defaultBookId, defaultChap) {
+            const text = String(rawText || '').replace(/<[^>]+>/g, ' ');
+            const out = [];
+            const seen = new Set();
+            const fullPat = /\b((?:[1-3]\s+)?[A-Z][a-z]{1,11}\.?)\s+(\d{1,3})[:.](\d{1,3})\b/g;
+            let m;
+            while ((m = fullPat.exec(text)) !== null) {
+                const bId = normalizeBookRefToken(m[1]);
+                const ch = parseInt(m[2], 10);
+                const v = parseInt(m[3], 10);
+                if (bId && ch > 0 && v > 0) {
+                    const k = `${bId}:${ch}:${v}`;
+                    if (!seen.has(k)) { seen.add(k); out.push([bId, ch, v]); }
+                }
+            }
+            if (defaultBookId) {
+                const localPat = /(?:cf\.|see|note\s+on|vv?\.|in|and|compare)\s+(\d{1,3})[:.](\d{1,3})\b/gi;
+                while ((m = localPat.exec(text)) !== null) {
+                    const ch = parseInt(m[1], 10);
+                    const v = parseInt(m[2], 10);
+                    if (ch > 0 && v > 0) {
+                        const k = `${defaultBookId}:${ch}:${v}`;
+                        if (!seen.has(k)) { seen.add(k); out.push([defaultBookId, ch, v]); }
+                    }
+                }
+                if (defaultChap) {
+                    const vOnlyPat = /\bvv?\.\s*(\d{1,3})\b/gi;
+                    while ((m = vOnlyPat.exec(text)) !== null) {
+                        const v = parseInt(m[1], 10);
+                        if (v > 0) {
+                            const k = `${defaultBookId}:${defaultChap}:${v}`;
+                            if (!seen.has(k)) { seen.add(k); out.push([defaultBookId, defaultChap, v]); }
+                        }
+                    }
+                }
+            }
+            return out;
+        }
+
         function getMatchingCrossRefs(bookId, chapNum, verseNum) {
             const xrs = APP_DATA.cross_refs || [];
             const matched = [];
@@ -4079,12 +4448,129 @@
                 const [ab, ac, av] = xr.a;
                 const [bb, bc, bv] = xr.b;
                 if (ab === bookId && ac === chapNum && Math.abs(av - verseNum) <= 1) {
-                    matched.push({ xr, target: xr.b, sideLabel: 'Parallel / Witness →' });
+                    matched.push({ xr, target: xr.b, sideLabel: 'Parallel / Witness ->' });
                 } else if (bb === bookId && bc === chapNum && Math.abs(bv - verseNum) <= 1) {
-                    matched.push({ xr, target: xr.a, sideLabel: 'Parent Source / OT →' });
+                    matched.push({ xr, target: xr.a, sideLabel: 'Parent Source / OT ->' });
                 }
             });
             return matched;
+        }
+
+        function getCombinedCrossReferences(bookId, chapNum, verseNum, chapNotesOverride) {
+            const byTarget = new Map();
+            const addEntry = (target, title, note, srcLabel, tier) => {
+                if (!Array.isArray(target) || target.length < 3) return;
+                const [tb, tc, tv] = target;
+                if (tb === bookId && tc === chapNum && tv === verseNum) return;
+                const key = `${tb}:${tc}:${tv}`;
+                if (!byTarget.has(key)) {
+                    const snip = getVerseSnippet(tb, tc, tv);
+                    byTarget.set(key, {
+                        target: [tb, tc, tv],
+                        abbrRef: snip.abbrRef || `${tb.toUpperCase()} ${tc}:${tv}`,
+                        snippetEn: snip.en || '',
+                        title: title || '',
+                        note: note || '',
+                        tier: tier || 'sapphire',
+                        sources: new Set()
+                    });
+                }
+                const entry = byTarget.get(key);
+                if (srcLabel) entry.sources.add(srcLabel);
+                if (!entry.title && title) entry.title = title;
+                if (!entry.note && note) entry.note = note;
+            };
+
+            getMatchingCrossRefs(bookId, chapNum, verseNum).forEach(({ xr, target }) => {
+                addEntry(target, xr.title, xr.note, 'Canonical Index', xr.tier || 'gold');
+            });
+
+            CURATED_CROSS_REFS_SUPPLEMENT.forEach(xr => {
+                const [ab, ac, av] = xr.a;
+                const [bb, bc, bv] = xr.b;
+                if (ab === bookId && ac === chapNum && av === verseNum) {
+                    addEntry(xr.b, xr.title, xr.note, xr.src || 'Catholic Study Ref', 'gold');
+                } else if (bb === bookId && bc === chapNum && bv === verseNum) {
+                    addEntry(xr.a, xr.title, xr.note, xr.src || 'Catholic Study Ref', 'gold');
+                }
+            });
+
+            let vNotes = [];
+            if (chapNotesOverride && Array.isArray(chapNotesOverride[String(verseNum)])) {
+                vNotes = chapNotesOverride[String(verseNum)];
+            } else {
+                const shard = NOTES_SHARD_CACHE.get(bookId);
+                if (shard && shard.chapters && shard.chapters[String(chapNum)]) {
+                    vNotes = shard.chapters[String(chapNum)][String(verseNum)] || [];
+                }
+            }
+            vNotes.forEach(n => {
+                if (typeof isNoteVisibleByPrefs === 'function' && !isNoteVisibleByPrefs(n)) return;
+                const srcMeta = (typeof SOURCE_BADGE !== 'undefined' && SOURCE_BADGE[n.src]) || null;
+                const srcLabel = srcMeta ? srcMeta.label : (n.src || 'Study Note');
+                const refs = extractScriptureRefsFromText(`${n.title || ''} ${n.html || ''}`, bookId, chapNum);
+                refs.forEach(ref => addEntry(ref, n.title || '', '', srcLabel, 'sapphire'));
+            });
+
+            return Array.from(byTarget.values()).map(item => ({
+                ...item,
+                sources: Array.from(item.sources)
+            }));
+        }
+
+        function renderCombinedCrossRefsHtml(bookId, chapNum, verseNum, chapNotesOverride, compactMode) {
+            const items = getCombinedCrossReferences(bookId, chapNum, verseNum, chapNotesOverride);
+            if (!items.length) return '';
+            if (compactMode) {
+                return `
+                    <div class="flex flex-wrap gap-1.5">
+                        ${items.map(item => {
+                            const srcList = item.sources.join(', ');
+                            const tip = `Sources (${item.sources.length}): ${srcList}${item.title ? ' — ' + item.title : ''}`;
+                            return `<span class="xref-combined-chip">
+                                <button type="button" onclick="event.stopPropagation(); jumpToReference('${escapeJsArg(item.target[0])}', ${item.target[1]}, ${item.target[2]})" class="hover:underline">${escapeHtmlText(item.abbrRef)}</button>
+                                <span class="xref-info-dot" title="${escapeHtmlText(tip)}" onclick="event.stopPropagation(); alert('${escapeJsArg(item.abbrRef + '\\nSources: ' + srcList + (item.title ? '\\n' + item.title : ''))}')">i</span>
+                            </span>`;
+                        }).join('')}
+                    </div>
+                `;
+            }
+            return `
+                <div class="space-y-1.5">
+                    ${items.map(item => {
+                        const srcList = item.sources.join(' · ');
+                        const tip = `Attested in: ${srcList}`;
+                        const snipShort = item.snippetEn && item.snippetEn.length > 130 ? item.snippetEn.slice(0, 127) + '...' : (item.snippetEn || '');
+                        return `<div class="p-2.5 rounded-lg border border-slate-800 bg-slate-900/70 space-y-1">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <button type="button" onclick="jumpToReference('${escapeJsArg(item.target[0])}', ${item.target[1]}, ${item.target[2]})" class="font-mono text-xs font-bold text-cyan-300 hover:underline">${escapeHtmlText(item.abbrRef)}</button>
+                                    <span class="xref-info-dot flex-shrink-0" title="${escapeHtmlText(tip)}">i</span>
+                                    ${item.title ? `<span class="text-[11px] font-semibold truncate opacity-90">${escapeHtmlText(item.title)}</span>` : ''}
+                                </div>
+                                <button type="button" onclick="jumpToReference('${escapeJsArg(item.target[0])}', ${item.target[1]}, ${item.target[2]})" class="text-[10px] font-mono text-amber-300 hover:underline flex-shrink-0">Jump &rarr;</button>
+                            </div>
+                            ${snipShort ? `<div class="text-[11px] font-serif italic opacity-85">"${escapeHtmlText(snipShort)}"</div>` : ''}
+                        </div>`;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function linkifyScriptureRefsHtml(htmlStr, defaultBookId, defaultChap) {
+            if (!htmlStr) return '';
+            const parts = String(htmlStr).split(/(<[^>]+>)/g);
+            const pat = /\b((?:[1-3]\s+)?[A-Z][a-z]{1,11}\.?)\s+(\d{1,3})[:.](\d{1,3})(?:\s*[-\u2013]\s*\d{1,3})?\b/g;
+            return parts.map(part => {
+                if (part.startsWith('<')) return part;
+                return part.replace(pat, (full, bName, chStr, vStr) => {
+                    const bId = normalizeBookRefToken(bName);
+                    const ch = parseInt(chStr, 10);
+                    const v = parseInt(vStr, 10);
+                    if (!bId || !ch || !v) return full;
+                    return `<button type="button" class="inline-xref-btn" onclick="event.stopPropagation(); jumpToReference('${escapeJsArg(bId)}', ${ch}, ${v})" title="Jump to ${escapeHtmlText(bName)} ${ch}:${v}">${full}</button>`;
+                });
+            }).join('');
         }
 
         function getVerseSnippet(bookId, ch, v) {
@@ -4372,15 +4858,16 @@
             } else {
                 const lNorm = normalizeLatinWord(surface);
                 const lex = (APP_DATA.latin_lex && APP_DATA.latin_lex[lNorm]) || null;
+                const laMorph = analyzeLatinMorphology(surface);
                 renderBibleHubInspector({
                     word: surface,
                     translit: `${surface} (Ecclesiastical Latin Vulgate)`,
-                    strongLabel: 'Vulgata',
+                    strongLabel: 'VULG',
                     langTag: 'Latin',
-                    lemma: lex ? lex[0] : lNorm,
-                    posCode: '',
-                    contextualGloss: 'Clementine / Nova Vulgata Witness',
-                    extraNote: lex ? lex[1] : 'Click Concordance below to scan every Latin occurrence across all 73 books.',
+                    lemma: lex ? lex[0] : (laMorph.lemmaGuess || lNorm),
+                    posCode: laMorph.pos || 'Latin Morph',
+                    contextualGloss: lex ? lex[1] : laMorph.analysis,
+                    extraNote: lex ? `${laMorph.analysis} — Clementine / Nova Vulgata.` : `${laMorph.analysis} — Click Concordance below to scan every Latin occurrence across all 73 books.`,
                     alignStrong: '',
                     alignHint: lNorm
                 });
@@ -4480,6 +4967,13 @@
             snip.className = `sticky-verse-full-text px-2 py-1 rounded ${stickyDockExpanded ? '' : 'is-collapsed'} ${hlColor ? 'hl-' + hlColor : ''}`;
             snip.innerHTML = renderInteractiveEnglishProse(text || '', book, chapNum, verseNum, hlColor || '');
             if (lbl) lbl.textContent = stickyDockExpanded ? 'Compact' : 'Expand';
+            const notesCountEl = document.getElementById('stickyNotesCountBadge');
+            if (notesCountEl) {
+                const shard = NOTES_SHARD_CACHE.get(book.id);
+                const vNotes = (shard && shard.chapters && shard.chapters[String(chapNum)] && shard.chapters[String(chapNum)][String(verseNum)]) || [];
+                const visCnt = vNotes.filter(n => typeof isNoteVisibleByPrefs !== 'function' || isNoteVisibleByPrefs(n)).length;
+                notesCountEl.textContent = visCnt > 0 ? `(${visCnt})` : '';
+            }
             syncHlDotsAndBadge(hlColor || '');
             bar.style.display = 'flex';
         }
@@ -4514,23 +5008,15 @@
 
             if (currentReaderMode === 'dolls') {
                 const showXRefs = !visibilityPrefs || visibilityPrefs.markers.crossRefs !== false;
-                const crossRefHtml = (showXRefs && matchingXRefs.length > 0) ? `
+                const combinedItems = showXRefs ? getCombinedCrossReferences(book.id, chapNum, verseNum) : [];
+                const crossRefHtml = (showXRefs && combinedItems.length > 0) ? `
                     <div class="suite-xref-block pt-2 border-t border-slate-800 space-y-2">
-                        <div class="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-wider"><i data-lucide="link" class="w-3 h-3 inline-block align-middle mr-1"></i>Bidirectional Canonical Cross-References (${matchingXRefs.length})</div>
-                        ${matchingXRefs.map(({ xr, target }) => {
-                            const snip = getVerseSnippet(target[0], target[1], target[2]);
-                            const tierCls = xr.tier === 'gold' ? 'badge-gold' : (xr.tier === 'crimson' ? 'badge-crimson' : 'badge-sapphire');
-                            return `
-                                <div class="p-3 rounded-lg border border-slate-800 bg-slate-900/70 space-y-1.5">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="font-bold text-xs text-white">${xr.title}</span>
-                                        <button onclick="jumpToReference('${target[0]}', ${target[1]}, ${target[2]})" class="px-2 py-0.5 rounded ${tierCls} font-mono text-[10px] hover:opacity-80 cursor-pointer">Jump ${snip.abbrRef} &rarr;</button>
-                                    </div>
-                                    <div class="text-[11px] text-slate-300">${xr.note}</div>
-                                    <div class="text-[11px] font-serif text-amber-200/90 bg-black/40 p-2 rounded">"${escapeHtmlText(snip.en)}"</div>
-                                </div>
-                            `;
-                        }).join('')}
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-wider"><i data-lucide="link" class="w-3 h-3 inline-block align-middle mr-1"></i>Combined Cross-References (${combinedItems.length})</span>
+                            <span class="text-[10px] font-mono text-slate-400">Hover <span class="xref-info-dot" style="width:11px;height:11px;font-size:8px;">i</span> for source attribution</span>
+                        </div>
+                        ${renderCombinedCrossRefsHtml(book.id, chapNum, verseNum, null, true)}
+                        ${renderCombinedCrossRefsHtml(book.id, chapNum, verseNum, null, false)}
                     </div>
                 ` : '';
 
@@ -4821,6 +5307,7 @@
                     : baseStreamId === 'wlc' ? ((book.verses_he && book.verses_he[currentChapterIndex]) || [])
                     : ((book.tr && book.tr[baseStreamId] && book.tr[baseStreamId][currentChapterIndex]) || []);
                 let maxRowCount = baseCh.length;
+                const useScrollFlex = splitPaneOn || parallelCols.length > 3;
                 const colHtml = parallelCols.map((sid, colIdx) => {
                     const meta = getStreamMeta(sid);
                     const bdgCls = getApprovalBadgeClass(meta.approval);
@@ -4831,14 +5318,17 @@
                         : sid === 'lxx_gnt' ? ((book.verses_gr && book.verses_gr[currentChapterIndex]) || [])
                         : sid === 'wlc' ? ((book.verses_he && book.verses_he[currentChapterIndex]) || [])
                         : ((book.tr && book.tr[sid] && book.tr[sid][currentChapterIndex]) || []);
-                    const hasData = rawStreamCh.length > 0;
+                    const hasData = rawStreamCh.some(x => x && String(x).trim().length > 0 && !String(x).trim().startsWith('[—'));
                     const rowCount = Math.max(draCh.length, rawStreamCh.length);
                     if (rowCount > maxRowCount) maxRowCount = rowCount;
                     const streamLang = meta.lang === 'gr' ? 'Greek' : meta.lang === 'he' ? 'Hebrew' : meta.lang === 'la' ? 'Latin' : 'English';
                     let rowsHtml = '';
                     if (!hasData) {
                         const probe = getRawStreamVerse(book, sid, currentChapterIndex, currentVerseIndex);
-                        rowsHtml = `<div class="p-4 bg-slate-950/60 rounded-lg text-amber-200/90 text-xs italic">${escapeHtmlText(probe.reason || `${meta.name} unavailable for ${book.name} ${chapNum}.`)}</div>`;
+                        const fallbackMsg = meta.lang === 'he' && book.testament === 'NT'
+                            ? `${meta.name} (Hebrew OT WLC) covers the 39 proto-canonical Old Testament books. Select GNT/Vulgate or an English witness for ${book.name}.`
+                            : (probe.reason || `${meta.name} unavailable for ${book.name} ${chapNum}.`);
+                        rowsHtml = `<div class="p-4 bg-slate-950/60 rounded-lg text-amber-200/90 text-xs italic">${escapeHtmlText(fallbackMsg)}</div>`;
                     } else {
                         for (let idx = 0; idx < rowCount; idx++) {
                             const txt = rawStreamCh[idx] || '';
@@ -4853,7 +5343,7 @@
                         }
                     }
                     return `
-                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2 min-w-0">
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2 ${useScrollFlex ? '' : 'min-w-0'}" style="${useScrollFlex ? 'min-width: 265px; flex: 1 0 265px;' : ''}">
                             <div class="border-b border-slate-800 pb-2 space-y-1">
                                 <div class="flex items-center justify-between gap-1">
                                     <span class="text-[10px] font-mono font-bold" style="color:${meta.color}">STREAM ${colIdx + 1} · ${streamLang.toUpperCase()}</span>
@@ -4880,11 +5370,11 @@
                 }).join('');
 
                 const colCountDesktop = Math.min(parallelCols.length, 4);
-                const parGridStyle = parallelCols.length > 4
-                    ? ''
-                    : `grid-template-columns: repeat(${colCountDesktop}, minmax(240px, 1fr));`;
-                const parGridClass = parallelCols.length > 4
-                    ? 'flex gap-3 overflow-x-auto pb-2 flex-1 min-w-0 [&>div]:min-w-[290px] [&>div]:flex-1'
+                const parGridStyle = useScrollFlex
+                    ? 'display: flex; overflow-x: auto; gap: 0.75rem; padding-bottom: 0.5rem;'
+                    : `grid-template-columns: repeat(${colCountDesktop}, minmax(260px, 1fr));`;
+                const parGridClass = useScrollFlex
+                    ? 'flex-1 min-w-0'
                     : 'grid gap-3 flex-1 min-w-0';
 
                 container.innerHTML = `
@@ -4892,17 +5382,22 @@
                         ${chapMetaBar}
                         <div class="flex flex-wrap items-center justify-between gap-2">
                             <div class="flex flex-wrap items-center gap-2">
-                                <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Translation Stream (${parallelCols.length} active)</button>
-                                <span class="text-[11px] text-slate-400 font-mono">Hover any word to preview Strong's &amp; morphology · Click to inspect</span>
+                                <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Stream (${parallelCols.length})</button>
+                                <button type="button" onclick="toggleParallelExegesisStrip()" class="suite-btn ${parallelExegesisOpen ? 'is-active' : ''}" style="height:24px;font-size:10px;padding:0 8px;" title="Show or hide active-verse Crux, Apparatus, &amp; Combined Cross-References inside Parallel mode">Verse Exegesis &amp; Cross-Refs</button>
+                                <span class="text-[11px] text-slate-400 font-mono hidden xl:inline">Hover word for POS + Strong's · Click to inspect &amp; lock</span>
                             </div>
-                            <div class="flex items-center gap-4">
+                            <div class="flex flex-wrap items-center gap-3">
+                                <label class="flex items-center gap-1.5 text-[10px] font-mono text-amber-300 cursor-pointer select-none" title="Show inline Strong's &amp; grammatical POS pills beneath words in all columns">
+                                    <input type="checkbox" id="parallelInterlinearToggle" ${parallelInterlinearOn ? 'checked' : ''} onchange="setParallelInterlinear(this.checked)" class="accent-amber-400">
+                                    Interlinear Glosses
+                                </label>
                                 <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 cursor-pointer select-none" title="Highlight word-level differences against Stream 1">
                                     <input type="checkbox" id="parallelDiffToggle" ${parallelDiffEnabled ? 'checked' : ''} onchange="setParallelDiff(this.checked)" class="accent-emerald-400">
-                                    Word-Level Diff
+                                    Word Diff
                                 </label>
-                                <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="When on, scrolling any one translation column scrolls the other columns to the matching position">
-                                    <input type="checkbox" id="parallelSyncScrollToggle" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-amber-500">
-                                    Sync scroll across columns
+                                <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="Synchronize vertical scrolling across all columns">
+                                    <input type="checkbox" id="parallelSyncScrollToggle" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-cyan-400">
+                                    Sync Scroll
                                 </label>
                             </div>
                         </div>
@@ -4910,13 +5405,16 @@
                         <!-- Live Parallel Hover Morphology & Interlinear Inspector Ribbon -->
                         <div id="parMorphRibbon" class="par-morph-ribbon text-xs">
                             <div class="flex flex-wrap items-center gap-2">
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 font-mono text-[10px] font-bold uppercase">Parallel Morphology</span>
-                                <span id="parMorphPreviewText" class="text-slate-200 font-serif">Move over or click any word in English, Greek, Hebrew, or Latin columns below to inspect lemma, parsing &amp; Strong's lexicon.</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 font-mono text-[10px] font-bold uppercase">Live Morphology</span>
+                                <span id="parMorphPreviewText" class="text-slate-200 font-serif">Hover over any English, Greek, Hebrew, or Latin word below for instant lemma, POS color tag &amp; Strong's lexicon.</span>
                             </div>
                             <div class="flex items-center gap-1.5 font-mono text-[10px]">
                                 <button type="button" onclick="openBibleWordStudyModal()" class="suite-btn" style="height:22px;font-size:10px;padding:0 8px;">Word Study</button>
                                 <button type="button" onclick="openConcordanceForInspected()" class="suite-btn" style="height:22px;font-size:10px;padding:0 8px;">Concordance</button>
                             </div>
+                        </div>
+                        <div id="parExegesisStrip" class="${parallelExegesisOpen ? '' : 'hidden '}rounded-xl border border-amber-500/35 bg-slate-950/90 p-3 space-y-2 text-xs">
+                            ${buildParallelExegesisStripHtml(book, chapNum, verseNum)}
                         </div>
 
                         <div class="flex items-start gap-2">
@@ -4962,16 +5460,17 @@
                         </div>
                         <div class="suite-manuscript-frame p-6 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3 font-serif text-base leading-relaxed text-slate-200">
                             ${romanCornersHtml()}
-                            ${renderIlluminatedDropCapHtml(chDisplayVerses[0] || '', masterChVerses.length > 0 ? masterEnId : 'dra', chapNum)}
                             ${chDisplayVerses.map((v, idx) => {
                                 const vNum = idx + 1;
                                 const hlClass = localStorage.getItem(`hl_${book.id}_${chapNum}_${vNum}`) || '';
                                 const hasNote = localStorage.getItem(`notes_${book.id}_${chapNum}_${vNum}`) ? ' <i data-lucide="file-text" class="w-3 h-3 inline-block align-baseline text-amber-400"></i>' : '';
                                 const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                const bodyHtml = idx === 0
-                                    ? formatIlluminatedVerse1BodyHtml(v)
-                                    : escapeHtmlText(v);
-                                return `<span id="cont-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer hover:text-amber-300 transition ${idx === currentVerseIndex ? 'text-amber-400 font-semibold suite-verse-highlight' : ''} ${hlClass ? 'hl-' + hlClass : ''}"><sup class="suite-verse-num text-amber-400 font-mono text-xs select-none">${vNum}</sup> ${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${hasNote}&nbsp;</span>`;
+                                const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
+                                const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
+                                const supHtml = idx === 0 && dropCap
+                                    ? dropCap
+                                    : `<sup class="suite-verse-num text-amber-400 font-mono text-xs select-none">${vNum}</sup> `;
+                                return `<span id="cont-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer hover:text-amber-300 transition ${idx === currentVerseIndex ? 'text-amber-400 font-semibold suite-verse-highlight' : ''} ${hlClass ? 'hl-' + hlClass : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span>${hasNote}&nbsp;</span>`;
                             }).join('')}
                             ${romanColophonHtml(`${book.abbr} ${chapNum}`)}
                         </div>
@@ -4980,7 +5479,7 @@
                 const curSpan = document.getElementById(`cont-v-${currentVerseIndex}`);
                 if (curSpan && typeof curSpan.scrollIntoView === 'function') curSpan.scrollIntoView({ block: 'nearest' });
             } else if (currentReaderMode === 'devotional') {
-                // 2K/DENMARK COMFORT PRINT® STREAMLINED DEVOTIONAL MODE
+                // COMFORT PRINT® STREAMLINED DEVOTIONAL MODE
                 const masterMeta = getStreamMeta(masterEnId);
                 const draVerses = (book.verses_en && book.verses_en[currentChapterIndex]) || [];
                 const masterChVerses = (masterEnId === 'dra') ? draVerses : ((book.tr && book.tr[masterEnId] && book.tr[masterEnId][currentChapterIndex]) || []);
@@ -4991,33 +5490,33 @@
                 container.innerHTML = `
                     <div class="comfort-print-page max-w-[66ch] mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
                         ${romanCornersHtml()}
-                        <div class="flex items-center justify-between gap-2 mb-4 text-[11px] font-mono">
-                            <span class="text-slate-500 uppercase tracking-widest">Comfort Print® Reading</span>
-                            <button type="button" id="btnDevotionalFocusToggle" onclick="toggleDevotionalFocusMode()" class="suite-btn ${devotionalFocusMode ? 'is-active' : ''}">
-                                <i data-lucide="${devotionalFocusMode ? 'minimize-2' : 'maximize-2'}" class="w-3.5 h-3.5"></i>
-                                <span>${devotionalFocusMode ? 'Exit Focus' : 'Focus Mode'}</span>
-                            </button>
-                        </div>
-                        <div class="text-center border-b border-slate-800/80 pb-5 mb-6">
-                            <div class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400/80">${escapeHtmlText(book.division)} · ${escapeHtmlText(activeMeta.short)}</div>
+                        <div class="text-center border-b border-slate-800/80 pb-5 mb-6 relative">
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400/80">${escapeHtmlText(book.division)} · ${escapeHtmlText(activeMeta.short)}</span>
+                                <button type="button" id="btnDevotionalFocusToggle" onclick="toggleDevotionalFocusMode()" class="suite-btn ml-2 ${devotionalFocusMode ? 'is-active' : ''}" style="height:22px;font-size:10px;padding:0 7px;">
+                                    <i data-lucide="${devotionalFocusMode ? 'minimize-2' : 'maximize-2'}" class="w-3 h-3"></i>
+                                    <span>${devotionalFocusMode ? 'Exit Focus' : 'Focus'}</span>
+                                </button>
+                            </div>
                             <h1 class="text-3xl font-bold text-amber-50 mt-1" style="font-family: var(--plenary-serif-font);">${escapeHtmlText(book.name)} ${chapNum}</h1>
                             ${romanColophonHtml()}
                         </div>
                         <div class="text-slate-100 leading-[1.88] text-[1.15rem] tracking-[0.01em]" style="font-family: var(--plenary-serif-font);">
-                            ${renderIlluminatedDropCapHtml(chDisplayVerses[0] || '', masterChVerses.length > 0 ? masterEnId : 'dra', chapNum)}
                             ${chDisplayVerses.map((v, idx) => {
                                 const vNum = idx + 1;
                                 const isCur = idx === currentVerseIndex;
                                 const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
-                                const bodyHtml = idx === 0
-                                    ? formatIlluminatedVerse1BodyHtml(v)
-                                    : escapeHtmlText(v);
-                                return `<span id="dev-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-0.5' : ''}"><sup class="suite-verse-num text-[10px] font-mono text-amber-500/70 mr-1 select-none">${vNum}</sup>${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
+                                const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
+                                const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
+                                const supHtml = idx === 0 && dropCap
+                                    ? dropCap
+                                    : `<sup class="suite-verse-num text-[10px] font-mono text-amber-500/70 mr-1 select-none">${vNum}</sup>`;
+                                return `<span id="dev-v-${idx}" data-verse-idx="${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-0.5' : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
                             }).join('')}
                         </div>
                         ${romanColophonHtml(`FINIS · ${book.abbr} ${chapNum}`)}
                         <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-500">
-                            <span>2K/Denmark Comfort Print® Typography</span>
+                            <span>Comfort Print® Typography</span>
                             <button onclick="setReaderView('dolls')" class="text-amber-400 hover:underline">Inspect Selected Verse in Exegesis Workbench →</button>
                         </div>
                     </div>
@@ -5107,13 +5606,16 @@
                                     <span class="text-slate-400">Click any verse to sync all 4 cards</span>
                                 </div>
                                 <div class="canvas-4k-card-body text-slate-100 leading-[1.82] text-[1.05rem]" style="font-family: var(--plenary-serif-font);">
-                                    ${renderIlluminatedDropCapHtml(chDisplayVerses[0] || '', masterChVerses.length > 0 ? masterEnId : 'dra', chapNum)}
                                     ${chDisplayVerses.map((v, idx) => {
                                         const vNum = idx + 1;
                                         const isCur = idx === currentVerseIndex;
                                         const fnSups = buildInlineFnSupsHtml(cachedChapNotes, vNum);
+                                        const dropCap = idx === 0 ? renderIlluminatedDropCapHtml(v, masterChVerses.length > 0 ? masterEnId : 'dra', chapNum) : '';
                                         const bodyHtml = idx === 0 ? formatIlluminatedVerse1BodyHtml(v) : escapeHtmlText(v);
-                                        return `<span onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-1 font-semibold' : ''}"><sup class="suite-verse-num text-[10px] font-mono text-amber-500/80 mr-1">${vNum}</sup>${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
+                                        const supHtml = idx === 0 && dropCap
+                                            ? dropCap
+                                            : `<sup class="suite-verse-num text-[10px] font-mono text-amber-500/80 mr-1">${vNum}</sup>`;
+                                        return `<span onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 suite-verse-highlight rounded px-1 font-semibold' : ''}">${supHtml}${bodyHtml}<span class="suite-fn-slot" data-fn-verse="${vNum}">${fnSups}</span> </span>`;
                                     }).join('')}
                                 </div>
                             </div>
@@ -5240,6 +5742,89 @@
             refreshIcons();
         }
 
+        function classifyPosBadgeClass(posStr) {
+            const p = String(posStr || '').toLowerCase();
+            if (!p) return 'pos-part';
+            if (/\b(?:verb|v-|ind|subj|impv|imperf|aor|perf|fut|inf)\b/.test(p) || p.startsWith('v-')) return 'pos-verb';
+            if (/\b(?:noun|n-|subst|masc|fem|neut)\b/.test(p) || p.startsWith('n-')) return 'pos-noun';
+            if (/\b(?:adj|a-)\b/.test(p) || p.startsWith('a-')) return 'pos-adj';
+            if (/\b(?:prep|conj|adv|indecl)\b/.test(p)) return 'pos-prep';
+            if (/\b(?:pron|art|rel|dem|interr)\b/.test(p)) return 'pos-pron';
+            return 'pos-part';
+        }
+
+        function analyzeLatinMorphology(surface) {
+            const w = String(surface || '').toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
+            if (!w) return { pos: 'Latin', analysis: 'Vulgate Latin token', lemmaGuess: '' };
+            const lexiconHints = {
+                et: ['Conj', 'et ("and / also / even")'],
+                in: ['Prep', 'in + Acc/Abl ("in, into, upon")'],
+                est: ['Verb', 'sum (Pres Act Ind 3sg: "is / exists")'],
+                sunt: ['Verb', 'sum (Pres Act Ind 3pl: "are")'],
+                erat: ['Verb', 'sum (Impf Act Ind 3sg: "was")'],
+                erant: ['Verb', 'sum (Impf Act Ind 3pl: "were")'],
+                fuit: ['Verb', 'sum (Perf Act Ind 3sg: "was / became")'],
+                erit: ['Verb', 'sum (Fut Act Ind 3sg: "will be")'],
+                autem: ['Conj', 'autem ("but / however / now")'],
+                enim: ['Conj', 'enim ("for / indeed")'],
+                sed: ['Conj', 'sed ("but / yet")'],
+                quia: ['Conj', 'quia ("because / that")'],
+                quod: ['Pron/Conj', 'qui, quae, quod ("which / because / that")'],
+                qui: ['Pron', 'qui (Nom Masc Rel Pron: "who / which")'],
+                quae: ['Pron', 'qui (Nom Fem/Neut Pl Rel Pron: "who / which")'],
+                quem: ['Pron', 'qui (Acc Masc Sg: "whom")'],
+                cui: ['Pron', 'qui (Dat Sg: "to whom")'],
+                cum: ['Prep/Conj', 'cum ("with / when / since")'],
+                ad: ['Prep', 'ad + Acc ("to, toward, at")'],
+                de: ['Prep', 'de + Abl ("from, down from, concerning")'],
+                ex: ['Prep', 'ex + Abl ("out of, from")'],
+                per: ['Prep', 'per + Acc ("through, by means of")'],
+                pro: ['Prep', 'pro + Abl ("for, on behalf of")'],
+                super: ['Prep', 'super ("upon, over, above")'],
+                non: ['Adv', 'non ("not")'],
+                ut: ['Conj', 'ut ("so that, in order that, as")'],
+                si: ['Conj', 'si ("if")'],
+                tu: ['Pron', 'tu (Nom Sg: "you / thou")'],
+                es: ['Verb', 'sum (Pres Act Ind 2sg: "you are")'],
+                ego: ['Pron', 'ego (Nom Sg: "I")'],
+                sum: ['Verb', 'sum (Pres Act Ind 1sg: "I am")'],
+                dixit: ['Verb', 'dico (Perf Act Ind 3sg: "said / spoke")'],
+                ait: ['Verb', 'aio (Pres/Perf Act Ind 3sg: "says / said")'],
+                dixerunt: ['Verb', 'dico (Perf Act Ind 3pl: "they said")'],
+                respondit: ['Verb', 'respondeo (Perf Act Ind 3sg: "answered")'],
+                petrus: ['Noun', 'Petrus (Nom Masc Sg: "Peter / Rock")'],
+                petra: ['Noun', 'petra (Nom/Abl Fem Sg: "rock / bedrock")'],
+                ecclesiam: ['Noun', 'ecclesia (Acc Fem Sg: "Church / assembly")'],
+                caelorum: ['Noun', 'caelum (Gen Neut Pl: "of the heavens")'],
+                claves: ['Noun', 'clavis (Nom/Acc Fem Pl: "keys")'],
+                regni: ['Noun', 'regnum (Gen Neut Sg: "of the kingdom")'],
+                dominus: ['Noun', 'Dominus (Nom Masc Sg: "Lord")'],
+                domine: ['Noun', 'Dominus (Voc Masc Sg: "O Lord")'],
+                deus: ['Noun', 'Deus (Nom Masc Sg: "God")'],
+                dei: ['Noun', 'Deus (Gen Masc Sg: "of God")'],
+                deo: ['Noun', 'Deus (Dat/Abl Masc Sg: "to/by God")'],
+                deum: ['Noun', 'Deus (Acc Masc Sg: "God")'],
+            };
+            if (lexiconHints[w]) {
+                return { pos: lexiconHints[w][0], analysis: lexiconHints[w][1], lemmaGuess: w };
+            }
+            if (w.endsWith('orum') || w.endsWith('arum')) return { pos: 'Noun/Adj', analysis: '1st/2nd Decl. Genitive Plural ("of ...")', lemmaGuess: w.slice(0, -4) + (w.endsWith('arum') ? 'a' : 'us') };
+            if (w.endsWith('ibus') || w.endsWith('abus')) return { pos: 'Noun/Adj', analysis: '3rd/4th/5th Decl. Dative or Ablative Plural', lemmaGuess: w.slice(0, -4) };
+            if (w.endsWith('averunt') || w.endsWith('iverunt') || w.endsWith('erunt')) return { pos: 'Verb', analysis: 'Perfect Active Indicative, 3rd Person Plural', lemmaGuess: w.replace(/(?:av|iv)?erunt$/, 'o') };
+            if (w.endsWith('abant') || w.endsWith('ebant') || w.endsWith('iebant')) return { pos: 'Verb', analysis: 'Imperfect Active Indicative, 3rd Person Plural', lemmaGuess: w.replace(/(?:a|e|ie)bant$/, 'o') };
+            if (w.endsWith('abat') || w.endsWith('ebat') || w.endsWith('iebat')) return { pos: 'Verb', analysis: 'Imperfect Active Indicative, 3rd Person Singular', lemmaGuess: w.replace(/(?:a|e|ie)bat$/, 'o') };
+            if (w.endsWith('avit') || w.endsWith('evit') || w.endsWith('ivit')) return { pos: 'Verb', analysis: 'Perfect Active Indicative, 3rd Person Singular', lemmaGuess: w.replace(/(?:av|ev|iv)it$/, 'o') };
+            if (w.endsWith('ntur')) return { pos: 'Verb', analysis: 'Passive / Deponent 3rd Person Plural', lemmaGuess: w.slice(0, -4) };
+            if (w.endsWith('tur')) return { pos: 'Verb', analysis: 'Passive / Deponent 3rd Person Singular', lemmaGuess: w.slice(0, -3) };
+            if (w.endsWith('bunt') || w.endsWith('bit')) return { pos: 'Verb', analysis: 'Future Active Indicative (1st/2nd Conj.)', lemmaGuess: w.replace(/bi?u?nt$/, 'o') };
+            if (w.endsWith('are') || w.endsWith('ere') || w.endsWith('ire')) return { pos: 'Verb', analysis: 'Present Active Infinitive', lemmaGuess: w.slice(0, -2) };
+            if (w.endsWith('tionem') || w.endsWith('tio') || w.endsWith('tate')) return { pos: 'Noun', analysis: '3rd Declension Abstract Noun', lemmaGuess: w };
+            if (w.endsWith('ntes') || w.endsWith('ntis') || w.endsWith('ns')) return { pos: 'Participle', analysis: 'Present Active Participle', lemmaGuess: w };
+            if (w.endsWith('am') || w.endsWith('em') || w.endsWith('um')) return { pos: 'Noun/Adj', analysis: 'Singular Accusative / 2nd Decl. Neuter Nom-Acc', lemmaGuess: w };
+            if (w.endsWith('os') || w.endsWith('as') || w.endsWith('es')) return { pos: 'Noun/Adj', analysis: 'Plural Accusative / 3rd Decl. Nom-Acc', lemmaGuess: w };
+            return { pos: 'Latin', analysis: 'Clementine / Nova Vulgata Witness Token', lemmaGuess: w };
+        }
+
         function resolveParallelWordQuickInfo(lang, surface, verseNum) {
             const book = APP_DATA.books[currentBookIndex];
             const chapNum = currentChapterIndex + 1;
@@ -5247,12 +5832,14 @@
             if (lang === 'Greek') {
                 const info = lookupGreekMorph(surface) || {};
                 const se = getStrongsEntry(info.strong);
+                const decoded = info.pos ? decodeMorph(info.pos) : '';
                 return {
                     lang: 'Greek',
                     word: surface,
                     translit: transliterateGreek(surface),
                     strong: info.strong || '',
-                    pos: info.pos || 'Koine Greek',
+                    pos: decoded || info.pos || 'Koine Greek',
+                    posCode: info.pos || '',
                     lemma: se ? se.lemma : (info.norm || surface),
                     gloss: se ? se.def : 'Greek NT / Septuagint word'
                 };
@@ -5260,25 +5847,31 @@
             if (lang === 'Hebrew') {
                 const info = lookupHebrewMorph(surface) || {};
                 const se = getStrongsEntry(info.strong);
+                const decoded = info.pos ? decodeMorph(info.pos) : '';
                 return {
                     lang: 'Hebrew',
                     word: surface,
                     translit: se ? se.translit : (info.norm || ''),
                     strong: info.strong || '',
-                    pos: info.pos || 'Biblical Hebrew',
+                    pos: decoded || info.pos || 'Biblical Hebrew',
+                    posCode: info.pos || '',
                     lemma: se ? se.lemma : (info.norm || surface),
-                    gloss: se ? se.def : 'Hebrew Masoretic (WLC) token'
+                    gloss: se ? se.def : (info.gloss ? info.gloss.replace(/\//g, ' + ') : 'Hebrew Masoretic (WLC) token')
                 };
             }
             if (lang === 'Latin') {
+                const lNorm = normalizeLatinWord(surface);
+                const lex = (APP_DATA.latin_lex && APP_DATA.latin_lex[lNorm]) || null;
+                const laMorph = analyzeLatinMorphology(surface);
                 return {
                     lang: 'Latin',
                     word: surface,
                     translit: surface.toLowerCase(),
                     strong: 'VULG',
-                    pos: 'Vulgate Latin',
-                    lemma: surface.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/gi, ''),
-                    gloss: 'Clementine / Nova Vulgata canonical witness'
+                    pos: laMorph.pos || 'Vulgate Latin',
+                    posCode: laMorph.pos || 'LAT',
+                    lemma: lex ? lex[0] : (laMorph.lemmaGuess || lNorm),
+                    gloss: lex ? `${lex[1]} (${laMorph.analysis})` : laMorph.analysis
                 };
             }
             const clean = normalizeEnglishToken(surface);
@@ -5290,25 +5883,100 @@
                 translit: se ? se.translit : clean,
                 strong: strongId || 'EN',
                 pos: strongId ? `Aligned -> ${strongId}` : 'English Token',
+                posCode: strongId || 'EN',
                 lemma: se ? se.lemma : clean,
-                gloss: se ? se.def : 'Click word to run English / Strong concordance lookup'
+                gloss: se ? se.def : 'Click to inspect & run English/Vorlage concordance'
             };
         }
 
-        function previewParallelWord(lang, surface, vNum) {
+        function showParFloatingTooltip(ev, lang, surface, vNum) {
+            if (visibilityPrefs && visibilityPrefs.markers && visibilityPrefs.markers.morphologyHover === false) return;
+            const tip = document.getElementById('parFloatingTooltip');
+            if (!tip) return;
+            const info = resolveParallelWordQuickInfo(lang, surface, vNum);
+            const posCls = classifyPosBadgeClass(info.pos || info.posCode);
+            const glossShort = (info.gloss || '').length > 140 ? info.gloss.slice(0, 137) + '...' : (info.gloss || '');
+            tip.innerHTML = `
+                <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="font-serif font-bold text-sm text-amber-300">${escapeHtmlText(info.word)}</span>
+                    <div class="flex items-center gap-1">
+                        <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 border border-slate-700">${escapeHtmlText(info.strong || info.lang)}</span>
+                        <span class="pos-badge ${posCls}">${escapeHtmlText(info.posCode || info.pos || info.lang)}</span>
+                    </div>
+                </div>
+                <div class="text-[11px] font-mono text-emerald-300 mb-0.5">${escapeHtmlText(info.lemma)} ${info.translit ? `<span class="text-slate-400 font-sans italic">(${escapeHtmlText(info.translit)})</span>` : ''}</div>
+                ${info.pos && info.pos !== info.posCode ? `<div class="text-[10px] font-mono text-purple-300 mb-1">${escapeHtmlText(info.pos)}</div>` : ''}
+                <div class="text-[11px] leading-snug opacity-90">${escapeHtmlText(glossShort)}</div>
+            `;
+            const pad = 14;
+            let x = (ev && ev.clientX ? ev.clientX : 200) + pad;
+            let y = (ev && ev.clientY ? ev.clientY : 200) + pad;
+            if (x + 335 > window.innerWidth) x = Math.max(8, window.innerWidth - 340);
+            if (y + 165 > window.innerHeight) y = Math.max(8, (ev ? ev.clientY : 200) - 160);
+            tip.style.left = `${x}px`;
+            tip.style.top = `${y}px`;
+            tip.style.display = 'block';
+        }
+
+        function hideParFloatingTooltip() {
+            const tip = document.getElementById('parFloatingTooltip');
+            if (tip) tip.style.display = 'none';
+        }
+
+        function previewParallelWord(lang, surface, vNum, ev) {
+            if (ev) showParFloatingTooltip(ev, lang, surface, vNum);
             const box = document.getElementById('parMorphPreviewText');
             if (!box || (visibilityPrefs && visibilityPrefs.markers && visibilityPrefs.markers.morphologyHover === false)) return;
             const info = resolveParallelWordQuickInfo(lang, surface, vNum);
+            const posCls = classifyPosBadgeClass(info.pos || info.posCode);
             const glossShort = (info.gloss || '').length > 135 ? info.gloss.slice(0, 132) + '...' : (info.gloss || '');
             box.innerHTML = `<strong class="text-amber-300 font-serif text-sm">${escapeHtmlText(info.word)}</strong> `
                 + `<span class="text-emerald-300 font-mono text-[11px] ml-1">${escapeHtmlText(info.lemma)}</span> `
                 + (info.translit ? `<span class="text-slate-400 italic text-xs">(${escapeHtmlText(info.translit)})</span> ` : '')
                 + `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-cyan-300 font-mono text-[10px] mx-1">${escapeHtmlText(info.strong || info.lang)}</span>`
-                + (info.pos ? `<span class="text-purple-300 font-mono text-[10px] mr-1">[${escapeHtmlText(info.pos)}]</span>` : '')
+                + (info.pos ? `<span class="pos-badge ${posCls} mr-1">${escapeHtmlText(info.pos)}</span>` : '')
                 + `<span class="text-slate-300 text-xs">${escapeHtmlText(glossShort)}</span>`;
             if (info.strong && /^[GH]\d+$/.test(info.strong)) {
                 window.__activeInspectedStrong = info.strong;
             }
+        }
+
+        function buildParallelExegesisStripHtml(book, chapNum, verseNum) {
+            const cruxHtml = activeCrux
+                ? `<div class="p-2 rounded-lg border border-amber-500/30 bg-amber-950/15 space-y-1">
+                        <div class="flex items-center justify-between gap-2"><strong class="text-amber-300 font-mono text-[11px]">${escapeHtmlText(activeCrux.title)}</strong><button type="button" onclick="setReaderView('dolls')" class="text-[10px] font-mono text-cyan-300 hover:underline">Open Full 7-Layer Exegesis →</button></div>
+                        <div class="text-[11px] opacity-90 leading-relaxed">${escapeHtmlText(activeCrux.summary || '')}</div>
+                   </div>`
+                : '';
+            const shard = NOTES_SHARD_CACHE.get(book.id);
+            const chapNotes = (shard && shard.chapters && shard.chapters[String(chapNum)]) || null;
+            const combinedXrefs = typeof getCombinedCrossReferences === 'function'
+                ? getCombinedCrossReferences(book.id, chapNum, verseNum, chapNotes)
+                : getMatchingCrossRefs(book.id, chapNum, verseNum).map(m => ({ target: m.target, abbrRef: getVerseSnippet(m.target[0], m.target[1], m.target[2]).abbrRef, title: m.xr.title, sources: ['Canonical'] }));
+            const xrChips = combinedXrefs.slice(0, 12).map(cx => {
+                const srcs = Array.isArray(cx.sources) ? cx.sources.join(', ') : 'Study Ref';
+                return `<span class="xref-combined-chip"><button type="button" onclick="jumpToReference('${cx.target[0]}', ${cx.target[1]}, ${cx.target[2]})" class="font-mono text-[10px] font-semibold hover:underline">${escapeHtmlText(cx.abbrRef)}</button><span class="xref-info-dot" title="Attested in: ${escapeHtmlText(srcs)}${cx.title ? ' · ' + escapeHtmlText(cx.title) : ''}">i</span></span>`;
+            }).join('');
+            return `
+                <div class="flex items-center justify-between gap-2">
+                    <span class="font-mono text-[10px] uppercase tracking-wider text-amber-300 font-bold">Parallel Exegesis &amp; Combined Cross-References (${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum})</span>
+                    <button type="button" onclick="toggleCommentarySplitPane(true)" class="text-[10px] font-mono text-sky-300 hover:underline">Open Side-by-Side Study Notes →</button>
+                </div>
+                ${cruxHtml || '<div class="text-[11px] opacity-80 italic">Click any word in the columns below to load its Strong\'s entry, or open Side-by-Side Study Notes for full commentary.</div>'}
+                ${xrChips ? `<div class="flex flex-wrap items-center gap-1.5 pt-1"><span class="text-[10px] font-mono text-cyan-300 mr-1">Cross-Refs:</span>${xrChips}</div>` : ''}
+            `;
+        }
+
+        function toggleParallelExegesisStrip() {
+            parallelExegesisOpen = !parallelExegesisOpen;
+            localStorage.setItem('plenary_parallel_exegesis', parallelExegesisOpen ? '1' : '0');
+            if (currentReaderMode === 'parallel') renderReader();
+        }
+
+        function setParallelInterlinear(on) {
+            parallelInterlinearOn = !!on;
+            localStorage.setItem('plenary_parallel_interlinear', parallelInterlinearOn ? '1' : '0');
+            if (currentReaderMode === 'parallel') renderReader();
         }
 
         function clickParallelWord(lang, surface, vIdx) {
@@ -5354,7 +6022,22 @@
                 const diffCls = (baseSet && nw && !baseSet.has(nw))
                     ? ' bg-emerald-500/20 text-emerald-300 border-b border-emerald-500/50'
                     : '';
-                return `<span class="${clsBase}${diffCls}" onmouseenter="previewParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vNum})" onclick="event.stopPropagation(); clickParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vIdx})">${escapeHtmlText(tok)}</span>`;
+                let subGloss = '';
+                if (parallelInterlinearOn) {
+                    const info = resolveParallelWordQuickInfo(lang, cleanSurf, vNum);
+                    let tagTxt = (info.strong && info.strong !== 'EN' && info.strong !== 'VULG')
+                        ? info.strong
+                        : (info.posCode || info.pos || '');
+                    const skipSet = new Set(['English Token', 'Latin', 'Vulgate Latin', 'Koine Greek', 'Biblical Hebrew', 'EN', 'VULG']);
+                    if (tagTxt && !skipSet.has(tagTxt)) {
+                        tagTxt = String(tagTxt).replace('Noun/Adj', 'N/Adj').replace('Participle', 'Part').replace('Pron/Conj', 'Pron');
+                        const posCls = classifyPosBadgeClass(info.pos || info.posCode);
+                        subGloss = `<span class="par-interlinear-gloss ${posCls}">${escapeHtmlText(tagTxt.slice(0, 10))}</span>`;
+                    }
+                }
+                const wrapOpen = parallelInterlinearOn ? '<span class="inline-flex flex-col items-center align-baseline mx-1 mb-1">' : '';
+                const wrapClose = parallelInterlinearOn ? `${subGloss}</span>` : '';
+                return `${wrapOpen}<span class="${clsBase}${diffCls}" onmouseenter="previewParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vNum}, event)" onmousemove="showParFloatingTooltip(event, '${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vNum})" onmouseleave="hideParFloatingTooltip()" onclick="event.stopPropagation(); clickParallelWord('${escapeJsArg(lang)}', '${escapeJsArg(cleanSurf)}', ${vIdx})">${escapeHtmlText(tok)}</span>${wrapClose}`;
             }).join('');
         }
 
@@ -5742,6 +6425,7 @@
                         <rect x="2" y="2" width="60" height="60" rx="5" fill="url(#${gradId})" stroke="${pal.border}" stroke-width="2"/>
                         <rect x="5" y="5" width="54" height="54" rx="3" fill="none" stroke="${pal.accent}" stroke-width="0.7" opacity="0.65"/>
                         ${motifPaths}
+                        <text x="11" y="15" text-anchor="start" font-family="ui-monospace, monospace" font-size="7.5" font-weight="700" fill="${pal.accent}" opacity="0.85">v.1</text>
                         <text x="32" y="43" text-anchor="middle" font-family="var(--plenary-serif-font), Georgia, serif" font-size="34" font-weight="700" fill="${pal.text}" style="filter: drop-shadow(0 2px 3px rgba(0,0,0,0.75));">${escapeHtmlText(letter)}</text>
                         <text x="53" y="56" text-anchor="end" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="${pal.accent}" opacity="0.9">${chapNum}</text>
                     </svg>
@@ -5759,7 +6443,7 @@
             const leadWordTail = firstWordMatch ? firstWordMatch[1] : '';
             const afterFirstWord = rest.slice(leadWordTail.length);
             const leadHtml = leadWordTail
-                ? `<span class="suite-illuminated-lead">${escapeHtmlText(leadWordTail.toUpperCase())}</span>`
+                ? `<span class="suite-illuminated-lead">${escapeHtmlText(leadWordTail)}</span>`
                 : '';
             return `${escapeHtmlText(prefix)}${leadHtml}${escapeHtmlText(afterFirstWord)}`;
         }
@@ -5971,7 +6655,7 @@
                             <span class="text-[11px] font-semibold text-slate-200">${escapeHtmlText(n.title || '')}</span>
                         </div>
                         ${dupBanner}
-                        <div class="text-xs text-slate-300 leading-relaxed">${n.html || ''}</div>
+                        <div class="text-xs text-slate-300 leading-relaxed">${linkifyScriptureRefsHtml(n.html || '')}</div>
                         <button onclick="openNoteSourcePdf('${escapeJsArg(n.src)}', ${n.source_pdf_page || 'null'}, '${escapeJsArg(n.title || '')}', '${escapeJsArg(n.html || '')}', '${escapeJsArg((SOURCE_BADGE[n.src] && SOURCE_BADGE[n.src].license) || '')}')" class="text-[10px] font-mono text-cyan-400 hover:text-cyan-200 hover:underline flex items-center gap-1">${n.source_pdf_page ? `View source PDF (p. ${n.source_pdf_page})` : 'View source PDF'}</button>
                     </div>
                 `;
@@ -6143,19 +6827,20 @@
                 document.getElementById('inspectorTierDesc').textContent = (book.chap_notes && book.chap_notes[String(chapNum)]) || "Manuscript witnesses align cleanly here; click any English word, original-tongue token, or 3D hologram word for instant parsing and 73-book concordance.";
             }
 
-            // Cross-refs in Inspector
+            // Combined Cross-refs in Inspector (Canonical Registry + Active Study Bible Shards with subtle (i) provenance)
             const xrCard = document.getElementById('inspectorCrossRefList');
-            const matching = getMatchingCrossRefs(book.id, chapNum, verseNum);
-            if (matching.length > 0) {
-                xrCard.innerHTML = matching.map(({ xr, target }) => {
-                    const snip = getVerseSnippet(target[0], target[1], target[2]);
-                    return `<button onclick="jumpToReference('${target[0]}', ${target[1]}, ${target[2]})" class="w-full text-left p-2 rounded bg-slate-900 border border-slate-800 hover:border-cyan-500/60 transition flex items-center justify-between">
-                        <span class="font-semibold text-cyan-300 truncate pr-2">${snip.abbrRef}: ${xr.title}</span>
-                        <span class="text-[10px] font-mono text-slate-400">&rarr;</span>
-                    </button>`;
-                }).join('');
+            const combined = getCombinedCrossReferences(book.id, chapNum, verseNum);
+            if (combined.length > 0) {
+                xrCard.innerHTML = `<div class="flex flex-wrap gap-1.5">${combined.slice(0, 18).map(item => {
+                    const srcList = item.sources.join(', ');
+                    const tip = `Attested in: ${srcList}${item.title ? ' — ' + item.title : ''}`;
+                    return `<span class="xref-combined-chip">
+                        <button type="button" onclick="jumpToReference('${escapeJsArg(item.target[0])}', ${item.target[1]}, ${item.target[2]})" class="hover:underline">${escapeHtmlText(item.abbrRef)}</button>
+                        <span class="xref-info-dot" title="${escapeHtmlText(tip)}">i</span>
+                    </span>`;
+                }).join('')}</div>`;
             } else {
-                xrCard.innerHTML = `<div class="text-[11px] text-slate-500 italic">No curated crux cross-link on this verse; click a word above to run full-Bible concordance.</div>`;
+                xrCard.innerHTML = `<div class="text-[11px] text-slate-500 italic">No combined cross-references on this verse; click any word above for 73-book concordance.</div>`;
             }
 
             const patList = document.getElementById('inspectorPatristicList');
@@ -6667,17 +7352,65 @@
             syncActiveReference(true);
         }
 
-        // ====== 2K/DENMARK COMFORT PRINT® & PROFESSIONAL BIBLE TYPOGRAPHY ENGINE ======
+        // ====== COMFORT PRINT & PROFESSIONAL BIBLE TYPOGRAPHY ENGINE ======
         const DEFAULT_TYPOGRAPHY_PREFS = {
-            fontFamily: 'comfortprint',
+            fontFamily: 'comfortprint_clone',
             fontSizePx: 17,
             lineHeight: 1.72,
             measureCh: 64,
             paraSpacingEm: 0.85,
         };
+        if (!localStorage.getItem('plenary_font_v3_default')) {
+            try {
+                const prevFont = localStorage.getItem('plenary_comfort_font');
+                if (!prevFont || prevFont === 'comfortprint' || prevFont === 'opendyslexic' || prevFont === 'crimson_pro' || prevFont === 'literata' || prevFont === 'lora' || prevFont === 'source_serif') {
+                    localStorage.setItem('plenary_comfort_font', 'comfortprint_clone');
+                    const rawT = localStorage.getItem('plenary_typography_v1');
+                    if (rawT) {
+                        const objT = JSON.parse(rawT);
+                        objT.fontFamily = 'comfortprint_clone';
+                        localStorage.setItem('plenary_typography_v1', JSON.stringify(objT));
+                    }
+                }
+                localStorage.setItem('plenary_font_v3_default', '1');
+            } catch (e) {}
+        }
         let currentComfortFont = localStorage.getItem('plenary_comfort_font') || DEFAULT_TYPOGRAPHY_PREFS.fontFamily;
         let currentComfortScale = parseFloat(localStorage.getItem('plenary_comfort_scale') || '1') || 1;
         let typographyPrefs = { ...DEFAULT_TYPOGRAPHY_PREFS, fontFamily: currentComfortFont };
+
+        const FONT_FAMILY_STACKS = {
+            comfortprint_clone: "'ComfortPrint Classic Clone', 'Charis SIL', Georgia, serif",
+            comfortprint: "'2K/DENMARK Comfort Print', 'Adobe Caslon Pro', 'Charis SIL', Georgia, serif",
+            charis: "'Charis SIL', 'ComfortPrint Classic Clone', Georgia, serif",
+            caslon_arno: "'Arno Pro', 'Adobe Caslon Pro', 'Charis SIL', Georgia, serif",
+            adobe_caslon: "'Adobe Caslon Pro', 'Arno Pro', 'Charis SIL', Georgia, serif",
+            bembo: "'Bembo Std', 'Charis SIL', 'EB Garamond', Georgia, serif",
+            eb_garamond: "'EB Garamond', 'FreeSerif', Georgia, serif",
+            freeserif: "'FreeSerif', 'Charis SIL', Georgia, serif",
+            palatino: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
+            times: "'Times New Roman', 'FreeSerif', Georgia, serif",
+            georgia_editorial: "Georgia, 'Times New Roman', serif",
+            cambria_press: "Cambria, 'Charis SIL', Georgia, serif",
+            inter_sans: "'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif",
+            accessible_sans: "Verdana, 'Segoe UI', Tahoma, sans-serif"
+        };
+        const FONT_LETTER_SPACING = {
+            comfortprint_clone: '0em',
+            comfortprint: '0.002em',
+            charis: '0em',
+            caslon_arno: '0.002em',
+            adobe_caslon: '0.003em',
+            bembo: '0.002em',
+            eb_garamond: '0.003em',
+            freeserif: '0em',
+            palatino: '0.002em',
+            times: '0em',
+            georgia_editorial: '0.002em',
+            cambria_press: '0.001em',
+            inter_sans: '0em',
+            accessible_sans: '0.02em'
+        };
 
         function loadTypographyPrefs() {
             try {
@@ -6687,7 +7420,10 @@
                     typographyPrefs = { ...DEFAULT_TYPOGRAPHY_PREFS, ...parsed };
                 }
             } catch (e) {}
-            if (typographyPrefs.fontFamily) currentComfortFont = typographyPrefs.fontFamily;
+            if (!typographyPrefs.fontFamily || !FONT_FAMILY_STACKS[typographyPrefs.fontFamily]) {
+                typographyPrefs.fontFamily = DEFAULT_TYPOGRAPHY_PREFS.fontFamily;
+            }
+            currentComfortFont = typographyPrefs.fontFamily;
         }
 
         function saveTypographyPrefs() {
@@ -6697,52 +7433,18 @@
             } catch (e) {}
         }
 
-        const FONT_FAMILY_STACKS = {
-            comfortprint: "'2K/DENMARK Comfort Print', 'ArnoPro', 'ACaslonPro', 'Crimson Pro', Georgia, serif",
-            comfortprint_clone: "'ComfortPrint Classic Clone', 'CharisSIL', Georgia, serif",
-            charis: "'CharisSIL', Georgia, serif",
-            caslon_arno: "'ArnoPro', 'ACaslonPro', 'CharisSIL', Georgia, serif",
-            adobe_caslon: "'ACaslonPro', 'ArnoPro', Georgia, serif",
-            bembo: "'Bembo', 'ETBembo', 'Crimson Pro', 'EB Garamond', Georgia, serif",
-            palatino: "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif",
-            georgia_editorial: "Georgia, 'Times New Roman', serif",
-            cambria_press: "Cambria, 'Hoefler Text', Utopia, Georgia, serif",
-            crimson_pro: "'Crimson Pro', Georgia, serif",
-            eb_garamond: "'EB Garamond', Garamond, Georgia, serif",
-            literata: "'Literata', Georgia, serif",
-            lora: "'Lora', Georgia, serif",
-            source_serif: "'Source Serif 4', Georgia, serif",
-            inter_sans: "'Inter', system-ui, -apple-system, sans-serif",
-            opendyslexic: "'OpenDyslexic', 'Comic Sans MS', 'Verdana', sans-serif"
-        };
-        const FONT_LETTER_SPACING = {
-            comfortprint: '0.008em',
-            comfortprint_clone: '0em',
-            charis: '0em',
-            caslon_arno: '0.004em',
-            adobe_caslon: '0.006em',
-            bembo: '0.005em',
-            palatino: '0.004em',
-            georgia_editorial: '0.003em',
-            cambria_press: '0.002em',
-            crimson_pro: '0.004em',
-            eb_garamond: '0.006em',
-            literata: '0.003em',
-            lora: '0.002em',
-            source_serif: '0.003em',
-            inter_sans: '-0.005em',
-            opendyslexic: '0.04em'
-        };
-
         function applyComfortTypography() {
             const root = document.documentElement;
-            const ff = typographyPrefs.fontFamily || currentComfortFont || 'comfortprint';
-            const stack = FONT_FAMILY_STACKS[ff] || FONT_FAMILY_STACKS.comfortprint;
+            let ff = typographyPrefs.fontFamily || currentComfortFont || 'comfortprint_clone';
+            if (!FONT_FAMILY_STACKS[ff]) ff = 'comfortprint_clone';
+            const stack = FONT_FAMILY_STACKS[ff];
             const ls = FONT_LETTER_SPACING[ff] || '0em';
             document.body.setAttribute('data-comfort-font', ff);
             root.setAttribute('data-comfort-font', ff);
             root.style.setProperty('--plenary-serif-font', stack);
             document.body.style.setProperty('--plenary-serif-font', stack);
+            root.style.setProperty('--plenary-font-en', stack);
+            document.body.style.setProperty('--plenary-font-en', stack);
             root.style.setProperty('--plenary-letter-spacing', ls);
             document.body.style.setProperty('--plenary-letter-spacing', ls);
             root.style.setProperty('--plenary-font-scale', String(currentComfortScale));
@@ -6780,7 +7482,7 @@
         }
 
         function setComfortFont(preset) {
-            currentComfortFont = preset || 'comfortprint';
+            currentComfortFont = (preset && FONT_FAMILY_STACKS[preset]) ? preset : 'comfortprint_clone';
             typographyPrefs.fontFamily = currentComfortFont;
             saveTypographyPrefs();
             applyComfortTypography();
@@ -6823,15 +7525,6 @@
         }
 
         // ====== UNIVERSAL ACCESSIBILITY & NEURAL READ-ALONG VOICE ======
-        const EXTRA_FONT_STACKS = {
-            crimson_pro: "'Crimson Pro', Georgia, serif",
-            eb_garamond: "'EB Garamond', Garamond, Georgia, serif",
-            literata: "'Literata', Georgia, serif",
-            lora: "'Lora', Georgia, serif",
-            source_serif: "'Source Serif 4', Georgia, serif",
-            inter_sans: "'Inter', system-ui, -apple-system, sans-serif",
-            opendyslexic: "'OpenDyslexic', 'Comic Sans MS', 'Verdana', sans-serif",
-        };
         let a11yPrefs = (() => {
             try { return JSON.parse(localStorage.getItem('plenary_a11y_prefs') || '{}'); } catch { return {}; }
         })();
@@ -7094,16 +7787,21 @@
             const cleaned = String(rawText).replace(/\r\n/g, '\n').trim();
             const blocks = cleaned.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
             const parts = (blocks.length > 1 ? blocks : cleaned.split(/\n/).map(p => p.trim()).filter(Boolean));
-            return parts.map(p => {
+            const curBook = (typeof APP_DATA !== 'undefined' && APP_DATA.books && APP_DATA.books[currentBookIndex]) ? APP_DATA.books[currentBookIndex] : null;
+            const inner = parts.map(p => {
                 const isHeading = p.length <= 90 && (
                     /^(?:CHAPTERS?|SECTION|PART|OUTLINE|INTRODUCTION|OVERVIEW|THEMES?)\b/i.test(p)
                     || (/^[A-Z0-9][A-Za-z0-9\s,:\-–—()';.]{2,72}$/.test(p) && !/[.!?]$/.test(p))
                 );
                 if (isHeading) {
-                    return `<h4 class="font-semibold text-sm text-amber-300 mt-4 mb-1.5 pb-1 border-b border-slate-800" style="font-family:var(--plenary-font-ui);">${escapeHtmlText(p)}</h4>`;
+                    return `<h4 class="font-semibold text-sm text-amber-300 mt-5 mb-2 pb-1 border-b border-slate-800" style="font-family:var(--plenary-font-ui);">${escapeHtmlText(p)}</h4>`;
                 }
-                return `<p class="font-serif text-[0.95rem] text-slate-200 leading-[1.72] mb-3">${escapeHtmlText(p)}</p>`;
+                const linked = typeof linkifyScriptureRefsHtml === 'function'
+                    ? linkifyScriptureRefsHtml(escapeHtmlText(p), curBook ? curBook.id : '', currentChapterIndex + 1)
+                    : escapeHtmlText(p);
+                return `<p class="text-[1.02rem] text-slate-200 leading-[1.78] mb-3.5" style="font-family:var(--plenary-serif-font);">${linked}</p>`;
             }).join('');
+            return `<div class="max-w-[68ch] mx-auto">${inner}</div>`;
         }
 
         function jumpToNabrePassage(bookId, chap, verse) {
@@ -7252,16 +7950,18 @@
                     </details>
                 `).join('');
                 bodyEl.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 space-y-2">
-                            <div class="text-[10px] font-mono uppercase text-slate-400">Select Any of the 73 Books to Inspect Its Reading Guide &amp; Introduction:</div>
-                            <div class="flex flex-wrap gap-1">${bookPills}</div>
+                    <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-4 items-start">
+                        <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 space-y-2 lg:sticky lg:top-0">
+                            <div class="text-[10px] font-mono uppercase text-slate-400">73 Canonical Books</div>
+                            <div class="flex flex-wrap gap-1 max-h-[60vh] overflow-y-auto">${bookPills}</div>
                         </div>
-                        <div class="space-y-2">
-                            <div class="text-[11px] font-mono font-bold text-amber-300 uppercase">Major Biblical Division Essays (${divs.length})</div>
-                            ${divHtml}
+                        <div class="space-y-4 min-w-0">
+                            ${divs.length > 0 ? `<div class="space-y-2">
+                                <div class="text-[11px] font-mono font-bold text-amber-300 uppercase">Major Biblical Division Essays (${divs.length})</div>
+                                ${divHtml}
+                            </div>` : ''}
+                            ${renderNabreBookGuideCard(selBook, selBg, q)}
                         </div>
-                        ${renderNabreBookGuideCard(selBook, selBg, q)}
                     </div>
                 `;
                 return;
@@ -7275,27 +7975,29 @@
                 }
                 const pills = filtered.map(({ a, idx }) => {
                     const active = idx === nabreSelectedArticleIdx;
-                    return `<button onclick="selectNabreArticle(${idx})" class="px-2.5 py-1 rounded text-left font-mono text-[11px] border transition ${active ? 'bg-sky-500/25 text-sky-300 border-sky-500/50 font-bold' : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'}">${escapeHtmlText(a.title)} <span class="text-[9px] text-slate-400">(p.${a.pdf_page})</span></button>`;
+                    return `<button onclick="selectNabreArticle(${idx})" class="w-full px-2.5 py-1.5 rounded text-left font-mono text-[11px] border transition ${active ? 'bg-sky-500/25 text-sky-300 border-sky-500/50 font-bold' : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'}"><div class="truncate">${escapeHtmlText(a.title)}</div><div class="text-[9px] text-slate-400">PDF p.${a.pdf_page}</div></button>`;
                 }).join('');
                 const curArt = articles[nabreSelectedArticleIdx];
                 bodyEl.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 space-y-2">
-                            <div class="text-[10px] font-mono uppercase text-slate-400">15 General &amp; Reference Articles (Senior, Harrington, Simkins, Brink, Madigan, Witherup, Schuller):</div>
-                            <div class="flex flex-wrap gap-1.5">${pills || '<span class="text-slate-500 italic">No articles match your search.</span>'}</div>
+                    <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 items-start">
+                        <div class="p-3 rounded-xl border border-slate-800 bg-slate-950 space-y-2 lg:sticky lg:top-0">
+                            <div class="text-[10px] font-mono uppercase text-slate-400">15 Scholarly &amp; General Articles (${filtered.length})</div>
+                            <div class="space-y-1 max-h-[60vh] overflow-y-auto">${pills || '<span class="text-slate-500 italic">No articles match your search.</span>'}</div>
                         </div>
+                        <div class="min-w-0">
                         ${curArt ? `
                             <div class="p-5 rounded-xl border border-sky-500/30 bg-slate-950 space-y-3">
                                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
                                     <div>
                                         <h3 class="text-base font-bold text-white">${escapeHtmlText(curArt.title)}</h3>
-                                        <div class="text-[11px] font-mono text-slate-400">The Catholic Study Bible (3rd Ed.) • PDF Pages ${curArt.pdf_page}–${curArt.end_page}</div>
+                                        <div class="text-[11px] font-mono text-slate-400">The Catholic Study Bible (3rd Ed.) · PDF Pages ${curArt.pdf_page}–${curArt.end_page}</div>
                                     </div>
                                     <button onclick="openNabrePdfAtPage(${curArt.pdf_page})" class="px-3 py-1 rounded bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 font-mono text-xs">Open Article in PDF (p. ${curArt.pdf_page})</button>
                                 </div>
                                 <div class="pt-1">${formatNabreProseHtml(curArt.text)}</div>
                             </div>
                         ` : ''}
+                        </div>
                     </div>
                 `;
                 return;
@@ -8170,6 +8872,9 @@
                 renderSplitCommentaryPane();
                 attachSplitScrollAnchor();
             }
+            if (!skipRender && currentReaderMode === 'parallel') {
+                renderReader();
+            }
         }
 
         function toggleSplitPaneScope() {
@@ -8233,44 +8938,181 @@
             return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
+        const FN_STYLE_LABELS = {
+            sigla: 'Sigla 1a',
+            sequential: 'Seq [1]',
+            counts: 'Count 3+N',
+            pill: 'Verse Pill',
+            off: 'Fn Off'
+        };
+
+        function syncFootnoteStyleControls() {
+            const btn = document.getElementById('splitFnStyleBtn');
+            if (btn) btn.textContent = FN_STYLE_LABELS[footnoteMarkerStyle] || 'Sigla 1a';
+            const sel = document.getElementById('visFootnoteStyleSelect');
+            if (sel) sel.value = footnoteMarkerStyle;
+        }
+
+        function setFootnoteMarkerStyle(style) {
+            if (!FN_STYLE_LABELS[style]) style = 'sigla';
+            footnoteMarkerStyle = style;
+            try { localStorage.setItem('plenary_fn_marker_style', footnoteMarkerStyle); } catch (e) {}
+            syncFootnoteStyleControls();
+            renderReader();
+        }
+
+        function cycleFootnoteMarkerStyle() {
+            const order = ['sigla', 'sequential', 'counts', 'pill', 'off'];
+            const next = order[(order.indexOf(footnoteMarkerStyle) + 1) % order.length];
+            setFootnoteMarkerStyle(next);
+        }
+
+        const ANCHOR_SYNONYM_GROUPS = [
+            ['shew', 'show', 'showed', 'shown'],
+            ['heaven', 'heavens', 'sky'],
+            ['tempt', 'tempting', 'tempted', 'test', 'testing', 'tested'],
+            ['hypocrite', 'hypocrites', 'hypocrisy'],
+            ['leaven', 'yeast'],
+            ['rock', 'peter', 'petra', 'cephas'],
+            ['hell', 'hades', 'netherworld', 'sheol'],
+            ['jonas', 'jonah'],
+            ['christ', 'messiah', 'anointed'],
+            ['sign', 'signs'],
+            ['time', 'times', 'season', 'seasons'],
+            ['key', 'keys'],
+            ['bind', 'binding', 'bound'],
+            ['loose', 'loosed', 'loosing'],
+            ['sadducee', 'sadducees'],
+            ['pharisee', 'pharisees'],
+            ['disciple', 'disciples'],
+            ['flesh', 'body'],
+            ['barjona', 'bar-jona', 'son'],
+        ];
+
+        function extractAnchorMatchVariants(rawAnchor) {
+            const primary = extractPrimaryAnchorWord(rawAnchor);
+            if (!primary || primary.length < 2) return [];
+            const set = new Set([primary]);
+            const rawTokens = String(rawAnchor || '').toLowerCase().replace(/[^a-z0-9\s-]/g, ' ').split(/\s+/).filter(Boolean);
+            for (const t of rawTokens) {
+                if (t.length >= 3 && !ANCHOR_STOPWORD_ARTICLES.has(t)) set.add(t);
+            }
+            const seedList = Array.from(set);
+            seedList.forEach(w => {
+                if (w.endsWith('s') && w.length > 3) set.add(w.slice(0, -1));
+                else set.add(w + 's');
+                if (w.endsWith('es') && w.length > 4) set.add(w.slice(0, -2));
+                if (w.endsWith('ing') && w.length > 5) { set.add(w.slice(0, -3)); set.add(w.slice(0, -3) + 'e'); }
+                if (w.endsWith('ed') && w.length > 4) { set.add(w.slice(0, -2)); set.add(w.slice(0, -1)); }
+                if (w.endsWith('eth') && w.length > 5) set.add(w.slice(0, -3));
+                ANCHOR_SYNONYM_GROUPS.forEach(grp => {
+                    if (grp.includes(w)) grp.forEach(alt => set.add(alt));
+                });
+            });
+            return Array.from(set).filter(x => x.length >= 2 && !ANCHOR_STOPWORD_ARTICLES.has(x));
+        }
+
+        function showFnHoverCard(ev, vNum, letter, note) {
+            const card = document.getElementById('fnHoverCard');
+            if (!card || !note) return;
+            const badge = SOURCE_BADGE[note.src] || { label: note.src || 'Study Note', cls: 'text-slate-300 border-slate-700 bg-slate-800' };
+            const plain = String(note.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            const snippet = plain.length > 210 ? plain.slice(0, 207) + '...' : plain;
+            card.innerHTML = `
+                <div class="flex items-center justify-between gap-2 mb-1">
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>
+                    <span class="font-mono text-[10px] font-bold text-amber-300">${vNum}${escapeHtmlText(letter)}${note.anchor_word ? ` · "${escapeHtmlText(note.anchor_word)}"` : ''}</span>
+                </div>
+                ${note.title ? `<div class="text-[11px] font-semibold mb-1">${escapeHtmlText(note.title)}</div>` : ''}
+                <div class="text-[11px] leading-snug opacity-90">${escapeHtmlText(snippet || 'Click badge to open full Study Note in side panel.')}</div>
+                <div class="text-[9px] font-mono text-cyan-300 mt-1">Click to jump to note card ${vNum}${escapeHtmlText(letter)} &rarr;</div>
+            `;
+            const pad = 14;
+            let x = (ev && ev.clientX ? ev.clientX : 200) + pad;
+            let y = (ev && ev.clientY ? ev.clientY : 200) + pad;
+            if (x + 335 > window.innerWidth) x = Math.max(8, window.innerWidth - 340);
+            if (y + 170 > window.innerHeight) y = Math.max(8, (ev ? ev.clientY : 200) - 165);
+            card.style.left = `${x}px`;
+            card.style.top = `${y}px`;
+            card.style.display = 'block';
+        }
+
+        function hideFnHoverCard() {
+            const card = document.getElementById('fnHoverCard');
+            if (card) card.style.display = 'none';
+        }
+
+        function createSigilSupBtn(vNum, item, seqNum, styleMode) {
+            const sup = document.createElement('button');
+            sup.type = 'button';
+            sup.className = 'fn-sigil-sup';
+            sup.setAttribute('data-fn-verse', String(vNum));
+            sup.setAttribute('data-fn-letter', item.letter);
+            sup.textContent = styleMode === 'sequential' ? `[${seqNum}]` : `${vNum}${item.letter}`;
+            sup.onclick = (ev) => { ev.stopPropagation(); hideFnHoverCard(); jumpToSplitNote(vNum, item.letter); };
+            sup.onmouseenter = (ev) => { highlightSplitWordNotes(vNum, item.normKey || '', true); showFnHoverCard(ev, vNum, item.letter, item.note); };
+            sup.onmousemove = (ev) => showFnHoverCard(ev, vNum, item.letter, item.note);
+            sup.onmouseleave = () => { highlightSplitWordNotes(vNum, item.normKey || '', false); hideFnHoverCard(); };
+            return sup;
+        }
+
         function buildInlineFnSupsHtml(chapNotes, vNum) {
-            if (!chapNotes) return '';
+            if (footnoteMarkerStyle === 'off' || !chapNotes) return '';
             const notes = chapNotes[String(vNum)] || [];
             if (!notes.length) return '';
             const visible = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
             if (!visible.length) return '';
-            return `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${visible.length} study notes on v.${vNum} — click to open side-by-side">§ ${visible.length}</button>`;
+            return `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${visible.length} study note${visible.length > 1 ? 's' : ''} on v.${vNum} — click to view all">${visible.length} note${visible.length > 1 ? 's' : ''}</button>`;
         }
 
         function anchorWordsInVerseElement(slotEl, chapNotes, vNum) {
+            if (footnoteMarkerStyle === 'off') {
+                slotEl.innerHTML = '';
+                return;
+            }
             const notes = chapNotes[String(vNum)] || [];
             const visible = computeNoteSigla(notes).filter(s => isNoteVisibleByPrefs(s.note));
             if (!visible.length) {
                 slotEl.innerHTML = '';
                 return;
             }
-            const byWord = new Map();
-            let verseLevelCount = 0;
-            visible.forEach(({ note }) => {
-                const rawAnchor = String(note.anchor_word || '').trim();
-                const norm = extractPrimaryAnchorWord(rawAnchor);
-                if (norm && norm.length >= 2) {
-                    if (!byWord.has(norm)) byWord.set(norm, { display: rawAnchor, count: 0 });
-                    byWord.get(norm).count += 1;
+
+            if (footnoteMarkerStyle === 'pill') {
+                slotEl.innerHTML = `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${visible.length} study note${visible.length > 1 ? 's' : ''} on v.${vNum}">v.${vNum} (${visible.length} notes)</button>`;
+                return;
+            }
+
+            const variantToBucket = new Map();
+            const bucketsByPrimary = new Map();
+            const unanchored = [];
+            visible.forEach((item, seqIdx) => {
+                const rawAnchor = String(item.note.anchor_word || '').trim();
+                const normPrimary = extractPrimaryAnchorWord(rawAnchor);
+                const variants = extractAnchorMatchVariants(rawAnchor);
+                if (normPrimary && variants.length > 0) {
+                    if (!bucketsByPrimary.has(normPrimary)) {
+                        bucketsByPrimary.set(normPrimary, { norm: normPrimary, display: rawAnchor, items: [] });
+                    }
+                    const bucket = bucketsByPrimary.get(normPrimary);
+                    item.seqNum = seqIdx + 1;
+                    item.normKey = normPrimary;
+                    bucket.items.push(item);
+                    variants.forEach(v => { if (!variantToBucket.has(v)) variantToBucket.set(v, bucket); });
                 } else {
-                    verseLevelCount += 1;
+                    item.seqNum = seqIdx + 1;
+                    item.normKey = '';
+                    unanchored.push(item);
                 }
             });
 
             const parentVerseEl = slotEl.parentElement;
-            let matchedWords = 0;
-            if (parentVerseEl && byWord.size > 0) {
-                // Collect text nodes belonging directly to the verse prose (exclude <sup> and .suite-fn-slot)
+            const usedBuckets = new Set();
+            if (parentVerseEl && variantToBucket.size > 0) {
                 const walker = document.createTreeWalker(parentVerseEl, NodeFilter.SHOW_TEXT, {
                     acceptNode(node) {
                         const p = node.parentElement;
                         if (!p) return NodeFilter.FILTER_REJECT;
-                        if (p.closest('.suite-verse-num, .suite-fn-slot, .fn-word-anchor, sup, button')) {
+                        if (p.closest('.suite-verse-num, .suite-fn-slot, .fn-word-anchor, .suite-illuminated-cap, sup, button')) {
                             return NodeFilter.FILTER_REJECT;
                         }
                         return node.nodeValue && node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
@@ -8280,55 +9122,100 @@
                 let n;
                 while ((n = walker.nextNode())) textNodes.push(n);
 
-                const remaining = new Map(byWord);
+                const allTerms = Array.from(variantToBucket.keys()).sort((a, b) => b.length - a.length);
+                const wordsRegex = new RegExp(`\\b(${allTerms.map(escapeRegExp).join('|')})\\b`, 'gi');
+
                 for (const tn of textNodes) {
-                    if (!remaining.size) break;
-                    const wordsRegex = new RegExp(`\\b(${Array.from(remaining.keys()).map(escapeRegExp).join('|')})\\b`, 'gi');
                     const text = tn.nodeValue;
+                    wordsRegex.lastIndex = 0;
                     if (!wordsRegex.test(text)) continue;
                     wordsRegex.lastIndex = 0;
                     const frag = document.createDocumentFragment();
                     let lastIdx = 0;
                     let m;
                     while ((m = wordsRegex.exec(text)) !== null) {
-                        const norm = normalizeAnchorToken(m[1]);
-                        const meta = remaining.get(norm);
-                        if (!meta) continue;
+                        const matchedLower = normalizeAnchorToken(m[1]);
+                        const bucket = variantToBucket.get(matchedLower);
+                        if (!bucket || usedBuckets.has(bucket)) continue;
+                        usedBuckets.add(bucket);
                         if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+
                         const span = document.createElement('span');
                         span.className = 'fn-word-anchor';
                         span.setAttribute('data-fn-verse', String(vNum));
-                        span.setAttribute('data-anchor-word', norm);
-                        span.setAttribute('title', `${meta.count} note${meta.count > 1 ? 's' : ''} anchored to “${m[1]}” — click to filter side pane`);
-                        span.onclick = (ev) => { ev.stopPropagation(); filterSplitByAnchorWord(vNum, norm); };
-                        span.onmouseenter = () => highlightSplitWordNotes(vNum, norm, true);
-                        span.onmouseleave = () => highlightSplitWordNotes(vNum, norm, false);
+                        span.setAttribute('data-anchor-word', bucket.norm);
+                        span.onclick = (ev) => { ev.stopPropagation(); filterSplitByAnchorWord(vNum, bucket.norm); };
+                        span.onmouseenter = () => highlightSplitWordNotes(vNum, bucket.norm, true);
+                        span.onmouseleave = () => highlightSplitWordNotes(vNum, bucket.norm, false);
                         span.appendChild(document.createTextNode(m[1]));
-                        const sup = document.createElement('sup');
-                        sup.className = 'fn-word-count';
-                        sup.textContent = String(meta.count);
-                        span.appendChild(sup);
+
+                        if (footnoteMarkerStyle === 'counts') {
+                            span.setAttribute('title', `${bucket.items.length} study note${bucket.items.length > 1 ? 's' : ''} anchored to "${m[1]}"`);
+                            const sup = document.createElement('sup');
+                            sup.className = 'fn-word-count';
+                            sup.textContent = String(bucket.items.length);
+                            span.appendChild(sup);
+                        } else {
+                            // 'sigla' (Default) or 'sequential' — attach exact synchronized markers!
+                            const showLimit = 3;
+                            bucket.items.slice(0, showLimit).forEach((it, idx) => {
+                                if (idx > 0) {
+                                    const comma = document.createElement('span');
+                                    comma.className = 'text-[9px] font-mono opacity-60';
+                                    comma.textContent = ',';
+                                    span.appendChild(comma);
+                                }
+                                span.appendChild(createSigilSupBtn(vNum, it, it.seqNum, footnoteMarkerStyle));
+                            });
+                            if (bucket.items.length > showLimit) {
+                                const more = document.createElement('button');
+                                more.type = 'button';
+                                more.className = 'fn-sigil-sup';
+                                more.textContent = `+${bucket.items.length - showLimit}`;
+                                more.title = `${bucket.items.length} notes on "${m[1]}" — click to filter all`;
+                                more.onclick = (ev) => { ev.stopPropagation(); filterSplitByAnchorWord(vNum, bucket.norm); };
+                                span.appendChild(more);
+                            }
+                        }
                         frag.appendChild(span);
                         lastIdx = m.index + m[0].length;
-                        remaining.delete(norm);
-                        matchedWords += meta.count;
                     }
                     if (lastIdx > 0) {
                         if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
                         tn.parentNode.replaceChild(frag, tn);
                     }
                 }
-                for (const rem of remaining.values()) {
-                    verseLevelCount += rem.count;
-                }
-            } else {
-                verseLevelCount = visible.length;
             }
 
-            if (verseLevelCount > 0) {
-                slotEl.innerHTML = `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${verseLevelCount} verse-level / cross-translation note${verseLevelCount > 1 ? 's' : ''} on v.${vNum}">§ ${verseLevelCount}</button>`;
-            } else {
-                slotEl.innerHTML = '';
+            const remainder = [];
+            unanchored.forEach(it => remainder.push(it));
+            bucketsByPrimary.forEach(bucket => {
+                if (!usedBuckets.has(bucket)) bucket.items.forEach(it => remainder.push(it));
+            });
+
+            slotEl.innerHTML = '';
+            if (remainder.length > 0) {
+                if (footnoteMarkerStyle === 'counts') {
+                    slotEl.innerHTML = `<button type="button" class="fn-verse-pill" data-fn-verse="${vNum}" onclick="event.stopPropagation(); clearSplitAnchorFilter(${vNum})" title="${remainder.length} verse-level / cross-translation notes on v.${vNum} (out of ${visible.length} total)">+${remainder.length} verse notes</button>`;
+                } else {
+                    const pillWrap = document.createElement('span');
+                    pillWrap.className = 'inline-flex items-center gap-0.5 ml-1';
+                    const cap = Math.min(remainder.length, 3);
+                    for (let i = 0; i < cap; i++) {
+                        pillWrap.appendChild(createSigilSupBtn(vNum, remainder[i], remainder[i].seqNum, footnoteMarkerStyle));
+                    }
+                    const restCount = remainder.length - cap;
+                    if (restCount > 0) {
+                        const allBtn = document.createElement('button');
+                        allBtn.type = 'button';
+                        allBtn.className = 'fn-verse-pill';
+                        allBtn.textContent = `+${restCount} v.${vNum}`;
+                        allBtn.title = `Show all ${visible.length} study notes on v.${vNum}`;
+                        allBtn.onclick = (ev) => { ev.stopPropagation(); clearSplitAnchorFilter(vNum); };
+                        pillWrap.appendChild(allBtn);
+                    }
+                    slotEl.appendChild(pillWrap);
+                }
             }
         }
 
@@ -8340,10 +9227,32 @@
                     const vNum = parseInt(slot.getAttribute('data-fn-verse'), 10);
                     if (!isNaN(vNum)) anchorWordsInVerseElement(slot, chapNotes, vNum);
                 });
+                const verseNum = currentVerseIndex + 1;
+                const notesCountEl = document.getElementById('stickyNotesCountBadge');
+                if (notesCountEl) {
+                    const vNotes = chapNotes[String(verseNum)] || [];
+                    const visCnt = vNotes.filter(n => isNoteVisibleByPrefs(n)).length;
+                    notesCountEl.textContent = visCnt > 0 ? `(${visCnt})` : '';
+                }
+                const xrCard = document.getElementById('inspectorCrossRefList');
+                if (xrCard && typeof getCombinedCrossReferences === 'function') {
+                    const combined = getCombinedCrossReferences(bookId, chapNum, verseNum, chapNotes);
+                    if (combined.length > 0) {
+                        xrCard.innerHTML = `<div class="flex flex-wrap gap-1.5">${combined.slice(0, 18).map(item => {
+                            const srcList = item.sources.join(', ');
+                            const tip = `Attested in: ${srcList}${item.title ? ' — ' + item.title : ''}`;
+                            return `<span class="xref-combined-chip">
+                                <button type="button" onclick="jumpToReference('${escapeJsArg(item.target[0])}', ${item.target[1]}, ${item.target[2]})" class="hover:underline">${escapeHtmlText(item.abbrRef)}</button>
+                                <span class="xref-info-dot" title="${escapeHtmlText(tip)}">i</span>
+                            </span>`;
+                        }).join('')}</div>`;
+                    }
+                }
             });
         }
 
         function highlightSplitWordNotes(vNum, normWord, active) {
+            if (!normWord) return;
             document.querySelectorAll(`#readerContent .fn-word-anchor[data-fn-verse="${vNum}"][data-anchor-word="${normWord}"]`).forEach(el => {
                 el.classList.toggle('fn-word-active', !!active);
             });
@@ -8370,6 +9279,7 @@
             const list = document.getElementById('splitCommentaryList');
             const anchorRef = document.getElementById('splitAnchorRef');
             if (!list || !APP_DATA || !APP_DATA.books) return;
+            syncFootnoteStyleControls();
             const book = APP_DATA.books[currentBookIndex];
             const chapNum = currentChapterIndex + 1;
             const verseNum = currentVerseIndex + 1;
@@ -8387,7 +9297,7 @@
                 if (activeSplitAnchorFilter) {
                     cards.push(`
                         <div class="sticky top-0 z-10 flex items-center justify-between gap-2 px-2.5 py-1.5 mb-2 rounded-md border border-amber-500/40 bg-slate-900/95 text-[11px] font-mono">
-                            <span>Anchored to <strong>“${escapeHtmlText(activeSplitAnchorFilter.word)}”</strong> (v.${activeSplitAnchorFilter.verse})</span>
+                            <span>Anchored to <strong>"${escapeHtmlText(activeSplitAnchorFilter.word)}"</strong> (v.${activeSplitAnchorFilter.verse})</span>
                             <button type="button" onclick="clearSplitAnchorFilter()" class="px-2 py-0.5 rounded border border-slate-700 hover:border-amber-400 text-[10px]">Show all</button>
                         </div>
                     `);
@@ -8412,7 +9322,7 @@
                         cards.push(`
                             <div class="split-note-card ${vIdx === currentVerseIndex ? 'split-note-active' : ''}" data-note-verse="${vIdx}" onclick="focusVerseFromSplitNote(${vIdx})">
                                 <div class="flex items-center justify-between gap-2 mb-1 font-mono text-[10px]">
-                                    <span class="font-bold">§ ${escapeHtmlText(book.abbr)} ${chapNum}:${vNum} — Personal Note</span>
+                                    <span class="font-bold">${escapeHtmlText(book.abbr)} ${chapNum}:${vNum} — Personal Note</span>
                                 </div>
                                 <div class="text-xs leading-relaxed">${escapeHtmlText(personalNote)}</div>
                             </div>
@@ -8429,16 +9339,31 @@
                                 <div class="flex items-center gap-1.5 flex-wrap mb-1">
                                     <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border border-slate-700">${vNum}${escapeHtmlText(letter)}</span>
                                     <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase border ${badge.cls}">${escapeHtmlText(badge.label)}</span>
-                                    ${n.anchor_word ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-serif italic border border-slate-700/70 opacity-85">“${escapeHtmlText(n.anchor_word)}”</span>` : ''}
+                                    ${n.anchor_word ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-serif italic border border-slate-700/70 opacity-85">"${escapeHtmlText(n.anchor_word)}"</span>` : ''}
                                     ${n.kind ? `<span class="text-[9px] font-mono opacity-65 uppercase">${escapeHtmlText(n.kind)}</span>` : ''}
                                     ${dupOf ? `<span class="text-[9px] font-mono opacity-75">[=${escapeHtmlText(dupOf)}]</span>` : ''}
                                 </div>
                                 ${n.title ? `<div class="text-[11px] font-semibold mb-0.5">${escapeHtmlText(n.title)}</div>` : ''}
-                                <div class="text-xs leading-relaxed opacity-90">${n.html || ''}</div>
+                                <div class="text-xs leading-relaxed opacity-90">${linkifyScriptureRefsHtml(n.html || '', book.id, chapNum)}</div>
                             </div>
                         `);
                     });
                 });
+
+                if (visibilityPrefs && visibilityPrefs.markers && visibilityPrefs.markers.crossRefs !== false && typeof getCombinedCrossReferences === 'function') {
+                    const combinedChips = renderCombinedCrossRefsHtml(book.id, chapNum, verseNum, chapNotes, true);
+                    if (combinedChips) {
+                        cards.push(`
+                            <div class="split-note-card border-cyan-500/35">
+                                <div class="flex items-center justify-between gap-2 mb-1.5 font-mono text-[10px]">
+                                    <span class="font-bold text-cyan-300 uppercase">Combined Cross-References (${escapeHtmlText(book.abbr)} ${chapNum}:${verseNum})</span>
+                                    <span class="opacity-65">Hover i for sources</span>
+                                </div>
+                                ${combinedChips}
+                            </div>
+                        `);
+                    }
+                }
 
                 list.innerHTML = cards.length
                     ? cards.join('')
@@ -8460,22 +9385,25 @@
         }
 
         function jumpToSplitNote(vNum, letter) {
+            activeSplitAnchorFilter = null;
             if (!splitPaneOn) toggleCommentarySplitPane(true);
             if (currentVerseIndex !== vNum - 1) {
                 selectVerse(vNum - 1);
+            } else {
+                renderSplitCommentaryPane();
             }
-            const tryScroll = () => {
+            const tryScroll = (attempt) => {
                 const card = document.getElementById(`split-note-${vNum}-${letter}`);
                 if (card) {
                     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    card.classList.add('split-note-active');
-                    card.style.outline = '2px solid var(--accent-primary)';
-                    setTimeout(() => { card.style.outline = ''; }, 2000);
+                    card.classList.add('split-note-active', 'split-note-flash');
+                    setTimeout(() => card.classList.remove('split-note-flash'), 1800);
                     return true;
                 }
+                if (attempt < 5) setTimeout(() => tryScroll(attempt + 1), 120);
                 return false;
             };
-            if (!tryScroll()) setTimeout(tryScroll, 180);
+            setTimeout(() => tryScroll(0), 60);
         }
 
         function attachSplitScrollAnchor() {
@@ -12114,5 +13042,7 @@
             }
         }
     </script>
+    <div id="parFloatingTooltip" aria-hidden="true"></div>
+    <div id="fnHoverCard" aria-hidden="true"></div>
 </body>
 </html>
