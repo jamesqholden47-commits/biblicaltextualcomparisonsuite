@@ -14,12 +14,27 @@ import sqlite3
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
+from fastapi.responses import FileResponse
+
+from . import auth_routes, licensing
 
 router = APIRouter(prefix="/api/plenary", tags=["plenary-db"])
 
 _HERE = Path(__file__).resolve()
-_DEFAULT_DB = _HERE.parents[3] / "web_app" / "plenary_logos.sqlite"
+_WEB_APP_DIR = _HERE.parents[3] / "web_app"
+_DEFAULT_DB = _WEB_APP_DIR / "plenary_logos.sqlite"
+_STUDY_MEDIA_DIR = _WEB_APP_DIR / "study_media"
+
+
+def _is_saas_mode() -> bool:
+    return os.environ.get("PLENARY_SAAS_MODE", "0").strip().lower() in ("1", "true", "yes")
+
+
+def _effective_tier(user: dict | None) -> str:
+    if not _is_saas_mode():
+        return "institutional"
+    return licensing.normalize_tier((user or {}).get("tier") or "free")
 
 
 def get_db_path() -> Path:
@@ -93,11 +108,14 @@ def plenary_books():
 def plenary_chapter(
     book_id: str,
     chapter: int,
+    response: Response,
     translations: Optional[str] = Query(
         default=None,
         description="Comma-separated translation IDs (e.g. he,gr,vul,dra,rsv2ce). Omit for all.",
     ),
+    user: dict | None = Depends(auth_routes.get_current_user_optional),
 ):
+    tier = _effective_tier(user)
     conn = _connect()
     try:
         book_row = conn.execute(
@@ -113,6 +131,13 @@ def plenary_chapter(
             )
 
         tr_filter = [t.strip() for t in translations.split(",") if t.strip()] if translations else []
+        if _is_saas_mode() and tr_filter:
+            denied = [t for t in tr_filter if not licensing.is_translation_allowed(tier, t)]
+            if denied:
+                raise HTTPException(
+                    status_code=403,
+                    detail=f"Tier '{tier}' does not include translation(s): {', '.join(denied)}",
+                )
         if tr_filter:
             placeholders = ",".join("?" for _ in tr_filter)
             v_rows = conn.execute(
@@ -130,8 +155,13 @@ def plenary_chapter(
 
         verses_by_num: dict[int, dict[str, str]] = {}
         for r in v_rows:
+            tr_id = r["translation_id"]
+            if _is_saas_mode() and not licensing.is_translation_allowed(tier, tr_id):
+                continue
             v_num = int(r["verse"])
-            verses_by_num.setdefault(v_num, {})[r["translation_id"]] = r["text"]
+            verses_by_num.setdefault(v_num, {})[tr_id] = r["text"]
+
+        response.headers["Cache-Control"] = "private, max-age=300" if user else "public, max-age=300"
 
         note_counts = {
             int(r["verse"]): int(r["cnt"])
@@ -262,5 +292,121 @@ def plenary_search(
             results["apparatus"] = [dict(r) for r in rows]
 
         return {"query": q, "fts_query": fts_q, "scope": scope, "results": results}
+    finally:
+        conn.close()
+
+
+@router.get("/patristics")
+def plenary_patristics(
+    response: Response,
+    q: Optional[str] = Query(default=None),
+    series: Optional[str] = Query(default=None, description="PL, PG, or SCHAFF"),
+    book_id: Optional[str] = Query(default=None),
+    chapter: Optional[int] = Query(default=None),
+    limit: int = Query(default=30, ge=1, le=200),
+):
+    conn = _connect()
+    try:
+        response.headers["Cache-Control"] = "public, max-age=300"
+        has_fts = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE name='patristic_fts'"
+        ).fetchone()
+
+        if q and q.strip() and has_fts:
+            fts_q = _sanitize_fts_query(q)
+            if not fts_q:
+                return {"items": [], "count": 0}
+            sql = (
+                "SELECT p.id, p.series, p.volume, p.author, p.work_title, "
+                "p.book_id, p.chapter, p.verse, p.page_or_col, "
+                "snippet(patristic_fts, 5, '[', ']', '...', 22) AS snippet "
+                "FROM patristic_fts "
+                "JOIN patristic_index p ON p.id = patristic_fts.patristic_id "
+                "WHERE patristic_fts MATCH ?"
+            )
+            params: list = [fts_q]
+            if series:
+                sql += " AND p.series = ?"
+                params.append(series.strip().upper())
+            sql += " ORDER BY bm25(patristic_fts) LIMIT ?"
+            params.append(limit)
+            rows = conn.execute(sql, params).fetchall()
+            items = [dict(r) for r in rows]
+            return {"items": items, "count": len(items)}
+
+        sql = (
+            "SELECT id, series, volume, author, work_title, book_id, chapter, verse, "
+            "page_or_col, substr(excerpt, 1, 280) AS snippet "
+            "FROM patristic_index WHERE 1=1"
+        )
+        params = []
+        if series:
+            sql += " AND series = ?"
+            params.append(series.strip().upper())
+        if book_id:
+            sql += " AND book_id = ?"
+            params.append(book_id.strip())
+        if chapter is not None:
+            sql += " AND chapter = ?"
+            params.append(chapter)
+        sql += " ORDER BY series, volume, id LIMIT ?"
+        params.append(limit)
+        items = [dict(r) for r in conn.execute(sql, params).fetchall()]
+        return {"items": items, "count": len(items)}
+    finally:
+        conn.close()
+
+
+@router.get("/media")
+def plenary_media(
+    book_id: Optional[str] = Query(default=None),
+    chapter: Optional[int] = Query(default=None),
+    limit: int = Query(default=40, ge=1, le=200),
+):
+    conn = _connect()
+    try:
+        has_tbl = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE name='media_assets'"
+        ).fetchone()
+        if not has_tbl:
+            return {"items": [], "count": 0}
+        sql = (
+            "SELECT id, source_id, book_id, chapter, title, rel_path, width, height, mime "
+            "FROM media_assets WHERE 1=1"
+        )
+        params: list = []
+        if book_id:
+            sql += " AND book_id = ?"
+            params.append(book_id.strip())
+        if chapter is not None:
+            sql += " AND chapter = ?"
+            params.append(chapter)
+        sql += " ORDER BY id LIMIT ?"
+        params.append(limit)
+        items = [dict(r) for r in conn.execute(sql, params).fetchall()]
+        return {"items": items, "count": len(items)}
+    finally:
+        conn.close()
+
+
+@router.get("/media/file/{asset_id}")
+def plenary_media_file(asset_id: str):
+    conn = _connect()
+    try:
+        has_tbl = conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE name='media_assets'"
+        ).fetchone()
+        if not has_tbl:
+            raise HTTPException(status_code=404, detail="media_assets table not initialized")
+        row = conn.execute(
+            "SELECT rel_path, mime FROM media_assets WHERE id = ?", (asset_id,)
+        ).fetchone()
+        if not row:
+            raise HTTPException(status_code=404, detail=f"Media asset not found: {asset_id}")
+        media_root = _STUDY_MEDIA_DIR.resolve()
+        candidate = (media_root / row["rel_path"]).resolve()
+        if not candidate.is_relative_to(media_root) or not candidate.is_file():
+            raise HTTPException(status_code=404, detail="Media file missing or invalid path")
+        return FileResponse(str(candidate), media_type=row["mime"] or "application/octet-stream")
     finally:
         conn.close()

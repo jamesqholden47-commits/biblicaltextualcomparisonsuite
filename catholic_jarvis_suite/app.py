@@ -25,13 +25,31 @@ import fitz  # PyMuPDF
 
 app = FastAPI(title="CatholicJarvis Master Work Suite")
 
+_raw_origins = os.environ.get("ALLOWED_ORIGINS", "").strip()
+_allowed_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()] if _raw_origins else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+try:
+    from modules.rate_limit import RateLimitMiddleware
+    if os.environ.get("PLENARY_RATE_LIMIT", "0").strip().lower() in ("1", "true", "yes"):
+        app.add_middleware(RateLimitMiddleware)
+except Exception as _rl_err:
+    print(f"Warning: RateLimitMiddleware not loaded: {_rl_err}")
+
+
+@app.get("/api/health/ready")
+def health_ready():
+    """Lightweight readiness probe for load balancers / Tauri / SaaS."""
+    from modules.plenary_db_routes import get_db_path
+    db_ok = get_db_path().is_file()
+    return {"status": "ready" if db_ok else "degraded", "plenary_sqlite": db_ok}
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")

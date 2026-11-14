@@ -300,9 +300,68 @@
         body.theme-sepia .suite-select { background-color: #ede2c7; color: #7c2d12; border-color: #b5a078; }
         body.theme-sepia .suite-badge-fallback { background: #ead49b; color: #78350f; border-color: #b45309; }
         body.theme-sepia .suite-prose-word.suite-word-selected { color: #78350f; background: rgba(180, 83, 9, 0.22); }
+
+        /* Parchment Theme (data-theme="parchment") & data-theme attribute parity */
+        body[data-theme="parchment"], body.theme-parchment { background-color: #f6efe0 !important; color: #2f2419 !important; }
+        body[data-theme="parchment"] header, body[data-theme="parchment"] aside, body[data-theme="parchment"] .bg-slate-950, body[data-theme="parchment"] .bg-\[\#090d16\], body[data-theme="parchment"] .bg-\[\#080b12\],
+        body.theme-parchment header, body.theme-parchment aside, body.theme-parchment .bg-slate-950, body.theme-parchment .bg-\[\#090d16\], body.theme-parchment .bg-\[\#080b12\] { background-color: #efe5cf !important; color: #2f2419 !important; }
+        body[data-theme="parchment"] .bg-slate-900, body[data-theme="parchment"] .bg-slate-900\/80, body[data-theme="parchment"] .bg-slate-900\/70, body[data-theme="parchment"] .bg-slate-900\/60, body[data-theme="parchment"] .bg-slate-900\/50,
+        body.theme-parchment .bg-slate-900, body.theme-parchment .bg-slate-900\/80, body.theme-parchment .bg-slate-900\/70, body.theme-parchment .bg-slate-900\/60, body.theme-parchment .bg-slate-900\/50 { background-color: #e7dac0 !important; color: #2f2419 !important; }
+        body[data-theme="parchment"] .bg-black\/40, body[data-theme="parchment"] .bg-black\/50 { background-color: #ddd0b3 !important; color: #241b12 !important; }
+        body[data-theme="parchment"] .border-slate-800, body[data-theme="parchment"] .border-slate-700 { border-color: #cbb994 !important; }
+        body[data-theme="parchment"] .text-white, body[data-theme="parchment"] .text-slate-100, body[data-theme="parchment"] .text-slate-200 { color: #241b12 !important; }
+        body[data-theme="parchment"] .text-slate-300, body[data-theme="parchment"] .text-slate-400 { color: #574534 !important; }
+        body[data-theme="parchment"] .morph-token { background: #e3d5b8; border-color: #bda87f; color: #241b12; }
+        body[data-theme="parchment"] .suite-select { background-color: #efe5cf; color: #7c2d12; border-color: #bda87f; }
+        body[data-theme="parchment"] .suite-badge-fallback { background: #ebd7a7; color: #78350f; border-color: #b45309; }
+        body[data-theme="parchment"] .suite-prose-word.suite-word-selected { color: #78350f; background: rgba(180, 83, 9, 0.22); }
+        body[data-theme="parchment"] .comfort-print-page { background-color: #fbf6eb !important; border-color: #d6c5a3 !important; color: #241b12 !important; }
+        body[data-theme="light"] .comfort-print-page { background-color: #ffffff !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
+        body[data-theme="sepia"] .comfort-print-page { background-color: #f9f3e3 !important; border-color: #cbb890 !important; color: #2d2216 !important; }
+
+        /* 2K/Denmark Comfort Print Optical Margin, Drop-Cap & Zero-Clutter Focus Mode */
+        .comfort-print-page {
+            font-family: var(--plenary-serif-font);
+            hanging-punctuation: first allow-end;
+            text-wrap: pretty;
+            hyphens: auto;
+            font-variant-numeric: oldstyle-nums proportional-nums;
+            font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "onum" 1;
+        }
+        .comfort-drop-cap {
+            float: left;
+            font-family: var(--plenary-serif-font);
+            font-size: 3.45em;
+            line-height: 0.82;
+            padding-right: 0.14em;
+            padding-top: 0.05em;
+            margin-bottom: -0.05em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            user-select: none;
+        }
+        body.devotional-focus-mode header,
+        body.devotional-focus-mode #canonSidebar,
+        body.devotional-focus-mode #inspectorPane,
+        body.devotional-focus-mode #workspaceTabBar,
+        body.devotional-focus-mode #stickyVerseBar,
+        body.devotional-focus-mode #threeDViewport,
+        body.devotional-focus-mode #centerToolRibbon {
+            display: none !important;
+        }
+        body.devotional-focus-mode #readerContent {
+            padding-top: 2.5rem !important;
+            padding-bottom: 3rem !important;
+        }
+        #devotionalFocusExitBtn {
+            display: none;
+        }
+        body.devotional-focus-mode #devotionalFocusExitBtn {
+            display: inline-flex;
+        }
     </style>
 </head>
-<body class="bg-[#080b12] text-slate-100 h-screen flex flex-col font-sans antialiased overflow-hidden selection:bg-amber-500 selection:text-black">
+<body data-theme="dark" class="bg-[#080b12] text-slate-100 h-screen flex flex-col font-sans antialiased overflow-hidden selection:bg-amber-500 selection:text-black">
 
     <!-- TOP WORKSPACE COMMAND BAR -->
     <header class="h-14 bg-slate-950 border-b border-slate-800 flex items-center justify-between px-3 gap-2 z-40 flex-shrink-0">
@@ -429,7 +488,13 @@
                 <i data-lucide="graduation-cap" class="w-4 h-4"></i>
             </button>
 
-            <button onclick="cycleTheme()" class="p-1.5 rounded-lg text-xs border border-slate-700 bg-slate-900 text-slate-300 hover:text-white" title="Cycle Dark / Light / Sepia Theme">
+            <select id="themeSelector" onchange="setTheme(this.value)" class="suite-select hidden sm:inline-block" title="Select Theme: Dark / Light / Sepia / Parchment">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="sepia">Sepia</option>
+                <option value="parchment">Parchment</option>
+            </select>
+            <button onclick="cycleTheme()" class="p-1.5 rounded-lg text-xs border border-slate-700 bg-slate-900 text-slate-300 hover:text-white" title="Cycle Dark / Light / Sepia / Parchment Theme">
                 <i data-lucide="palette" class="w-4 h-4"></i>
             </button>
 
@@ -541,9 +606,12 @@
         </aside>
 
         <!-- CENTER PANE: RUSSIAN DOLLS / PARALLEL / CONTINUOUS READER -->
-        <section class="flex-grow flex flex-col bg-[#090d16] overflow-hidden min-w-0">
+        <section class="relative flex-grow flex flex-col bg-[#090d16] overflow-hidden min-w-0">
+            <button id="devotionalFocusExitBtn" type="button" onclick="toggleDevotionalFocusMode(false)" class="fixed top-4 right-4 z-50 px-3 py-1.5 rounded-full bg-slate-900/90 border border-amber-500/40 text-amber-300 text-xs font-mono shadow-lg hover:bg-slate-800 items-center gap-1.5 transition" title="Exit Zero-Clutter Focus Mode (Esc)">
+                <span>✕ Exit Focus</span>
+            </button>
             <!-- Center Tool Ribbon -->
-            <div style="min-height: 2.5rem;" class="bg-slate-900/70 border-b border-slate-800 px-3 py-1 flex items-center justify-between flex-wrap text-xs text-slate-300 flex-shrink-0 gap-2">
+            <div id="centerToolRibbon" style="min-height: 2.5rem;" class="bg-slate-900/70 border-b border-slate-800 px-3 py-1 flex items-center justify-between flex-wrap text-xs text-slate-300 flex-shrink-0 gap-2">
                 <div class="flex items-center space-x-1 flex-shrink-0">
                     <button onclick="setReaderView('dolls')" id="btnViewDolls" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-medium border border-amber-500/40 whitespace-nowrap">Dolls</button>
                     <button onclick="setReaderView('parallel')" id="btnViewParallel" class="px-2 py-1 rounded bg-slate-800 text-slate-400 font-medium hover:text-white whitespace-nowrap" title="Compare 2 to 10+ translations side-by-side">Parallel (N-Way)</button>
@@ -1132,13 +1200,20 @@
 
     <!-- EMBEDDED COMPLETE DATASET & APPLICATION ENGINE -->
     <script>
-        const APP_DATA = __PLENARY_PAYLOAD__;
+        const _RAW_PLENARY_PAYLOAD = __PLENARY_PAYLOAD__;
+        const APP_DATA = (_RAW_PLENARY_PAYLOAD && typeof _RAW_PLENARY_PAYLOAD === 'object') ? _RAW_PLENARY_PAYLOAD : {};
+        if (!Array.isArray(APP_DATA.books)) APP_DATA.books = [];
+        if (!Array.isArray(APP_DATA.preloaded_cruxes)) APP_DATA.preloaded_cruxes = [];
+        if (!Array.isArray(APP_DATA.translation_registry)) APP_DATA.translation_registry = [];
+        if (!Array.isArray(APP_DATA.canon_schema)) APP_DATA.canon_schema = [];
+        const IS_PLENARY_SHELL_MODE = Boolean(window.__PLENARY_SHELL_MODE__) || (typeof DATA === 'undefined' && APP_DATA.books.length === 0);
+        window.__PLENARY_API_REACHABLE__ = IS_PLENARY_SHELL_MODE;
 
         // Core Application State
         let currentBookIndex = 50; // Acts
         let currentChapterIndex = 14; // Chapter 15
         let currentVerseIndex = 15; // Verse 16
-        let activeCrux = APP_DATA.preloaded_cruxes[0];
+        let activeCrux = APP_DATA.preloaded_cruxes[0] || null;
         let currentReaderMode = 'dolls';
         let is3DOpen = false;
         let is3DExpanded = false;
@@ -1148,10 +1223,15 @@
         let blindDrillEnabled = localStorage.getItem('plenary_blind_drill') === '1';
         let parallelSyncScroll = localStorage.getItem('plenary_parallel_sync_scroll') !== '0'; // default ON
         let parallelSyncScrollGuard = false;
+        let parallelDiffEnabled = localStorage.getItem('plenary_parallel_diff') === '1';
+        let devotionalFocusMode = false;
+        let activePatristicsMediaTab = 'patristics';
+        let chapterLoadSeq = 0;
+        let searchReqSeq = 0;
 
         // Multi-Translation & Multi-Strata State (DRA IMPRIMATUR default)
         let masterEnId = localStorage.getItem('plenary_master_en') || 'dra';
-        if (!(APP_DATA.translation_registry || []).some(t => t.id === masterEnId && t.is_master_en)) masterEnId = 'dra';
+        if (APP_DATA.translation_registry.length > 0 && !(APP_DATA.translation_registry || []).some(t => t.id === masterEnId && t.is_master_en)) masterEnId = 'dra';
         let parallelCols = [masterEnId, 'lxx_gnt', 'wlc', 'vulg_clem'];
         let active3DLayers = ['dra', 'lxx_gnt', 'vulg_clem', 'wlc', 'vorlage'];
         let showDoll4All12 = true;
@@ -1262,6 +1342,223 @@
             };
             notesShardInFlightScript = script;
             document.body.appendChild(script);
+        }
+
+        // ====== LAZY SQLITE/FTS5 CHAPTER & PATRISTICS/MEDIA LOADER (Map LRU + IndexedDB) ======
+        const CHAPTER_LRU_CACHE = new Map();
+        const CHAPTER_LRU_MAX = 24;
+        const PATRISTICS_MEDIA_CACHE = new Map();
+        let _plenaryChapterDbPromise = null;
+
+        function openChapterCacheDB() {
+            if (_plenaryChapterDbPromise) return _plenaryChapterDbPromise;
+            if (typeof indexedDB === 'undefined') return Promise.resolve(null);
+            _plenaryChapterDbPromise = new Promise((resolve) => {
+                try {
+                    const req = indexedDB.open('plenary_suite_cache_v1', 1);
+                    req.onupgradeneeded = (ev) => {
+                        const db = ev.target.result;
+                        if (!db.objectStoreNames.contains('chapters')) {
+                            db.createObjectStore('chapters', { keyPath: 'key' });
+                        }
+                    };
+                    req.onsuccess = (ev) => resolve(ev.target.result);
+                    req.onerror = () => resolve(null);
+                } catch (e) {
+                    resolve(null);
+                }
+            });
+            return _plenaryChapterDbPromise;
+        }
+
+        async function idbGetChapter(key) {
+            try {
+                const db = await openChapterCacheDB();
+                if (!db) return null;
+                return await new Promise((resolve) => {
+                    const tx = db.transaction('chapters', 'readonly');
+                    const store = tx.objectStore('chapters');
+                    const req = store.get(key);
+                    req.onsuccess = () => resolve(req.result ? req.result.data : null);
+                    req.onerror = () => resolve(null);
+                });
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function idbSetChapter(key, data) {
+            try {
+                const db = await openChapterCacheDB();
+                if (!db) return;
+                await new Promise((resolve) => {
+                    const tx = db.transaction('chapters', 'readwrite');
+                    tx.objectStore('chapters').put({ key, data, ts: Date.now() });
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => resolve();
+                });
+            } catch (e) {}
+        }
+
+        function lruGetChapter(key) {
+            if (!CHAPTER_LRU_CACHE.has(key)) return null;
+            const val = CHAPTER_LRU_CACHE.get(key);
+            CHAPTER_LRU_CACHE.delete(key);
+            CHAPTER_LRU_CACHE.set(key, val);
+            return val;
+        }
+
+        function lruSetChapter(key, val) {
+            if (CHAPTER_LRU_CACHE.has(key)) CHAPTER_LRU_CACHE.delete(key);
+            CHAPTER_LRU_CACHE.set(key, val);
+            while (CHAPTER_LRU_CACHE.size > CHAPTER_LRU_MAX) {
+                const oldest = CHAPTER_LRU_CACHE.keys().next().value;
+                CHAPTER_LRU_CACHE.delete(oldest);
+            }
+        }
+
+        function renderChapterLoadingSkeleton(bookName, chapNum) {
+            const container = document.getElementById('readerContent');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="max-w-3xl mx-auto space-y-4 py-6">
+                    <div class="h-4 w-40 bg-slate-800 rounded animate-pulse"></div>
+                    <div class="h-7 w-64 bg-slate-800 rounded animate-pulse"></div>
+                    <div class="p-6 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3 animate-pulse">
+                        <div class="text-xs font-mono text-amber-400/90 mb-2">Loading ${escapeHtmlText(bookName || 'Scripture')} ${chapNum || ''}...</div>
+                        <div class="h-4 bg-slate-800/80 rounded w-full"></div>
+                        <div class="h-4 bg-slate-800/80 rounded w-11/12"></div>
+                        <div class="h-4 bg-slate-800/80 rounded w-5/6"></div>
+                        <div class="h-4 bg-slate-800/80 rounded w-full"></div>
+                        <div class="h-4 bg-slate-800/80 rounded w-4/5"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function applyChapterPayloadToBook(book, cIdx, payload) {
+            if (!book || !payload || typeof payload !== 'object') return;
+            const src = payload.chapter && typeof payload.chapter === 'object' ? payload.chapter : payload;
+            if (!Array.isArray(book.verses_en)) book.verses_en = [];
+            if (!Array.isArray(book.verses_gr)) book.verses_gr = [];
+            if (!Array.isArray(book.verses_he)) book.verses_he = [];
+            if (!Array.isArray(book.verses_la)) book.verses_la = [];
+            if (!book.tr || typeof book.tr !== 'object') book.tr = {};
+
+            if (Array.isArray(src.verses_en)) book.verses_en[cIdx] = src.verses_en;
+            else if (Array.isArray(src.verses)) {
+                book.verses_en[cIdx] = src.verses.map(v => typeof v === 'string' ? v : (v.en || v.dra || v.text || ''));
+                if (src.verses.some(v => v && typeof v === 'object' && v.gr)) book.verses_gr[cIdx] = src.verses.map(v => (v && v.gr) || '');
+                if (src.verses.some(v => v && typeof v === 'object' && v.he)) book.verses_he[cIdx] = src.verses.map(v => (v && v.he) || '');
+                if (src.verses.some(v => v && typeof v === 'object' && v.la)) book.verses_la[cIdx] = src.verses.map(v => (v && v.la) || '');
+            }
+            if (Array.isArray(src.verses_gr)) book.verses_gr[cIdx] = src.verses_gr;
+            if (Array.isArray(src.verses_he)) book.verses_he[cIdx] = src.verses_he;
+            if (Array.isArray(src.verses_la)) book.verses_la[cIdx] = src.verses_la;
+            if (src.tr && typeof src.tr === 'object') {
+                Object.keys(src.tr).forEach(sid => {
+                    if (!Array.isArray(book.tr[sid])) book.tr[sid] = [];
+                    if (Array.isArray(src.tr[sid])) book.tr[sid][cIdx] = src.tr[sid];
+                });
+            }
+        }
+
+        async function loadPlenaryBooksFromApi() {
+            const container = document.getElementById('readerContent');
+            if (container) renderChapterLoadingSkeleton('73-Book Canon Index', '');
+            try {
+                const res = await fetch('/api/plenary/books');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const payload = await res.json();
+                window.__PLENARY_API_REACHABLE__ = true;
+                const booksArr = Array.isArray(payload) ? payload : (payload && Array.isArray(payload.books) ? payload.books : []);
+                if (booksArr.length > 0) {
+                    APP_DATA.books = booksArr.map(b => ({
+                        ...b,
+                        verses_en: Array.isArray(b.verses_en) ? b.verses_en : [],
+                        verses_gr: Array.isArray(b.verses_gr) ? b.verses_gr : [],
+                        verses_he: Array.isArray(b.verses_he) ? b.verses_he : [],
+                        verses_la: Array.isArray(b.verses_la) ? b.verses_la : [],
+                        tr: (b.tr && typeof b.tr === 'object') ? b.tr : {}
+                    }));
+                }
+                if (payload && Array.isArray(payload.canon_schema) && payload.canon_schema.length > 0) {
+                    APP_DATA.canon_schema = payload.canon_schema;
+                } else if (APP_DATA.canon_schema.length === 0 && APP_DATA.books.length > 0) {
+                    const seenDiv = new Set();
+                    APP_DATA.canon_schema = APP_DATA.books.reduce((acc, b) => {
+                        if (b.division && !seenDiv.has(b.division)) {
+                            seenDiv.add(b.division);
+                            acc.push({ division: b.division });
+                        }
+                        return acc;
+                    }, []);
+                }
+                if (payload && Array.isArray(payload.translation_registry) && payload.translation_registry.length > 0) {
+                    APP_DATA.translation_registry = payload.translation_registry;
+                }
+                if (payload && Array.isArray(payload.preloaded_cruxes) && payload.preloaded_cruxes.length > 0) {
+                    APP_DATA.preloaded_cruxes = payload.preloaded_cruxes;
+                    if (!activeCrux) activeCrux = APP_DATA.preloaded_cruxes[0] || null;
+                }
+                if (currentBookIndex >= APP_DATA.books.length) {
+                    currentBookIndex = 0;
+                    currentChapterIndex = 0;
+                    currentVerseIndex = 0;
+                }
+            } catch (err) {
+                if (container) {
+                    container.innerHTML = `<div class="max-w-xl mx-auto p-6 my-8 rounded-xl border border-rose-500/40 bg-rose-950/30 text-rose-200 text-xs font-mono">Unable to load /api/plenary/books (${escapeHtmlText(err.message || String(err))}).</div>`;
+                }
+            }
+        }
+
+        async function ensureChapterLoaded(bIdx, cIdx) {
+            const book = APP_DATA.books[bIdx];
+            if (!book) return false;
+            if (Array.isArray(book.verses_en) && Array.isArray(book.verses_en[cIdx]) && book.verses_en[cIdx].length > 0) {
+                return true;
+            }
+            const chapNum = cIdx + 1;
+            const cacheKey = `${book.id}:${chapNum}`;
+            let cached = lruGetChapter(cacheKey);
+            if (!cached) {
+                cached = await idbGetChapter(cacheKey);
+                if (cached) lruSetChapter(cacheKey, cached);
+            }
+            if (cached) {
+                applyChapterPayloadToBook(book, cIdx, cached);
+                return true;
+            }
+            try {
+                const res = await fetch(`/api/plenary/chapter/${encodeURIComponent(book.id)}/${chapNum}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                window.__PLENARY_API_REACHABLE__ = true;
+                lruSetChapter(cacheKey, data);
+                idbSetChapter(cacheKey, data);
+                applyChapterPayloadToBook(book, cIdx, data);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        async function loadVersePatristicsAndMedia(bookId, chapNum, verseNum) {
+            const key = `${bookId}:${chapNum}:${verseNum}`;
+            if (PATRISTICS_MEDIA_CACHE.has(key)) {
+                return PATRISTICS_MEDIA_CACHE.get(key);
+            }
+            const qs = `book=${encodeURIComponent(bookId)}&chapter=${encodeURIComponent(chapNum)}&verse=${encodeURIComponent(verseNum)}`;
+            const [patRes, medRes] = await Promise.all([
+                fetch(`/api/plenary/patristics?${qs}`).then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch(`/api/plenary/media?${qs}`).then(r => r.ok ? r.json() : null).catch(() => null)
+            ]);
+            const patItems = Array.isArray(patRes) ? patRes : (patRes && (patRes.items || patRes.citations || patRes.patristics)) || [];
+            const medItems = Array.isArray(medRes) ? medRes : (medRes && (medRes.items || medRes.media)) || [];
+            const result = { patristics: patItems, media: medItems };
+            PATRISTICS_MEDIA_CACHE.set(key, result);
+            return result;
         }
 
         // ====== APPROVED STREAM RESOLUTION & FALLBACK ENGINE ======
@@ -1792,7 +2089,16 @@
         }
 
         // ====== INITIALIZATION ======
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            initTheme();
+            applyComfortTypography();
+            if (IS_PLENARY_SHELL_MODE) {
+                await loadPlenaryBooksFromApi();
+            } else if (typeof location !== 'undefined' && location.protocol && location.protocol.startsWith('http')) {
+                fetch('/api/plenary/books', { method: 'HEAD' }).then(r => {
+                    if (r.ok) window.__PLENARY_API_REACHABLE__ = true;
+                }).catch(() => {});
+            }
             populateBookSelector();
             populateCruxSelector();
             populateMasterEnSelector();
@@ -1800,7 +2106,6 @@
             pushNavHistory(currentBookIndex, currentChapterIndex, currentVerseIndex);
             renderCanonTree();
             loadWorkspaceTabsFromStorage();
-            applyComfortTypography();
             syncActiveReference(false);
             updateLibraryBadge();
             applyBlindDrillState();
@@ -1811,6 +2116,7 @@
                     e.preventDefault();
                     toggleSearchModal();
                 } else if (e.key === 'Escape') {
+                    if (devotionalFocusMode) toggleDevotionalFocusMode(false);
                     closeSearchModal();
                     closeLibraryModal();
                     closeConcordanceModal();
@@ -1915,6 +2221,7 @@
 
         function syncActiveReference(recordHistory = true) {
             const book = APP_DATA.books[currentBookIndex];
+            if (!book) return;
             const chapNum = currentChapterIndex + 1;
             const verseNum = currentVerseIndex + 1;
             selected3DWord = null;
@@ -1967,9 +2274,29 @@
             document.getElementById('verseSelector').value = currentVerseIndex;
 
             updateBookmarkButtonUI();
-            renderReader();
-            updateInspector();
-            if (is3DOpen) update3DTextTextures();
+            const hasChapterData = Array.isArray(book.verses_en) && Array.isArray(book.verses_en[currentChapterIndex]) && book.verses_en[currentChapterIndex].length > 0;
+            if (!hasChapterData && (IS_PLENARY_SHELL_MODE || window.__PLENARY_API_REACHABLE__)) {
+                const reqSeq = ++chapterLoadSeq;
+                renderChapterLoadingSkeleton(book.name, chapNum);
+                ensureChapterLoaded(currentBookIndex, currentChapterIndex).then((loaded) => {
+                    if (reqSeq !== chapterLoadSeq) return;
+                    if (loaded) {
+                        const chLen = (book.verses_en[currentChapterIndex] && book.verses_en[currentChapterIndex].length) || 1;
+                        if (currentVerseIndex >= chLen) currentVerseIndex = 0;
+                        populateVerseSelector();
+                        document.getElementById('verseSelector').value = currentVerseIndex;
+                    }
+                    renderReader();
+                    updateInspector();
+                    if (is3DOpen) update3DTextTextures();
+                    loadActiveVerseNotes();
+                    refreshIcons();
+                });
+            } else {
+                renderReader();
+                updateInspector();
+                if (is3DOpen) update3DTextTextures();
+            }
             renderCanonTree();
             loadActiveVerseNotes();
             if (typeof syncLinkedWorkspaceTabs === 'function') syncLinkedWorkspaceTabs();
@@ -2740,10 +3067,32 @@
                                 <div id="doll6-notes-content" class="text-xs text-slate-400 italic">Loading study notes shard...</div>
                             </div>
                         </div>
+
+                        <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/80">
+                            <button onclick="toggleDollDrawer('doll7')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-slate-800/60 transition">
+                                <span class="font-mono text-xs font-bold text-purple-300">🪆 DOLL 7: Verse-Level Patristics &amp; Study Media Drawer <span class="text-[10px] text-slate-400 font-normal">• Church Fathers + Maps/Manuscripts/Audio</span></span>
+                                <i id="icon-doll7" data-lucide="chevron-up" class="w-4 h-4 text-slate-400"></i>
+                            </button>
+                            <div id="drawer-doll7" class="px-5 py-4 border-t border-slate-800 bg-slate-950 space-y-3">
+                                <div class="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs font-mono">
+                                    <button type="button" id="doll7-tab-patristics" onclick="setPatristicsMediaTab('patristics')" class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-semibold">📜 Patristics</button>
+                                    <button type="button" id="doll7-tab-media" onclick="setPatristicsMediaTab('media')" class="px-2.5 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700">🖼️ Study Media</button>
+                                    <span id="doll7-status" class="ml-auto text-[10px] text-slate-500"></span>
+                                </div>
+                                <div id="doll7-panel-content" class="text-xs text-slate-300 space-y-2">Loading verse patristics &amp; media...</div>
+                            </div>
+                        </div>
                     </div>
                 `;
             } else if (currentReaderMode === 'parallel') {
                 const reg = APP_DATA.translation_registry || [];
+                const baseStreamId = parallelCols[0];
+                const baseCh = baseStreamId === 'dra' ? ((book.verses_en && book.verses_en[currentChapterIndex]) || [])
+                    : baseStreamId === 'vulg_clem' ? ((book.verses_la && book.verses_la[currentChapterIndex]) || [])
+                    : baseStreamId === 'lxx_gnt' ? ((book.verses_gr && book.verses_gr[currentChapterIndex]) || [])
+                    : baseStreamId === 'wlc' ? ((book.verses_he && book.verses_he[currentChapterIndex]) || [])
+                    : ((book.tr && book.tr[baseStreamId] && book.tr[baseStreamId][currentChapterIndex]) || []);
+                let maxRowCount = baseCh.length;
                 const colHtml = parallelCols.map((sid, colIdx) => {
                     const meta = getStreamMeta(sid);
                     const bdgCls = getApprovalBadgeClass(meta.approval);
@@ -2756,6 +3105,7 @@
                         : ((book.tr && book.tr[sid] && book.tr[sid][currentChapterIndex]) || []);
                     const hasData = rawStreamCh.length > 0;
                     const rowCount = Math.max(draCh.length, rawStreamCh.length);
+                    if (rowCount > maxRowCount) maxRowCount = rowCount;
                     let rowsHtml = '';
                     if (!hasData) {
                         const probe = getRawStreamVerse(book, sid, currentChapterIndex, currentVerseIndex);
@@ -2767,7 +3117,10 @@
                             const hasNote = (colIdx === 0 && localStorage.getItem(`notes_${book.id}_${chapNum}_${idx + 1}`)) ? ' 📝' : '';
                             const activeBorder = (idx === currentVerseIndex) ? 'bg-slate-800 suite-pill-active' : 'hover:bg-slate-800/50';
                             const displayTxt = txt || `[Merged / omitted at v.${idx + 1} in ${meta.short}]`;
-                            rowsHtml += `<p id="par-col-${colIdx}-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer p-1.5 rounded transition ${activeBorder} ${hlCls ? 'hl-' + hlCls : ''} ${!txt ? 'text-slate-500 italic' : ''}" ${meta.lang === 'he' ? 'dir="rtl"' : ''}><sup class="font-mono text-[10px] mr-1" style="color:${meta.color}" dir="ltr">${idx + 1}</sup> ${escapeHtmlText(displayTxt)}${hasNote}</p>`;
+                            const renderedBody = (parallelDiffEnabled && colIdx > 0 && txt && baseCh[idx])
+                                ? renderParallelWordDiff(baseCh[idx], txt)
+                                : escapeHtmlText(displayTxt);
+                            rowsHtml += `<p id="par-col-${colIdx}-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer p-1.5 rounded transition ${activeBorder} ${hlCls ? 'hl-' + hlCls : ''} ${!txt ? 'text-slate-500 italic' : ''}" ${meta.lang === 'he' ? 'dir="rtl"' : ''}><sup class="font-mono text-[10px] mr-1" style="color:${meta.color}" dir="ltr">${idx + 1}</sup> ${renderedBody}${hasNote}</p>`;
                         }
                     }
                     return `
@@ -2792,24 +3145,45 @@
                     `;
                 }).join('');
 
+                const anchorRowsHtml = Array.from({ length: maxRowCount }, (_, idx) => {
+                    const isCur = idx === currentVerseIndex;
+                    return `<button type="button" id="par-anchor-${idx}" onclick="selectVerse(${idx})" class="w-full text-center py-1 rounded font-mono text-[11px] transition ${isCur ? 'bg-amber-500/25 text-amber-300 font-bold border border-amber-500/50' : 'text-slate-400 hover:text-white hover:bg-slate-800'}">${chapNum}:${idx + 1}</button>`;
+                }).join('');
+
                 const parGridClass = parallelCols.length > 4
-                    ? 'flex gap-3 overflow-x-auto pb-2 [&>div]:min-w-[300px] [&>div]:flex-1'
-                    : `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${Math.min(parallelCols.length, 4)} gap-3`;
+                    ? 'flex gap-3 overflow-x-auto pb-2 flex-1 min-w-0 [&>div]:min-w-[300px] [&>div]:flex-1'
+                    : `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${Math.min(parallelCols.length, 4)} gap-3 flex-1 min-w-0`;
                 container.innerHTML = `
                     <div class="max-w-full mx-auto space-y-4">
                         ${chapMetaBar}
-                        <div class="flex items-center justify-between -mb-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2 -mb-1">
                             <button onclick="addParallelCol()" class="px-2.5 py-1 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/25 text-[11px] font-mono font-bold transition">+ Add Translation Stream (${parallelCols.length} active)</button>
-                            <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="When on, scrolling any one translation column scrolls the other columns to the matching position">
-                                <input type="checkbox" id="parallelSyncScrollToggle" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-amber-500">
-                                Sync scroll across columns
-                            </label>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-300 cursor-pointer select-none" title="Highlight word-level differences against Stream 1">
+                                    <input type="checkbox" id="parallelDiffToggle" ${parallelDiffEnabled ? 'checked' : ''} onchange="setParallelDiff(this.checked)" class="accent-emerald-400">
+                                    Word-Level Diff
+                                </label>
+                                <label class="flex items-center gap-1.5 text-[10px] font-mono text-slate-400 cursor-pointer select-none" title="When on, scrolling any one translation column scrolls the other columns to the matching position">
+                                    <input type="checkbox" id="parallelSyncScrollToggle" ${parallelSyncScroll ? 'checked' : ''} onchange="setParallelSyncScroll(this.checked)" class="accent-amber-500">
+                                    Sync scroll across columns
+                                </label>
+                            </div>
                         </div>
-                        <div class="${parGridClass}">
-                            ${colHtml}
+                        <div class="flex items-start gap-2">
+                            <div class="sticky left-0 z-10 w-14 flex-shrink-0 bg-slate-950/95 border border-slate-800 rounded-xl p-2 space-y-1.5">
+                                <div class="text-[9px] font-mono uppercase text-center text-amber-400 font-bold border-b border-slate-800 pb-1">Anchor</div>
+                                <div id="par-scroll-anchor" class="max-h-[70vh] overflow-y-auto space-y-1 pr-0.5">
+                                    ${anchorRowsHtml}
+                                </div>
+                            </div>
+                            <div class="${parGridClass}">
+                                ${colHtml}
+                            </div>
                         </div>
                     </div>
                 `;
+                const curAnchor = document.getElementById(`par-anchor-${currentVerseIndex}`);
+                if (curAnchor && typeof curAnchor.scrollIntoView === 'function') curAnchor.scrollIntoView({ block: 'nearest' });
                 for (let ci = 0; ci < parallelCols.length; ci++) {
                     const activeEl = document.getElementById(`par-col-${ci}-${currentVerseIndex}`);
                     if (activeEl && typeof activeEl.scrollIntoView === 'function') activeEl.scrollIntoView({ block: 'nearest' });
@@ -2853,13 +3227,19 @@
                 const chDisplayVerses = (masterChVerses.length > 0) ? masterChVerses : draVerses;
                 const activeMeta = masterChVerses.length > 0 ? masterMeta : getStreamMeta('dra');
                 container.innerHTML = `
-                    <div class="max-w-[66ch] mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
+                    <div class="comfort-print-page max-w-[66ch] mx-auto py-8 px-6 sm:px-10 my-4 rounded-2xl border border-amber-900/30 bg-[#0d111a] shadow-2xl">
+                        <div class="flex items-center justify-between gap-2 mb-4 text-[11px] font-mono">
+                            <span class="text-slate-500 uppercase tracking-widest">Comfort Print® Reading</span>
+                            <button type="button" id="btnDevotionalFocusToggle" onclick="toggleDevotionalFocusMode()" class="px-2.5 py-1 rounded-full border ${devotionalFocusMode ? 'bg-amber-500/20 text-amber-300 border-amber-500/50' : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:text-white'} transition">
+                                ${devotionalFocusMode ? '✕ Exit Focus Mode' : '⛶ Zero-Clutter Focus'}
+                            </button>
+                        </div>
                         <div class="text-center border-b border-slate-800/80 pb-5 mb-6">
                             <div class="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-400/80">${escapeHtmlText(book.division)} · ${escapeHtmlText(activeMeta.short)}</div>
                             <h1 class="text-3xl font-bold text-amber-50 mt-1" style="font-family: var(--plenary-serif-font);">${escapeHtmlText(book.name)} ${chapNum}</h1>
                         </div>
                         <div class="text-slate-100 leading-[1.88] text-[1.15rem] tracking-[0.01em]" style="font-family: var(--plenary-serif-font);">
-                            <span class="float-left text-5xl font-bold text-amber-400 mr-3 leading-[0.85] pt-1 select-none">${chapNum}</span>
+                            <span class="comfort-drop-cap text-amber-400">${chapNum}</span>
                             ${chDisplayVerses.map((v, idx) => {
                                 const isCur = idx === currentVerseIndex;
                                 return `<span id="dev-v-${idx}" onclick="selectVerse(${idx})" class="cursor-pointer transition hover:text-amber-200 ${isCur ? 'text-amber-200 bg-amber-500/10 rounded px-0.5' : ''}"><sup class="text-[10px] font-mono text-amber-500/70 mr-1 select-none">${idx + 1}</sup>${escapeHtmlText(v)} </span>`;
@@ -2958,9 +3338,95 @@
                     </div>
                 `;
             }
-            if (currentReaderMode === 'dolls') renderDoll6StudyNotes();
+            if (currentReaderMode === 'dolls') {
+                renderDoll6StudyNotes();
+                renderDoll7PatristicsMedia(book, chapNum, verseNum);
+            }
             if (currentReaderMode === 'study_scroll') renderStudyScrollNotes();
             refreshIcons();
+        }
+
+        function setParallelDiff(on) {
+            parallelDiffEnabled = !!on;
+            localStorage.setItem('plenary_parallel_diff', parallelDiffEnabled ? '1' : '0');
+            if (currentReaderMode === 'parallel') renderReader();
+        }
+
+        function renderParallelWordDiff(baseText, targetText) {
+            const normWord = (w) => w.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+            const baseSet = new Set(String(baseText || '').split(/\s+/).map(normWord).filter(Boolean));
+            const tokens = String(targetText || '').split(/(\s+)/);
+            return tokens.map(tok => {
+                if (/^\s+$/.test(tok)) return tok;
+                const nw = normWord(tok);
+                if (!nw || baseSet.has(nw)) return escapeHtmlText(tok);
+                return `<span class="bg-emerald-500/20 text-emerald-300 rounded px-0.5 border-b border-emerald-500/50">${escapeHtmlText(tok)}</span>`;
+            }).join('');
+        }
+
+        function toggleDevotionalFocusMode(force) {
+            devotionalFocusMode = typeof force === 'boolean' ? force : !devotionalFocusMode;
+            document.body.classList.toggle('devotional-focus-mode', devotionalFocusMode);
+            if (currentReaderMode === 'devotional') renderReader();
+        }
+
+        function setPatristicsMediaTab(tab) {
+            activePatristicsMediaTab = (tab === 'media') ? 'media' : 'patristics';
+            const book = APP_DATA.books[currentBookIndex];
+            if (book) renderDoll7PatristicsMedia(book, currentChapterIndex + 1, currentVerseIndex + 1);
+        }
+
+        async function renderDoll7PatristicsMedia(book, chapNum, verseNum) {
+            const panel = document.getElementById('doll7-panel-content');
+            const statusEl = document.getElementById('doll7-status');
+            const tabPat = document.getElementById('doll7-tab-patristics');
+            const tabMed = document.getElementById('doll7-tab-media');
+            if (!panel || !book) return;
+
+            if (tabPat) tabPat.className = activePatristicsMediaTab === 'patristics'
+                ? 'px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-semibold'
+                : 'px-2.5 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700';
+            if (tabMed) tabMed.className = activePatristicsMediaTab === 'media'
+                ? 'px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
+                : 'px-2.5 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700';
+
+            if (statusEl) statusEl.textContent = `${book.abbr} ${chapNum}:${verseNum}`;
+            const data = await loadVersePatristicsAndMedia(book.id, chapNum, verseNum);
+
+            if (activePatristicsMediaTab === 'patristics') {
+                const items = (data.patristics && data.patristics.length > 0)
+                    ? data.patristics
+                    : ((activeCrux && activeCrux.patristics) || []);
+                if (!items.length) {
+                    panel.innerHTML = `<div class="text-slate-500 italic">No verse-level patristic citations returned for ${escapeHtmlText(book.name)} ${chapNum}:${verseNum}.</div>`;
+                    return;
+                }
+                panel.innerHTML = items.map(p => `
+                    <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="font-bold text-purple-300">${escapeHtmlText(p.father || p.author || 'Church Father')}</span>
+                            <span class="text-[10px] font-mono text-slate-400">${escapeHtmlText(p.work || p.source || '')}${p.century ? ` · ${escapeHtmlText(p.century)}` : ''}</span>
+                        </div>
+                        <div class="text-slate-200 leading-relaxed">${escapeHtmlText(p.text || p.quote || p.excerpt || '')}</div>
+                    </div>
+                `).join('');
+            } else {
+                const media = data.media || [];
+                if (!media.length) {
+                    panel.innerHTML = `<div class="text-slate-500 italic">No study media (maps, manuscripts, audio, or plates) indexed for ${escapeHtmlText(book.name)} ${chapNum}:${verseNum}.</div>`;
+                    return;
+                }
+                panel.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">` + media.map(m => `
+                    <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="font-bold text-cyan-300">${escapeHtmlText(m.title || m.label || 'Study Media')}</span>
+                            <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">${escapeHtmlText(m.kind || m.type || 'media')}</span>
+                        </div>
+                        ${m.description || m.caption ? `<div class="text-slate-300 text-[11px]">${escapeHtmlText(m.description || m.caption)}</div>` : ''}
+                        ${m.url || m.src ? `<a href="${escapeHtmlText(m.url || m.src)}" target="_blank" rel="noopener" class="inline-block text-[11px] font-mono text-amber-300 hover:underline">Open Resource ↗</a>` : ''}
+                    </div>
+                `).join('') + `</div>`;
+            }
         }
 
         // James's request (2026-11-11): "verses to scroll together in the parallel" -- each of the
@@ -2977,7 +3443,10 @@
         }
 
         function wireParallelScrollSync() {
-            const panes = [0, 1, 2, 3].map(i => document.getElementById(`par-scroll-${i}`)).filter(Boolean);
+            const panes = [
+                document.getElementById('par-scroll-anchor'),
+                ...parallelCols.map((_, i) => document.getElementById(`par-scroll-${i}`))
+            ].filter(Boolean);
             panes.forEach(pane => {
                 pane.addEventListener('scroll', () => {
                     if (!parallelSyncScroll || parallelSyncScrollGuard) return;
@@ -4443,16 +4912,32 @@
             document.getElementById('verseNotesInput').value = val;
         }
 
-        // ====== THEME SWITCHER ======
-        function cycleTheme() {
+        // ====== THEME SWITCHER (Dark / Light / Sepia / Parchment via data-theme) ======
+        const PLENARY_THEMES = ['dark', 'light', 'sepia', 'parchment'];
+
+        function setTheme(theme) {
+            const next = PLENARY_THEMES.includes(theme) ? theme : 'dark';
             const body = document.body;
-            if (body.classList.contains('dark')) {
-                body.classList.remove('dark'); body.classList.add('theme-light');
-            } else if (body.classList.contains('theme-light')) {
-                body.classList.remove('theme-light'); body.classList.add('theme-sepia');
-            } else {
-                body.classList.remove('theme-sepia'); body.classList.add('dark');
-            }
+            body.classList.remove('dark', 'theme-light', 'theme-sepia', 'theme-parchment');
+            if (next === 'dark') body.classList.add('dark');
+            else body.classList.add(`theme-${next}`);
+            body.setAttribute('data-theme', next);
+            document.documentElement.setAttribute('data-theme', next);
+            const sel = document.getElementById('themeSelector');
+            if (sel) sel.value = next;
+            localStorage.setItem('plenary_theme', next);
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('plenary_theme') || 'dark';
+            setTheme(saved);
+        }
+
+        function cycleTheme() {
+            const cur = document.body.getAttribute('data-theme') || 'dark';
+            const idx = PLENARY_THEMES.indexOf(cur);
+            const next = PLENARY_THEMES[(idx + 1) % PLENARY_THEMES.length];
+            setTheme(next);
         }
 
         // ====== SCHOLAR MODE: BLIND TRANSLATION DRILL (Feature D) ======
@@ -4709,7 +5194,7 @@
             return { bIdx, cIdx: chNum - 1, vIdx: vNum - 1, book, chNum, vNum, en: enRes.text || '' };
         }
 
-        function runFullBibleSearch(query, maxShow = 200) {
+        async function runFullBibleSearch(query, maxShow = 200) {
             const rawQ = (query || '').trim();
             const list = document.getElementById('searchResultsList');
             const countLabel = document.getElementById('searchResultCount');
@@ -4726,6 +5211,91 @@
             const directRef = parseBibleReference(rawQ);
             window.__directRefMatch = directRef;
 
+            const renderSearchResults = (hits, totalCount) => {
+                countLabel.textContent = `${directRef ? 'Direct Reference Match + ' : ''}${totalCount} phrase matches across 73 books${hits.length > maxShow ? ` (showing first ${maxShow})` : ''}`;
+                list.innerHTML = '';
+
+                if (directRef) {
+                    const card = document.createElement('div');
+                    card.className = 'p-3 rounded-lg border border-amber-500/40 bg-amber-500/15 hover:bg-amber-500/30 cursor-pointer transition space-y-1';
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between text-xs font-bold text-amber-300 font-mono">
+                            <span>GO DIRECTLY TO: ${escapeHtmlText(directRef.book.name)} ${directRef.chNum}:${directRef.vNum}</span>
+                            <span class="text-[10px] uppercase">Enter / Jump ➔</span>
+                        </div>
+                        <div class="text-xs text-slate-100 font-serif">"${escapeHtmlText(directRef.en || '')}"</div>
+                    `;
+                    card.onclick = () => jumpFromModal(directRef.bIdx, directRef.cIdx, directRef.vIdx, 'search');
+                    list.appendChild(card);
+                }
+
+                hits.slice(0, maxShow).forEach(r => {
+                    const item = document.createElement('div');
+                    item.className = 'p-3 rounded-lg border border-slate-800 bg-slate-950/80 hover:border-amber-500/60 cursor-pointer transition space-y-1';
+                    const safeQ = rawQ.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    let display = escapeHtmlText(r.text || '');
+                    try { display = display.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark class="bg-amber-500/30 text-amber-300 font-semibold px-0.5 rounded">$1</mark>'); } catch (e) {}
+
+                    item.innerHTML = `
+                        <div class="flex items-center justify-between text-xs font-bold text-amber-400 font-mono">
+                            <span>${escapeHtmlText(r.ref)} <span class="text-[10px] text-cyan-400">[${escapeHtmlText(r.witness)}]</span></span>
+                            <span class="text-[10px] text-slate-500 uppercase">Jump ➔</span>
+                        </div>
+                        <div class="text-xs text-slate-200 font-serif leading-relaxed" ${r.witnessKey === 'HE' ? 'dir="rtl"' : ''}>${display}</div>
+                        ${r.witnessKey !== 'EN' && r.en ? `<div class="text-[11px] text-slate-400 font-serif">"${escapeHtmlText(r.en)}"</div>` : ''}
+                    `;
+                    item.onclick = () => jumpFromModal(r.bIdx, r.cIdx, r.vIdx, 'search');
+                    list.appendChild(item);
+                });
+
+                if (hits.length > maxShow) {
+                    const moreBtn = document.createElement('button');
+                    moreBtn.className = 'w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-mono text-xs';
+                    moreBtn.textContent = `Show All ${hits.length} Results`;
+                    moreBtn.onclick = () => runFullBibleSearch(rawQ, hits.length);
+                    list.appendChild(moreBtn);
+                }
+            };
+
+            if (IS_PLENARY_SHELL_MODE || window.__PLENARY_API_REACHABLE__) {
+                const reqId = ++searchReqSeq;
+                countLabel.textContent = 'Searching SQLite FTS5 index...';
+                try {
+                    const url = `/api/plenary/search?q=${encodeURIComponent(rawQ)}&witness=${encodeURIComponent(witness)}&canon=${encodeURIComponent(canonFilter)}&limit=${encodeURIComponent(maxShow)}`;
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const data = await res.json();
+                    if (reqId !== searchReqSeq) return;
+                    const rawHits = Array.isArray(data) ? data : (data.hits || data.results || []);
+                    const mappedHits = rawHits.map(h => {
+                        const bIdx = typeof h.bIdx === 'number' ? h.bIdx : APP_DATA.books.findIndex(b => b.id === (h.book_id || h.bookId));
+                        const bookObj = bIdx >= 0 ? APP_DATA.books[bIdx] : null;
+                        const cIdx = typeof h.cIdx === 'number' ? h.cIdx : Math.max(0, (h.chapter || 1) - 1);
+                        const vIdx = typeof h.vIdx === 'number' ? h.vIdx : Math.max(0, (h.verse || 1) - 1);
+                        const wKey = (h.witnessKey || h.witness || witness || 'en').toUpperCase();
+                        return {
+                            bIdx: Math.max(0, bIdx),
+                            cIdx,
+                            vIdx,
+                            ref: h.ref || (bookObj ? `${bookObj.name} ${cIdx + 1}:${vIdx + 1}` : `${h.book_id || ''} ${cIdx + 1}:${vIdx + 1}`),
+                            witness: h.witnessLabel || h.witness || wKey,
+                            witnessKey: wKey,
+                            text: h.text || h.snippet || h.en || '',
+                            en: h.en || ''
+                        };
+                    });
+                    renderSearchResults(mappedHits, typeof data.total === 'number' ? data.total : mappedHits.length);
+                    return;
+                } catch (err) {
+                    if (reqId !== searchReqSeq) return;
+                    if (IS_PLENARY_SHELL_MODE) {
+                        list.innerHTML = `<div class="p-3 rounded-lg border border-rose-500/40 bg-rose-950/30 text-rose-200 text-xs font-mono">Search API unavailable (${escapeHtmlText(err.message || String(err))}).</div>`;
+                        countLabel.textContent = 'Search error';
+                        return;
+                    }
+                }
+            }
+
             const qNorm = /[\u0590-\u05ff]/.test(rawQ)
                 ? rawQ.normalize('NFD').replace(/[\u0591-\u05c7]/g, '')
                 : rawQ.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -4737,7 +5307,7 @@
                 if (canonFilter === 'dc' && !book.deuterocanon) continue;
                 if (canonFilter === 'nt' && book.testament !== 'NT') continue;
 
-                const chaps = book.verses_en;
+                const chaps = book.verses_en || [];
                 for (let cIdx = 0; cIdx < chaps.length; cIdx++) {
                     for (let vIdx = 0; vIdx < chaps[cIdx].length; vIdx++) {
                         let matchedWitness = '';
@@ -4771,49 +5341,7 @@
                 }
             }
 
-            countLabel.textContent = `${directRef ? 'Direct Reference Match + ' : ''}${hits.length} phrase matches across 73 books${hits.length > maxShow ? ` (showing first ${maxShow})` : ''}`;
-            list.innerHTML = '';
-
-            if (directRef) {
-                const card = document.createElement('div');
-                card.className = 'p-3 rounded-lg border border-amber-500/40 bg-amber-500/15 hover:bg-amber-500/30 cursor-pointer transition space-y-1';
-                card.innerHTML = `
-                    <div class="flex items-center justify-between text-xs font-bold text-amber-300 font-mono">
-                        <span>GO DIRECTLY TO: ${escapeHtmlText(directRef.book.name)} ${directRef.chNum}:${directRef.vNum}</span>
-                        <span class="text-[10px] uppercase">Enter / Jump ➔</span>
-                    </div>
-                    <div class="text-xs text-slate-100 font-serif">"${escapeHtmlText(directRef.en)}"</div>
-                `;
-                card.onclick = () => jumpFromModal(directRef.bIdx, directRef.cIdx, directRef.vIdx, 'search');
-                list.appendChild(card);
-            }
-
-            hits.slice(0, maxShow).forEach(r => {
-                const item = document.createElement('div');
-                item.className = 'p-3 rounded-lg border border-slate-800 bg-slate-950/80 hover:border-amber-500/60 cursor-pointer transition space-y-1';
-                const safeQ = rawQ.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                let display = escapeHtmlText(r.text);
-                try { display = display.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark class="bg-amber-500/30 text-amber-300 font-semibold px-0.5 rounded">$1</mark>'); } catch (e) {}
-
-                item.innerHTML = `
-                    <div class="flex items-center justify-between text-xs font-bold text-amber-400 font-mono">
-                        <span>${escapeHtmlText(r.ref)} <span class="text-[10px] text-cyan-400">[${escapeHtmlText(r.witness)}]</span></span>
-                        <span class="text-[10px] text-slate-500 uppercase">Jump ➔</span>
-                    </div>
-                    <div class="text-xs text-slate-200 font-serif leading-relaxed" ${r.witnessKey === 'HE' ? 'dir="rtl"' : ''}>${display}</div>
-                    ${r.witnessKey !== 'EN' ? `<div class="text-[11px] text-slate-400 font-serif">"${escapeHtmlText(r.en)}"</div>` : ''}
-                `;
-                item.onclick = () => jumpFromModal(r.bIdx, r.cIdx, r.vIdx, 'search');
-                list.appendChild(item);
-            });
-
-            if (hits.length > maxShow) {
-                const moreBtn = document.createElement('button');
-                moreBtn.className = 'w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-mono text-xs';
-                moreBtn.textContent = `Show All ${hits.length} Results`;
-                moreBtn.onclick = () => runFullBibleSearch(rawQ, hits.length);
-                list.appendChild(moreBtn);
-            }
+            renderSearchResults(hits, hits.length);
         }
 
         // ====== DISCORD APOLOGETICS CARD EXPORTER ======

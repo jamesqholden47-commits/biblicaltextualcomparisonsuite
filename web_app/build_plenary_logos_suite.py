@@ -10,6 +10,7 @@ Features:
 - Local personal notes and highlights persistence (localStorage) + Discord Apologetics Card generator
 """
 
+import argparse
 import json
 import os
 import re
@@ -64,6 +65,8 @@ LUCIDE_JS_PATH = os.path.join(SCRIPT_DIR, 'lucide.min.js')
 TAILWIND_CSS_PATH = os.path.join(SCRIPT_DIR, 'tailwind_compiled.css')
 JSON_OUT = os.path.join(SCRIPT_DIR, 'plenary_logos_data.json')
 HTML_OUT = os.path.join(SCRIPT_DIR, 'plenary_logos_suite.html')
+SHELL_HTML_OUT = os.path.join(SCRIPT_DIR, 'plenary_logos_shell.html')
+PRIVATE_TRANSLATION_IDS = {'nkjv', 'nabre', 'ignatius', 'rsv2ce'}
 
 TRANSLATION_REGISTRY = [
     {
@@ -2118,7 +2121,7 @@ def load_esther_additions():
     return adds
 
 
-def load_bible_datasets():
+def load_bible_datasets(public_only=False):
     print("Loading Approved Challoner Douay-Rheims (DRA) baseline (73 books)...")
     with open(DRA_PATH, 'r', encoding='utf-8') as f:
         dra = json.load(f)
@@ -2148,6 +2151,10 @@ def load_bible_datasets():
     ]
     extra_corpora = {}
     for key, p, label in extra_paths:
+        if public_only and key in PRIVATE_TRANSLATION_IDS:
+            print(f"Skipping {label}: excluded by --public-only.")
+            extra_corpora[key] = {}
+            continue
         if key == 'nkjv' and not os.path.exists(p):
             print(f"Skipping {label}: private source not present on this machine "
                   f"(run ingest_private_owned_sources.py if you own a copy).")
@@ -2517,14 +2524,56 @@ def load_biblical_chiasms():
             return json.load(f)
     return {}
 
-def build_suite():
-    books = load_bible_datasets()
+def get_filtered_registry(public_only=False):
+    if not public_only:
+        return TRANSLATION_REGISTRY
+    return [
+        t for t in TRANSLATION_REGISTRY
+        if t.get("id") not in PRIVATE_TRANSLATION_IDS and not t.get("private")
+    ]
+
+def build_suite(mode="standalone", public_only=False):
+    registry = get_filtered_registry(public_only=public_only)
+
+    if mode == "shell":
+        print("Generating thin-shell HTML workstation (lazy-load mode, no inline dataset)...")
+        payload = {
+            "canon_schema": CANON_SCHEMA,
+            "translation_registry": registry,
+            "books": [],
+            "preloaded_cruxes": PRELOADED_CRUXES[:1],
+            "greek_morph": {},
+            "hebrew_morph": {},
+            "strongs_gloss": {},
+            "latin_lex": {},
+            "dra_links": {},
+            "cross_refs": [],
+        }
+        json_blob = json.dumps(payload, ensure_ascii=False, separators=(',', ':')).replace('</script>', '<\\/script>')
+        with open(os.path.join(SCRIPT_DIR, 'logos_suite_template.html'), 'r', encoding='utf-8') as f:
+            html_content = f.read()
+
+        final_html = html_content.replace('__PLENARY_PAYLOAD__', json_blob)
+        final_html = final_html.replace('<!-- __THREE_JS_TAG__ -->', '<script src="three.min.js"></script>')
+        final_html = final_html.replace(
+            '<!-- __LUCIDE_JS_TAG__ -->',
+            '<script src="lucide.min.js"></script>\n    <script>window.__PLENARY_SHELL_MODE__ = true;</script>'
+        )
+        final_html = final_html.replace('<!-- __OFFLINE_CSS_TAG__ -->', '<link rel="stylesheet" href="tailwind_compiled.css">')
+
+        with open(SHELL_HTML_OUT, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+
+        print(f"Successfully generated thin-shell suite: {SHELL_HTML_OUT} ({os.path.getsize(SHELL_HTML_OUT):,} bytes)")
+        return
+
+    books = load_bible_datasets(public_only=public_only)
     verify_cross_refs(books)
     strongs_gloss, greek_morph, hebrew_morph, dra_links = load_lexicon_and_links()
 
     payload = {
         "canon_schema": CANON_SCHEMA,
-        "translation_registry": TRANSLATION_REGISTRY,
+        "translation_registry": registry,
         "books": books,
         "preloaded_cruxes": PRELOADED_CRUXES,
         "greek_morph": greek_morph,
@@ -2594,4 +2643,17 @@ def build_suite():
     print(f"Successfully generated standalone suite: {HTML_OUT} ({os.path.getsize(HTML_OUT)} bytes)")
 
 if __name__ == '__main__':
-    build_suite()
+    parser = argparse.ArgumentParser(description="Build Plenary Scripture Workstation HTML/JSON bundles.")
+    parser.add_argument(
+        "--mode",
+        choices=["shell", "standalone"],
+        default="standalone",
+        help="Build mode: 'standalone' embeds the full dataset; 'shell' builds a thin lazy-loading HTML shell (< 500 KB).",
+    )
+    parser.add_argument(
+        "--public-only",
+        action="store_true",
+        help="Strip private/licensed translation IDs (nkjv, nabre, ignatius, rsv2ce) for public/demo builds.",
+    )
+    args = parser.parse_args()
+    build_suite(mode=args.mode, public_only=args.public_only)
